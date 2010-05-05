@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 namespace SMC.TestingUtils
 {
@@ -67,103 +68,129 @@ namespace SMC.TestingUtils
 
         public int GetOrdinal( string name )
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _recordsToRetrieve[_recordsetNumber].Count; i++)
+                if (_recordsToRetrieve[_recordsetNumber][i].Key == name)
+                    return i;
+
+            throw new IndexOutOfRangeException();
         }
 
 
         public bool GetBoolean( int i )
         {
-            throw new NotImplementedException();
+            return (bool)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public byte GetByte( int i )
         {
-            throw new NotImplementedException();
+            return (byte)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public long GetBytes( int i, long fieldOffset, byte[] buffer, int bufferoffset, int length )
         {
-            throw new NotImplementedException();
+            if (fieldOffset < 0)
+                return 0;
+
+            var str = Encoding.Default.GetBytes( (string)_recordsToRetrieve[_recordsetNumber][i].Value );
+            long k = 0;
+            for (long j = fieldOffset; j < str.Length && k < length; j++, k++)
+                buffer[bufferoffset++] = str[j];
+
+            return k;
         }
 
 
         public char GetChar( int i )
         {
-            throw new NotImplementedException();
+            return (char)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public long GetChars( int i, long fieldoffset, char[] buffer, int bufferoffset, int length )
         {
-            throw new NotImplementedException();
+            if (fieldoffset < 0)
+                return 0;
+
+            var str = ((string)_recordsToRetrieve[_recordsetNumber][i].Value).ToCharArray();
+            long k = 0;
+            for ( long j = fieldoffset; j < str.Length && k < length; j++,k++ )
+                buffer[bufferoffset++] = str[j];
+
+            return k;
         }
 
 
         public Guid GetGuid( int i )
         {
-            throw new NotImplementedException();
+            return (Guid)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public short GetInt16( int i )
         {
-            throw new NotImplementedException();
+            return (short)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public int GetInt32( int i )
         {
-            throw new NotImplementedException();
+            return (int)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public long GetInt64( int i )
         {
-            throw new NotImplementedException();
+            return (long)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public float GetFloat( int i )
         {
-            throw new NotImplementedException();
+            return (float)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public double GetDouble( int i )
         {
-            throw new NotImplementedException();
+            return (double)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public string GetString( int i )
         {
-            throw new NotImplementedException();
+            return (string)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public decimal GetDecimal( int i )
         {
-            throw new NotImplementedException();
+            return (decimal)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public DateTime GetDateTime( int i )
         {
-            throw new NotImplementedException();
+            return (DateTime)_recordsToRetrieve[_recordsetNumber][i].Value;
         }
 
 
         public IDataReader GetData( int i )
         {
-            throw new NotImplementedException();
+            return
+                new DataReaderMock( new List< KeyValuePair< string, object > >
+                                        {
+                                            new KeyValuePair< string, object >(
+                                                _recordsToRetrieve[_recordsetNumber][i].Key,
+                                                _recordsToRetrieve[_recordsetNumber][i].Value )
+                                        } );
         }
 
 
         public bool IsDBNull( int i )
         {
-            throw new NotImplementedException();
+            return _recordsToRetrieve[_recordsetNumber][i].Value == null;
         }
 
 
@@ -185,7 +212,10 @@ namespace SMC.TestingUtils
         }
 
 
-        public void Close() {}
+        public void Close()
+        {
+            IsClosed = true;
+        }
 
 
         public DataTable GetSchemaTable()
@@ -227,17 +257,19 @@ namespace SMC.TestingUtils
 
         public int Depth
         {
-            get { throw new NotImplementedException(); }
+            get { return 0; }
         }
 
-        public bool IsClosed
-        {
-            get { return false; }
-        }
+        public bool IsClosed { get; private set; }
 
         public int RecordsAffected
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (IsClosed)
+                    return -1;
+                return 0;
+            }
         }
 
         #endregion
