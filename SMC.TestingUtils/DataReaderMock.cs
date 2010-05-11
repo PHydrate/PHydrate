@@ -8,68 +8,142 @@ namespace SMC.TestingUtils
 {
     public class DataReaderMock : IDataReader
     {
-        readonly IList< KeyValuePair< string, object > >[] _recordsToRetrieve;
-        int _readCount;
+        readonly IList< IList< IList< object > > > _recordsToRetrieve;
+        readonly IList< IList< string > > _recordSetColumnNames;
         int _recordsetNumber;
+        int _rowNumber;
         DataTable _schemaTable;
+        bool _readyForPlayback;
 
-
+        [Obsolete("Use the parameterless constructor and AddRecordSet/AddRow methods.")]
         public DataReaderMock( params IList< KeyValuePair< string, object > >[] recordsToRetrieve )
         {
-            _recordsToRetrieve = recordsToRetrieve;
+            _recordsToRetrieve = new List< IList< IList< object > > >();
+            _recordSetColumnNames = new List< IList< string > >();
             _recordsetNumber = 0;
+            _rowNumber = 0;
+
+            foreach (var record in recordsToRetrieve)
+            {
+                AddRecordSet( record.Select( x => x.Key ).ToArray() )
+                    .AddRow( record.Select( x => x.Value ).ToArray() )
+                    .Playback();
+            }
+        }
+
+        public DataReaderMock()
+        {
+            _recordsToRetrieve = new List< IList< IList< object > > >();
+            _recordSetColumnNames = new List< IList< string > >();
+            _recordsetNumber = 0;
+            _rowNumber = 0;
+            _readyForPlayback = false;
+        }
+
+        public DataReaderMock AddRecordSet(params string[] columnNames)
+        {
+            ThrowIfInPlaybackMode();
+
+            _recordSetColumnNames.Add( columnNames );
+            _recordsToRetrieve.Add( new List< IList< object > >() );
+
+            return this;
+        }
+
+        public DataReaderMock AddRow(params object[] columnValues)
+        {
+            ThrowIfInPlaybackMode();
+
+            if (_recordsToRetrieve.Count == 0)
+                throw new InvalidOperationException( "Attempt to add a row before defining a recordset" );
+
+            _recordsToRetrieve.Last().Add( columnValues );  
+
+            return this;
+        }
+
+        public DataReaderMock Playback()
+        {
+            _readyForPlayback = true;
+
+            return this;
+        }
+
+        void ThrowIfInPlaybackMode()
+        {
+            if (_readyForPlayback)
+                throw new InvalidOperationException( "Cannot add records while in Playback state." );
+        }
+
+        void ThrowUnlessInPlaybackMode()
+        {
+            if (!_readyForPlayback)
+                throw new InvalidOperationException( "Cannot execute outside of Playback state." );
         }
 
         #region IDataReader Members
 
         public void Dispose()
         {
-            _readCount = 0;
+            ThrowUnlessInPlaybackMode();
+            IsClosed = true;
         }
 
 
         public string GetName( int i )
         {
-            return _recordsToRetrieve[_recordsetNumber][i].Key;
+            ThrowUnlessInPlaybackMode();
+
+            return _recordSetColumnNames[_recordsetNumber][i];
         }
 
 
         public string GetDataTypeName( int i )
         {
-            return _recordsToRetrieve[_recordsetNumber][i].Value.GetType().Name;
+            ThrowUnlessInPlaybackMode();
+
+            return _recordsToRetrieve[_recordsetNumber][0][i].GetType().Name;
         }
 
 
         public Type GetFieldType( int i )
         {
-            return _recordsToRetrieve[_recordsetNumber][i].Value.GetType();
+            ThrowUnlessInPlaybackMode();
+
+            return _recordsToRetrieve[_recordsetNumber][0][i].GetType();
         }
 
 
         public object GetValue( int i )
         {
-            return _recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return GetColumnValue( i );
         }
 
 
         public int GetValues( object[] values )
         {
+            ThrowUnlessInPlaybackMode();
+
             for ( int i = 0; i < values.Length; i++ )
             {
-                if ( i >= _recordsToRetrieve[_recordsetNumber].Count )
+                if ( i >= _recordSetColumnNames[_recordsetNumber].Count )
                     break;
 
-                values[i] = _recordsToRetrieve[_recordsetNumber][i].Value;
+                values[i] = GetColumnValue( i );
             }
 
-            return Math.Min( values.Length, _recordsToRetrieve[_recordsetNumber].Count );
+            return Math.Min( values.Length, _recordSetColumnNames[_recordsetNumber].Count );
         }
 
 
         public int GetOrdinal( string name )
         {
-            for (int i = 0; i < _recordsToRetrieve[_recordsetNumber].Count; i++)
-                if (_recordsToRetrieve[_recordsetNumber][i].Key == name)
+            ThrowUnlessInPlaybackMode();
+
+            for (int i = 0; i < _recordSetColumnNames[_recordsetNumber].Count; i++)
+                if (_recordSetColumnNames[_recordsetNumber][i] == name)
                     return i;
 
             throw new IndexOutOfRangeException();
@@ -78,22 +152,28 @@ namespace SMC.TestingUtils
 
         public bool GetBoolean( int i )
         {
-            return (bool)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (bool)GetColumnValue( i );
         }
 
 
         public byte GetByte( int i )
         {
-            return (byte)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (byte)GetColumnValue( i );
         }
 
 
         public long GetBytes( int i, long fieldOffset, byte[] buffer, int bufferoffset, int length )
         {
+            ThrowUnlessInPlaybackMode();
+
             if (fieldOffset < 0)
                 return 0;
 
-            var str = Encoding.Default.GetBytes( (string)_recordsToRetrieve[_recordsetNumber][i].Value );
+            var str = Encoding.Default.GetBytes( (string)GetColumnValue( i ) );
             long k = 0;
             for (long j = fieldOffset; j < str.Length && k < length; j++, k++)
                 buffer[bufferoffset++] = str[j];
@@ -104,16 +184,20 @@ namespace SMC.TestingUtils
 
         public char GetChar( int i )
         {
-            return (char)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (char)GetColumnValue( i );
         }
 
 
         public long GetChars( int i, long fieldoffset, char[] buffer, int bufferoffset, int length )
         {
+            ThrowUnlessInPlaybackMode();
+
             if (fieldoffset < 0)
                 return 0;
 
-            var str = ((string)_recordsToRetrieve[_recordsetNumber][i].Value).ToCharArray();
+            var str = ((string)GetColumnValue( i )).ToCharArray();
             long k = 0;
             for ( long j = fieldoffset; j < str.Length && k < length; j++,k++ )
                 buffer[bufferoffset++] = str[j];
@@ -124,102 +208,145 @@ namespace SMC.TestingUtils
 
         public Guid GetGuid( int i )
         {
-            return (Guid)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (Guid)GetColumnValue( i );
+        }
+
+        object GetColumnValue( int columnOrdinal )
+        {
+            ThrowUnlessInPlaybackMode();
+
+            return _recordsToRetrieve[_recordsetNumber][_rowNumber][columnOrdinal];
         }
 
 
         public short GetInt16( int i )
         {
-            return (short)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (short)GetColumnValue( i );
         }
 
 
         public int GetInt32( int i )
         {
-            return (int)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (int)GetColumnValue( i );
         }
 
 
         public long GetInt64( int i )
         {
-            return (long)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (long)GetColumnValue( i );
         }
 
 
         public float GetFloat( int i )
         {
-            return (float)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (float)GetColumnValue( i );
         }
 
 
         public double GetDouble( int i )
         {
-            return (double)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (double)GetColumnValue( i );
         }
 
 
         public string GetString( int i )
         {
-            return (string)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (string)GetColumnValue( i );
         }
 
 
         public decimal GetDecimal( int i )
         {
-            return (decimal)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (decimal)GetColumnValue( i );
         }
 
 
         public DateTime GetDateTime( int i )
         {
-            return (DateTime)_recordsToRetrieve[_recordsetNumber][i].Value;
+            ThrowUnlessInPlaybackMode();
+
+            return (DateTime)GetColumnValue( i );
         }
 
 
         public IDataReader GetData( int i )
         {
+            ThrowUnlessInPlaybackMode();
+
             return
-                new DataReaderMock( new List< KeyValuePair< string, object > >
-                                        {
-                                            new KeyValuePair< string, object >(
-                                                _recordsToRetrieve[_recordsetNumber][i].Key,
-                                                _recordsToRetrieve[_recordsetNumber][i].Value )
-                                        } );
+                new DataReaderMock()
+                    .AddRecordSet( _recordSetColumnNames[_recordsetNumber][i] )
+                    .AddRow( GetColumnValue( i ) )
+                    .Playback();
         }
 
 
         public bool IsDBNull( int i )
         {
-            return _recordsToRetrieve[_recordsetNumber][i].Value == null;
+            ThrowUnlessInPlaybackMode();
+
+            return GetColumnValue( i ) == null;
         }
 
 
         public int FieldCount
         {
-            get { return _recordsToRetrieve[_recordsetNumber].Count; }
+            get
+            {
+                ThrowUnlessInPlaybackMode();
+                return _recordSetColumnNames[_recordsetNumber].Count;
+            }
         }
 
 
         object IDataRecord.this[ int i ]
         {
-            get { return _recordsToRetrieve[_recordsetNumber][i].Value; }
+            get
+            {
+                ThrowUnlessInPlaybackMode();
+                return GetColumnValue( i );
+            }
         }
 
 
-        object IDataRecord.this[ string name ]
+        object IDataRecord.this[string name]
         {
-            get { return _recordsToRetrieve[_recordsetNumber].Where( x => x.Key == name ).First().Value; }
+            get
+            {
+                ThrowUnlessInPlaybackMode();
+                return GetColumnValue( GetOrdinal( name ) );
+            }
         }
 
 
         public void Close()
         {
+            ThrowUnlessInPlaybackMode();
+
             IsClosed = true;
         }
 
 
         public DataTable GetSchemaTable()
         {
+            ThrowUnlessInPlaybackMode();
+
             if ( _schemaTable == null )
             {
                 _schemaTable = new DataTable();
@@ -230,9 +357,9 @@ namespace SMC.TestingUtils
                 for ( int i = 0; i < _recordsToRetrieve[_recordsetNumber].Count; i++ )
                 {
                     DataRow newRow = _schemaTable.NewRow();
-                    newRow["ColumnName"] = _recordsToRetrieve[_recordsetNumber][i].Key;
+                    newRow["ColumnName"] = _recordSetColumnNames[_recordsetNumber][i];
                     newRow["ColumnOrdinal"] = i;
-                    newRow["DataType"] = _recordsToRetrieve[_recordsetNumber][i].Value.GetType();
+                    newRow["DataType"] = GetColumnValue( i ).GetType();
 
                     _schemaTable.Rows.Add( newRow );
                 }
@@ -244,28 +371,48 @@ namespace SMC.TestingUtils
 
         public bool NextResult()
         {
-            _readCount = 0;
-            return (++_recordsetNumber < _recordsToRetrieve.Length);
+            ThrowUnlessInPlaybackMode();
+
+            _rowNumber = 0;
+            _schemaTable = null;
+            return (++_recordsetNumber < _recordsToRetrieve.Count);
         }
 
 
         public bool Read()
         {
-            return _readCount++ < 1;
+            ThrowUnlessInPlaybackMode();
+
+            return _rowNumber++ < _recordsToRetrieve[_recordsetNumber].Count;
         }
 
 
         public int Depth
         {
-            get { return 0; }
+            get
+            {
+                ThrowUnlessInPlaybackMode();
+                return 0;
+            }
         }
 
-        public bool IsClosed { get; private set; }
+        bool _isClosed;
+        public bool IsClosed
+        {
+            get
+            {
+                ThrowUnlessInPlaybackMode();
+                return _isClosed;
+            }
+            private set { _isClosed = value; }
+        }
 
         public int RecordsAffected
         {
             get
             {
+                ThrowUnlessInPlaybackMode();
+
                 if (IsClosed)
                     return -1;
                 return 0;
