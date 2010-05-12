@@ -89,6 +89,11 @@ namespace SMC.TestingUtils
             get { return (decimal)(_random.NextDouble() * _random.Next()); }
         }
 
+        public DateTime DateTime
+        {
+            get { return new DateTime( _random.Next( 1970, 2100 ), _random.Next( 1, 12 ), _random.Next( 1, 28 ) ); }
+        }
+
         string GetWaffle( string phrase )
         {
             var stringBuilder = new StringBuilder();

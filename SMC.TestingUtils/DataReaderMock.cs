@@ -21,14 +21,13 @@ namespace SMC.TestingUtils
             _recordsToRetrieve = new List< IList< IList< object > > >();
             _recordSetColumnNames = new List< IList< string > >();
             _recordsetNumber = 0;
-            _rowNumber = 0;
+            _rowNumber = -1;
 
-            foreach (var record in recordsToRetrieve)
-            {
+            foreach ( var record in recordsToRetrieve )
                 AddRecordSet( record.Select( x => x.Key ).ToArray() )
-                    .AddRow( record.Select( x => x.Value ).ToArray() )
-                    .Playback();
-            }
+                    .AddRow( record.Select( x => x.Value ).ToArray() );
+
+            Playback();
         }
 
         public DataReaderMock()
@@ -36,7 +35,7 @@ namespace SMC.TestingUtils
             _recordsToRetrieve = new List< IList< IList< object > > >();
             _recordSetColumnNames = new List< IList< string > >();
             _recordsetNumber = 0;
-            _rowNumber = 0;
+            _rowNumber = -1;
             _readyForPlayback = false;
         }
 
@@ -373,7 +372,7 @@ namespace SMC.TestingUtils
         {
             ThrowUnlessInPlaybackMode();
 
-            _rowNumber = 0;
+            _rowNumber = -1;
             _schemaTable = null;
             return (++_recordsetNumber < _recordsToRetrieve.Count);
         }
@@ -383,7 +382,7 @@ namespace SMC.TestingUtils
         {
             ThrowUnlessInPlaybackMode();
 
-            return _rowNumber++ < _recordsToRetrieve[_recordsetNumber].Count;
+            return ++_rowNumber < _recordsToRetrieve[_recordsetNumber].Count;
         }
 
 
