@@ -341,7 +341,7 @@ namespace SMC.TestingUtils
             IsClosed = true;
         }
 
-
+        // TODO: Add the rest of the columns to duplicate what SqlDataReader returns
         public DataTable GetSchemaTable()
         {
             ThrowUnlessInPlaybackMode();

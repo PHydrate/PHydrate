@@ -88,27 +88,22 @@ namespace SMC.TestingUtils.Specs.DataReaderMock
         It should_throw_exception_when_calling_read
             = () => ShouldThrowInvalidOperationException( () => MockUnderTest.Read() );
 
+#pragma warning disable 642
         It should_throw_exception_when_referencing_depth
-            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.Depth == 0 ) return; } );
+            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.Depth == 0 ); } );
 
         It should_throw_exception_when_referencing_fieldcount
-            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.FieldCount > 0 ) return; } );
-
-        It should_throw_exception_when_referencing_isclosed
-            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.IsClosed ) return; } );
+            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.FieldCount > 0 ); } );
 
         It should_throw_exception_when_referencing_recordsaffected
-            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.RecordsAffected == 0 ) return; } );
+            = () => ShouldThrowInvalidOperationException( () => { if ( MockUnderTest.RecordsAffected == 0 ); } );
 
         It should_throw_exception_when_referencing_this_by_int
-            =
-            () =>
-            ShouldThrowInvalidOperationException( () => { if ( ((IDataRecord)MockUnderTest)[0] == null ) return; } );
+            = () => ShouldThrowInvalidOperationException( () => { if ( ((IDataRecord)MockUnderTest)[0] == null ); } );
 
         It should_throw_exception_when_referencing_this_by_string
-            =
-            () =>
-            ShouldThrowInvalidOperationException( () => { if ( ((IDataRecord)MockUnderTest)[""] == null ) return; } );
+            = () => ShouldThrowInvalidOperationException( () => { if ( ((IDataRecord)MockUnderTest)[""] == null ); } );
+#pragma warning restore 642
 
         static Exception ShouldThrowInvalidOperationException( Action action )
         {
