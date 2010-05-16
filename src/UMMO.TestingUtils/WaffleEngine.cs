@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace SMC.TestingUtils
+namespace UMMO.TestingUtils
 {
     // This class is borrowed from Andrew Clarke from Red Gate
     // Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/

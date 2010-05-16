@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using Machine.Specifications.Utility;
 
-namespace SMC.TestingUtils.Specs.DataReaderMock
+namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     public abstract class DataReaderMockSpecsBase
     {

@@ -8,8 +8,8 @@
     <ProjectGuid>{2455C7A7-7A94-446B-9A0E-456A3C5C8DD6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SMC.TestingUtils</RootNamespace>
-    <AssemblyName>SMC.TestingUtils</AssemblyName>
+    <RootNamespace>UMMO.TestingUtils</RootNamespace>
+    <AssemblyName>UMMO.TestingUtils</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Machine.Specifications\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,30 +49,6 @@
     <Compile Include="DataReaderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomDataGenerator.cs" />
-    <Compile Include="Specs\DataReaderMock\DataReaderMockSpecsBase.cs" />
-    <Compile Include="Specs\DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
-    <Compile Include="Specs\DataReaderMock\DataReaderMockSpecs_WithRecordSetDefined.cs" />
-    <Compile Include="Specs\DataReaderMock\When_calling_get_functions.cs" />
-    <Compile Include="Specs\DataReaderMock\When_closing_datareader.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_bool_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_byte_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_char_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_datetime_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_decimal_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_double_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_float_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_guid_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_int_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_long_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_short_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_column_is_of_string_type.cs" />
-    <Compile Include="Specs\DataReaderMock\When_disposing_datareader.cs" />
-    <Compile Include="Specs\DataReaderMock\When_in_playback_mode.cs" />
-    <Compile Include="Specs\DataReaderMock\When_not_in_playback_mode.cs" />
-    <Compile Include="Specs\DataReaderMock\When_no_recordset_has_been_defined.cs" />
-    <Compile Include="Specs\DataReaderMock\When_querying_datareader_metadata.cs" />
-    <Compile Include="Specs\DataReaderMock\When_using_obsolete_constructor.cs" />
-    <Compile Include="Specs\DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
     <Compile Include="WaffleEngine.cs" />
     <Compile Include="WafflePhrases.cs" />
   </ItemGroup>

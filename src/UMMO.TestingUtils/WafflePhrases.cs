@@ -1,4 +1,4 @@
-namespace SMC.TestingUtils
+namespace UMMO.TestingUtils
 {
     internal static class WafflePhrases
     {

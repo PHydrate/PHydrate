@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace SMC.TestingUtils
+namespace UMMO.TestingUtils
 {
     public class RandomDataGenerator
     {

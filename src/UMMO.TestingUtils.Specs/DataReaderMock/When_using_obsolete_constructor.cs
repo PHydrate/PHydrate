@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace SMC.TestingUtils.Specs.DataReaderMock
+namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Subject( typeof(TestingUtils.DataReaderMock), "Obsolete constructor" )]
     public class When_using_obsolete_constructor : DataReaderMockSpecsUsingObsoleteConstructor

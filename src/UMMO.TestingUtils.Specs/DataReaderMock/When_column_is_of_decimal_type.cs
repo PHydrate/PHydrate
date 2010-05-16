@@ -2,7 +2,7 @@
 using System.Data;
 using Machine.Specifications;
 
-namespace SMC.TestingUtils.Specs.DataReaderMock
+namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Subject( typeof(TestingUtils.DataReaderMock) )]
     public class When_column_is_of_decimal_type : DataReaderMockSpecsWithRecordSetDefined

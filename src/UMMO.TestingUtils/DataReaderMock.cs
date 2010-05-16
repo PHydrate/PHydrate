@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SMC.TestingUtils
+namespace UMMO.TestingUtils
 {
     public class DataReaderMock : IDataReader
     {

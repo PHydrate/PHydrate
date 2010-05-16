@@ -2,13 +2,13 @@
 using System.Data;
 using Machine.Specifications;
 
-namespace SMC.TestingUtils.Specs.DataReaderMock
+namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Subject( typeof(TestingUtils.DataReaderMock) )]
-    public class When_column_is_of_int_type : DataReaderMockSpecsWithRecordSetDefined
+    public class When_column_is_of_char_type : DataReaderMockSpecsWithRecordSetDefined
     {
-        static readonly int IntegerValue = A.Random.Integer;
-        Because of = () => SetupTestRecord( IntegerValue );
+        static readonly char CharValue = A.Random.Character;
+        Because of = () => SetupTestRecord( CharValue );
 
         It should_return_column_name_when_getname_is_called
             = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
@@ -17,28 +17,28 @@ namespace SMC.TestingUtils.Specs.DataReaderMock
             = () => MockUnderTest.IsDBNull( 0 ).ShouldBeFalse();
 
         It should_return_int32_when_getdatatypename_is_called
-            = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Int32" );
+            = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Char" );
 
         It should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( IntegerValue );
+            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( CharValue );
 
         It should_return_typeof_int32_when_getfieldtype_is_called
-            = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Int32) );
+            = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Char) );
 
         It should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), IntegerValue );
+            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), CharValue );
 
         It should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( IntegerValue );
+            = () => AssertThatArrayFromGetValuesIsCorrect( CharValue );
 
         It should_return_value_when_getint32_is_called
-            = () => MockUnderTest.GetInt32( 0 ).ShouldEqual( IntegerValue );
+            = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );
 
         It should_return_value_when_name_indexer_is_used
-            = () => ((IDataReader)MockUnderTest)[ColumnName].ShouldEqual( IntegerValue );
+            = () => ((IDataReader)MockUnderTest)[ColumnName].ShouldEqual( CharValue );
 
         It should_return_value_when_ordinal_indexer_is_used
-            = () => ((IDataReader)MockUnderTest)[0].ShouldEqual( IntegerValue );
+            = () => ((IDataReader)MockUnderTest)[0].ShouldEqual( CharValue );
 
         It should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );
@@ -47,7 +47,7 @@ namespace SMC.TestingUtils.Specs.DataReaderMock
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetByte( 0 ) );
 
         It should_throw_exception_when_getchar_is_called
-            = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetChar( 0 ) );
+            = () => MockUnderTest.GetChar( 0 ).ShouldEqual( CharValue );
 
         It should_throw_exception_when_getdatetime_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetDateTime( 0 ) );

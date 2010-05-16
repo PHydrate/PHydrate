@@ -1,9 +1,8 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Text;
 using Machine.Specifications;
 
-namespace SMC.TestingUtils.Specs.DataReaderMock
+namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Subject( typeof(TestingUtils.DataReaderMock) )]
     public class When_calling_get_functions : DataReaderMockSpecsWithRecordSetDefined

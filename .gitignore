@@ -2,3 +2,5 @@ bin
 obj
 *.suo
 _ReSharper*
+*.[rR]e[sS]harper
+*.user

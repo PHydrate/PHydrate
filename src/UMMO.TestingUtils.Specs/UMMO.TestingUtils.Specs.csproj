@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{148F8478-874C-4C42-A96E-EB8A64E566CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UMMO.TestingUtils.Specs</RootNamespace>
+    <AssemblyName>UMMO.TestingUtils.Specs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Machine.Specifications\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataReaderMock\DataReaderMockSpecsBase.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecs_WithRecordSetDefined.cs" />
+    <Compile Include="DataReaderMock\When_calling_get_functions.cs" />
+    <Compile Include="DataReaderMock\When_closing_datareader.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_bool_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_byte_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_char_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_datetime_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_decimal_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_double_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_float_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_guid_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_int_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_long_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_short_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_string_type.cs" />
+    <Compile Include="DataReaderMock\When_disposing_datareader.cs" />
+    <Compile Include="DataReaderMock\When_in_playback_mode.cs" />
+    <Compile Include="DataReaderMock\When_not_in_playback_mode.cs" />
+    <Compile Include="DataReaderMock\When_no_recordset_has_been_defined.cs" />
+    <Compile Include="DataReaderMock\When_querying_datareader_metadata.cs" />
+    <Compile Include="DataReaderMock\When_using_obsolete_constructor.cs" />
+    <Compile Include="DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UMMO.TestingUtils\UMMO.TestingUtils.csproj">
+      <Project>{2455C7A7-7A94-446B-9A0E-456A3C5C8DD6}</Project>
+      <Name>UMMO.TestingUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
