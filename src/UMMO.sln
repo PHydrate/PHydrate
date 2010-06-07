@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMMO.TestingUtils.Specs", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMMO.Extensions", "UMMO.Extensions\UMMO.Extensions.csproj", "{E618AA69-7C27-4791-A933-677BAC4F8233}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UMMO.Extensions.Specs", "UMMO.Extensions.Specs\UMMO.Extensions.Specs.csproj", "{E1805F14-C074-4E50-AB9C-6E3E9E7FC5B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{E618AA69-7C27-4791-A933-677BAC4F8233}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E618AA69-7C27-4791-A933-677BAC4F8233}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E618AA69-7C27-4791-A933-677BAC4F8233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1805F14-C074-4E50-AB9C-6E3E9E7FC5B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1805F14-C074-4E50-AB9C-6E3E9E7FC5B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1805F14-C074-4E50-AB9C-6E3E9E7FC5B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1805F14-C074-4E50-AB9C-6E3E9E7FC5B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

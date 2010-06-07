@@ -1,20 +1,26 @@
+using System;
 using System.Data;
 
 namespace UMMO.Extensions
 {
     public static class DataRecordExtensions
     {
-        public static T GetValue<T>(this IDataRecord dataRecord, string columnName)
+        public static T Value<T>(this IDataRecord dataRecord, string columnName)
         {
-            return dataRecord.GetValue<T>(dataRecord.GetOrdinal(columnName));
+            return dataRecord.Value<T>(dataRecord.GetOrdinal(columnName));
         }
 
-        public static T GetValue<T>(this IDataRecord dataRecord, int columnOrdinal)
+        public static T Value<T>(this IDataRecord dataRecord, int columnOrdinal)
         {
             object value = dataRecord[columnOrdinal];
-            if (typeof (T).IsValueType)
-                return value == null ? default(T) : (T) value;
-            return (T) value;
+            if (typeof(T).IsEnum)
+            {
+                if (value is int)
+                    return (T) value;
+                return (value is DBNull || value == null) ? default(T) : (T)Enum.Parse(typeof(T), value.ToString());
+            }
+                
+            return (value is DBNull || value == null) ? default(T) : (T) value;
         }
     }
 }
