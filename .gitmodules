@@ -1,0 +1,3 @@
+[submodule "machine.specifications"]
+	path = extern/machine.specifications
+	url = git://github.com/stephen-czetty/machine.specifications.git
