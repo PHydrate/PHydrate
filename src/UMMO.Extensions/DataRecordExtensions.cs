@@ -2,7 +2,7 @@ using System.Data;
 
 namespace UMMO.Extensions
 {
-    public static class DataReaderExtensions
+    public static class DataRecordExtensions
     {
         public static T GetValue<T>(this IDataRecord dataRecord, string columnName)
         {
