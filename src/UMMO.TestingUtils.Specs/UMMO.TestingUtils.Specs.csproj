@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="DataReaderMock\DataReaderMockSpecsBase.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
-    <Compile Include="DataReaderMock\DataReaderMockSpecs_WithRecordSetDefined.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecsWithRecordSetDefined.cs" />
     <Compile Include="DataReaderMock\When_calling_get_functions.cs" />
     <Compile Include="DataReaderMock\When_closing_datareader.cs" />
     <Compile Include="DataReaderMock\When_column_is_of_bool_type.cs" />

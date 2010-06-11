@@ -1,3 +1,5 @@
+#region Copyright
+
 /*
  * Copyright (c) 2008, Red Gate Software Ltd
  * All rights reserved.
@@ -25,6 +27,8 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,41 +41,40 @@ namespace UMMO.TestingUtils
 
     public class WaffleEngine
     {
-        readonly Random _random;
+        private readonly Random _random;
 
-        int _cardinalSequence;
-        int _ordinalSequence;
-        string _title;
+        private int _cardinalSequence;
+        private int _ordinalSequence;
+        private string _title;
 
         public WaffleEngine( Random random )
         {
             _random = random;
         }
 
-        void EvaluateRandomPhrase( IList< string > phrases, StringBuilder output )
+        private void EvaluateRandomPhrase( IList< string > phrases, StringBuilder output )
         {
-            EvaluatePhrase( phrases[_random.Next( 0, phrases.Count )], output );
+            EvaluatePhrase( phrases[ _random.Next( 0, phrases.Count ) ], output );
         }
 
         internal void EvaluatePhrase( string phrase, StringBuilder result )
         {
             for ( int i = 0; i < phrase.Length; i++ )
-            {
-                if ( phrase[i] == '|' && i + 1 < phrase.Length )
+                if ( phrase[ i ] == '|' && i + 1 < phrase.Length )
                 {
                     i++;
 
                     StringBuilder escape = result;
                     bool titleCase = false;
 
-                    if ( phrase[i] == 'u' && i + 1 < phrase.Length )
+                    if ( phrase[ i ] == 'u' && i + 1 < phrase.Length )
                     {
                         escape = new StringBuilder();
                         titleCase = true;
                         i++;
                     }
 
-                    switch ( phrase[i] )
+                    switch ( phrase[ i ] )
                     {
                         case 'a':
                             EvaluateCardinalSequence( escape );
@@ -136,48 +139,37 @@ namespace UMMO.TestingUtils
                     }
 
                     if ( titleCase )
-                    {
                         result.Append( TitleCaseWords( escape.ToString() ) );
-                    }
                 }
                 else
-                {
-                    result.Append( phrase[i] );
-                }
-            }
+                    result.Append( phrase[ i ] );
         }
 
-        void EvaluateCardinalSequence( StringBuilder output )
+        private void EvaluateCardinalSequence( StringBuilder output )
         {
             if ( _cardinalSequence >= WafflePhrases.CardinalSequence.Length )
-            {
                 _cardinalSequence = 0;
-            }
 
-            output.Append( WafflePhrases.CardinalSequence[_cardinalSequence++] );
+            output.Append( WafflePhrases.CardinalSequence[ _cardinalSequence++ ] );
         }
 
-        void EvaluateOrdinalSequence( StringBuilder output )
+        private void EvaluateOrdinalSequence( StringBuilder output )
         {
             if ( _ordinalSequence >= WafflePhrases.OrdinalSequences.Length )
-            {
                 _ordinalSequence = 0;
-            }
 
-            output.Append( WafflePhrases.OrdinalSequences[_ordinalSequence++] );
+            output.Append( WafflePhrases.OrdinalSequences[ _ordinalSequence++ ] );
         }
 
-        void RandomDate( StringBuilder output )
+        private void RandomDate( StringBuilder output )
         {
             output.AppendFormat( "{0:04u}", DateTime.Now.Year - _random.Next( 0, 31 ) );
         }
-
 
         public static string TitleCaseWords( string input )
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase( input );
         }
-
 
         public void HtmlWaffle( int paragraphs, Boolean includeHeading, StringBuilder result )
         {
@@ -211,9 +203,7 @@ namespace UMMO.TestingUtils
             for ( int i = 0; i < paragraphs; i++ )
             {
                 if ( i != 0 )
-                {
                     EvaluateRandomPhrase( WafflePhrases.MaybeHeading, result );
-                }
 
                 EvaluatePhrase( "|A |B |C |D.  ", result );
                 EvaluateRandomPhrase( WafflePhrases.MaybeParagraph, result );
@@ -249,9 +239,7 @@ namespace UMMO.TestingUtils
             for ( int i = 0; i < paragraphs; i++ )
             {
                 if ( i != 0 )
-                {
                     EvaluateRandomPhrase( WafflePhrases.MaybeHeading, result );
-                }
 
                 EvaluatePhrase( "|A |B |C |D.  ", result );
                 EvaluateRandomPhrase( WafflePhrases.MaybeParagraph, result );
