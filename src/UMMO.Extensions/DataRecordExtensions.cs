@@ -28,12 +28,15 @@ namespace UMMO.Extensions
     {
         public static T Value< T >( this IDataRecord dataRecord, string columnName )
         {
-            return dataRecord.Value< T >( dataRecord.GetOrdinal( columnName ) );
+            return GetValue< T >( dataRecord[ columnName ] );
         }
 
         public static T Value< T >( this IDataRecord dataRecord, int columnOrdinal )
         {
-            object value = dataRecord[ columnOrdinal ];
+            return GetValue< T >( dataRecord[ columnOrdinal ] );
+        }
+
+        private static T GetValue< T >( object value ) {
             if ( typeof(T).IsEnum )
             {
                 if ( value is int )

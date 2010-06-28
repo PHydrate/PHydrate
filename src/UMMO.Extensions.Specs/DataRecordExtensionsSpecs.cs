@@ -27,7 +27,7 @@ using UMMO.TestingUtils;
 namespace UMMO.Extensions.Specs
 {
     [ Subject( typeof(DataRecordExtensions) ) ]
-    public class When_calling_data_record_get_value_extension_method
+    public class When_calling_data_record_value_extension_method
     {
         private static IDataReader _dataRecordUnderTest;
         private static DateTime _randomDate;
@@ -38,12 +38,12 @@ namespace UMMO.Extensions.Specs
                                         {
                                             var record = new DataReaderMock();
                                             record.AddRecordSet( "string", "int", "date", "enum", "nullString",
-                                                                 "nullInt", "nullDate", "nullEnum" );
+                                                                 "nullInt", "nullDate", "nullEnum", "enumAsInt" );
                                             _randomDate = A.Random.DateTime;
                                             _randomString = A.Random.FirstName;
                                             _randomInt = A.Random.Integer;
                                             record.AddRow( _randomString, _randomInt, _randomDate, "X", null, null, null,
-                                                           null );
+                                                           null, 1 );
                                             record.Playback();
                                             _dataRecordUnderTest = record;
                                         };
@@ -85,6 +85,12 @@ namespace UMMO.Extensions.Specs
 
         private It Should_return_zero_for_the_nullint_column
             = () => _dataRecordUnderTest.Value< int >( "nullInt" ).ShouldEqual( 0 );
+
+        private It Should_return_a_value_when_called_with_an_ordinal
+            = () => _dataRecordUnderTest.Value< string >( 0 ).ShouldEqual( _randomString );
+
+        private It Should_return_enum_when_value_is_an_int
+            = () => _dataRecordUnderTest.Value< TestEnum >( "enumAsInt" ).ShouldEqual( TestEnum.X );
 
         #region Nested type: TestEnum
 

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace UMMO.TestingUtils
@@ -299,14 +300,16 @@ namespace UMMO.TestingUtils
                 _schemaTable = new DataTable();
                 _schemaTable.Columns.Add( "ColumnName" );
                 _schemaTable.Columns.Add( "ColumnOrdinal", typeof(int) );
+                _schemaTable.Columns.Add( "ColumnSize", typeof(int) );
                 _schemaTable.Columns.Add( "DataType", typeof(Type) );
 
-                for ( int i = 0; i < _recordsToRetrieve[ _recordsetNumber ].Count; i++ )
+                for (int i = 0; i < _recordsToRetrieve[_recordsetNumber][0].Count; i++)
                 {
                     DataRow newRow = _schemaTable.NewRow();
                     newRow[ "ColumnName" ] = _recordSetColumnNames[ _recordsetNumber ][ i ];
                     newRow[ "ColumnOrdinal" ] = i;
-                    newRow[ "DataType" ] = GetColumnValue( i ).GetType();
+                    newRow[ "ColumnSize" ] = CalculateColumnSize( i );
+                    newRow[ "DataType" ] = _recordsToRetrieve[ _recordsetNumber ][ 0 ][ i ].GetType();
 
                     _schemaTable.Rows.Add( newRow );
                 }
@@ -410,6 +413,19 @@ namespace UMMO.TestingUtils
             ThrowUnlessInPlaybackMode();
 
             return _recordsToRetrieve[ _recordsetNumber ][ _rowNumber ][ columnOrdinal ];
+        }
+
+        private int CalculateColumnSize(int columnOrdinal)
+        {
+            ThrowUnlessInPlaybackMode();
+
+            object column = _recordsToRetrieve[ _recordsetNumber ][ 0 ][ columnOrdinal ];
+
+            if ( column is string )
+                return
+                    _recordsToRetrieve[ _recordsetNumber ].Select( x => ( (string)x[ columnOrdinal ] ).Length ).Max();
+
+            return Marshal.SizeOf( column );
         }
     }
 }

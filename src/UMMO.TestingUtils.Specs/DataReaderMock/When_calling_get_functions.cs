@@ -20,6 +20,7 @@
 #endregion
 
 using System.Data;
+using System.Runtime.InteropServices;
 using System.Text;
 using Machine.Specifications;
 
@@ -28,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
     public class When_calling_get_functions : DataReaderMockSpecsWithRecordSetDefined
     {
-        private static string _expectedValue = A.Random.Password;
+        private static readonly string _expectedValue = A.Random.Password;
         private Because Of = () => SetupTestRecord( _expectedValue );
 
         private It Should_create_datatable_with_correct_data_when_getschematable_is_called
@@ -57,10 +58,11 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
 
         private static void AssertThatDataTableFromGetSchemaTableIsCorrect( DataTable schemaTable )
         {
-            schemaTable.Columns.Count.ShouldEqual( 3 );
+            schemaTable.Columns.Count.ShouldEqual( 4 );
             schemaTable.Rows.Count.ShouldEqual( 1 );
             schemaTable.Rows[ 0 ][ "ColumnName" ].ShouldEqual( ColumnName );
             schemaTable.Rows[ 0 ][ "ColumnOrdinal" ].ShouldEqual( 0 );
+            schemaTable.Rows[ 0 ][ "ColumnSize" ].ShouldEqual( _expectedValue.Length );
             schemaTable.Rows[ 0 ][ "DataType" ].ShouldEqual( _expectedValue.GetType() );
         }
 

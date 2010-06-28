@@ -62,6 +62,7 @@
     <Compile Include="DataReaderMock\When_column_is_of_string_type.cs" />
     <Compile Include="DataReaderMock\When_disposing_datareader.cs" />
     <Compile Include="DataReaderMock\When_in_playback_mode.cs" />
+    <Compile Include="DataReaderMock\When_loading_a_datatable.cs" />
     <Compile Include="DataReaderMock\When_not_in_playback_mode.cs" />
     <Compile Include="DataReaderMock\When_no_recordset_has_been_defined.cs" />
     <Compile Include="DataReaderMock\When_querying_datareader_metadata.cs" />
