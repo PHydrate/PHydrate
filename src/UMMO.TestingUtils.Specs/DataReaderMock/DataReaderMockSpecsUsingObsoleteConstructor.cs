@@ -21,7 +21,7 @@
 
 using System.Collections.Generic;
 using Machine.Specifications;
-using Machine.Specifications.Utility;
+using Machine.Specifications.Annotations;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
