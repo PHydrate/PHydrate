@@ -42,10 +42,13 @@
     <Compile Include="A.cs" />
     <Compile Include="DataReaderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomDataGenerator.cs" />
-    <Compile Include="RandomInteger.cs" />
-    <Compile Include="WaffleEngine.cs" />
-    <Compile Include="WafflePhrases.cs" />
+    <Compile Include="RandomDataException.cs" />
+    <Compile Include="RandomData\RandomDataGenerator.cs" />
+    <Compile Include="RandomData\RandomInteger.cs" />
+    <Compile Include="RandomData\RandomNumericType.cs" />
+    <Compile Include="RandomData\RandomString.cs" />
+    <Compile Include="RandomData\Waffle\WaffleEngine.cs" />
+    <Compile Include="RandomData\Waffle\WafflePhrases.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -28,7 +28,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
     public class When_column_is_of_string_type : DataReaderMockSpecsWithRecordSetDefined
     {
-        private static readonly string StringValue = A.Random.Noun;
+        private static readonly string StringValue = A.Random.String.Resembling.A.Noun;
         private Because Of = () => SetupTestRecord( StringValue );
 
         private It Should_return_column_name_when_getname_is_called

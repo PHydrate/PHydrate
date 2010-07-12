@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -21,40 +21,20 @@
 
 using System;
 
-namespace UMMO.TestingUtils
+namespace UMMO.TestingUtils.RandomData
 {
-    public class RandomInteger
+    public class RandomInteger : RandomNumericType<int>
     {
-        private readonly Random _random;
+        public RandomInteger( Random random ) : base( random ) {}
 
-        protected internal RandomInteger( Random random )
+        public override int Value
         {
-            _random = random;
+            get { return Random.Next(); }
         }
 
-        public int Int
+        public override int Between( int min, int max )
         {
-            get { return _random.Next(); }
-        }
-
-        public int Between( int min, int max )
-        {
-            return _random.Next( min, max );
-        }
-
-        public int GreaterThan( int min )
-        {
-            return Between( min, int.MaxValue );
-        }
-
-        public int LessThan( int max )
-        {
-            return Between( int.MinValue, max );
-        }
-
-        public static implicit operator int( RandomInteger randomInteger )
-        {
-            return randomInteger.Int;
+            return Random.Next( min, max );
         }
     }
 }

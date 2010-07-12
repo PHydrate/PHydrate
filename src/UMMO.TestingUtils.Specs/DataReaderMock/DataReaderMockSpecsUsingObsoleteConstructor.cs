@@ -37,10 +37,10 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
         [ UsedImplicitly ]
         private Establish Context = () =>
                                         {
-                                            _columnOneName = A.Random.FirstName;
+                                            _columnOneName = A.Random.String.Resembling.A.FirstName;
                                             _columnOneValue = A.Random.Integer;
-                                            _columnTwoName = A.Random.LastName;
-                                            _columnTwoValue = A.Random.Password;
+                                            _columnTwoName = A.Random.String.Resembling.A.LastName;
+                                            _columnTwoValue = A.Random.String.Resembling.A.Password;
                                             RecordSet = new List< KeyValuePair< string, object > >
                                                             {
                                                                 new KeyValuePair< string, object >( _columnOneName,

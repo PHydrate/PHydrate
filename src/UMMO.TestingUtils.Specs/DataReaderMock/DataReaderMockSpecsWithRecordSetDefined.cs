@@ -32,7 +32,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
         [ UsedImplicitly ]
         private Establish Context = () =>
                                         {
-                                            ColumnName = A.Random.Noun;
+                                            ColumnName = A.Random.String.Resembling.A.Noun;
                                             MockUnderTest.AddRecordSet( ColumnName );
                                         };
 

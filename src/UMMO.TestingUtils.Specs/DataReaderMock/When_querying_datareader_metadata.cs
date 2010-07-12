@@ -37,6 +37,6 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
 
         private It Should_throw_exception_when_getordinal_is_called_with_unknown_columnname
             = () =>
-              typeof(IndexOutOfRangeException).ShouldBeThrownBy( () => MockUnderTest.GetOrdinal( A.Random.LastName ) );
+              typeof(IndexOutOfRangeException).ShouldBeThrownBy(() => MockUnderTest.GetOrdinal(A.Random.String.Resembling.A.LastName));
     }
 }

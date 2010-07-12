@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 /*
  * Copyright (c) 2008, Red Gate Software Ltd
@@ -34,7 +34,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace UMMO.TestingUtils
+namespace UMMO.TestingUtils.RandomData.Waffle
 {
     // This class is borrowed from Andrew Clarke from Red Gate
     // Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/

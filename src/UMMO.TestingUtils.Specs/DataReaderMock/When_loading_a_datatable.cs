@@ -6,15 +6,15 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     [Subject(typeof(TestingUtils.DataReaderMock))]
     public class When_loading_a_datatable : DataReaderMockSpecsBase
     {
-        private static string _expectedValue = A.Random.Password;
+        private static string _expectedValue = A.Random.String.Resembling.A.Password;
         private static string ColumnName;
         private static readonly DataTable _result = new DataTable();
 
         private Establish Context = () =>
                                         {
-                                            ColumnName = A.Random.Noun;
+                                            ColumnName = A.Random.String.Resembling.A.Noun;
                                             MockUnderTest.AddRecordSet( ColumnName );
-                                            _expectedValue = A.Random.FirstName;
+                                            _expectedValue = A.Random.String.Resembling.A.FirstName;
                                             MockUnderTest.AddRow( _expectedValue ).Playback();
                                         };
 

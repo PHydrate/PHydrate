@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Machine.Specifications\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino-Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -69,7 +73,7 @@
     <Compile Include="DataReaderMock\When_using_obsolete_constructor.cs" />
     <Compile Include="DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomDataGeneratorTests.cs" />
+    <Compile Include="RandomDataGeneratorTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UMMO.TestingUtils\UMMO.TestingUtils.csproj">

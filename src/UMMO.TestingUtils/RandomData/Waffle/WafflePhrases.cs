@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 /*
  * Copyright (c) 2008, Red Gate Software Ltd
@@ -29,7 +29,7 @@
 
 #endregion
 
-namespace UMMO.TestingUtils
+namespace UMMO.TestingUtils.RandomData.Waffle
 {
     internal static class WafflePhrases
     {

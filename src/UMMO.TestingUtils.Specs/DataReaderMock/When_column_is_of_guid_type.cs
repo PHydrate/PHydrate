@@ -28,7 +28,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
     public class When_column_is_of_guid_type : DataReaderMockSpecsWithRecordSetDefined
     {
-        private static readonly Guid GuidValue = RandomDataGenerator.Guid;
+        private static readonly Guid GuidValue = A.Random.Guid;
         private Because Of = () => SetupTestRecord( GuidValue );
 
         private It Should_return_column_name_when_getname_is_called

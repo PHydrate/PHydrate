@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using UMMO.TestingUtils.RandomData;
 
 namespace UMMO.TestingUtils
 {

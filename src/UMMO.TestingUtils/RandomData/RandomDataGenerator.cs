@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -20,41 +20,26 @@
 #endregion
 
 using System;
-using System.Text;
 
-namespace UMMO.TestingUtils
+namespace UMMO.TestingUtils.RandomData
 {
+    // ReSharper disable MemberCanBeMadeStatic.Global
     public class RandomDataGenerator
     {
         private readonly Random _random;
-        private readonly WaffleEngine _waffleEngine;
         private readonly RandomInteger _randomInteger;
+        private readonly RandomString _randomString;
 
         protected internal RandomDataGenerator(Random random)
         {
             _random = random;
-            _waffleEngine = new WaffleEngine( _random );
             _randomInteger = new RandomInteger( _random );
+            _randomString = new RandomString( _random );
         }
 
-        public string FirstName
+        public RandomString String
         {
-            get { return GetWaffle( "|f" ); }
-        }
-
-        public string LastName
-        {
-            get { return GetWaffle( "|s" ); }
-        }
-
-        public string Password
-        {
-            get { return GetWaffle( "|ue|ud" ); }
-        }
-
-        public string Noun
-        {
-            get { return GetWaffle( "|o" ); }
+            get { return _randomString; }
         }
 
         public RandomInteger Integer
@@ -79,10 +64,10 @@ namespace UMMO.TestingUtils
 
         public char Character
         {
-            get { return Password[ 0 ]; }
+            get { return String.Password[ 0 ]; }
         }
 
-        public static Guid Guid
+        public Guid Guid
         {
             get { return Guid.NewGuid(); }
         }
@@ -116,12 +101,6 @@ namespace UMMO.TestingUtils
         {
             get { return new DateTime( _random.Next( 1970, 2100 ), _random.Next( 1, 12 ), _random.Next( 1, 28 ) ); }
         }
-
-        private string GetWaffle( string phrase )
-        {
-            var stringBuilder = new StringBuilder();
-            _waffleEngine.EvaluatePhrase( phrase, stringBuilder );
-            return stringBuilder.ToString();
-        }
     }
+    // ReSharper restore MemberCanBeMadeStatic.Global
 }

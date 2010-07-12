@@ -21,15 +21,18 @@
 
 using System;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 using Rhino.Mocks;
+using UMMO.TestingUtils.RandomData;
 
 namespace UMMO.TestingUtils.Specs
 {
-    public class RandomDataGeneratorTests
+    public abstract class RandomDataGeneratorTestBase
     {
         protected static RandomDataGenerator RandomDataGeneratorUnderTest;
         protected static Random Random;
 
+        [UsedImplicitly]
         private Establish Context = () =>
                                         {
                                             Random = MockRepository.GeneratePartialMock< Random >();
@@ -45,5 +48,16 @@ namespace UMMO.TestingUtils.Specs
         }
 
         #endregion
+    }
+
+    [Subject(typeof(RandomDataGenerator))]
+    public class When_getting_random_integer : RandomDataGeneratorTestBase
+    {
+        private Because Of = () => _randomInteger = RandomDataGeneratorUnderTest.Integer;
+
+        private It Should_be_of_type_random_integer
+            = () => _randomInteger.ShouldBeOfType< RandomInteger >();
+
+        private static Object _randomInteger;
     }
 }

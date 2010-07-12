@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
     public class When_calling_get_functions : DataReaderMockSpecsWithRecordSetDefined
     {
-        private static readonly string _expectedValue = A.Random.Password;
+        private static readonly string _expectedValue = A.Random.String.Resembling.A.Password;
         private Because Of = () => SetupTestRecord( _expectedValue );
 
         private It Should_create_datatable_with_correct_data_when_getschematable_is_called
