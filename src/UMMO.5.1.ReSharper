@@ -153,9 +153,6 @@ Copyright 2010, Stephen Michael Czetty]]></FileHeader>
           <Kind Name="Machine.Specifications_SupportingField" />
         </ElementKinds>
       </UserRule>
-      <Abbreviation Text="ID" />
-      <Abbreviation Text="CTX" />
-      <Abbreviation Text="MDB" />
     </Naming2>
   </CodeStyleSettings>
 </Configuration>

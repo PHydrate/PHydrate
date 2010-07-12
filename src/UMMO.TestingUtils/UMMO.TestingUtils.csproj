@@ -43,6 +43,7 @@
     <Compile Include="DataReaderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomDataGenerator.cs" />
+    <Compile Include="RandomInteger.cs" />
     <Compile Include="WaffleEngine.cs" />
     <Compile Include="WafflePhrases.cs" />
   </ItemGroup>

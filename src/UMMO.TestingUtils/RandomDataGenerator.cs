@@ -28,11 +28,13 @@ namespace UMMO.TestingUtils
     {
         private readonly Random _random;
         private readonly WaffleEngine _waffleEngine;
+        private readonly RandomInteger _randomInteger;
 
-        protected internal RandomDataGenerator()
+        protected internal RandomDataGenerator(Random random)
         {
-            _random = new Random();
+            _random = random;
             _waffleEngine = new WaffleEngine( _random );
+            _randomInteger = new RandomInteger( _random );
         }
 
         public string FirstName
@@ -55,9 +57,9 @@ namespace UMMO.TestingUtils
             get { return GetWaffle( "|o" ); }
         }
 
-        public int Integer
+        public RandomInteger Integer
         {
-            get { return _random.Next(); }
+            get { return _randomInteger; }
         }
 
         public bool Boolean

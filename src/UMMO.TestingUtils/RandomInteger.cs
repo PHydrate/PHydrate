@@ -23,18 +23,38 @@ using System;
 
 namespace UMMO.TestingUtils
 {
-    public static class A
+    public class RandomInteger
     {
-        private static readonly RandomDataGenerator RandomDataGenerator;
+        private readonly Random _random;
 
-        static A()
+        protected internal RandomInteger( Random random )
         {
-            RandomDataGenerator = new RandomDataGenerator( new Random() );
+            _random = random;
         }
 
-        public static RandomDataGenerator Random
+        public int Int
         {
-            get { return RandomDataGenerator; }
+            get { return _random.Next(); }
+        }
+
+        public int Between( int min, int max )
+        {
+            return _random.Next( min, max );
+        }
+
+        public int GreaterThan( int min )
+        {
+            return Between( min, int.MaxValue );
+        }
+
+        public int LessThan( int max )
+        {
+            return Between( int.MinValue, max );
+        }
+
+        public static implicit operator int( RandomInteger randomInteger )
+        {
+            return randomInteger.Int;
         }
     }
 }

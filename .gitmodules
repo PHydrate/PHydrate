@@ -1,3 +1,6 @@
 [submodule "machine.specifications"]
 	path = extern/machine.specifications
 	url = git://github.com/stephen-czetty/machine.specifications.git
+[submodule "extern/rhino-mocks"]
+	path = extern/rhino-mocks
+	url = git://github.com/ayende/rhino-mocks.git
