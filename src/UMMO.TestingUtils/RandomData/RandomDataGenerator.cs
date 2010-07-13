@@ -26,25 +26,25 @@ namespace UMMO.TestingUtils.RandomData
     // ReSharper disable MemberCanBeMadeStatic.Global
     public class RandomDataGenerator
     {
-        private readonly Random _random;
-        private readonly RandomInteger _randomInteger;
-        private readonly RandomString _randomString;
+        private readonly IRandom _random;
+        private RandomInteger _randomInteger;
+        private RandomString _randomString;
+        private RandomDecimal _randomDecimal;
+        private RandomDouble _randomDouble;
 
-        protected internal RandomDataGenerator(Random random)
+        protected internal RandomDataGenerator(IRandom random)
         {
             _random = random;
-            _randomInteger = new RandomInteger( _random );
-            _randomString = new RandomString( _random );
         }
 
         public RandomString String
         {
-            get { return _randomString; }
+            get { return _randomString ?? ( _randomString = new RandomString( _random ) ); }
         }
 
         public RandomInteger Integer
         {
-            get { return _randomInteger; }
+            get { return _randomInteger ?? ( _randomInteger = new RandomInteger( _random ) ); }
         }
 
         public bool Boolean
@@ -87,14 +87,14 @@ namespace UMMO.TestingUtils.RandomData
             get { return (float)( _random.NextDouble() * _random.Next() ); }
         }
 
-        public double Double
+        public RandomDouble Double
         {
-            get { return ( _random.NextDouble() * _random.Next() ); }
+            get { return _randomDouble ?? ( _randomDouble = new RandomDouble( _random ) ); }
         }
 
-        public decimal Decimal
+        public RandomDecimal Decimal
         {
-            get { return (decimal)( _random.NextDouble() * _random.Next() ); }
+            get { return _randomDecimal ?? ( _randomDecimal = new RandomDecimal( _random ) ); }
         }
 
         public DateTime DateTime

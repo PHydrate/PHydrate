@@ -19,7 +19,6 @@
 
 #endregion
 
-using System;
 using UMMO.TestingUtils.RandomData;
 
 namespace UMMO.TestingUtils
@@ -30,7 +29,7 @@ namespace UMMO.TestingUtils
 
         static A()
         {
-            RandomDataGenerator = new RandomDataGenerator( new Random() );
+            RandomDataGenerator = new RandomDataGenerator( new RandomWrapper() );
         }
 
         public static RandomDataGenerator Random

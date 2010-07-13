@@ -30,12 +30,12 @@ namespace UMMO.TestingUtils.Specs
     public abstract class RandomDataGeneratorTestBase
     {
         protected static RandomDataGenerator RandomDataGeneratorUnderTest;
-        protected static Random Random;
+        protected static IRandom Random;
 
         [UsedImplicitly]
         private Establish Context = () =>
                                         {
-                                            Random = MockRepository.GeneratePartialMock< Random >();
+                                            Random = MockRepository.GenerateStub< IRandom >();
                                             RandomDataGeneratorUnderTest = new RandomDataGeneratorAccessor( Random );
                                         };
 
@@ -44,7 +44,7 @@ namespace UMMO.TestingUtils.Specs
         // Used to get at the protected internal constructor of RandomDataGenerator.
         private class RandomDataGeneratorAccessor : RandomDataGenerator
         {
-            protected internal RandomDataGeneratorAccessor( Random random ) : base( random ) {}
+            protected internal RandomDataGeneratorAccessor( IRandom random ) : base( random ) {}
         }
 
         #endregion

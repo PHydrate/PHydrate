@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -21,18 +21,18 @@
 
 namespace UMMO.TestingUtils.RandomData
 {
-    public class RandomInteger : RandomNumericType<int>
+    public interface IRandom
     {
-        public RandomInteger( IRandom random ) : base( random ) {}
-
-        public override int Value
-        {
-            get { return Random.Next(); }
-        }
-
-        protected override int GetBetween( int min, int max )
-        {
-            return Random.Next( min, max );
-        }
+        int Next();
+        int Next( int max );
+        int Next( int min, int max );
+        void NextBytes( byte[] buffer );
+        double NextDouble();
+        decimal NextDecimal();
+        decimal NextDecimal( decimal max );
+        decimal NextDecimal( decimal min, decimal max );
+        long NextLong();
+        long NextLong( long max );
+        long NextLong( long min, long max );
     }
 }

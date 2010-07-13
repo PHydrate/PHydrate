@@ -41,13 +41,13 @@ namespace UMMO.TestingUtils.RandomData.Waffle
 
     public class WaffleEngine
     {
-        private readonly Random _random;
+        private readonly IRandom _random;
 
         private int _cardinalSequence;
         private int _ordinalSequence;
         private string _title;
 
-        public WaffleEngine( Random random )
+        public WaffleEngine( IRandom random )
         {
             _random = random;
         }
