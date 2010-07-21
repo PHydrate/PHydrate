@@ -25,11 +25,11 @@ using Machine.Specifications.Annotations;
 using Rhino.Mocks;
 using UMMO.TestingUtils.RandomData;
 
-namespace UMMO.TestingUtils.Specs
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 {
     public abstract class RandomDataGeneratorTestBase
     {
-        protected static RandomDataGenerator RandomDataGeneratorUnderTest;
+        protected static RandomData.RandomDataGenerator RandomDataGeneratorUnderTest;
         protected static IRandom Random;
 
         [UsedImplicitly]
@@ -42,7 +42,7 @@ namespace UMMO.TestingUtils.Specs
         #region Nested type: RandomDataGeneratorAccessor
 
         // Used to get at the protected internal constructor of RandomDataGenerator.
-        private class RandomDataGeneratorAccessor : RandomDataGenerator
+        private class RandomDataGeneratorAccessor : RandomData.RandomDataGenerator
         {
             protected internal RandomDataGeneratorAccessor( IRandom random ) : base( random ) {}
         }
@@ -50,14 +50,26 @@ namespace UMMO.TestingUtils.Specs
         #endregion
     }
 
-    [Subject(typeof(RandomDataGenerator))]
-    public class When_getting_random_integer : RandomDataGeneratorTestBase
+    [Subject(typeof(RandomDecimal))]
+    public class When_getting_random_decimal : RandomDataGeneratorTestBase
     {
-        private Because Of = () => _randomInteger = RandomDataGeneratorUnderTest.Integer;
+        private const decimal ExpectedDecimal = 22.5m;
+        private Establish Context = () => Random.Stub( x => x.NextDecimal() ).Return( ExpectedDecimal );
+        private Because Of = () => _randomDecimal = RandomDataGeneratorUnderTest.Decimal;
 
-        private It Should_be_of_type_random_integer
-            = () => _randomInteger.ShouldBeOfType< RandomInteger >();
+        private It Should_be_of_type_random_decimal
+            = () => _randomDecimal.ShouldBeOfType< RandomDecimal >();
 
-        private static Object _randomInteger;
+        private It Should_return_expected_decimal_when_calling_value
+            = () => ( (RandomDecimal)_randomDecimal ).Value.ShouldEqual( ExpectedDecimal );
+
+        private It Should_implicitly_cast_to_decimal
+            = () =>
+                  {
+                      decimal value = (RandomDecimal)_randomDecimal;
+                      value.ShouldEqual( ExpectedDecimal );
+                  };
+
+        private static Object _randomDecimal;
     }
 }

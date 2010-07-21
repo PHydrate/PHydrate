@@ -43,6 +43,7 @@
     <Compile Include="DataReaderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomDataException.cs" />
+    <Compile Include="RandomData\ExtendedRandom.cs" />
     <Compile Include="RandomData\IRandom.cs" />
     <Compile Include="RandomData\RandomDataGenerator.cs" />
     <Compile Include="RandomData\RandomDecimal.cs" />
@@ -51,7 +52,6 @@
     <Compile Include="RandomData\RandomInteger.cs" />
     <Compile Include="RandomData\RandomNumericType.cs" />
     <Compile Include="RandomData\RandomString.cs" />
-    <Compile Include="RandomData\RandomWrapper.cs" />
     <Compile Include="RandomData\Waffle\WaffleEngine.cs" />
     <Compile Include="RandomData\Waffle\WafflePhrases.cs" />
   </ItemGroup>
