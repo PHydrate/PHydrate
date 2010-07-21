@@ -23,65 +23,38 @@ using System;
 
 namespace UMMO.TestingUtils.RandomData
 {
-    public class RandomWrapper : IRandom
+    public class ExtendedRandom : Random, IRandom
     {
-        private readonly Random _random = new Random();
-
         #region IRandom Members
-
-        public int Next()
-        {
-            return _random.Next();
-        }
-
-        public int Next( int max )
-        {
-            return _random.Next( max );
-        }
-
-        public int Next( int min, int max )
-        {
-            return _random.Next( min, max );
-        }
-
-        public void NextBytes( byte[] buffer )
-        {
-            _random.NextBytes( buffer );
-        }
-
-        public double NextDouble()
-        {
-            return _random.NextDouble();
-        }
 
         public decimal NextDecimal()
         {
-            return _random.NextDecimal();
+            return RandomExtensions.NextDecimal(this);
         }
 
         public decimal NextDecimal( decimal max )
         {
-            return _random.NextDecimal( max );
+            return RandomExtensions.NextDecimal(this, max);
         }
 
         public decimal NextDecimal( decimal min, decimal max )
         {
-            return _random.NextDecimal( min, max );
+            return RandomExtensions.NextDecimal(this, min, max);
         }
 
         public long NextLong()
         {
-            return _random.NextLong();
+            return RandomExtensions.NextLong(this);
         }
 
         public long NextLong( long max )
         {
-            return _random.NextLong( max );
+            return RandomExtensions.NextLong(this, max);
         }
 
         public long NextLong( long min, long max )
         {
-            return _random.NextLong( min, max );
+            return RandomExtensions.NextLong(this, min, max);
         }
 
         #endregion

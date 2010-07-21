@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils
 
         static A()
         {
-            RandomDataGenerator = new RandomDataGenerator( new RandomWrapper() );
+            RandomDataGenerator = new RandomDataGenerator( new ExtendedRandom() );
         }
 
         public static RandomDataGenerator Random
