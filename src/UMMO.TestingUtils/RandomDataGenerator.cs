@@ -20,8 +20,9 @@
 #endregion
 
 using System;
+using UMMO.TestingUtils.RandomData;
 
-namespace UMMO.TestingUtils.RandomData
+namespace UMMO.TestingUtils
 {
     // ReSharper disable MemberCanBeMadeStatic.Global
     public class RandomDataGenerator
@@ -103,4 +104,14 @@ namespace UMMO.TestingUtils.RandomData
         }
     }
     // ReSharper restore MemberCanBeMadeStatic.Global
+
+    public static partial class A
+    {
+        private static RandomDataGenerator RandomDataGenerator;
+
+        public static RandomDataGenerator Random
+        {
+            get { return RandomDataGenerator ?? (RandomDataGenerator = new RandomDataGenerator(new ExtendedRandom())); }
+        }
+    }
 }

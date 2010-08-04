@@ -19,22 +19,20 @@
 
 #endregion
 
-using UMMO.TestingUtils.RandomData;
-
 namespace UMMO.TestingUtils
 {
-    public static class A
+    public interface IRandom
     {
-        private static readonly RandomDataGenerator RandomDataGenerator;
-
-        static A()
-        {
-            RandomDataGenerator = new RandomDataGenerator( new ExtendedRandom() );
-        }
-
-        public static RandomDataGenerator Random
-        {
-            get { return RandomDataGenerator; }
-        }
+        int Next();
+        int Next( int max );
+        int Next( int min, int max );
+        void NextBytes( byte[] buffer );
+        double NextDouble();
+        decimal NextDecimal();
+        decimal NextDecimal( decimal max );
+        decimal NextDecimal( decimal min, decimal max );
+        long NextLong();
+        long NextLong( long max );
+        long NextLong( long min, long max );
     }
 }

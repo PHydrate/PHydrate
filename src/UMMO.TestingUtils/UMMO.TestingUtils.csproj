@@ -39,13 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="A.cs" />
     <Compile Include="DataReaderMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomDataException.cs" />
     <Compile Include="RandomData\ExtendedRandom.cs" />
-    <Compile Include="RandomData\IRandom.cs" />
-    <Compile Include="RandomData\RandomDataGenerator.cs" />
+    <Compile Include="IRandom.cs" />
+    <Compile Include="RandomDataGenerator.cs" />
     <Compile Include="RandomData\RandomDecimal.cs" />
     <Compile Include="RandomData\RandomDouble.cs" />
     <Compile Include="RandomData\RandomExtensions.cs" />

@@ -428,4 +428,9 @@ namespace UMMO.TestingUtils
             return Marshal.SizeOf( column );
         }
     }
+
+    public static partial class A
+    {
+        public static IDataReader DataReader { get { return new DataReaderMock(); } }
+    }
 }

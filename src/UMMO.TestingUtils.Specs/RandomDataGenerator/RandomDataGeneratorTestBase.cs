@@ -22,13 +22,13 @@
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
 using Rhino.Mocks;
-using UMMO.TestingUtils.RandomData;
+using UMMO.TestingUtils;
 
 namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 {
     public abstract class RandomDataGeneratorTestBase
     {
-        protected static RandomData.RandomDataGenerator RandomDataGeneratorUnderTest;
+        protected static TestingUtils.RandomDataGenerator RandomDataGeneratorUnderTest;
         protected static IRandom Random;
 
         [UsedImplicitly]
@@ -41,7 +41,7 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
         #region Nested type: RandomDataGeneratorAccessor
 
         // Used to get at the protected internal constructor of RandomDataGenerator.
-        private class RandomDataGeneratorAccessor : RandomData.RandomDataGenerator
+        private class RandomDataGeneratorAccessor : TestingUtils.RandomDataGenerator
         {
             protected internal RandomDataGeneratorAccessor( IRandom random ) : base( random ) {}
         }
