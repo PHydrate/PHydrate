@@ -66,7 +66,10 @@ namespace UMMO.TestingUtils.RandomData
         {
             if ( minValue >= maxValue )
                 throw new InvalidOperationException();
-            decimal range = maxValue - minValue;
+
+            // We want to prevent overflows, so if we get a situation that would create one,
+            // then change the value to Decimal.MaxValue
+            decimal range = ((maxValue == Decimal.MaxValue && minValue < 0) || (minValue == Decimal.MinValue && maxValue > 0)) ? Decimal.MaxValue : maxValue - minValue;
             return rg.NextDecimal( range ) + minValue;
         }
 

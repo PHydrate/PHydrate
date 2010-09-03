@@ -107,11 +107,11 @@ namespace UMMO.TestingUtils
 
     public static partial class A
     {
-        private static RandomDataGenerator RandomDataGenerator;
+        private static RandomDataGenerator _randomDataGenerator;
 
         public static RandomDataGenerator Random
         {
-            get { return RandomDataGenerator ?? (RandomDataGenerator = new RandomDataGenerator(new ExtendedRandom())); }
+            get { return _randomDataGenerator ?? (_randomDataGenerator = new RandomDataGenerator(new ExtendedRandom())); }
         }
     }
 }

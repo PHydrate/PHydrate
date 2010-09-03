@@ -19,20 +19,28 @@
 
 #endregion
 
-namespace UMMO.TestingUtils.RandomData
+using Machine.Specifications;
+using UMMO.TestingUtils.RandomData;
+
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 {
-    public class RandomDecimal : RandomNumericType<decimal>
+    [Subject(typeof(RandomString))]
+    public class When_getting_random_string : RandomDataGeneratorTestBase
     {
-        protected internal RandomDecimal( IRandom random ) : base( random ) {}
+        private Establish Context =()=> _randomString = RandomDataGeneratorUnderTest.String;
 
-        public override decimal Value
-        {
-            get { return Random.NextDecimal(); }
-        }
+        private It Should_be_of_type_random_string
+            = () => _randomString.ShouldBeOfType<RandomString>();
 
-        protected override decimal GetBetween( decimal min, decimal max )
-        {
-            return Random.NextDecimal(min, max);
-        }
+        private It Should_implicitly_cast_to_string
+            = () =>
+                  {
+                      string value = (RandomString)_randomString;
+                      value.ShouldNotBeNull();
+                  };
+
+        private static object _randomString;
+
     }
+
 }

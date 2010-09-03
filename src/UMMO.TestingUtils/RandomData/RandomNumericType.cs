@@ -30,7 +30,7 @@ namespace UMMO.TestingUtils.RandomData
         private readonly T _maxValue;
         private readonly T _minValue;
 
-        protected internal RandomNumericType( IRandom random )
+        protected RandomNumericType( IRandom random )
         {
             Random = random;
             var minValueField = typeof(T).GetField( "MinValue", BindingFlags.Static | BindingFlags.Public );

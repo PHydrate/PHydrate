@@ -27,4 +27,80 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 
         private static Object _randomDecimal;
     }
+
+    [Subject(typeof(RandomDecimal))]
+    public class When_getting_random_decimal_between_two_values
+    {
+        private Establish Context = () =>
+                                        {
+                                            _randomDecimal = A.Random.Decimal;
+                                            _minValue = A.Random.Decimal;
+                                            _maxValue = A.Random.Decimal.GreaterThan( _minValue );
+                                        };
+
+        private Because Of = () => _randomValue = _randomDecimal.Between( _minValue, _maxValue );
+
+        private It Should_be_greater_than_or_equal_to_minvalue
+            = () => _randomValue.ShouldBeGreaterThanOrEqualTo( _minValue );
+
+        private It Should_be_less_than_or_equal_to_maxvalue
+            = () => _randomValue.ShouldBeLessThanOrEqualTo( _maxValue );
+
+        private static RandomDecimal _randomDecimal;
+        private static decimal _minValue;
+        private static decimal _maxValue;
+        private static decimal _randomValue;
+    }
+
+    [Subject(typeof(RandomDecimal))]
+    public class When_getting_random_decimal_greater_than_negative_number
+    {
+        private Establish Context = () => _minValue = A.Random.Decimal.LessThan( 0m );
+
+        private Because Of = () => _actualValue = A.Random.Decimal.GreaterThan( _minValue );
+
+        private It Should_return_value_greater_than_or_equal_to_min_value
+            = () => _actualValue.ShouldBeGreaterThanOrEqualTo( _minValue );
+
+        private static decimal _minValue;
+        private static decimal _actualValue;
+    }
+
+    [Subject(typeof(RandomDecimal))]
+    public class When_getting_random_decimal_less_than_positive_number
+    {
+        private Establish Context = () => _maxValue = A.Random.Decimal.GreaterThan(0m);
+
+        private Because Of = () => _actualValue = A.Random.Decimal.LessThan(_maxValue);
+
+        private It Should_return_value_less_than_or_equal_to_min_value
+            = () => _actualValue.ShouldBeLessThanOrEqualTo(_maxValue);
+
+        private static decimal _maxValue;
+        private static decimal _actualValue;
+    }
+
+    [Subject( typeof(RandomDecimal))]
+    public class When_getting_random_decimal_between_two_values_in_incorrect_order
+    {
+        private Establish Context = () =>
+                                        {
+                                            _randomDecimal = A.Random.Decimal;
+                                            _minValue = A.Random.Decimal;
+                                            _maxValue = A.Random.Decimal.LessThan( _minValue - 1.0m );
+                                        };
+
+        private Because Of = () => _exception = Catch.Exception( () => _randomDecimal.Between( _minValue, _maxValue ) );
+
+        private It Should_throw_exception_when_minvalue_is_greater_than_maxvalue
+            = () => _exception.ShouldNotBeNull();
+
+        private It Should_throw_exception_of_type_argument_exception
+            = () => _exception.ShouldBeOfType< ArgumentException >();
+
+        private static RandomDecimal _randomDecimal;
+        private static decimal _minValue;
+        private static decimal _maxValue;
+        private static Exception _exception;
+    }
 }
