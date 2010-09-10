@@ -19,6 +19,8 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
         private static Exception _exception;
 
         #region Test classes
+
+        // TODO: Add tests to cover these classes, too.
         private struct BadNumeric : IComparable<BadNumeric>
         {
             #region Implementation of IComparable<BadNumeric>
