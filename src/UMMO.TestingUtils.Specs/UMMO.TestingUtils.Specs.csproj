@@ -70,6 +70,7 @@
     <Compile Include="DataReaderMock\When_not_in_playback_mode.cs" />
     <Compile Include="DataReaderMock\When_no_recordset_has_been_defined.cs" />
     <Compile Include="DataReaderMock\When_querying_datareader_metadata.cs" />
+    <Compile Include="DataReaderMock\When_using_A_DataReader.cs" />
     <Compile Include="DataReaderMock\When_using_obsolete_constructor.cs" />
     <Compile Include="DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -103,4 +103,15 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
         private static decimal _maxValue;
         private static Exception _exception;
     }
+
+    [Subject(typeof(RandomExtensions))]
+    public class When_getting_next_decimal_between_min_and_max_where_min_is_greater_than_max
+    {
+        private Establish Context = () => _random = new Random();
+
+        private It Should_throw_invalid_operation_exception
+            = () => Catch.Exception( () => _random.NextDecimal( 1, 0 ) ).ShouldBeOfType< InvalidOperationException >();
+
+        private static Random _random;
+    }
 }

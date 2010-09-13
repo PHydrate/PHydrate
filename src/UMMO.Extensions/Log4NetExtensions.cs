@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using log4net;
 using log4net.Core;
 
@@ -73,11 +72,6 @@ namespace UMMO.Extensions
             {
                 _log = log;
                 _callingMethod = callingMethod;
-            }
-
-            private static bool ExceptionWasThrown()
-            {
-                return Marshal.GetExceptionCode() != 0;
             }
 
             #region Implementation of IDisposable
