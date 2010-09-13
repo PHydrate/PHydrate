@@ -19,21 +19,27 @@
 
 #endregion
 
-namespace UMMO.TestingUtils
+using Machine.Specifications;
+
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomString
 {
-    public interface IRandom
+    [Subject(typeof(RandomData.RandomString))]
+    public class When_getting_random_string : RandomDataGeneratorTestBase
     {
-        int Next();
-        int Next( int max );
-        int Next( int min, int max );
-        void NextBytes( byte[] buffer );
-        byte[] NextBytes( int bufferLength );
-        double NextDouble();
-        decimal NextDecimal();
-        decimal NextDecimal( decimal max );
-        decimal NextDecimal( decimal min, decimal max );
-        long NextLong();
-        long NextLong( long max );
-        long NextLong( long min, long max );
+        private Establish Context =()=> _randomString = RandomDataGeneratorUnderTest.String;
+
+        private It Should_be_of_type_random_string
+            = () => _randomString.ShouldBeOfType<RandomData.RandomString>();
+
+        private It Should_implicitly_cast_to_string
+            = () =>
+                  {
+                      string value = (RandomData.RandomString)_randomString;
+                      value.ShouldNotBeNull();
+                  };
+
+        private static object _randomString;
+
     }
+
 }

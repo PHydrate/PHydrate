@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -19,21 +19,21 @@
 
 #endregion
 
-namespace UMMO.TestingUtils
+using Machine.Specifications;
+
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomDecimal
 {
-    public interface IRandom
+    [Subject(typeof(RandomData.RandomDecimal))]
+    public class When_getting_random_decimal_greater_than_negative_number
     {
-        int Next();
-        int Next( int max );
-        int Next( int min, int max );
-        void NextBytes( byte[] buffer );
-        byte[] NextBytes( int bufferLength );
-        double NextDouble();
-        decimal NextDecimal();
-        decimal NextDecimal( decimal max );
-        decimal NextDecimal( decimal min, decimal max );
-        long NextLong();
-        long NextLong( long max );
-        long NextLong( long min, long max );
+        private Establish Context = () => _minValue = A.Random.Decimal.LessThan( 0m );
+
+        private Because Of = () => _actualValue = A.Random.Decimal.GreaterThan( _minValue );
+
+        private It Should_return_value_greater_than_or_equal_to_min_value
+            = () => _actualValue.ShouldBeGreaterThanOrEqualTo( _minValue );
+
+        private static decimal _minValue;
+        private static decimal _actualValue;
     }
 }

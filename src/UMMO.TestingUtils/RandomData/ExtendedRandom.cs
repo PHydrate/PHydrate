@@ -27,34 +27,81 @@ namespace UMMO.TestingUtils.RandomData
     {
         #region IRandom Members
 
+        public byte[] NextBytes( int bufferLength )
+        {
+            var bytes = new byte[bufferLength];
+            NextBytes( bytes );
+            return bytes;
+        }
+
+        private int NextInt32()
+        {
+            unchecked
+            {
+                int firstBits = Next(0, 1 << 4) << 28;
+                int lastBits = Next(0, 1 << 28);
+                return firstBits | lastBits;
+            }
+        }
+
         public decimal NextDecimal()
         {
-            return RandomExtensions.NextDecimal(this);
+            bool sign = Next(2) == 1;
+            return NextDecimal(sign);
         }
 
-        public decimal NextDecimal( decimal max )
+        private decimal NextDecimal(bool sign)
         {
-            return RandomExtensions.NextDecimal(this, max);
+            var scale = (byte)Next(29);
+            return new decimal(NextInt32(),
+                                NextInt32(),
+                                NextInt32(),
+                                sign,
+                                scale);
         }
 
-        public decimal NextDecimal( decimal min, decimal max )
+        private decimal NextNonNegativeDecimal()
         {
-            return RandomExtensions.NextDecimal(this, min, max);
+            return NextDecimal(false);
         }
+
+        public decimal NextDecimal(decimal maxValue)
+        {
+            return (NextNonNegativeDecimal() / Decimal.MaxValue) * maxValue;
+        }
+
+        public decimal NextDecimal(decimal minValue, decimal maxValue)
+        {
+            if (minValue >= maxValue)
+                throw new InvalidOperationException();
+
+            // We want to prevent overflows, so if we get a situation that would create one,
+            // then change the value to Decimal.MaxValue
+            decimal range = ((maxValue == Decimal.MaxValue && minValue < 0) || (minValue == Decimal.MinValue && maxValue > 0)) ? Decimal.MaxValue : maxValue - minValue;
+            return NextDecimal(range) + minValue;
+        }
+
 
         public long NextLong()
         {
-            return RandomExtensions.NextLong(this);
+            var bytes = new byte[sizeof(long)];
+            NextBytes(bytes);
+            // strip out the sign bit
+            bytes[sizeof(long) - 1] = (byte)(bytes[sizeof(long) - 1] & 0x7f);
+            return BitConverter.ToInt64(bytes, 0);
         }
 
-        public long NextLong( long max )
+        public long NextLong(long maxValue)
         {
-            return RandomExtensions.NextLong(this, max);
+            return (long)((NextLong() / (double)Int64.MaxValue) * maxValue);
         }
 
-        public long NextLong( long min, long max )
+        public long NextLong(long minValue, long maxValue)
         {
-            return RandomExtensions.NextLong(this, min, max);
+            if (minValue >= maxValue)
+                throw new InvalidOperationException();
+            long range = ((maxValue == Int64.MaxValue && minValue < 0) || (minValue == Int64.MinValue && maxValue > 0)) ? Int64.MaxValue : maxValue - minValue;
+            return NextLong(range) + minValue;
         }
 
         #endregion

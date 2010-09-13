@@ -74,12 +74,25 @@
     <Compile Include="DataReaderMock\When_using_obsolete_constructor.cs" />
     <Compile Include="DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_bytes.cs" />
     <Compile Include="RandomDataGenerator\RandomDataGeneratorTestBase.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_decimal_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_greater_than_negative_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_less_than_positive_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double_less_than_positive_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomInteger\When_getting_random_integer_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_long_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values_in_incorrect_order.cs" />
     <Compile Include="RandomDataGenerator\When_deriving_from_random_numeric_type_with_an_unsupported_type.cs" />
-    <Compile Include="RandomDataGenerator\When_getting_random_decimal.cs" />
-    <Compile Include="RandomDataGenerator\When_getting_random_double.cs" />
-    <Compile Include="RandomDataGenerator\When_getting_random_integer.cs" />
-    <Compile Include="RandomDataGenerator\When_getting_random_string.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double.cs" />
+    <Compile Include="RandomDataGenerator\RandomInteger\When_getting_random_integer.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\When_getting_random_string.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UMMO.TestingUtils\UMMO.TestingUtils.csproj">

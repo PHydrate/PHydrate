@@ -32,6 +32,7 @@ namespace UMMO.TestingUtils
         private RandomString _randomString;
         private RandomDecimal _randomDecimal;
         private RandomDouble _randomDouble;
+        private RandomLong _randomLong;
 
         protected internal RandomDataGenerator(IRandom random)
         {
@@ -78,9 +79,9 @@ namespace UMMO.TestingUtils
             get { return (short)_random.Next(); }
         }
 
-        public long LongInteger
+        public RandomLong LongInteger
         {
-            get { return _random.Next(); }
+            get { return _randomLong ?? ( _randomLong = new RandomLong( _random ) ); }
         }
 
         public float Float

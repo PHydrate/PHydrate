@@ -22,11 +22,10 @@
 using System;
 using Machine.Specifications;
 using Rhino.Mocks;
-using UMMO.TestingUtils.RandomData;
 
-namespace UMMO.TestingUtils.Specs.RandomDataGenerator
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomInteger
 {
-    [Subject(typeof(RandomInteger))]
+    [Subject(typeof(RandomData.RandomInteger))]
     public class When_getting_random_integer : RandomDataGeneratorTestBase
     {
         private const int ExpectedInteger = 22;
@@ -34,42 +33,18 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
         private Because Of = () => _randomInteger = RandomDataGeneratorUnderTest.Integer;
 
         private It Should_be_of_type_random_integer
-            = () => _randomInteger.ShouldBeOfType< RandomInteger >();
+            = () => _randomInteger.ShouldBeOfType< RandomData.RandomInteger >();
 
         private It Should_return_expected_integer_when_calling_value
-            = () => ( (RandomInteger)_randomInteger ).Value.ShouldEqual( ExpectedInteger );
+            = () => ( (RandomData.RandomInteger)_randomInteger ).Value.ShouldEqual( ExpectedInteger );
 
         private It Should_implicitly_cast_to_integer
             = () =>
                   {
-                      int value = (RandomInteger)_randomInteger;
+                      int value = (RandomData.RandomInteger)_randomInteger;
                       value.ShouldEqual( ExpectedInteger );
                   };
 
         private static Object _randomInteger;
-    }
-
-    [Subject(typeof(RandomInteger))]
-    public class When_getting_random_integer_between_two_values
-    {
-        private Establish Context = () =>
-        {
-            _randomInteger = A.Random.Integer;
-            _maxValue = A.Random.Integer;
-            _minValue = A.Random.Integer.LessThan(_maxValue);
-        };
-
-        private Because Of = () => _randomValue = _randomInteger.Between(_minValue, _maxValue);
-
-        private It Should_be_greater_than_or_equal_to_minvalue
-            = () => _randomValue.ShouldBeGreaterThanOrEqualTo(_minValue);
-
-        private It Should_be_less_than_or_equal_to_maxvalue
-            = () => _randomValue.ShouldBeLessThanOrEqualTo(_maxValue);
-
-        private static RandomInteger _randomInteger;
-        private static int _minValue;
-        private static int _maxValue;
-        private static int _randomValue;
     }
 }

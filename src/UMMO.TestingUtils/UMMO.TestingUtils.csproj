@@ -47,8 +47,8 @@
     <Compile Include="RandomDataGenerator.cs" />
     <Compile Include="RandomData\RandomDecimal.cs" />
     <Compile Include="RandomData\RandomDouble.cs" />
-    <Compile Include="RandomData\RandomExtensions.cs" />
     <Compile Include="RandomData\RandomInteger.cs" />
+    <Compile Include="RandomData\RandomLong.cs" />
     <Compile Include="RandomData\RandomNumericType.cs" />
     <Compile Include="RandomData\RandomString.cs" />
     <Compile Include="RandomData\Waffle\WaffleEngine.cs" />

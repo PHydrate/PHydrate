@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -19,28 +19,25 @@
 
 #endregion
 
+using System;
 using Machine.Specifications;
-using UMMO.TestingUtils.RandomData;
 
-namespace UMMO.TestingUtils.Specs.RandomDataGenerator
+namespace UMMO.TestingUtils.Specs.RandomDataGenerator.ExtendedRandom
 {
-    [Subject(typeof(RandomString))]
-    public class When_getting_random_string : RandomDataGeneratorTestBase
+    [Subject(typeof(RandomData.ExtendedRandom))]
+    public class When_getting_next_decimal_between_min_and_max_where_min_is_greater_than_max
     {
-        private Establish Context =()=> _randomString = RandomDataGeneratorUnderTest.String;
+        private Establish Context = () => _random = new RandomData.ExtendedRandom();
 
-        private It Should_be_of_type_random_string
-            = () => _randomString.ShouldBeOfType<RandomString>();
+        private Because Of = () => _exception = Catch.Exception( () => _random.NextDecimal( 1, 0 ) );
 
-        private It Should_implicitly_cast_to_string
-            = () =>
-                  {
-                      string value = (RandomString)_randomString;
-                      value.ShouldNotBeNull();
-                  };
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
 
-        private static object _randomString;
+        private It Should_throw_invalid_operation_exception
+            = () => _exception.ShouldBeOfType< InvalidOperationException >();
 
+        private static IRandom _random;
+        private static Exception _exception;
     }
-
 }
