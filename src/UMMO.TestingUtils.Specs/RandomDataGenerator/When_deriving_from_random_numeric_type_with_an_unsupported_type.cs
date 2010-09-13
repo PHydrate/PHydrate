@@ -12,7 +12,7 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
         private Because Of = () => _exception = Catch.Exception( () => new BadRandomNumeric( _random ) );
 
         private It Should_throw_random_data_exception
-            = () => _exception.ShouldBeOfType( typeof(RandomDataException) );
+            = () => _exception.ShouldBeOfType< RandomDataException >();
 
 
         private static IRandom _random;

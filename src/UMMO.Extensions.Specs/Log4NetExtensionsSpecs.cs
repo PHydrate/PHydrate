@@ -51,7 +51,7 @@ namespace UMMO.Extensions.Specs
             = () => LoggerStub.VerifyAllExpectations();
 
         private It Should_return_an_i_disposable
-            = () => ReturnValue.ShouldBeOfType( typeof(IDisposable) );
+            = () => ReturnValue.ShouldBeOfType< IDisposable >();
     }
 
     [Subject(typeof(Log4NetExtensions))]

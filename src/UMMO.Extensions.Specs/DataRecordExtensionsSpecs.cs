@@ -63,16 +63,16 @@ namespace UMMO.Extensions.Specs
             = () => _dataRecordUnderTest.Value< string >( "string" ).ShouldEqual( _randomString );
 
         private It Should_return_a_string_for_the_string_column
-            = () => _dataRecordUnderTest.Value< string >( "string" ).ShouldBeOfType( typeof(string) );
+            = () => _dataRecordUnderTest.Value< string >( "string" ).ShouldBeOfType< string >();
 
         private It Should_return_an_date_for_the_date_column
-            = () => _dataRecordUnderTest.Value< DateTime >( "date" ).ShouldBeOfType( typeof(DateTime) );
+            = () => _dataRecordUnderTest.Value< DateTime >( "date" ).ShouldBeOfType< DateTime >();
 
         private It Should_return_an_enum_for_the_enum_column
-            = () => _dataRecordUnderTest.Value< TestEnum >( "enum" ).ShouldBeOfType( typeof(TestEnum) );
+            = () => _dataRecordUnderTest.Value< TestEnum >( "enum" ).ShouldBeOfType< TestEnum >();
 
         private It Should_return_an_int_for_the_int_column
-            = () => _dataRecordUnderTest.Value< int >( "int" ).ShouldBeOfType( typeof(int) );
+            = () => _dataRecordUnderTest.Value< int >( "int" ).ShouldBeOfType< int >();
 
         private It Should_return_null_for_the_nullstring_column
             = () => _dataRecordUnderTest.Value< string >( "nullString" ).ShouldBeNull();
