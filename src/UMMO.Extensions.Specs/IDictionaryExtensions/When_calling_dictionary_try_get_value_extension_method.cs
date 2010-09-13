@@ -23,9 +23,9 @@ using System.Collections.Generic;
 using Machine.Specifications;
 using UMMO.TestingUtils;
 
-namespace UMMO.Extensions.Specs
+namespace UMMO.Extensions.Specs.IDictionaryExtensions
 {
-    [Subject(typeof(IDictionaryExtensions))]
+    [Subject(typeof(Extensions.IDictionaryExtensions))]
     public class When_calling_dictionary_try_get_value_extension_method
     {
         private static IDictionary< int, int > _dictionaryUnderTest;

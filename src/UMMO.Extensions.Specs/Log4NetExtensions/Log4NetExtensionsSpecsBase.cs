@@ -19,13 +19,12 @@
 
 #endregion
 
-using System;
 using log4net;
 using log4net.Core;
 using Machine.Specifications;
 using Rhino.Mocks;
 
-namespace UMMO.Extensions.Specs
+namespace UMMO.Extensions.Specs.Log4NetExtensions
 {
     public class Log4NetExtensionsSpecsBase
     {
@@ -40,28 +39,5 @@ namespace UMMO.Extensions.Specs
         protected static object ReturnValue;
         protected static ILog LogStub;
         protected static ILogger LoggerStub;
-    }
-
-    [Subject(typeof(Log4NetExtensions))]
-    public class When_calling_log_method_extension_method : Log4NetExtensionsSpecsBase
-    {
-        private Because Of = () => ReturnValue = LogStub.LogMethod();
-
-        private It Should_have_called_i_logger_log
-            = () => LoggerStub.VerifyAllExpectations();
-
-        private It Should_return_an_i_disposable
-            = () => ReturnValue.ShouldBeOfType< IDisposable >();
-    }
-
-    [Subject(typeof(Log4NetExtensions))]
-    public class When_disposing_return_value_of_log_method : Log4NetExtensionsSpecsBase
-    {
-        private Establish Context = () => ReturnValue = LogStub.LogMethod();
-
-        private Because Of = () => ( (IDisposable)ReturnValue ).Dispose();
-
-        private It Should_call_i_logger_log_when_disposed
-            = () => LoggerStub.VerifyAllExpectations();
     }
 }

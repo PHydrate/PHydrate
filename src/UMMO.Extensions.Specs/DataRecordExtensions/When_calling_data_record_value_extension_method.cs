@@ -24,9 +24,9 @@ using System.Data;
 using Machine.Specifications;
 using UMMO.TestingUtils;
 
-namespace UMMO.Extensions.Specs
+namespace UMMO.Extensions.Specs.DataRecordExtensions
 {
-    [ Subject( typeof(DataRecordExtensions) ) ]
+    [ Subject( typeof(Extensions.DataRecordExtensions) ) ]
     public class When_calling_data_record_value_extension_method
     {
         private static IDataReader _dataRecordUnderTest;
