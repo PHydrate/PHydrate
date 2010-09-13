@@ -56,12 +56,7 @@ namespace UMMO.TestingUtils
 
         public byte Byte
         {
-            get
-            {
-                var bytes = new byte[1];
-                _random.NextBytes( bytes );
-                return bytes[ 0 ];
-            }
+            get { return _random.NextBytes( 1 )[ 0 ]; }
         }
 
         public char Character
