@@ -24,30 +24,6 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomDecimal
 {
     [Subject(typeof(RandomData.RandomDecimal))]
-    public class When_getting_random_decimal_between_two_values
-    {
-        private Establish Context = () =>
-                                        {
-                                            _randomDecimal = A.Random.Decimal;
-                                            _minValue = A.Random.Decimal;
-                                            _maxValue = A.Random.Decimal.GreaterThan( _minValue );
-                                        };
-
-        private Because Of = () => _randomValue = _randomDecimal.Between( _minValue, _maxValue );
-
-        private It Should_be_greater_than_or_equal_to_minvalue
-            = () => _randomValue.ShouldBeGreaterThanOrEqualTo( _minValue );
-
-        private It Should_be_less_than_or_equal_to_maxvalue
-            = () => _randomValue.ShouldBeLessThanOrEqualTo( _maxValue );
-
-        private static RandomData.RandomDecimal _randomDecimal;
-        private static decimal _minValue;
-        private static decimal _maxValue;
-        private static decimal _randomValue;
-    }
-
-    [Subject(typeof(RandomData.RandomDecimal))]
     public class When_getting_random_decimal_between_two_equal_values
     {
         private Establish Context = () =>
