@@ -46,4 +46,23 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomDecimal
         private static decimal _maxValue;
         private static decimal _randomValue;
     }
+
+    [Subject(typeof(RandomData.RandomDecimal))]
+    public class When_getting_random_decimal_between_two_equal_values
+    {
+        private Establish Context = () =>
+                                        {
+                                            _randomDecimal = A.Random.Decimal;
+                                            _randomRange = A.Random.Decimal;
+                                        };
+
+        private Because Of = () => _randomValue = _randomDecimal.Between( _randomRange, _randomRange );
+
+        private It Should_return_value
+            = () => _randomValue.ShouldEqual( _randomRange );
+
+        private static RandomData.RandomDecimal _randomDecimal;
+        private static decimal _randomRange;
+        private static decimal _randomValue;
+    }
 }
