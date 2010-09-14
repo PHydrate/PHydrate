@@ -98,6 +98,7 @@
     <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_bytes.cs" />
     <Compile Include="RandomDataGenerator\RandomDataGeneratorTestBase.cs" />
     <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_decimal_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_equal_values.cs" />
     <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values.cs" />
     <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values_in_incorrect_order.cs" />
     <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_greater_than_negative_number.cs" />
