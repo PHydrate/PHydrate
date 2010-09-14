@@ -72,7 +72,7 @@ namespace UMMO.TestingUtils.RandomData
 
         public decimal NextDecimal(decimal minValue, decimal maxValue)
         {
-            if (minValue >= maxValue)
+            if (minValue > maxValue)
                 throw new InvalidOperationException();
 
             // We want to prevent overflows, so if we get a situation that would create one,
@@ -87,20 +87,29 @@ namespace UMMO.TestingUtils.RandomData
             var bytes = new byte[sizeof(long)];
             NextBytes(bytes);
             // strip out the sign bit
-            bytes[sizeof(long) - 1] = (byte)(bytes[sizeof(long) - 1] & 0x7f);
+            //bytes[sizeof(long) - 1] = (byte)(bytes[sizeof(long) - 1] & 0x7f);
             return BitConverter.ToInt64(bytes, 0);
         }
 
         public long NextLong(long maxValue)
         {
-            return (long)((NextLong() / (double)Int64.MaxValue) * maxValue);
+            return (long)((Math.Abs(NextLong()) / (double)Int64.MaxValue) * maxValue);
         }
 
         public long NextLong(long minValue, long maxValue)
         {
-            if (minValue >= maxValue)
+            if (minValue > maxValue)
                 throw new InvalidOperationException();
-            long range = ((maxValue == Int64.MaxValue && minValue < 0) || (minValue == Int64.MinValue && maxValue > 0)) ? Int64.MaxValue : maxValue - minValue;
+            long range = ((maxValue == Int64.MaxValue && minValue < 0) ||
+                           (minValue == Int64.MinValue && maxValue >= 0))
+                             ? Int64.MaxValue
+                             : maxValue - minValue;
+
+            // Some kind of weird thing is going on here...  It seems that
+            // Int64.MinValue wants to stay that way.
+            if (minValue == Int64.MinValue)
+                minValue = Int64.MinValue + 1;
+
             return NextLong(range) + minValue;
         }
 

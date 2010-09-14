@@ -106,8 +106,11 @@
     <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double_less_than_positive_number.cs" />
     <Compile Include="RandomDataGenerator\RandomInteger\When_getting_random_integer_between_two_values.cs" />
     <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_long_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_equal_values.cs" />
     <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values.cs" />
     <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_greater_than_zero.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_less_than_zero.cs" />
     <Compile Include="RandomDataGenerator\When_deriving_from_random_numeric_type_with_an_unsupported_type.cs" />
     <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal.cs" />
     <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double.cs" />
