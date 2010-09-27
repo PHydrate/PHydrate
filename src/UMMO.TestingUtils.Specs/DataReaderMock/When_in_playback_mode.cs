@@ -25,9 +25,9 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_in_playback_mode : DataReaderMockSpecsWithRecordSetDefined
+    public class When_in_playback_mode : DataReaderMockSpecsBase
     {
-        private Because Of = () => MockUnderTest.Playback();
+        private Establish Context = () => MockUnderTest.Playback();
 
         private It Should_return_zero_when_calling_depth
             = () => MockUnderTest.Depth.ShouldEqual( 0 );

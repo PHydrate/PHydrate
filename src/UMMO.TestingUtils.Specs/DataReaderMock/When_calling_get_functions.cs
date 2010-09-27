@@ -27,10 +27,10 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_calling_get_functions : DataReaderMockSpecsWithRecordSetDefined
+    public class When_calling_get_functions : DataReaderMockSpecsWithRecordSetDefined<string>
     {
-        private static readonly string ExpectedValue = A.Random.String.Resembling.A.Password;
-        private Because Of = () => SetupTestRecord( ExpectedValue );
+        private Establish Context =()=> ExpectedValue = A.Random.String.Resembling.A.Password;
+        
 
         private It Should_create_datatable_with_correct_data_when_getschematable_is_called
             = () => AssertThatDataTableFromGetSchemaTableIsCorrect( MockUnderTest.GetSchemaTable() );
@@ -84,10 +84,9 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     }
 
     [Subject(typeof(TestingUtils.DataReaderMock))]
-    public class When_calling_get_functions_with_numeric_datatype : DataReaderMockSpecsWithRecordSetDefined
+    public class When_calling_get_functions_with_numeric_datatype : DataReaderMockSpecsWithRecordSetDefined<int>
     {
-        private static readonly int ExpectedValue = A.Random.Integer;
-        private Because Of = () => SetupTestRecord( ExpectedValue );
+        private Establish Context =()=> ExpectedValue = A.Random.Integer;
 
         private It Should_create_datatable_with_correct_data_when_getschematable_is_called
             = () => AssertThatDataTableFromGetSchemaTableIsCorrect( MockUnderTest.GetSchemaTable() );

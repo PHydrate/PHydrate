@@ -25,7 +25,7 @@ using Machine.Specifications.Annotations;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
-    public abstract class DataReaderMockSpecsWithRecordSetDefined : DataReaderMockSpecsBase
+    public abstract class DataReaderMockSpecsWithRecordSetDefined<T> : DataReaderMockSpecsBase
     {
         protected static string ColumnName;
 
@@ -36,7 +36,11 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
                                             MockUnderTest.AddRecordSet( ColumnName );
                                         };
 
-        protected static void AssertThatDataReaderFromGetDataIsCorrect< T >( IDataReader dataReader, T expectedValue )
+        private Because Of = () => SetupTestRecord(ExpectedValue);
+
+        protected static T ExpectedValue;
+
+        protected static void AssertThatDataReaderFromGetDataIsCorrect( IDataReader dataReader, T expectedValue )
         {
             dataReader.Read().ShouldBeTrue();
             dataReader[ 0 ].ShouldBeOfType< T >();
@@ -45,13 +49,13 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
             dataReader[ ColumnName ].ShouldEqual( expectedValue );
         }
 
-        protected static void SetupTestRecord< T >( T value )
+        protected static void SetupTestRecord( T value )
         {
             MockUnderTest.AddRow( value ).Playback();
             MockUnderTest.Read();
         }
 
-        protected static void AssertThatArrayFromGetValuesIsCorrect< T >( T expectedValue )
+        protected static void AssertThatArrayFromGetValuesIsCorrect( T expectedValue )
         {
             var objArray = new object[1];
             MockUnderTest.GetValues( objArray );

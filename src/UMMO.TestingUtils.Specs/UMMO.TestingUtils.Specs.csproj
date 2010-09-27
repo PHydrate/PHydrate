@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataReaderMock\DataReaderBehavior.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsBase.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsWithRecordSetDefined.cs" />

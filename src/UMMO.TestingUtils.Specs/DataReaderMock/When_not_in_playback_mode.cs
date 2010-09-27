@@ -26,7 +26,7 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_not_in_playback_mode : DataReaderMockSpecsWithRecordSetDefined
+    public class When_not_in_playback_mode : DataReaderMockSpecsBase
     {
         private It Should_throw_exception_when_calling_close
             = () => ShouldThrowInvalidOperationException( () => MockUnderTest.Close() );

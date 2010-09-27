@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of UMMO.
 // 
@@ -19,24 +19,22 @@
 
 #endregion
 
-using System;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
-    [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_querying_datareader_metadata : DataReaderMockSpecsWithRecordSetDefined<int>
+    [Behaviors]
+    [UsedImplicitly]    // TODO: Change MSpec to make BehaviorsAttribute imply UsedImplicitly
+    public class DataReaderBehavior
     {
-        //private Because Of = () => MockUnderTest.Playback();
+        private static TestingUtils.DataReaderMock MockUnderTest;
+        private static string ColumnName;
 
-        private It Should_return_one_when_fieldcount_is_called
-            = () => MockUnderTest.FieldCount.ShouldEqual( 1 );
+        private It Should_return_column_name_when_getname_is_called
+            = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
 
-        private It Should_return_zero_when_getordinal_is_called_with_columnname
-            = () => MockUnderTest.GetOrdinal( ColumnName ).ShouldEqual( 0 );
-
-        private It Should_throw_exception_when_getordinal_is_called_with_unknown_columnname
-            = () =>
-              typeof(IndexOutOfRangeException).ShouldBeThrownBy(() => MockUnderTest.GetOrdinal(A.Random.String.Resembling.A.LastName));
+        private It Should_return_false_when_isdbnull_is_called
+            = () => MockUnderTest.IsDBNull(0).ShouldBeFalse();
     }
 }

@@ -26,40 +26,35 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_column_is_of_datetime_type : DataReaderMockSpecsWithRecordSetDefined
+    public class When_column_is_of_datetime_type : DataReaderMockSpecsWithRecordSetDefined<DateTime>
     {
-        private static readonly DateTime DateTimeValue = A.Random.DateTime;
-        private Because Of = () => SetupTestRecord( DateTimeValue );
+        private Establish Context = () => ExpectedValue = A.Random.DateTime;
 
-        private It Should_return_column_name_when_getname_is_called
-            = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
+        private Behaves_like<DataReaderBehavior> A_datareader;
 
         private It Should_return_decimal_when_getdatatypename_is_called
             = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "DateTime" );
 
-        private It Should_return_false_when_isdbnull_is_called
-            = () => MockUnderTest.IsDBNull( 0 ).ShouldBeFalse();
-
         private It Should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( DateTimeValue );
+            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_return_typeof_int32_when_getfieldtype_is_called
             = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(DateTime) );
 
         private It Should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), DateTimeValue );
+            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), ExpectedValue );
 
         private It Should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( DateTimeValue );
+            = () => AssertThatArrayFromGetValuesIsCorrect( ExpectedValue );
 
         private It Should_return_value_when_getint32_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );
 
         private It Should_return_value_when_name_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( DateTimeValue );
+            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( ExpectedValue );
 
         private It Should_return_value_when_ordinal_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( DateTimeValue );
+            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );
@@ -71,7 +66,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetChar( 0 ) );
 
         private It Should_throw_exception_when_getdatetime_is_called
-            = () => MockUnderTest.GetDateTime( 0 ).ShouldEqual( DateTimeValue );
+            = () => MockUnderTest.GetDateTime( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getdecimal_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetDecimal( 0 ) );

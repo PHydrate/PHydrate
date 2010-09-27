@@ -26,43 +26,38 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_column_is_of_decimal_type : DataReaderMockSpecsWithRecordSetDefined
+    public class When_column_is_of_decimal_type : DataReaderMockSpecsWithRecordSetDefined<decimal>
     {
-        private static readonly decimal DecimalValue = A.Random.Decimal;
-        private Because Of = () => SetupTestRecord( DecimalValue );
+        private Establish Context = () => ExpectedValue = A.Random.Decimal;
 
-        private It Should_return_column_name_when_getname_is_called
-            = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
+        private Behaves_like<DataReaderBehavior> A_datareader;
 
         private It Should_return_decimal_when_getdatatypename_is_called
             = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Decimal" );
 
-        private It Should_return_false_when_isdbnull_is_called
-            = () => MockUnderTest.IsDBNull( 0 ).ShouldBeFalse();
-
         private It Should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( DecimalValue );
+            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_return_typeof_int32_when_getfieldtype_is_called
             = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Decimal) );
 
         private It Should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), DecimalValue );
+            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), ExpectedValue );
 
         private It Should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( DecimalValue );
+            = () => AssertThatArrayFromGetValuesIsCorrect( ExpectedValue );
 
         private It Should_return_value_when_getdecimal_is_called
-            = () => MockUnderTest.GetDecimal( 0 ).ShouldEqual( DecimalValue );
+            = () => MockUnderTest.GetDecimal( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_return_value_when_getint32_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );
 
         private It Should_return_value_when_name_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( DecimalValue );
+            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( ExpectedValue );
 
         private It Should_return_value_when_ordinal_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( DecimalValue );
+            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );

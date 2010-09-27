@@ -26,40 +26,35 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
-    public class When_column_is_of_long_type : DataReaderMockSpecsWithRecordSetDefined
+    public class When_column_is_of_long_type : DataReaderMockSpecsWithRecordSetDefined<long>
     {
-        private static readonly long LongValue = A.Random.LongInteger;
-        private Because Of = () => SetupTestRecord( LongValue );
+        private Establish Context = () => ExpectedValue = A.Random.LongInteger;
 
-        private It Should_return_column_name_when_getname_is_called
-            = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
-
-        private It Should_return_false_when_isdbnull_is_called
-            = () => MockUnderTest.IsDBNull( 0 ).ShouldBeFalse();
+        private Behaves_like<DataReaderBehavior> A_datareader;
 
         private It Should_return_int64_when_getdatatypename_is_called
             = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Int64" );
 
         private It Should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( LongValue );
+            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_return_typeof_int64_when_getfieldtype_is_called
             = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Int64) );
 
         private It Should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), LongValue );
+            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), ExpectedValue );
 
         private It Should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( LongValue );
+            = () => AssertThatArrayFromGetValuesIsCorrect( ExpectedValue );
 
         private It Should_return_value_when_getint64_is_called
-            = () => MockUnderTest.GetInt64( 0 ).ShouldEqual( LongValue );
+            = () => MockUnderTest.GetInt64( 0 ).ShouldEqual( ExpectedValue );
 
         private It Should_return_value_when_name_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( LongValue );
+            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( ExpectedValue );
 
         private It Should_return_value_when_ordinal_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( LongValue );
+            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );
