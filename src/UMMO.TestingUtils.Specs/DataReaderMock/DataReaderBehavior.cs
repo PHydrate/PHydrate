@@ -25,11 +25,11 @@ using Machine.Specifications.Annotations;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Behaviors]
-    [UsedImplicitly]    // TODO: Change MSpec to make BehaviorsAttribute imply UsedImplicitly
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]    // TODO: Change MSpec to make BehaviorsAttribute imply UsedImplicitly
     public class DataReaderBehavior
     {
-        private static TestingUtils.DataReaderMock MockUnderTest;
-        private static string ColumnName;
+        protected static TestingUtils.DataReaderMock MockUnderTest;
+        protected static string ColumnName;
 
         private It Should_return_column_name_when_getname_is_called
             = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );

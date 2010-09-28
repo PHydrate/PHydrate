@@ -36,6 +36,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
                                             MockUnderTest.AddRecordSet( ColumnName );
                                         };
 
+        [UsedImplicitly]
         private Because Of = () => SetupTestRecord(ExpectedValue);
 
         protected static T ExpectedValue;
@@ -49,7 +50,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
             dataReader[ ColumnName ].ShouldEqual( expectedValue );
         }
 
-        protected static void SetupTestRecord( T value )
+        private static void SetupTestRecord( T value )
         {
             MockUnderTest.AddRow( value ).Playback();
             MockUnderTest.Read();

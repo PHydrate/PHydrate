@@ -159,6 +159,12 @@ Copyright 2010, Stephen Michael Czetty]]></FileHeader>
           <Kind Name="Machine.Specifications_Behavior" />
         </ElementKinds>
       </UserRule>
+      <UserRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" StaticnessKind="Static, Instance" AccessRight="Private" Description="Specification Fields">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Field" />
+        </ElementKinds>
+        <ExtraRule Prefix="" Suffix="" Style="AaBb" />
+      </UserRule>
     </Naming2>
   </CodeStyleSettings>
 </Configuration>
