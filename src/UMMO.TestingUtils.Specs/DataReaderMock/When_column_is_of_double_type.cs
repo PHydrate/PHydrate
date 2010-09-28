@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Data;
 using Machine.Specifications;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
@@ -30,34 +29,13 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Double;
 
-        private Behaves_like<DataReaderBehavior> A_datareader;
-
-        private It Should_return_double_when_getdatatypename_is_called
-            = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Double" );
-
-        private It Should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedValue );
-
-        private It Should_return_typeof_double_when_getfieldtype_is_called
-            = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Double) );
-
-        private It Should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), ExpectedValue );
-
-        private It Should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( ExpectedValue );
+        private Behaves_like<DataReaderBehavior<double>> A_datareader_with_double_column;
 
         private It Should_return_value_when_getdouble_is_called
             = () => MockUnderTest.GetDouble( 0 ).ShouldEqual( ExpectedValue );
 
-        private It Should_return_value_when_getint32_is_called
+        private It Should_throw_exception_when_getint32_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );
-
-        private It Should_return_value_when_name_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( ExpectedValue );
-
-        private It Should_return_value_when_ordinal_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );

@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Data;
 using Machine.Specifications;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
@@ -30,31 +29,10 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Short;
 
-        private Behaves_like< DataReaderBehavior > A_datareader;
-
-        private It Should_return_int16_when_getdatatypename_is_called
-            = () => MockUnderTest.GetDataTypeName( 0 ).ShouldEqual( "Int16" );
-
-        private It Should_return_the_value_when_getvalue_is_called
-            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedValue );
-
-        private It Should_return_typeof_int16_when_getfieldtype_is_called
-            = () => MockUnderTest.GetFieldType( 0 ).ShouldEqual( typeof(Int16) );
-
-        private It Should_return_valid_datareader_when_getdate_is_called
-            = () => AssertThatDataReaderFromGetDataIsCorrect( MockUnderTest.GetData( 0 ), ExpectedValue );
-
-        private It Should_return_valid_value_in_array_when_getvalues_is_called
-            = () => AssertThatArrayFromGetValuesIsCorrect( ExpectedValue );
+        private Behaves_like< DataReaderBehavior<short> > A_datareader_with_short_column;
 
         private It Should_return_value_when_getint16_is_called
             = () => MockUnderTest.GetInt16( 0 ).ShouldEqual( ExpectedValue );
-
-        private It Should_return_value_when_name_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ ColumnName ].ShouldEqual( ExpectedValue );
-
-        private It Should_return_value_when_ordinal_indexer_is_used
-            = () => ( (IDataReader)MockUnderTest )[ 0 ].ShouldEqual( ExpectedValue );
 
         private It Should_throw_exception_when_getboolean_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetBoolean( 0 ) );
