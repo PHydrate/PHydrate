@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.DateTime;
 
-        private Behaves_like<DataReaderBehavior<DateTime>> A_datareader_with_datetime_column;
+        private Behaves_like<DataReaderBehavior<DateTime>> a_datareader_with_datetime_column;
 
         private It Should_throw_exception_when_getint32_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );

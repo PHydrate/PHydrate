@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Boolean;
 
-        private Behaves_like<DataReaderBehavior<bool>> A_datareader_with_boolean_column;
+        private Behaves_like<DataReaderBehavior<bool>> a_datareader_with_boolean_column;
 
         private It Should_return_value_when_getboolean_is_called
             = () => MockUnderTest.GetBoolean(0).ShouldEqual(ExpectedValue);

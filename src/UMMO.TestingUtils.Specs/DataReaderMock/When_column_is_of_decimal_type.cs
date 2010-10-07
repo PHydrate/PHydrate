@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Decimal;
 
-        private Behaves_like<DataReaderBehavior<decimal>> A_datareader_with_decimal_column;
+        private Behaves_like<DataReaderBehavior<decimal>> a_datareader_with_decimal_column;
 
         private It Should_return_value_when_getdecimal_is_called
             = () => MockUnderTest.GetDecimal( 0 ).ShouldEqual( ExpectedValue );

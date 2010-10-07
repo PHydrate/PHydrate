@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Guid;
 
-        private Behaves_like<DataReaderBehavior<Guid>> A_datareader_with_guid_column;
+        private Behaves_like<DataReaderBehavior<Guid>> a_datareader_with_guid_column;
 
        private It Should_return_value_when_getguid_is_called
             = () => MockUnderTest.GetGuid( 0 ).ShouldEqual( ExpectedValue );

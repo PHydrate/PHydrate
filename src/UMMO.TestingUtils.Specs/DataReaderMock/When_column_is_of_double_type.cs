@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Double;
 
-        private Behaves_like<DataReaderBehavior<double>> A_datareader_with_double_column;
+        private Behaves_like<DataReaderBehavior<double>> a_datareader_with_double_column;
 
         private It Should_return_value_when_getdouble_is_called
             = () => MockUnderTest.GetDouble( 0 ).ShouldEqual( ExpectedValue );

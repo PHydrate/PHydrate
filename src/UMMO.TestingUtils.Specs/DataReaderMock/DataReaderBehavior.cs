@@ -21,12 +21,10 @@
 
 using System.Data;
 using Machine.Specifications;
-using Machine.Specifications.Annotations;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Behaviors]
-    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]    // TODO: Change MSpec to make BehaviorsAttribute imply UsedImplicitly
     public class DataReaderBehavior
     {
         protected static TestingUtils.DataReaderMock MockUnderTest;
@@ -40,7 +38,6 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     }
 
     [Behaviors]
-    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]    // TODO: Change MSpec to make BehaviorsAttribute imply UsedImplicitly
     public class DataReaderBehavior<T>
     {
         protected static TestingUtils.DataReaderMock MockUnderTest;

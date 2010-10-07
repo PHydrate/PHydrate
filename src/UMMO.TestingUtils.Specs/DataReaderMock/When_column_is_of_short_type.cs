@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.Short;
 
-        private Behaves_like< DataReaderBehavior<short> > A_datareader_with_short_column;
+        private Behaves_like< DataReaderBehavior<short> > a_datareader_with_short_column;
 
         private It Should_return_value_when_getint16_is_called
             = () => MockUnderTest.GetInt16( 0 ).ShouldEqual( ExpectedValue );
