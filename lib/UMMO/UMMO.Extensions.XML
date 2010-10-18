@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UMMO.Extensions</name>
+    </assembly>
+    <members>
+        <member name="T:UMMO.Extensions.Log4NetExtensions">
+            <summary>
+            Extensions on Log4Net ILog
+            </summary>
+        </member>
+        <member name="M:UMMO.Extensions.Log4NetExtensions.LogMethod(log4net.ILog)">
+            <summary>
+            Logs the method.
+            </summary>
+            <remarks>
+            This method is intended to be called inside of a using() block.  When the block is exited,
+            the event will automatically be logged, and the method stack will be popped.
+            </remarks>
+            <param name="log">The log4net ILog object.</param>
+            <returns>IDisposable for the using() block.</returns>
+        </member>
+        <member name="P:UMMO.Extensions.Log4NetExtensions.MethodLogFormatString">
+            <summary>
+            Gets or sets the method log format string.
+            </summary>
+            <value>The method log format string.</value>
+        </member>
+        <member name="P:UMMO.Extensions.Log4NetExtensions.MethodLogLevel">
+            <summary>
+            Gets or sets the method log level.
+            </summary>
+            <remarks>
+            The default log level is Level.Debug.
+            </remarks>
+            <value>The method log level.</value>
+        </member>
+        <member name="T:UMMO.Extensions.DataRecordExtensions">
+            <summary>
+            Extensions on classes that implement IDataRecord
+            </summary>
+        </member>
+        <member name="M:UMMO.Extensions.DataRecordExtensions.Value``1(System.Data.IDataRecord,System.String)">
+            <summary>
+            Returns the value found in the column, or the default of T if the column is null (or DBNull).
+            This has the effect of transforming all DBNulls to CLR-native null values, so long as <typeparamref name="T"/>
+            is a nullable type.
+            </summary>
+            <typeparam name="T">The type expected to be found in the column</typeparam>
+            <param name="dataRecord">The data record.</param>
+            <param name="columnName">Name of the column.</param>
+            <returns>The value found in the column, null, or (for value types) the default value for <typeparamref name="T"/></returns>
+        </member>
+        <member name="M:UMMO.Extensions.DataRecordExtensions.Value``1(System.Data.IDataRecord,System.Int32)">
+            <summary>
+            Returns the value found in the column, or the default of T if the column is null (or DBNull).
+            This has the effect of transforming all DBNulls to CLR-native null values, so long as <typeparamref name="T"/>
+            is a nullable type.
+            </summary>
+            <typeparam name="T">The type expected to be found in the column</typeparam>
+            <param name="dataRecord">The data record.</param>
+            <param name="columnOrdinal">The column ordinal.</param>
+            <returns>The value found in the column, null, or (for value types) the default value for <typeparamref name="T"/></returns>
+        </member>
+        <member name="T:UMMO.Extensions.IDictionaryExtensions">
+            <summary>
+            Extensions on classes that implement IDictionary
+            </summary>
+        </member>
+        <member name="M:UMMO.Extensions.IDictionaryExtensions.TryGetValue``2(System.Collections.Generic.IDictionary{``0,``1},``0)">
+            <summary>
+            Wrapper around <see cref="T:System.Collections.Generic.IDictionary`2"/> that returns the default of TValue if the key does not exist.
+            </summary>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="dictionary">The dictionary.</param>
+            <param name="key">The key.</param>
+            <returns>The value of the key, or the default for the type if the key does not exist.</returns>
+        </member>
+    </members>
+</doc>
