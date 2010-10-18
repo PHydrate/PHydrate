@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate.Specs", "PHydrate.Specs\PHydrate.Specs.csproj", "{E48A20EE-AEE0-469B-847E-D0812262D63D}"
 EndProject
 Global
