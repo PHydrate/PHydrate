@@ -21,8 +21,15 @@
 
 namespace UMMO.TestingUtils.RandomData
 {
+    /// <summary>
+    /// Fluent random int
+    /// </summary>
     public class RandomInteger : RandomNumericType<int>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RandomInteger"/> class.
+        /// </summary>
+        /// <param name="random">The random number generator.</param>
         public RandomInteger( IRandom random ) : base( random ) {}
 
         public override int Value
@@ -30,9 +37,9 @@ namespace UMMO.TestingUtils.RandomData
             get { return Random.Next(); }
         }
 
-        protected override int GetBetween( int min, int max )
+        protected override int GetBetween( int minValue, int maxValue )
         {
-            return Random.Next( min, max );
+            return Random.Next( minValue, maxValue );
         }
     }
 }

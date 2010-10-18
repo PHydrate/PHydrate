@@ -28,6 +28,9 @@ using System.Text;
 
 namespace UMMO.TestingUtils
 {
+    /// <summary>
+    /// Implementation of IDataReader, intended for testing ADO-based code.
+    /// </summary>
     public class DataReaderMock : IDataReader
     {
         private readonly IList< IList< string > > _recordSetColumnNames;
@@ -38,6 +41,14 @@ namespace UMMO.TestingUtils
         private int _rowNumber;
         private DataTable _schemaTable;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReaderMock"/> class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is obsolete, is here for backward compatibility.  You should use the
+        /// parameterless constructor and AddRecordSet and AddRow methods.
+        /// </remarks>
+        /// <param name="recordsToRetrieve">A list of KeyValuePairs defining the column names and values of each record to retrieve.</param>
         [ Obsolete( "Use the parameterless constructor and AddRecordSet/AddRow methods." ) ]
         public DataReaderMock( params IList< KeyValuePair< string, object > >[] recordsToRetrieve )
         {
@@ -53,6 +64,9 @@ namespace UMMO.TestingUtils
             Playback();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataReaderMock"/> class.
+        /// </summary>
         public DataReaderMock()
         {
             _recordsToRetrieve = new List< IList< IList< object > > >();
@@ -367,6 +381,11 @@ namespace UMMO.TestingUtils
 
         #endregion
 
+        /// <summary>
+        /// Adds a record set to DataReader
+        /// </summary>
+        /// <param name="columnNames">The names of the columns in the recordset.</param>
+        /// <returns>The current instance, for chaining calls.</returns>
         public DataReaderMock AddRecordSet( params string[] columnNames )
         {
             ThrowIfInPlaybackMode();
@@ -377,6 +396,11 @@ namespace UMMO.TestingUtils
             return this;
         }
 
+        /// <summary>
+        /// Adds a row to the current record set
+        /// </summary>
+        /// <param name="columnValues">The column values.</param>
+        /// <returns>The current instance, for chaining calls.</returns>
         public DataReaderMock AddRow( params object[] columnValues )
         {
             ThrowIfInPlaybackMode();
@@ -389,6 +413,11 @@ namespace UMMO.TestingUtils
             return this;
         }
 
+        /// <summary>
+        /// Set the datareader in playback mode.  No more recordsets or rows may be added,
+        /// but the datareader is ready to pull data from.
+        /// </summary>
+        /// <returns>The current instance, for chaining calls.</returns>
         public DataReaderMock Playback()
         {
             _readyForPlayback = true;
@@ -429,8 +458,15 @@ namespace UMMO.TestingUtils
         }
     }
 
+    /// <summary>
+    /// Utility class to simplify test code.
+    /// </summary>
     public static partial class A
     {
+        /// <summary>
+        /// Gets a mock data reader.
+        /// </summary>
+        /// <value>The data reader.</value>
         public static IDataReader DataReader { get { return new DataReaderMock(); } }
     }
 }

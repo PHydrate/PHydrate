@@ -36,9 +36,14 @@ using System.Text;
 
 namespace UMMO.TestingUtils.RandomData.Waffle
 {
-    // This class is borrowed from Andrew Clarke from Red Gate
-    // Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/
-
+    /// <summary>
+    /// Generate random text.
+    /// </summary>
+    /// <remarks>
+    /// This class is borrowed from Andrew Clarke from Red Gate
+    /// Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/
+    /// </remarks>
+    // TODO: Examine this code closely, I suspect that it is fragile.
     public class WaffleEngine
     {
         private readonly IRandom _random;
@@ -47,6 +52,10 @@ namespace UMMO.TestingUtils.RandomData.Waffle
         private int _ordinalSequence;
         private string _title;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaffleEngine"/> class.
+        /// </summary>
+        /// <param name="random">The random number generator.</param>
         public WaffleEngine( IRandom random )
         {
             _random = random;
@@ -166,11 +175,12 @@ namespace UMMO.TestingUtils.RandomData.Waffle
             output.AppendFormat( "{0:04u}", DateTime.Now.Year - _random.Next( 0, 31 ) );
         }
 
-        public static string TitleCaseWords( string input )
+        private static string TitleCaseWords( string input )
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase( input );
         }
 
+/*
         public void HtmlWaffle( int paragraphs, Boolean includeHeading, StringBuilder result )
         {
             _title = string.Empty;
@@ -213,7 +223,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
             result.AppendLine( "</body>" );
             result.AppendLine( "</html>" );
         }
+*/
 
+/*
         public void TextWaffle( int paragraphs, Boolean includeHeading, StringBuilder result )
         {
             _title = string.Empty;
@@ -245,5 +257,6 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                 EvaluateRandomPhrase( WafflePhrases.MaybeParagraph, result );
             }
         }
+*/
     }
 }

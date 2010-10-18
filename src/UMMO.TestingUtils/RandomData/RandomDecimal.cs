@@ -21,18 +21,25 @@
 
 namespace UMMO.TestingUtils.RandomData
 {
+    /// <summary>
+    /// Fluent random decimal.
+    /// </summary>
     public class RandomDecimal : RandomNumericType<decimal>
     {
-        protected internal RandomDecimal( IRandom random ) : base( random ) {}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RandomDecimal"/> class.
+        /// </summary>
+        /// <param name="random">The random number generator.</param>
+        public RandomDecimal( IRandom random ) : base( random ) {}
 
         public override decimal Value
         {
             get { return Random.NextDecimal(); }
         }
 
-        protected override decimal GetBetween( decimal min, decimal max )
+        protected override decimal GetBetween( decimal minValue, decimal maxValue )
         {
-            return Random.NextDecimal(min, max);
+            return Random.NextDecimal(minValue, maxValue);
         }
     }
 }

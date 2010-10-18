@@ -31,6 +31,9 @@
 
 namespace UMMO.TestingUtils.RandomData.Waffle
 {
+    /// <summary>
+    /// Phrases used by the WaffleEngine.
+    /// </summary>
     internal static class WafflePhrases
     {
         public static readonly string[] Prefixes = new[]
@@ -149,15 +152,19 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                    "first", "second", "third", "fourth", "fifth"
                                                                };
 
+/*
         public static readonly string[] MaybeHeading = new[]
                                                            {
                                                                "", "", "\n<h2>The |uc.</h2>\n<p>", ""
                                                            };
+*/
 
+/*
         public static readonly string[] MaybeParagraph = new[]
                                                              {
                                                                  "", "", "|n", ""
                                                              };
+*/
 
         public static readonly string[] PreamblePhrases = new[]
                                                               {

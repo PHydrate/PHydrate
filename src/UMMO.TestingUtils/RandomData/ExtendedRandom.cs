@@ -23,10 +23,12 @@ using System;
 
 namespace UMMO.TestingUtils.RandomData
 {
+    /// <summary>
+    /// Implementation of IRandom
+    /// </summary>
     public class ExtendedRandom : Random, IRandom
     {
         #region IRandom Members
-
         public byte[] NextBytes( int bufferLength )
         {
             var bytes = new byte[bufferLength];

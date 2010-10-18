@@ -24,13 +24,34 @@ using System.Data;
 
 namespace UMMO.Extensions
 {
+    /// <summary>
+    /// Extensions on classes that implement IDataRecord
+    /// </summary>
     public static class DataRecordExtensions
     {
+        /// <summary>
+        /// Returns the value found in the column, or the default of T if the column is null (or DBNull).
+        /// This has the effect of transforming all DBNulls to CLR-native null values, so long as <typeparamref name="T"/>
+        /// is a nullable type.
+        /// </summary>
+        /// <typeparam name="T">The type expected to be found in the column</typeparam>
+        /// <param name="dataRecord">The data record.</param>
+        /// <param name="columnName">Name of the column.</param>
+        /// <returns>The value found in the column, null, or (for value types) the default value for <typeparamref name="T"/></returns>
         public static T Value< T >( this IDataRecord dataRecord, string columnName )
         {
             return GetValue< T >( dataRecord[ columnName ] );
         }
 
+        /// <summary>
+        /// Returns the value found in the column, or the default of T if the column is null (or DBNull).
+        /// This has the effect of transforming all DBNulls to CLR-native null values, so long as <typeparamref name="T"/>
+        /// is a nullable type.
+        /// </summary>
+        /// <typeparam name="T">The type expected to be found in the column</typeparam>
+        /// <param name="dataRecord">The data record.</param>
+        /// <param name="columnOrdinal">The column ordinal.</param>
+        /// <returns>The value found in the column, null, or (for value types) the default value for <typeparamref name="T"/></returns>
         public static T Value< T >( this IDataRecord dataRecord, int columnOrdinal )
         {
             return GetValue< T >( dataRecord[ columnOrdinal ] );

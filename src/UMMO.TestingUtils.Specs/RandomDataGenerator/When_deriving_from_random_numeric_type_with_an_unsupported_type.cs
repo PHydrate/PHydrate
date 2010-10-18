@@ -36,7 +36,7 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
                 get { return true; }
             }
 
-            protected override Boolean GetBetween(Boolean min, Boolean max)
+            protected override Boolean GetBetween(Boolean minValue, Boolean maxValue)
             {
                 throw new NotImplementedException();
             }

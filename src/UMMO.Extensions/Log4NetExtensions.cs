@@ -28,6 +28,9 @@ using log4net.Core;
 
 namespace UMMO.Extensions
 {
+    /// <summary>
+    /// Extensions on Log4Net ILog
+    /// </summary>
     public static class Log4NetExtensions
     {
         private static readonly Stack< string > MethodStack = new Stack< string >();
@@ -42,6 +45,15 @@ namespace UMMO.Extensions
             MethodLogFormatString = "";
         }
 
+        /// <summary>
+        /// Logs the method.
+        /// </summary>
+        /// <remarks>
+        /// This method is intended to be called inside of a using() block.  When the block is exited,
+        /// the event will automatically be logged, and the method stack will be popped.
+        /// </remarks>
+        /// <param name="log">The log4net ILog object.</param>
+        /// <returns>IDisposable for the using() block.</returns>
         public static IDisposable LogMethod(this ILog log)
         {
             MethodBase callingMethod = GetCallingMethod();
@@ -52,8 +64,19 @@ namespace UMMO.Extensions
             return new Log4NetWrapper( log, callingMethod );
         }
 
+        /// <summary>
+        /// Gets or sets the method log format string.
+        /// </summary>
+        /// <value>The method log format string.</value>
         public static string MethodLogFormatString { get; set; }
 
+        /// <summary>
+        /// Gets or sets the method log level.
+        /// </summary>
+        /// <remarks>
+        /// The default log level is Level.Debug.
+        /// </remarks>
+        /// <value>The method log level.</value>
         public static Level MethodLogLevel { get; set; }
 
         private static MethodBase GetCallingMethod()
@@ -63,7 +86,7 @@ namespace UMMO.Extensions
 
         #region Log4NetWrapper implementation of IDisposable
 
-        public class Log4NetWrapper : IDisposable
+        private class Log4NetWrapper : IDisposable
         {
             private readonly ILog _log;
             private readonly MethodBase _callingMethod;
