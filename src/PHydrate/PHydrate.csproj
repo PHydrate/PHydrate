@@ -37,6 +37,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CreateUsingAttribute.cs" />
+    <Compile Include="Attributes\CRUDAttributeBase.cs" />
+    <Compile Include="Attributes\DeleteUsingAttribute.cs" />
+    <Compile Include="Attributes\HydrateUsingAttribute.cs" />
+    <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="IHydrator.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="ISessionFactory.cs" />
