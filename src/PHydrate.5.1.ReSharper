@@ -5,6 +5,13 @@
     <Sharing>SOLUTION</Sharing>
     <CSharp>
       <FormatSettings>
+        <ANONYMOUS_METHOD_DECLARATION_BRACES>END_OF_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+        <BLANK_LINES_AROUND_SINGLE_LINE_INVOCABLE>1</BLANK_LINES_AROUND_SINGLE_LINE_INVOCABLE>
+        <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
+        <FORCE_ATTRIBUTE_STYLE>SEPARATE</FORCE_ATTRIBUTE_STYLE>
+        <INITIALIZER_BRACES>END_OF_LINE</INITIALIZER_BRACES>
+        <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
+        <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -21,6 +28,29 @@
           <Item>unsafe</Item>
           <Item>volatile</Item>
         </MODIFIERS_ORDER>
+        <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
+        <SIMPLE_EMBEDDED_STATEMENT_STYLE>LINE_BREAK</SIMPLE_EMBEDDED_STATEMENT_STYLE>
+        <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
+        <SPACE_WITHIN_ARRAY_ACCESS_BRACKETS>True</SPACE_WITHIN_ARRAY_ACCESS_BRACKETS>
+        <SPACE_WITHIN_ATTRIBUTE_BRACKETS>True</SPACE_WITHIN_ATTRIBUTE_BRACKETS>
+        <SPACE_WITHIN_CATCH_PARENTHESES>True</SPACE_WITHIN_CATCH_PARENTHESES>
+        <SPACE_WITHIN_FIXED_PARENTHESES>True</SPACE_WITHIN_FIXED_PARENTHESES>
+        <SPACE_WITHIN_FOR_PARENTHESES>True</SPACE_WITHIN_FOR_PARENTHESES>
+        <SPACE_WITHIN_FOREACH_PARENTHESES>True</SPACE_WITHIN_FOREACH_PARENTHESES>
+        <SPACE_WITHIN_IF_PARENTHESES>True</SPACE_WITHIN_IF_PARENTHESES>
+        <SPACE_WITHIN_LOCK_PARENTHESES>True</SPACE_WITHIN_LOCK_PARENTHESES>
+        <SPACE_WITHIN_METHOD_CALL_PARENTHESES>True</SPACE_WITHIN_METHOD_CALL_PARENTHESES>
+        <SPACE_WITHIN_METHOD_PARENTHESES>True</SPACE_WITHIN_METHOD_PARENTHESES>
+        <SPACE_WITHIN_PARENTHESES>True</SPACE_WITHIN_PARENTHESES>
+        <SPACE_WITHIN_SWITCH_PARENTHESES>True</SPACE_WITHIN_SWITCH_PARENTHESES>
+        <SPACE_WITHIN_TYPE_ARGUMENT_ANGLES>True</SPACE_WITHIN_TYPE_ARGUMENT_ANGLES>
+        <SPACE_WITHIN_TYPE_PARAMETER_ANGLES>True</SPACE_WITHIN_TYPE_PARAMETER_ANGLES>
+        <SPACE_WITHIN_USING_PARENTHESES>True</SPACE_WITHIN_USING_PARENTHESES>
+        <SPACE_WITHIN_WHILE_PARENTHESES>True</SPACE_WITHIN_WHILE_PARENTHESES>
+        <STICK_COMMENT>False</STICK_COMMENT>
       </FormatSettings>
       <UsingsSettings />
       <Naming2>
@@ -66,6 +96,24 @@
     <XML>
       <FormatSettings />
     </XML>
+    <FileHeader Region="Copyright"><![CDATA[This file is part of PHydrate.
+
+PHydrate is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PHydrate is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+
+Copyright 2010, Stephen Michael Czetty
+
+]]></FileHeader>
     <GenerateMemberBody />
     <Naming2>
       <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
@@ -88,4 +136,27 @@
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
     </Naming2>
   </CodeStyleSettings>
+  <SharedSolutionTemplateManager>
+    <FileTemplates>
+      <Template uid="f929b89c-a576-4414-8b96-5c36498b7f8b" shortcut="" description="Attribute Class" text="using System;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$ &#xD;&#xA;{&#xD;&#xA;    /// &lt;summary&gt;&#xD;&#xA;	/// $SUMMARY$&#xD;&#xA;	/// &lt;/summary&gt;&#xD;&#xA;	[AttributeUsage(AttributeTargets.$TARGET$, AllowMultiple = $MULTIPLE$, Inherited = $INHERITED$)]&#xD;&#xA;	public class $CLASS$ : Attribute&#xD;&#xA;    {&#xD;&#xA;        $END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
+          <Variable name="CLASS" expression="getFileNameWithoutExtension()" initialRange="-1" />
+          <Variable name="SUMMARY" expression="" initialRange="0" />
+          <Variable name="TARGET" expression="complete()" initialRange="0" />
+          <Variable name="MULTIPLE" expression="constant(&quot;false&quot;)" initialRange="0" />
+          <Variable name="INHERITED" expression="constant(&quot;false&quot;)" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Attribute" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="False" />
+        </CustomProperties>
+      </Template>
+    </FileTemplates>
+  </SharedSolutionTemplateManager>
 </Configuration>
