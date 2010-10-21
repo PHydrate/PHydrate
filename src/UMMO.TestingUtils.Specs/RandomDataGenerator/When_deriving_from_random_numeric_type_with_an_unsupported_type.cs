@@ -22,6 +22,8 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 
         private class BadRandomNumeric : RandomNumericType<Boolean>
         {
+            // Cannot completely cover this method, as the base class will throw an exception
+            // before the constructor can exit.
             public BadRandomNumeric(IRandom random) : base(random) { }
 
             // For test coverage
@@ -64,6 +66,7 @@ namespace UMMO.TestingUtils.Specs.RandomDataGenerator
             private static BadRandomNumeric _badRandomNumeric;
             private static bool _boolValue;
         }
+
         #endregion
     }
 }

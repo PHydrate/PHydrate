@@ -36,6 +36,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
     /// </summary>
     internal static class WafflePhrases
     {
+/*
         public static readonly string[] Prefixes = new[]
                                                        {
                                                            "the", "the", "the", "the", "the", "the", "the", "the", "the"
@@ -68,6 +69,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                            "the consolidation of the",
                                                            "a preponderance of the"
                                                        };
+*/
 
         public static readonly string[] ArtyNouns = new[]
                                                         {
@@ -130,6 +132,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                             "Anne", "Meander", "Dean", "Dirk", "Desmond", "Akiko"
                                                         };
 
+/*
         public static readonly string[] Buzzphrases = new[]
                                                           {
                                                               "|1 |2 |3",
@@ -140,17 +143,22 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                               "|4",
                                                               "|4"
                                                           };
+*/
 
+/*
         public static readonly string[] CardinalSequence = new[]
                                                                {
                                                                    "one", "two", "three", "four", "five", "six",
                                                                    "seven", "eight", "nine", "ten", "eleven", "twelve"
                                                                };
+*/
 
+/*
         public static readonly string[] OrdinalSequences = new[]
                                                                {
                                                                    "first", "second", "third", "fourth", "fifth"
                                                                };
+*/
 
 /*
         public static readonly string[] MaybeHeading = new[]
@@ -166,6 +174,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                              };
 */
 
+/*
         public static readonly string[] PreamblePhrases = new[]
                                                               {
                                                                   "In broad terms, we can define the main issues with |t. There are :-<DL><DT>The |o of |o<DD>|B |C |D.<DT>The |o of |o<DD>|B |C |D.<DT>The |o of |o<DD>|B |C |D.<DT>The |o of |o<DD>|B |C |D.</DL><p>"
@@ -317,7 +326,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                   ,
                                                                   "Whilst it may be true that |B |C |D, one must not lose sight of the fact that"
                                                               };
+*/
 
+/*
         public static readonly string[] SubjectPhrases = new[]
                                                              {
                                                                  "|h strategic goals",
@@ -388,7 +399,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                  "a metonymic reconstruction of the |c",
                                                                  "a primary interrelationship between system and/or subsystem  technologies"
                                                              };
+*/
 
+/*
         public static readonly string[] VerbPhrases = new[]
                                                           {
                                                               "|d the overall efficiency of",
@@ -494,7 +507,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                               "needs to be factored into the equation alongside the",
                                                               "needs to be addessed along with the"
                                                           };
+*/
 
+/*
         public static readonly string[] ObjectPhrases = new[]
                                                             {
                                                                 "the overall game-plan",
@@ -538,6 +553,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                 "the |c. This may explain why the |c |e |d |D",
                                                                 "the |c. This trend may dissipate due to the |c"
                                                             };
+*/
 
         public static readonly string[] Adverbs = new[]
                                                       {
@@ -597,6 +613,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                         "specifies"
                                                     };
 
+/*
         public static readonly string[] FirstAdjectivePhrases = new[]
                                                                     {
                                                                         "comprehensive", "targeted", "realigned",
@@ -651,7 +668,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                         "mechanism-independent", "synergistic",
                                                                         "high-level"
                                                                     };
+*/
 
+/*
         public static readonly string[] SecondAdjectivePhrases = new[]
                                                                      {
                                                                          "fast-track", "transparent", "results-driven",
@@ -755,7 +774,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                                          "ethical",
                                                                          "expressionistic", "resonant", "vibrant"
                                                                      };
+*/
 
+/*
         public static readonly string[] NounPhrases = new[]
                                                           {
                                                               "|o", "|o", "|o", "|o", "|o", "|o", "|o", "|o", "|o", "|o"
@@ -803,7 +824,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                               "delivery",
                                                               "funding", "resources"
                                                           };
+*/
 
+/*
         public static readonly string[] Cliches = new[]
                                                       {
                                                           "|o of |o", "|o of |o", "|o of |o", "|o of |o", "|o of |o",
@@ -905,5 +928,6 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                                                           "large portion of the co-ordination of communication",
                                                           "corporate procedure", "proposed scenario"
                                                       };
+*/
     }
 }

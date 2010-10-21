@@ -73,7 +73,8 @@
     <Compile Include="DataReaderMock\DataReaderMockSpecsBase.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
     <Compile Include="DataReaderMock\DataReaderMockSpecsWithRecordSetDefined.cs" />
-    <Compile Include="DataReaderMock\When_calling_get_functions.cs" />
+    <Compile Include="DataReaderMock\When_calling_get_functions_with_numeric_datatype.cs" />
+    <Compile Include="DataReaderMock\When_calling_get_functions_with_string_datatype.cs" />
     <Compile Include="DataReaderMock\When_closing_datareader.cs" />
     <Compile Include="DataReaderMock\When_column_is_of_bool_type.cs" />
     <Compile Include="DataReaderMock\When_column_is_of_byte_type.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values_in_incorrect_order.cs" />
     <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_greater_than_zero.cs" />
     <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_less_than_zero.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\RandomStringSpecsBase.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\When_getting_random_verb.cs" />
     <Compile Include="RandomDataGenerator\When_deriving_from_random_numeric_type_with_an_unsupported_type.cs" />
     <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal.cs" />
     <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double.cs" />

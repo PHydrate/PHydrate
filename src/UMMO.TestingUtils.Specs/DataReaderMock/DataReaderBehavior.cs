@@ -25,19 +25,6 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Behaviors]
-    public class DataReaderBehavior
-    {
-        protected static TestingUtils.DataReaderMock MockUnderTest;
-        protected static string ColumnName;
-
-        private It Should_return_column_name_when_getname_is_called
-            = () => MockUnderTest.GetName( 0 ).ShouldEqual( ColumnName );
-
-        private It Should_return_false_when_isdbnull_is_called
-            = () => MockUnderTest.IsDBNull(0).ShouldBeFalse();
-    }
-
-    [Behaviors]
     public class DataReaderBehavior<T>
     {
         protected static TestingUtils.DataReaderMock MockUnderTest;

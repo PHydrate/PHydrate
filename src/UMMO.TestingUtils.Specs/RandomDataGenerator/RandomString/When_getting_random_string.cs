@@ -24,22 +24,16 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.RandomDataGenerator.RandomString
 {
     [Subject(typeof(RandomData.RandomString))]
-    public class When_getting_random_string : RandomDataGeneratorTestBase
+    public class When_getting_random_string : RandomStringSpecsBase
     {
-        private Establish Context =()=> _randomString = RandomDataGeneratorUnderTest.String;
-
         private It Should_be_of_type_random_string
-            = () => _randomString.ShouldBeOfType<RandomData.RandomString>();
+            = () => RandomString.ShouldBeOfType<RandomData.RandomString>();
 
         private It Should_implicitly_cast_to_string
             = () =>
                   {
-                      string value = (RandomData.RandomString)_randomString;
+                      string value = (RandomData.RandomString)RandomString;
                       value.ShouldNotBeNull();
                   };
-
-        private static object _randomString;
-
     }
-
 }

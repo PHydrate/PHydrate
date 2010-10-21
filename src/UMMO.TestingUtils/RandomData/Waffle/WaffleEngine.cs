@@ -48,9 +48,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
     {
         private readonly IRandom _random;
 
-        private int _cardinalSequence;
-        private int _ordinalSequence;
-        private string _title;
+        //private int _cardinalSequence;
+        //private int _ordinalSequence;
+        //private string _title;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaffleEngine"/> class.
@@ -85,15 +85,15 @@ namespace UMMO.TestingUtils.RandomData.Waffle
 
                     switch ( phrase[ i ] )
                     {
-                        case 'a':
-                            EvaluateCardinalSequence( escape );
-                            break;
-                        case 'b':
-                            EvaluateOrdinalSequence( escape );
-                            break;
-                        case 'c':
-                            EvaluateRandomPhrase( WafflePhrases.Buzzphrases, escape );
-                            break;
+                        //case 'a':
+                        //    EvaluateCardinalSequence( escape );
+                        //    break;
+                        //case 'b':
+                        //    EvaluateOrdinalSequence( escape );
+                        //    break;
+                        //case 'c':
+                        //    EvaluateRandomPhrase( WafflePhrases.Buzzphrases, escape );
+                        //    break;
                         case 'd':
                             EvaluateRandomPhrase( WafflePhrases.Verbs, escape );
                             break;
@@ -109,42 +109,42 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                         case 'o':
                             EvaluateRandomPhrase( WafflePhrases.ArtyNouns, escape );
                             break;
-                        case 'y':
-                            RandomDate( escape );
-                            break;
-                        case 'h':
-                            EvaluateRandomPhrase( WafflePhrases.Prefixes, escape );
-                            break;
-                        case 'A':
-                            EvaluateRandomPhrase( WafflePhrases.PreamblePhrases, escape );
-                            break;
-                        case 'B':
-                            EvaluateRandomPhrase( WafflePhrases.SubjectPhrases, escape );
-                            break;
-                        case 'C':
-                            EvaluateRandomPhrase( WafflePhrases.VerbPhrases, escape );
-                            break;
-                        case 'D':
-                            EvaluateRandomPhrase( WafflePhrases.ObjectPhrases, escape );
-                            break;
-                        case '1':
-                            EvaluateRandomPhrase( WafflePhrases.FirstAdjectivePhrases, escape );
-                            break;
-                        case '2':
-                            EvaluateRandomPhrase( WafflePhrases.SecondAdjectivePhrases, escape );
-                            break;
-                        case '3':
-                            EvaluateRandomPhrase( WafflePhrases.NounPhrases, escape );
-                            break;
-                        case '4':
-                            EvaluateRandomPhrase( WafflePhrases.Cliches, escape );
-                            break;
-                        case 't':
-                            escape.Append( _title );
-                            break;
-                        case 'n':
-                            escape.Append( "</p>\n<p>" );
-                            break;
+                        //case 'y':
+                        //    RandomDate( escape );
+                        //    break;
+                        //case 'h':
+                        //    EvaluateRandomPhrase( WafflePhrases.Prefixes, escape );
+                        //    break;
+                        //case 'A':
+                        //    EvaluateRandomPhrase( WafflePhrases.PreamblePhrases, escape );
+                        //    break;
+                        //case 'B':
+                        //    EvaluateRandomPhrase( WafflePhrases.SubjectPhrases, escape );
+                        //    break;
+                        //case 'C':
+                        //    EvaluateRandomPhrase( WafflePhrases.VerbPhrases, escape );
+                        //    break;
+                        //case 'D':
+                        //    EvaluateRandomPhrase( WafflePhrases.ObjectPhrases, escape );
+                        //    break;
+                        //case '1':
+                        //    EvaluateRandomPhrase( WafflePhrases.FirstAdjectivePhrases, escape );
+                        //    break;
+                        //case '2':
+                        //    EvaluateRandomPhrase( WafflePhrases.SecondAdjectivePhrases, escape );
+                        //    break;
+                        //case '3':
+                        //    EvaluateRandomPhrase( WafflePhrases.NounPhrases, escape );
+                        //    break;
+                        //case '4':
+                        //    EvaluateRandomPhrase( WafflePhrases.Cliches, escape );
+                        //    break;
+                        //case 't':
+                        //    escape.Append( _title );
+                        //    break;
+                        //case 'n':
+                        //    escape.Append( "</p>\n<p>" );
+                        //    break;
                     }
 
                     if ( titleCase )
@@ -154,6 +154,7 @@ namespace UMMO.TestingUtils.RandomData.Waffle
                     result.Append( phrase[ i ] );
         }
 
+/*
         private void EvaluateCardinalSequence( StringBuilder output )
         {
             if ( _cardinalSequence >= WafflePhrases.CardinalSequence.Length )
@@ -161,7 +162,9 @@ namespace UMMO.TestingUtils.RandomData.Waffle
 
             output.Append( WafflePhrases.CardinalSequence[ _cardinalSequence++ ] );
         }
+*/
 
+/*
         private void EvaluateOrdinalSequence( StringBuilder output )
         {
             if ( _ordinalSequence >= WafflePhrases.OrdinalSequences.Length )
@@ -169,11 +172,14 @@ namespace UMMO.TestingUtils.RandomData.Waffle
 
             output.Append( WafflePhrases.OrdinalSequences[ _ordinalSequence++ ] );
         }
+*/
 
+/*
         private void RandomDate( StringBuilder output )
         {
             output.AppendFormat( "{0:04u}", DateTime.Now.Year - _random.Next( 0, 31 ) );
         }
+*/
 
         private static string TitleCaseWords( string input )
         {

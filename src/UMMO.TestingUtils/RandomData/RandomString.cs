@@ -100,6 +100,15 @@ namespace UMMO.TestingUtils.RandomData
         }
 
         /// <summary>
+        /// A random verb.
+        /// </summary>
+        /// <value>The verb.</value>
+        public string Verb
+        {
+            get { return GetWaffle( "|d" ); }
+        }
+
+        /// <summary>
         /// Performs an implicit conversion from <see cref="UMMO.TestingUtils.RandomData.RandomString"/> to <see cref="System.String"/>.
         /// </summary>
         /// <param name="randomString">The random string.</param>
