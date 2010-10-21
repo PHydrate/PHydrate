@@ -35,8 +35,8 @@
 </node>
 <node CREATED="1287078754603" ID="ID_1007700271" MODIFIED="1287078759629" TEXT="Persist&lt;T&gt; also"/>
 </node>
-<node CREATED="1287083538747" ID="ID_914881715" MODIFIED="1287091413972" TEXT="[Factory(typeof(T))]">
-<node CREATED="1287083550047" ID="ID_326755569" MODIFIED="1287083578627" TEXT="The IHydrationFactory&lt;T&gt; to be used to hydrate objects"/>
+<node CREATED="1287083538747" ID="ID_914881715" MODIFIED="1287700110936" TEXT="[ObjectHydrator(typeof(T))]">
+<node CREATED="1287083550047" ID="ID_326755569" MODIFIED="1287700120457" TEXT="The IObjectHydrator&lt;T&gt; to be used to hydrate objects"/>
 <node CREATED="1287083700466" ID="ID_299766822" MODIFIED="1287083716082" TEXT="Convention default: &lt;Class&gt;Factory??"/>
 </node>
 </node>
@@ -143,9 +143,14 @@
 <node CREATED="1287079827145" ID="ID_410178928" MODIFIED="1287079849724" TEXT="Default HydrationFactory will need public setters anyway."/>
 </node>
 </node>
-<node CREATED="1286997775061" ID="ID_1550261557" MODIFIED="1287165091613" TEXT="T Get&lt;T&gt;(Object parameters)">
+<node CREATED="1286997775061" ID="ID_1550261557" MODIFIED="1287700646799" TEXT="T Get&lt;T&gt;(Object parameters)">
 <node CREATED="1286997792105" ID="ID_1453817618" MODIFIED="1286997831075" TEXT="Queries based on member(s) tagged with UniqueIdentifierAttribute"/>
-<node CREATED="1287165091613" ID="ID_903569389" MODIFIED="1287165123852" TEXT="ie: session.Get&lt;Data&gt;(new { Id1 = 1, Id2 = 2});"/>
+<node CREATED="1287165091613" ID="ID_903569389" MODIFIED="1287700656159" TEXT="ie: session.Get&lt;Data&gt;(new { Id1 = 1, Id2 = 2 });">
+<node CREATED="1287700833495" ID="ID_715726115" MODIFIED="1287700846196" TEXT="I don&apos;t really like this syntax...  Is there a way it can be done with lambdas?"/>
+<node CREATED="1287700849037" ID="ID_385639176" MODIFIED="1287700889127" TEXT="session.Get&lt;Data&gt;(x =&gt; x.Id1 == 1 &amp;&amp; x.Id2 == 2)">
+<node CREATED="1287701072206" ID="ID_715782393" MODIFIED="1287701084792" TEXT="Which would be an Expression&lt;Func&lt;T, bool&gt;&gt;"/>
+</node>
+</node>
 </node>
 <node CREATED="1286997871040" ID="ID_553916446" MODIFIED="1286997928445" TEXT="void Persist&lt;T&gt;(T)">
 <node CREATED="1286997899651" ID="ID_807384461" MODIFIED="1286999015047" TEXT="Saves changed aggregates"/>
@@ -158,9 +163,15 @@
 </node>
 <node CREATED="1287079855770" ID="ID_185411499" MODIFIED="1287079858816" TEXT="IHydrationFactory">
 <node CREATED="1287079858817" ID="ID_1064253972" MODIFIED="1287079865741" TEXT="For default implementation"/>
-<node CREATED="1287079873515" ID="ID_1861612949" MODIFIED="1287079906671" TEXT="Object Hydrate(Type, IDictionary)"/>
+<node CREATED="1287079873515" ID="ID_1861612949" MODIFIED="1287699735273" TEXT="Object Hydrate(Type, IDictionary&lt;string, object&gt;)">
+<node CREATED="1287700070610" ID="ID_827075581" MODIFIED="1287700075831" TEXT="Might not need this."/>
 </node>
-<node CREATED="1287079620945" ID="ID_142736382" MODIFIED="1287081036816" TEXT="IHydrationFactory&lt;out T&gt; : IHydrationFactory">
+<node CREATED="1287699786778" ID="ID_577703086" MODIFIED="1287699795786" TEXT="T Hydrate&lt;T&gt;(IDictionary&lt;string, object&gt;)">
+<node CREATED="1287699800918" ID="ID_1194756001" MODIFIED="1287699843996" TEXT="Will this conflict with IHydrationFactory&lt;T&gt;.Hydrate()?"/>
+<node CREATED="1287699906618" ID="ID_1956553702" MODIFIED="1287699924751" TEXT="I think the abstraction is wrong"/>
+</node>
+</node>
+<node CREATED="1287079620945" ID="ID_142736382" MODIFIED="1287699946784" TEXT="IObjectHydrator&lt;out T&gt;">
 <node CREATED="1287079638185" ID="ID_1307546670" MODIFIED="1287079648515" TEXT="Optional"/>
 <node CREATED="1287092649107" ID="ID_370691262" MODIFIED="1287092665797" TEXT="This will need .NET 4.0."/>
 <node CREATED="1287079648753" ID="ID_77902523" MODIFIED="1287079754648" TEXT="If configured, use this factory to build objects of type T."/>
@@ -171,7 +182,7 @@
 </node>
 </node>
 <node CREATED="1287080212026" ID="ID_1400079527" MODIFIED="1287080222768" TEXT="How do we keep these internally?">
-<node CREATED="1287081061214" ID="ID_1338850838" MODIFIED="1287091341796" TEXT="IDictionary&lt;Type, IHydrationFactory&lt;Object&gt;&gt;"/>
+<node CREATED="1287081061214" ID="ID_1338850838" MODIFIED="1287700192635" TEXT="IDictionary&lt;Type, IObjectHydrator&lt;Object&gt;&gt;"/>
 <node CREATED="1287083744765" ID="ID_608136930" MODIFIED="1287083751967" TEXT="May not be necessary"/>
 </node>
 <node CREATED="1287083893925" ID="ID_1712625270" MODIFIED="1287178179339" TEXT="Implementations will need to have default constructors">
@@ -190,7 +201,7 @@
 <node CREATED="1287091300880" ID="ID_1557681351" MODIFIED="1287091312390" TEXT="These are just silly.  Just cache them in the repository."/>
 </node>
 </node>
-<node CREATED="1287079913757" ID="ID_1809966007" MODIFIED="1287079921472" TEXT="T Hydrate(IDictionary)"/>
+<node CREATED="1287079913757" ID="ID_1809966007" MODIFIED="1287699728208" TEXT="T Hydrate(IDictionary&lt;string, object&gt;)"/>
 </node>
 </node>
 </node>
