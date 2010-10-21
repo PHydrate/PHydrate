@@ -134,6 +134,25 @@ Copyright 2010, Stephen Michael Czetty
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="Aa_bb" StaticnessKind="Static, Instance" AccessRight="Private, Public" Description="MSpec Contexts &amp; Specifications">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Context" />
+          <Kind Name="Machine.Specifications_Specification" />
+        </ElementKinds>
+      </UserRule>
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="aa_bb" StaticnessKind="Static, Instance" AccessRight="Private" Description="MSpec behaviors">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Behavior" />
+        </ElementKinds>
+      </UserRule>
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="AaBb" StaticnessKind="Static, Instance" AccessRight="Public" Description="">
+        <ElementKinds />
+      </UserRule>
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="AaBb" StaticnessKind="Static, Instance" AccessRight="Private, Protected, ProtectedInternal, Internal, Public" Description="MSpec Supporting Fields">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_SupportingField" />
+        </ElementKinds>
+      </UserRule>
     </Naming2>
   </CodeStyleSettings>
   <SharedSolutionTemplateManager>
@@ -159,4 +178,9 @@ Copyright 2010, Stephen Michael Czetty
       </Template>
     </FileTemplates>
   </SharedSolutionTemplateManager>
+  <CodeAnnotations>
+    <Namespace>JetBrains.Annotations</Namespace>
+    <Namespace>Machine.Specifications.Annotations</Namespace>
+    <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
+  </CodeAnnotations>
 </Configuration>
