@@ -14,6 +14,6 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of object to hydrate</typeparam>
         /// <param name="columnValues">The column values.</param>
         /// <returns>The hydrated object</returns>
-        T Hydrate< T >( IDictionary< string, Object > columnValues );
+        T Hydrate< T >( IDictionary< string, Object > columnValues ) where T : new();
     }
 }
