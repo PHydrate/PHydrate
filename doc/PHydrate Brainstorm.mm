@@ -162,7 +162,9 @@
 </node>
 </node>
 <node CREATED="1287079855770" ID="ID_185411499" MODIFIED="1287079858816" TEXT="IHydrationFactory">
-<node CREATED="1287079858817" ID="ID_1064253972" MODIFIED="1287079865741" TEXT="For default implementation"/>
+<node CREATED="1287079858817" ID="ID_1064253972" MODIFIED="1287079865741" TEXT="For default implementation">
+<node CREATED="1287706063064" ID="ID_1641769016" MODIFIED="1287706094115" TEXT="Don&apos;t need this.  Can use IObjectHydrator&lt;Object&gt; for default."/>
+</node>
 <node CREATED="1287079873515" ID="ID_1861612949" MODIFIED="1287699735273" TEXT="Object Hydrate(Type, IDictionary&lt;string, object&gt;)">
 <node CREATED="1287700070610" ID="ID_827075581" MODIFIED="1287700075831" TEXT="Might not need this."/>
 </node>
