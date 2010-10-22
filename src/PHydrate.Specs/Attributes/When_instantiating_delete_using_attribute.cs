@@ -23,10 +23,10 @@
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Test.Attributes
+namespace PHydrate.Specs.Attributes
 {
     [ Subject( typeof(DeleteUsingAttribute) ) ]
-    public class When_instantiating_delete_using_attribute : AttributeSpecificationBase< DeleteUsingAttribute >
+    public class When_instantiating_delete_using_attribute : CrudAttributeSpecificationBase< DeleteUsingAttribute >
     {
         private Establish Context = () => InstantiateAttribute = () => new DeleteUsingAttribute( StoredProcedureName );
 

@@ -23,10 +23,10 @@
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Test.Attributes
+namespace PHydrate.Specs.Attributes
 {
     [ Subject( typeof(HydrateUsingAttribute) ) ]
-    public class When_instantiating_hydrate_using_attribute : AttributeSpecificationBase< HydrateUsingAttribute >
+    public class When_instantiating_hydrate_using_attribute : CrudAttributeSpecificationBase< HydrateUsingAttribute >
     {
         private Establish Context = () => InstantiateAttribute = () => new HydrateUsingAttribute( StoredProcedureName );
 

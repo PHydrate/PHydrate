@@ -21,6 +21,7 @@
 #endregion
 
 using System;
+using System.Linq.Expressions;
 
 namespace PHydrate
 {
@@ -41,15 +42,7 @@ namespace PHydrate
         /// <typeparam name = "T">The type of object to return.</typeparam>
         /// <param name = "query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
-        T Get< T >( Action< T > query );
-
-        /// <summary>
-        ///   Gets an object of type <typeparamref name = "T" /> given the arguments in the query.
-        /// </summary>
-        /// <typeparam name = "T">The type of object to return.</typeparam>
-        /// <param name = "parameters">The parameters used to select the object.</param>
-        /// <returns>The found object, or null if not found.</returns>
-        T Get< T >( Object parameters );
+        T Get< T >( Expression< Func<T, bool > > query );
 
         /// <summary>
         ///   Persists the specified object.

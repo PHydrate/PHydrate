@@ -41,11 +41,15 @@
     <Compile Include="Attributes\CRUDAttributeBase.cs" />
     <Compile Include="Attributes\DeleteUsingAttribute.cs" />
     <Compile Include="Attributes\HydrateUsingAttribute.cs" />
+    <Compile Include="Attributes\ObjectHydratorAttribute.cs" />
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
-    <Compile Include="IHydrator.cs" />
+    <Compile Include="Core\IObjectHydrator.cs" />
+    <Compile Include="Core\DefaultObjectHydrator.cs" />
+    <Compile Include="IObjectHydrator.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="ISessionFactory.cs" />
     <Compile Include="ITransaction.cs" />
+    <Compile Include="PHydrateException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

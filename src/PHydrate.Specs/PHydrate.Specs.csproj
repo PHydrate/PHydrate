@@ -8,8 +8,8 @@
     <ProjectGuid>{E48A20EE-AEE0-469B-847E-D0812262D63D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PHydrate.Test</RootNamespace>
-    <AssemblyName>PHydrate.Test</AssemblyName>
+    <RootNamespace>PHydrate.Specs</RootNamespace>
+    <AssemblyName>PHydrate.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -52,10 +52,16 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\machine.specifications\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\lib\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -66,11 +72,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\AttributeSpecificationBase.cs" />
+    <Compile Include="Attributes\CrudAttributeSpecificationBase.cs" />
     <Compile Include="Attributes\When_instantiating_create_using_attribute.cs" />
     <Compile Include="Attributes\When_instantiating_delete_using_attribute.cs" />
     <Compile Include="Attributes\When_instantiating_hydrate_using_attribute.cs" />
+    <Compile Include="Attributes\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
     <Compile Include="Attributes\When_instantiating_update_using_attribute.cs" />
+    <Compile Include="Core\When_hydrating_an_object_using_default_object_hydrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

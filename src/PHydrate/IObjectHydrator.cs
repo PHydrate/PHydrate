@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -21,22 +21,21 @@
 #endregion
 
 using System;
-using Machine.Specifications;
-using PHydrate.Attributes;
-using UMMO.TestingUtils;
+using System.Collections.Generic;
 
-namespace PHydrate.Test.Attributes
+namespace PHydrate
 {
-    public abstract class AttributeSpecificationBase< T > where T : CrudAttributeBase
+    /// <summary>
+    ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
+    /// </summary>
+    /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
+    public interface IObjectHydrator< out T >
     {
-        protected static Func< T > InstantiateAttribute;
-
-        protected static string StoredProcedureName;
-        protected static T CrudAttribute;
-
-        private Establish GlobalContext = () => StoredProcedureName = A.Random.String.Resembling.A.Noun;
-                          // TODO: Add Verb to UMMO.RandomString
-
-        private Because Of = () => CrudAttribute = InstantiateAttribute();
+        /// <summary>
+        ///   Hydrates the object of type <typeparamref name = "T" />.
+        /// </summary>
+        /// <param name = "columnValues">The column values from the database.</param>
+        /// <returns>The hydrated object</returns>
+        T Hydrate( IDictionary< string, Object > columnValues );
     }
 }

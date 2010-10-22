@@ -23,10 +23,10 @@
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Test.Attributes
+namespace PHydrate.Specs.Attributes
 {
     [ Subject( typeof(UpdateUsingAttribute) ) ]
-    public class When_instantiating_update_using_attribute : AttributeSpecificationBase< UpdateUsingAttribute >
+    public class When_instantiating_update_using_attribute : CrudAttributeSpecificationBase< UpdateUsingAttribute >
     {
         private Establish Context = () => InstantiateAttribute = () => new UpdateUsingAttribute( StoredProcedureName );
 

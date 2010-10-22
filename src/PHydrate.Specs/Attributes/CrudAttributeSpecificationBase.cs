@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,17 +20,23 @@
 
 #endregion
 
+using System;
 using Machine.Specifications;
 using PHydrate.Attributes;
+using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Attributes
 {
-    [ Subject( typeof(CreateUsingAttribute) ) ]
-    public class When_instantiating_create_using_attribute : CrudAttributeSpecificationBase< CreateUsingAttribute >
+    public abstract class CrudAttributeSpecificationBase< T > where T : CrudAttributeBase
     {
-        private Establish Context = () => InstantiateAttribute = () => new CreateUsingAttribute( StoredProcedureName );
+        protected static Func< T > InstantiateAttribute;
 
-        private It Should_store_procedure_name_in_property
-            = () => CrudAttribute.ProcedureName.ShouldEqual( StoredProcedureName );
+        protected static string StoredProcedureName;
+        protected static T CrudAttribute;
+
+        private Establish GlobalContext = () => StoredProcedureName = A.Random.String.Resembling.A.Noun;
+                          // TODO: Add Verb to UMMO.RandomString
+
+        private Because Of = () => CrudAttribute = InstantiateAttribute();
     }
 }
