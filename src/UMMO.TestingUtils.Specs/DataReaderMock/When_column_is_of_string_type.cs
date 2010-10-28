@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.String.Resembling.A.Noun;
 
-        private Behaves_like< DataReaderBehavior<string> > a_datareader_with_string_column;
+        private Behaves_like< ADataReaderContainingA<string> > a_datareader_with_string_column;
 
         private It Should_throw_exception_when_getint32_is_called
             = () => typeof(InvalidCastException).ShouldBeThrownBy( () => MockUnderTest.GetInt32( 0 ) );

@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
     [Behaviors]
-    public class DataReaderBehavior<T>
+    public class ADataReaderContainingA<T>
     {
         protected static TestingUtils.DataReaderMock MockUnderTest;
         protected static string ColumnName;

@@ -29,7 +29,7 @@ namespace UMMO.TestingUtils.Specs.DataReaderMock
     {
         private Establish Context = () => ExpectedValue = A.Random.LongInteger;
 
-        private Behaves_like<DataReaderBehavior<long>> a_datareader_with_long_column;
+        private Behaves_like<ADataReaderContainingA<long>> a_datareader_with_long_column;
 
         private It Should_return_value_when_getint64_is_called
             = () => MockUnderTest.GetInt64( 0 ).ShouldEqual( ExpectedValue );
