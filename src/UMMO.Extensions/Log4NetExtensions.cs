@@ -33,7 +33,8 @@ namespace UMMO.Extensions
     /// </summary>
     public static class Log4NetExtensions
     {
-        private static readonly Stack< string > MethodStack = new Stack< string >();
+        private static readonly Stack< KeyValuePair< string, string > > MethodStack =
+            new Stack< KeyValuePair< string, string > >();
 
         static Log4NetExtensions()
         {
@@ -41,8 +42,7 @@ namespace UMMO.Extensions
             MethodLogLevel = Level.Debug;
 
             // Default string to log method entry/exit
-            // TODO: Define this string and it's format parameters!
-            MethodLogFormatString = "";
+            MethodLogFormatString = "{0}ing method {1}";
         }
 
         /// <summary>
@@ -57,9 +57,14 @@ namespace UMMO.Extensions
         public static IDisposable LogMethod(this ILog log)
         {
             MethodBase callingMethod = GetCallingMethod();
-            MethodStack.Push( callingMethod.Name );
+            string fullyQualifiedName = callingMethod.DeclaringType.FullName + "." + callingMethod.Name;
+            MethodStack.Push( new KeyValuePair< string, string >( fullyQualifiedName, callingMethod.Name ) );
 
-            log.Logger.Log( callingMethod.DeclaringType, MethodLogLevel, String.Format(MethodLogFormatString), null );
+
+            log.Logger.Log( callingMethod.DeclaringType, MethodLogLevel,
+                            String.Format( MethodLogFormatString, "Enter",
+                                           fullyQualifiedName,
+                                           callingMethod.Name ), null );
 
             return new Log4NetWrapper( log, callingMethod );
         }
@@ -68,6 +73,13 @@ namespace UMMO.Extensions
         /// Gets or sets the method log format string.
         /// </summary>
         /// <value>The method log format string.</value>
+        /// <remarks>
+        /// The format string replacements are:
+        /// {0} - Event (Enter, Exit)
+        /// {1} - Fully qualified name of the method
+        /// {2} - Short name of the method
+        /// {3} - Parameters (comma seperated) (TODO)
+        /// </remarks>
         public static string MethodLogFormatString { get; set; }
 
         /// <summary>
@@ -101,10 +113,10 @@ namespace UMMO.Extensions
 
             public void Dispose()
             {
-                _log.Logger.Log( _callingMethod.DeclaringType, MethodLogLevel, String.Format( MethodLogFormatString ),
+                var exitingMethod = MethodStack.Pop();
+                _log.Logger.Log( _callingMethod.DeclaringType, MethodLogLevel,
+                                 String.Format( MethodLogFormatString, "Exit", exitingMethod.Key, exitingMethod.Value ),
                                  null );
-
-                MethodStack.Pop();
             }
 
             #endregion

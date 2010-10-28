@@ -22,21 +22,20 @@
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
 using Rhino.Mocks;
-using UMMO.TestingUtils;
 
 namespace UMMO.TestingUtils.Specs.RandomDataGenerator
 {
     public abstract class RandomDataGeneratorTestBase
     {
-        protected static TestingUtils.RandomDataGenerator RandomDataGeneratorUnderTest;
-        protected static IRandom Random;
-
         [UsedImplicitly]
         private Establish Context = () =>
                                         {
                                             Random = MockRepository.GenerateStub< IRandom >();
                                             RandomDataGeneratorUnderTest = new RandomDataGeneratorAccessor( Random );
                                         };
+
+        protected static TestingUtils.RandomDataGenerator RandomDataGeneratorUnderTest;
+        protected static IRandom Random;
 
         #region Nested type: RandomDataGeneratorAccessor
 

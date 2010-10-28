@@ -22,12 +22,14 @@
 using log4net;
 using log4net.Core;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 using Rhino.Mocks;
 
 namespace UMMO.Extensions.Specs.Log4NetExtensions
 {
     public class Log4NetExtensionsSpecsBase
     {
+        [UsedImplicitly]
         private Establish Context = () =>
                                         {
                                             LogStub = MockRepository.GenerateStub< ILog >();
