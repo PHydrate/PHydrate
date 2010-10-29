@@ -23,6 +23,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using log4net;
 using log4net.Core;
 
@@ -41,8 +43,14 @@ namespace UMMO.Extensions
             // Set the default log level for method wrappers.
             MethodLogLevel = Level.Debug;
 
+            // Set the default log level for exceptions.
+            ExceptionLogLevel = Level.Error;
+
             // Default string to log method entry/exit
-            MethodLogFormatString = "{0}ing method {1}";
+            MethodLogFormatString = "{0} method {1}";
+
+            // Default string to log an exception
+            ExceptionLogFormatString = "Exception thrown in method {0}";
         }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace UMMO.Extensions
         /// </remarks>
         /// <param name="log">The log4net ILog object.</param>
         /// <returns>IDisposable for the using() block.</returns>
-        public static IDisposable LogMethod(this ILog log)
+        public static IExceptionLogger LogMethod(this ILog log)
         {
             MethodBase callingMethod = GetCallingMethod();
             string fullyQualifiedName = callingMethod.DeclaringType.FullName + "." + callingMethod.Name;
@@ -62,7 +70,7 @@ namespace UMMO.Extensions
 
 
             log.Logger.Log( callingMethod.DeclaringType, MethodLogLevel,
-                            String.Format( MethodLogFormatString, "Enter",
+                            String.Format( MethodLogFormatString, "Entering",
                                            fullyQualifiedName,
                                            callingMethod.Name ), null );
 
@@ -75,10 +83,9 @@ namespace UMMO.Extensions
         /// <value>The method log format string.</value>
         /// <remarks>
         /// The format string replacements are:
-        /// {0} - Event (Enter, Exit)
+        /// {0} - ActionVerb (Entering, Exiting, Exception)
         /// {1} - Fully qualified name of the method
         /// {2} - Short name of the method
-        /// {3} - Parameters (comma seperated) (TODO)
         /// </remarks>
         public static string MethodLogFormatString { get; set; }
 
@@ -91,6 +98,26 @@ namespace UMMO.Extensions
         /// <value>The method log level.</value>
         public static Level MethodLogLevel { get; set; }
 
+        /// <summary>
+        /// Gets or sets the exception log format string.
+        /// </summary>
+        /// <value>The exception log format string.</value>
+        /// <remarks>
+        /// The fomat string replacements are:
+        /// {0} - Fully qualified name of the method
+        /// {1} - Short name of the method
+        /// </remarks>
+        public static string ExceptionLogFormatString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the exception log level.
+        /// </summary>
+        /// <remarks>
+        /// The default log level is Level.Error
+        /// </remarks>
+        /// <value>The exception log level.</value>
+        public static Level ExceptionLogLevel { get; set; }
+
         private static MethodBase GetCallingMethod()
         {
             return new StackTrace().GetFrame( 2 ).GetMethod();
@@ -98,7 +125,7 @@ namespace UMMO.Extensions
 
         #region Log4NetWrapper implementation of IDisposable
 
-        private class Log4NetWrapper : IDisposable
+        private class Log4NetWrapper : IExceptionLogger
         {
             private readonly ILog _log;
             private readonly MethodBase _callingMethod;
@@ -114,9 +141,21 @@ namespace UMMO.Extensions
             public void Dispose()
             {
                 var exitingMethod = MethodStack.Pop();
+                bool exceptionThrown = Marshal.GetExceptionCode() != 0 || Marshal.GetExceptionPointers() != IntPtr.Zero;
+
                 _log.Logger.Log( _callingMethod.DeclaringType, MethodLogLevel,
-                                 String.Format( MethodLogFormatString, "Exit", exitingMethod.Key, exitingMethod.Value ),
+                                 String.Format( MethodLogFormatString, "Exiting" + (exceptionThrown ? "with exception:" : ""),
+                                                exitingMethod.Key,
+                                                exitingMethod.Value ),
                                  null );
+            }
+
+            public void LogException( Exception exception )
+            {
+                var exceptionMethod = MethodStack.Peek();
+                _log.Logger.Log( _callingMethod.DeclaringType, ExceptionLogLevel,
+                                 String.Format( ExceptionLogFormatString, exceptionMethod.Key, exceptionMethod.Value ),
+                                 exception );
             }
 
             #endregion

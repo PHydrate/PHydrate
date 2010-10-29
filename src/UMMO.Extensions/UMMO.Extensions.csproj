@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="DataRecordExtensions.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
+    <Compile Include="IExceptionLogger.cs" />
     <Compile Include="Log4NetExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

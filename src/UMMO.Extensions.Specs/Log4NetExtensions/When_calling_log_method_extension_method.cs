@@ -1,5 +1,4 @@
-﻿using System;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using Rhino.Mocks;
 
 namespace UMMO.Extensions.Specs.Log4NetExtensions
@@ -12,7 +11,7 @@ namespace UMMO.Extensions.Specs.Log4NetExtensions
         private It Should_have_called_i_logger_log
             = () => LoggerStub.VerifyAllExpectations();
 
-        private It Should_return_an_i_disposable
-            = () => ReturnValue.ShouldBeOfType< IDisposable >();
+        private It Should_return_an_i_exceptionlogger
+            = () => ReturnValue.ShouldBeOfType< ILogWrapper >();
     }
 }

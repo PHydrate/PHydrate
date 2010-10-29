@@ -33,7 +33,7 @@ namespace UMMO.Extensions.Specs.Log4NetExtensions
         private Establish Context = () =>
                                         {
                                             LogStub = MockRepository.GenerateStub< ILog >();
-                                            LoggerStub = MockRepository.GenerateMock< ILogger >();
+                                            LoggerStub = MockRepository.GenerateMock< log4net.Core.ILogger >();
                                             LogStub.Stub( x => x.Logger ).Return( LoggerStub );
                                             LoggerStub.Expect( x => x.Log( null, null, null, null ) ).IgnoreArguments();
                                         };
