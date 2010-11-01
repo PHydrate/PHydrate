@@ -4,6 +4,17 @@
         <name>UMMO.Extensions</name>
     </assembly>
     <members>
+        <member name="T:UMMO.Extensions.ILogWrapper">
+            <summary>
+            Interface for exception logging
+            </summary>
+        </member>
+        <member name="M:UMMO.Extensions.ILogWrapper.LogException(System.Exception)">
+            <summary>
+            Logs an exception.
+            </summary>
+            <param name="exception">The exception.</param>
+        </member>
         <member name="T:UMMO.Extensions.Log4NetExtensions">
             <summary>
             Extensions on Log4Net ILog
@@ -25,6 +36,12 @@
             Gets or sets the method log format string.
             </summary>
             <value>The method log format string.</value>
+            <remarks>
+            The format string replacements are:
+            {0} - ActionVerb (Entering, Exiting, Exception)
+            {1} - Fully qualified name of the method
+            {2} - Short name of the method
+            </remarks>
         </member>
         <member name="P:UMMO.Extensions.Log4NetExtensions.MethodLogLevel">
             <summary>
@@ -34,6 +51,26 @@
             The default log level is Level.Debug.
             </remarks>
             <value>The method log level.</value>
+        </member>
+        <member name="P:UMMO.Extensions.Log4NetExtensions.ExceptionLogFormatString">
+            <summary>
+            Gets or sets the exception log format string.
+            </summary>
+            <value>The exception log format string.</value>
+            <remarks>
+            The fomat string replacements are:
+            {0} - Fully qualified name of the method
+            {1} - Short name of the method
+            </remarks>
+        </member>
+        <member name="P:UMMO.Extensions.Log4NetExtensions.ExceptionLogLevel">
+            <summary>
+            Gets or sets the exception log level.
+            </summary>
+            <remarks>
+            The default log level is Level.Error
+            </remarks>
+            <value>The exception log level.</value>
         </member>
         <member name="T:UMMO.Extensions.DataRecordExtensions">
             <summary>
