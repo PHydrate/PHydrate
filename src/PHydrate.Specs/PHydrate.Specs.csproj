@@ -77,8 +77,12 @@
     <Compile Include="Attributes\When_instantiating_delete_using_attribute.cs" />
     <Compile Include="Attributes\When_instantiating_hydrate_using_attribute.cs" />
     <Compile Include="Attributes\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
+    <Compile Include="Attributes\When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator.cs" />
     <Compile Include="Attributes\When_instantiating_update_using_attribute.cs" />
+    <Compile Include="Core\DefaultObjectHydratorSpecificationBase.cs" />
     <Compile Include="Core\When_hydrating_an_object_using_default_object_hydrator.cs" />
+    <Compile Include="Core\When_hydrating_an_object_without_a_parameterless_constructor.cs" />
+    <Compile Include="Core\When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

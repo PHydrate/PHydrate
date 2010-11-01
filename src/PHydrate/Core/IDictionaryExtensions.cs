@@ -20,22 +20,23 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PHydrate.Core
 {
-    /// <summary>
-    ///   Default hydrator implementation
-    /// </summary>
-    public interface IObjectHydrator
+    public static class IDictionaryExtensions
     {
-        /// <summary>
-        ///   Hydrates the specified object type.
-        /// </summary>
-        /// <typeparam name = "T">The type of object to hydrate</typeparam>
-        /// <param name = "columnValues">The column values.</param>
-        /// <returns>The hydrated object</returns>
-        T Hydrate< T >( IDictionary< string, Object > columnValues );
+        public static bool ContainsKeyNoCase< T >( this IDictionary< string, T > dictionary, string key,
+                                                   out string actualName )
+        {
+            foreach ( string k in dictionary.Keys.Where( k => k.ToLowerInvariant() == key.ToLowerInvariant() ) )
+            {
+                actualName = k;
+                return true;
+            }
+            actualName = null;
+            return false;
+        }
     }
 }

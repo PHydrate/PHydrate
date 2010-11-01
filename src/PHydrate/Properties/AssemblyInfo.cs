@@ -62,4 +62,5 @@ using System.Runtime.InteropServices;
 [ assembly: AssemblyFileVersion( "0.1.0.*" ) ]
 
 // Allow the Specifications to see the internals
-[assembly: InternalsVisibleTo("PHydrate.Specs")]
+
+[ assembly: InternalsVisibleTo( "PHydrate.Specs" ) ]

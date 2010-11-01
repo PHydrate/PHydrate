@@ -43,6 +43,7 @@
     <Compile Include="Attributes\HydrateUsingAttribute.cs" />
     <Compile Include="Attributes\ObjectHydratorAttribute.cs" />
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
+    <Compile Include="Core\IDictionaryExtensions.cs" />
     <Compile Include="Core\IObjectHydrator.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
     <Compile Include="IObjectHydrator.cs" />
