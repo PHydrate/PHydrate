@@ -1,0 +1,21 @@
+== PHydrate - An alternative to NHibernate
+
+----
+
+=== What is the motivation?
+
+I have come across many projects at my job that benefit from using ORM
+libraries such as NHibernate (our current ORM of choice).  Our DBA has
+placed a restriction on us that applications may only access the database
+via stored procedures.  I realized that when this restriction is in place,
+much of NHibernate becomes useless.  It no longer needs to generate SQL,
+and configuration becomes difficult, especially when using tools such as
+ReSharper.
+
+The goal of this project is to create an ORM that embraces the stored
+procedure paradigm.  Instead of creating mapping files (or classes, if you
+use Fluent NHibernate), objects can be mapped using attributes.  Besides
+some startup configuration, PHydrate will stay out of your code's way.
+
+At this point, everything else is in flux.  As I solidify things, I will add
+to this README.
