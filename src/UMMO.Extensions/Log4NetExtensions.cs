@@ -62,7 +62,7 @@ namespace UMMO.Extensions
         /// </remarks>
         /// <param name="log">The log4net ILog object.</param>
         /// <returns>IDisposable for the using() block.</returns>
-        public static IExceptionLogger LogMethod(this ILog log)
+        public static ILogWrapper LogMethod(this ILog log)
         {
             MethodBase callingMethod = GetCallingMethod();
             string fullyQualifiedName = callingMethod.DeclaringType.FullName + "." + callingMethod.Name;
@@ -125,7 +125,7 @@ namespace UMMO.Extensions
 
         #region Log4NetWrapper implementation of IDisposable
 
-        private class Log4NetWrapper : IExceptionLogger
+        private class Log4NetWrapper : ILogWrapper
         {
             private readonly ILog _log;
             private readonly MethodBase _callingMethod;

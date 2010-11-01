@@ -81,6 +81,7 @@
     <Compile Include="DataRecordExtensions\When_calling_data_record_value_extension_method.cs" />
     <Compile Include="IDictionaryExtensions\When_calling_dictionary_try_get_value_extension_method.cs" />
     <Compile Include="Log4NetExtensions\Log4NetExtensionsSpecsBase.cs" />
+    <Compile Include="Log4NetExtensions\When_calling_log_extension.cs" />
     <Compile Include="Log4NetExtensions\When_calling_log_method_extension_method.cs" />
     <Compile Include="Log4NetExtensions\When_disposing_return_value_of_log_method.cs" />
     <Compile Include="Log4NetExtensions\When_throwing_exception_from_within_log_using_block.cs" />
