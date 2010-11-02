@@ -1,5 +1,5 @@
-bin
-obj
+bin/
+obj/
 *.suo
 _ReSharper*
 *.user
@@ -7,4 +7,4 @@ _ReSharper*
 *.InstallLog
 *.InstallState
 *.tdnet
-lib/Machine.Specifications/Tests
+lib/Machine.Specifications/Tests/
