@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project name="UMMO" default="build" basedir=".">
+	<description>Builds the UMMO libraries</description>
+	<property name="debug" value="false" overwrite="false" />
+	<property name="build.configuration" value="release" overwrite="false" />
+	<property name="build.optimize" value="true" overwrite="false" />
+	<target name="clean" description="Remove all generated files">
+		<delete dir="Build" />
+	</target>
+	<target name="build" description="Build UMMO">
+		<if test="${not directory::exists('Build')}">
+			<echo message="Creating Build directory..." />
+			<mkdir dir="Build" />
+		</if>
+		<echo message="Building UMMO.TestingUtils.dll..." />
+		<csc doc="Build/UMMO.TestingUtils.xml" optimize="${build.optimize}" output="Build/UMMO.TestingUtils.dll" target="library">
+			<sources>
+				<include name="src/UMMO.TestingUtils/**/*.cs" />
+			</sources>
+			<nowarn>
+				<warning number="1607" />
+			</nowarn>
+		</csc>
+		<echo message="Building UMMO.Extensions.dll..." />
+		<csc doc="Build/UMMO.Extensions.xml" optimize="${build.optimize}" output="Build/UMMO.Extensions.dll" target="library">
+			<sources>
+				<include name="src/UMMO.Extensions/**/*.cs" />
+			</sources>
+			<references>
+				<include name="lib/log4net/*.dll" />
+			</references>
+			<nowarn>
+				<warning number="1607" />
+			</nowarn>
+		</csc>
+	</target>
+</project>
