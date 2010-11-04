@@ -114,4 +114,15 @@
 			<arg line="${fileset::to-string('test.assemblies', ' ')}"/>
 		</exec>
 	</target>
+
+	<target name="distro" depends="buildLibrary">
+		<echo message="Creating zip file..." />
+		<zip zipfile="${outputdir}/UMMO-bin.zip">
+			<fileset basedir="${outputdir}">
+				<include name="*.xml" />
+				<include name="*.dll" />
+				<exclude name="*.Specs.dll" />
+			</fileset>
+		</zip>
+	</target>
 </project>
