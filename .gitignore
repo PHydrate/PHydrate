@@ -8,3 +8,4 @@ _ReSharper*
 *.InstallState
 *.tdnet
 lib/Machine.Specifications/Tests/
+Build/
