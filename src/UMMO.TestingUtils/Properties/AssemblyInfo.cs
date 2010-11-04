@@ -57,8 +57,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[ assembly: AssemblyVersion( "0.2.0.*" ) ]
-[ assembly: AssemblyFileVersion( "0.2.0.*" ) ]
+[ assembly: AssemblyVersion( "0.5.0.*" ) ]
+[ assembly: AssemblyFileVersion( "0.5.0.0" ) ]
 
 // Allow the specifications assembly access to internals.
 [ assembly:InternalsVisibleTo("UMMO.TestingUtils.Specs") ]
