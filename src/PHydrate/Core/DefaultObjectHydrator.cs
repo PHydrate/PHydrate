@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -43,7 +44,7 @@ namespace PHydrate.Core
             PropertyInfo[] propertySetters = typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public );
             foreach ( PropertyInfo pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Name ) ) )
                 pi.SetValue( objToHydrate, columnValues[ pi.Name ], BindingFlags.Public | BindingFlags.NonPublic, null,
-                             null, null );
+                             null, CultureInfo.CurrentUICulture );
 
             return objToHydrate;
         }

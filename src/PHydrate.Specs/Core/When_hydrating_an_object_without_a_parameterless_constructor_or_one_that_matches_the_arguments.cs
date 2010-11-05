@@ -36,6 +36,7 @@ namespace PHydrate.Specs.Core
 
         private class TestHydrationTargetWithExplicitConstructor : TestHydrationTarget
         {
+            [CoverageExclude]
             public TestHydrationTargetWithExplicitConstructor( int fakeProperty, string anotherFakeProperty )
             {
             }

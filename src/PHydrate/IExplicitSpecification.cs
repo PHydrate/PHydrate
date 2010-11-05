@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,22 +20,19 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-
 namespace PHydrate
 {
     /// <summary>
-    ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
+    /// A code-based specification.
     /// </summary>
-    /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
-    public interface IObjectHydrator</* out */T>
+    /// <typeparam name="T">The type this specification accepts</typeparam>
+    public interface IExplicitSpecification< /* in */ T > : ISpecification< T >
     {
         /// <summary>
-        ///   Hydrates the object of type <typeparamref name = "T" />.
+        /// Determine if an object satifies the specification
         /// </summary>
-        /// <param name = "columnValues">The column values from the database.</param>
-        /// <returns>The hydrated object</returns>
-        T Hydrate(IDictionary<string, Object> columnValues);
+        /// <param name="obj">The object to check.</param>
+        /// <returns>True if the object is specified, false otherwise.</returns>
+        bool Satisfies( T obj );
     }
 }

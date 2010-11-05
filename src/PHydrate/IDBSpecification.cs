@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -21,21 +21,20 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace PHydrate
 {
     /// <summary>
-    ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
+    /// Database criteria for a type
     /// </summary>
-    /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
-    public interface IObjectHydrator</* out */T>
+    /// <typeparam name="T">The type this specification accepts</typeparam>
+    public interface IDbSpecification< /* in */ T > : ISpecification< T >
     {
         /// <summary>
-        ///   Hydrates the object of type <typeparamref name = "T" />.
+        /// Gets the criteria.
         /// </summary>
-        /// <param name = "columnValues">The column values from the database.</param>
-        /// <returns>The hydrated object</returns>
-        T Hydrate(IDictionary<string, Object> columnValues);
+        /// <value>The criteria.</value>
+        Expression< Func< T, bool > > Criteria { get; }
     }
 }
