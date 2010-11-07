@@ -28,7 +28,7 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core
 {
-    public class DefaultObjectHydratorSpecificationBase
+    public abstract class DefaultObjectHydratorSpecificationBase
     {
         protected static IObjectHydrator ObjectHydrator;
         protected static int RandomInteger;

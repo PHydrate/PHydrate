@@ -51,7 +51,8 @@ namespace PHydrate.Core
                 command.CommandText = storedProcedureName;
                 foreach ( IDataParameter dataParameter in dataParameters )
                     command.Parameters.Add( dataParameter );
-                return command.ExecuteReader( CommandBehavior.CloseConnection );
+                IDataReader executeStoredProcedureReader = command.ExecuteReader( CommandBehavior.CloseConnection );
+                return executeStoredProcedureReader;
             }
         }
 

@@ -28,7 +28,7 @@ namespace PHydrate.Attributes
     ///   Specify a custom IObjectHydrator for the class
     /// </summary>
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false ) ]
-    [BaseTypeRequired(typeof(IObjectHydrator<>))]
+    //[BaseTypeRequired(typeof(IObjectHydrator<>))]
     public class ObjectHydratorAttribute : Attribute
     {
         /// <summary>
