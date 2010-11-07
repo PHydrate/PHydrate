@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ResharperAnnotations.cs" />
     <Compile Include="Attributes\CreateUsingAttribute.cs" />
     <Compile Include="Attributes\CRUDAttributeBase.cs" />
     <Compile Include="Attributes\DeleteUsingAttribute.cs" />

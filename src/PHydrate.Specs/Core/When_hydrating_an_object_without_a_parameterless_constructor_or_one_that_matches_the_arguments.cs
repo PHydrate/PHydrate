@@ -30,28 +30,29 @@ namespace PHydrate.Specs.Core
     public class When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments :
         DefaultObjectHydratorSpecificationBase
     {
+        private Because Of =
+            () =>
+            _exception =
+            Catch.Exception( () => ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
+
+        private It Should_throw_exception_of_type_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
+
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
+
         private static Exception _exception;
 
         #region Test Class
 
         private class TestHydrationTargetWithExplicitConstructor : TestHydrationTarget
         {
+            [CoverageExclude]
             public TestHydrationTargetWithExplicitConstructor( int fakeProperty, string anotherFakeProperty )
             {
             }
         }
 
         #endregion
-
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
-
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
-
-        private It Should_throw_exception_of_type_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }
