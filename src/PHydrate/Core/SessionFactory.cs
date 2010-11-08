@@ -27,8 +27,30 @@ namespace PHydrate.Core
     /// <summary>
     /// Default implementation of ISessionFactory
     /// </summary>
-    public class SessionFactory : ISessionFactory
+    public sealed class SessionFactory : ISessionFactory
     {
+        private readonly IDatabaseService _databaseService;
+
+        private static SessionFactory _instance;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionFactory"/> class.
+        /// </summary>
+        /// <param name="databaseService">The database service.</param>
+        internal SessionFactory(IDatabaseService databaseService)
+        {
+            _databaseService = databaseService;
+        }
+
+        /// <summary>
+        /// Creates an instance of the SessionFactory.
+        /// </summary>
+        /// <returns></returns>
+        public static ISessionFactory Create()
+        {
+            return _instance ?? ( _instance = null ); // TODO
+        }
+
         #region Implementation of ISessionFactory
 
         /// <summary>
@@ -48,7 +70,7 @@ namespace PHydrate.Core
         /// </returns>
         public ISession GetSession()
         {
-            throw new NotImplementedException();
+            return new Session( _databaseService );
         }
 
         #endregion

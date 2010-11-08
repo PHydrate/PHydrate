@@ -85,6 +85,7 @@
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
     <Compile Include="Core\Session\SessionSpecificationBase.cs" />
     <Compile Include="Core\Session\When_getting_an_object_without_a_hydrator_procedure_defined.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_with_expression_containing_boolean_and.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_simple_expression.cs" />
     <Compile Include="Core\DefaultObjectHydrator\When_hydrating_an_object_using_default_object_hydrator.cs" />
     <Compile Include="Core\DefaultObjectHydrator\When_hydrating_an_object_without_a_parameterless_constructor.cs" />
