@@ -29,6 +29,11 @@ namespace UMMO.TestingUtils.RandomData
     public class ExtendedRandom : Random, IRandom
     {
         #region IRandom Members
+        /// <summary>
+        /// Returns an array of bytes of the specified length filled with random numbers.
+        /// </summary>
+        /// <param name="bufferLength">Length of the buffer.</param>
+        /// <returns>A random array of bytes.</returns>
         public byte[] NextBytes( int bufferLength )
         {
             var bytes = new byte[bufferLength];
@@ -46,6 +51,10 @@ namespace UMMO.TestingUtils.RandomData
             }
         }
 
+        /// <summary>
+        /// Returns a random decimal number.
+        /// </summary>
+        /// <returns>A fixed-point decimal number</returns>
         public decimal NextDecimal()
         {
             bool sign = Next(2) == 1;
@@ -67,11 +76,26 @@ namespace UMMO.TestingUtils.RandomData
             return NextDecimal(false);
         }
 
+        /// <summary>
+        /// Returns a random decimal number less than or equal to <paramref name="maxValue"/>.
+        /// </summary>
+        /// <param name="maxValue">The maximum possible value.</param>
+        /// <returns>
+        /// A fixed-point decimal number less than or equal to <paramref name="maxValue"/>
+        /// </returns>
         public decimal NextDecimal(decimal maxValue)
         {
             return (NextNonNegativeDecimal() / Decimal.MaxValue) * maxValue;
         }
 
+        /// <summary>
+        /// Returns a random decimal number between <paramref name="minValue"/> and <paramref name="maxValue"/>.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>
+        /// A fixed-point decimal number between <paramref name="minValue"/> and <paramref name="maxValue"/>.
+        /// </returns>
         public decimal NextDecimal(decimal minValue, decimal maxValue)
         {
             if (minValue > maxValue)
@@ -84,6 +108,10 @@ namespace UMMO.TestingUtils.RandomData
         }
 
 
+        /// <summary>
+        /// Returns a random 64-bit integer.
+        /// </summary>
+        /// <returns>A 64-bit signed integer.</returns>
         public long NextLong()
         {
             var bytes = new byte[sizeof(long)];
@@ -93,11 +121,22 @@ namespace UMMO.TestingUtils.RandomData
             return BitConverter.ToInt64(bytes, 0);
         }
 
+        /// <summary>
+        /// Returns a random 64-bit integer less than <paramref name="maxValue"/>.
+        /// </summary>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>A 64-bit signed integer.</returns>
         public long NextLong(long maxValue)
         {
             return (long)((Math.Abs(NextLong()) / (double)Int64.MaxValue) * maxValue);
         }
 
+        /// <summary>
+        /// Returns a random 64-bit integer between <paramref name="minValue"/> and <paramref name="maxValue"/>.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>A 64-bit signed integer.</returns>
         public long NextLong(long minValue, long maxValue)
         {
             if (minValue > maxValue)

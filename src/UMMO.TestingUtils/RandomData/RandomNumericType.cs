@@ -30,6 +30,9 @@ namespace UMMO.TestingUtils.RandomData
     /// <typeparam name="T">The type of random value being created</typeparam>
     public abstract class RandomNumericType< T > where T : struct, IComparable< T >
     {
+        /// <summary>
+        /// The random number generator
+        /// </summary>
         protected readonly IRandom Random;
         private readonly T _maxValue;
         private readonly T _minValue;
@@ -60,9 +63,9 @@ namespace UMMO.TestingUtils.RandomData
         internal RandomNumericType() {}
 
         /// <summary>
-        /// Gets the value.
+        /// Gets the random value.
         /// </summary>
-        /// <value>The value.</value>
+        /// <value>The random value.</value>
         public abstract T Value { get; }
 
         /// <summary>
@@ -103,7 +106,7 @@ namespace UMMO.TestingUtils.RandomData
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="UMMO.TestingUtils.RandomData.RandomNumericType&lt;T&gt;"/> to <see cref="T"/>.
+        /// Performs an implicit conversion from <see cref="UMMO.TestingUtils.RandomData.RandomNumericType&lt;T&gt;"/> to <typeparamref name="T"/>.
         /// </summary>
         /// <param name="randomNumeric">The random numeric.</param>
         /// <returns>The result of the conversion.</returns>

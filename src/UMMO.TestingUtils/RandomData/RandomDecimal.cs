@@ -32,11 +32,21 @@ namespace UMMO.TestingUtils.RandomData
         /// <param name="random">The random number generator.</param>
         public RandomDecimal( IRandom random ) : base( random ) {}
 
+        /// <summary>
+        /// Gets the random value.
+        /// </summary>
+        /// <value>The random value.</value>
         public override decimal Value
         {
             get { return Random.NextDecimal(); }
         }
 
+        /// <summary>
+        /// Return a random value of type decimal between the minimum and maximum.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns></returns>
         protected override decimal GetBetween( decimal minValue, decimal maxValue )
         {
             return Random.NextDecimal(minValue, maxValue);
