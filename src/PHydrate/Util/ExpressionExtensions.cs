@@ -42,13 +42,13 @@ namespace PHydrate.Util
             var dataParameters = new Dictionary< string, Object >();
 
             // Go through the expression using tail recursion
-            GetDataParametersRecursive( expression, dataParameters );
+            GetDataParametersRecursive( expression.Body, dataParameters );
             return dataParameters;
         }
 
-        private static void GetDataParametersRecursive< T >( Expression< Func< T, bool > > expression, IDictionary< string, object > dataParameters )
+        private static void GetDataParametersRecursive( Expression expression, IDictionary< string, object > dataParameters )
         {
-            var operation = expression.Body as BinaryExpression;
+            var operation = expression as BinaryExpression;
             if (operation != null)
             {
                 switch (operation.NodeType)
@@ -57,6 +57,12 @@ namespace PHydrate.Util
                         string name = ( (MemberExpression)operation.Left ).Member.Name;
                         if ( !dataParameters.ContainsKey( name ) )
                             dataParameters.Add( name, GetValue( operation.Right ) );
+                        break;
+
+                    case ExpressionType.AndAlso:
+                    case ExpressionType.And:
+                        GetDataParametersRecursive( operation.Left, dataParameters );
+                        GetDataParametersRecursive( operation.Right, dataParameters );
                         break;
 
                     default:
