@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,17 +20,19 @@
 
 #endregion
 
-using System.Linq;
 using Machine.Specifications;
+using PHydrate.Attributes;
+using PHydrate.Util;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Util.TypeExtensions
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_expression_containing_boolean_and : SessionSpecificationBase
+    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
+    public class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
     {
-        private Because Of = () => RequestedObject = SessionUnderTest.Get< TestObject >( x => x.Key == 1 && x.Key == 1 ).FirstOrDefault();
+        private static CreateUsingAttribute _attribute;
+        private Because Of = () => _attribute = typeof(TestClass).GetAttribute< CreateUsingAttribute >();
 
-        private It Should_not_be_null
-            = () => RequestedObject.ShouldNotBeNull();
+        private It Should_return_requested_attribute
+            = () => _attribute.ShouldNotBeNull();
     }
 }

@@ -5,7 +5,7 @@ using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.SessionFactory
 {
-    public class SessionFactorySpecificationBase
+    public abstract class SessionFactorySpecificationBase
     {
         [ UsedImplicitly ]
         private Establish Context = () => {

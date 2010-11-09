@@ -29,7 +29,7 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.Session
 {
-    public class SessionSpecificationBase
+    public abstract class SessionSpecificationBase
     {
         [ UsedImplicitly ]
         private Establish Context = () => {
@@ -41,7 +41,7 @@ namespace PHydrate.Specs.Core.Session
                                         _databaseService = MockRepository.GenerateStub< IDatabaseService >();
                                         _databaseService.Stub( x => x.ExecuteStoredProcedureReader( "", null ) ).
                                             IgnoreArguments().Return( _dataReaderMock );
-                                        SessionUnderTest = new PHydrate.Core.Session( _databaseService );
+                                        SessionUnderTest = new PHydrate.Core.Session( _databaseService, new PHydrate.Core.DefaultObjectHydrator() );
                                     };
 
         protected static ISession SessionUnderTest;

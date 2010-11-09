@@ -20,17 +20,18 @@
 
 #endregion
 
-using System.Linq;
 using Machine.Specifications;
+using PHydrate.Util;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Util.TypeExtensions
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_expression_containing_boolean_and : SessionSpecificationBase
+    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
+    public class When_constructing_using_the_default_constructor : TypeExtensionsSpecificationBase
     {
-        private Because Of = () => RequestedObject = SessionUnderTest.Get< TestObject >( x => x.Key == 1 && x.Key == 1 ).FirstOrDefault();
+        private static TestClass _expectedType;
+        private Because Of = () => _expectedType = typeof(TestClass).ConstructUsingDefaultConstructor< TestClass >();
 
-        private It Should_not_be_null
-            = () => RequestedObject.ShouldNotBeNull();
+        private It Should_return_expected_class
+            = () => _expectedType.ShouldNotBeNull();
     }
 }

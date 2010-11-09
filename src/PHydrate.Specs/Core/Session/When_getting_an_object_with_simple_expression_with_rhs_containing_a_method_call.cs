@@ -20,6 +20,7 @@
 
 #endregion
 
+using System.Linq;
 using Machine.Specifications;
 
 namespace PHydrate.Specs.Core.Session
@@ -28,7 +29,7 @@ namespace PHydrate.Specs.Core.Session
     public class When_getting_an_object_with_simple_expression_with_rhs_containing_a_method_call :
         SessionSpecificationBase
     {
-        private Because Of = () => RequestedObject = SessionUnderTest.Get< TestObject >( x => x.Key == Test() );
+        private Because Of = () => RequestedObject = SessionUnderTest.Get< TestObject >( x => x.Key == Test() ).FirstOrDefault();
 
         private It Should_not_be_null
             = () => RequestedObject.ShouldNotBeNull();
