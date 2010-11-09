@@ -223,7 +223,7 @@ Copyright 2010, Stephen Michael Czetty
         <Variables>
           <Variable name="CLASS" expression="guessExpectedType()" initialRange="0" />
           <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
-          <Variable name="SPECIFICATIONCONTEXT" expression="" initialRange="0" />
+          <Variable name="SPECIFICATIONCONTEXT" expression="getFileNameWithoutExtension()" initialRange="0" />
         </Variables>
         <CustomProperties>
           <Property key="FileName" value="Class" />

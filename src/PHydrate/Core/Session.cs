@@ -91,7 +91,7 @@ namespace PHydrate.Core
             if ( specification is IDbSpecification< T > )
                 foundObjects = Get( ( (IDbSpecification< T >)specification ).Criteria );
             else
-                foundObjects = GetAll< T >();
+                foundObjects = Get< T >( null as Expression< Func< T, bool > > );
 
             Func< T, bool > satisifies = x => true;
             if ( specification is IExplicitSpecification< T > )
@@ -106,11 +106,6 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object to persist.</typeparam>
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable< T > GetAll< T >()
         {
             throw new NotImplementedException();
         }

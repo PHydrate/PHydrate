@@ -42,7 +42,8 @@ namespace PHydrate.Util
             var dataParameters = new Dictionary< string, Object >();
 
             // Go through the expression using tail recursion
-            GetDataParametersRecursive( expression.Body, dataParameters );
+            if (expression != null)
+                GetDataParametersRecursive( expression.Body, dataParameters );
             return dataParameters;
         }
 
