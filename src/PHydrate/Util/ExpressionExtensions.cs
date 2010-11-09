@@ -85,7 +85,7 @@ namespace PHydrate.Util
         {
             // ReSharper disable UnusedMember.Local
             public T GetVariableValue<T>(Expression expression)
-                // ReSharper restore UnusedMember.Local
+            // ReSharper restore UnusedMember.Local
             {
                 var accessorExpression = Expression.Lambda<Func<T>>(expression);
                 var accessor = accessorExpression.Compile();

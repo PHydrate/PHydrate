@@ -70,7 +70,7 @@ namespace PHydrate.Core
         /// </returns>
         public ISession GetSession()
         {
-            return new Session( _databaseService );
+            return new Session( _databaseService, new DefaultObjectHydrator() );
         }
 
         #endregion

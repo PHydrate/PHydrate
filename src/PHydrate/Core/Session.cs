@@ -1,4 +1,27 @@
+#region Copyright
+
+// This file is part of PHydrate.
+// 
+// PHydrate is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PHydrate is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Copyright 2010, Stephen Michael Czetty
+// 
+
+#endregion
+
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
@@ -18,10 +41,11 @@ namespace PHydrate.Core
         /// Initializes a new instance of the <see cref="Session"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
-        public Session(IDatabaseService databaseService)
+        /// <param name="defaultObjectHydrator">The object hydrator to use by default</param>
+        internal Session( IDatabaseService databaseService, IObjectHydrator defaultObjectHydrator )
         {
             _databaseService = databaseService;
-            _defaultObjectHydrator = new DefaultObjectHydrator();
+            _defaultObjectHydrator = defaultObjectHydrator;
         }
 
         #region Implementation of ISession
@@ -41,11 +65,11 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of object to return.</typeparam>
         /// <param name="query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
-        public T Get< T >( Expression< Func< T, bool > > query )
+        public IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
         {
             // Get the name of the stored procedure that will hydrate this object
             var hydrationAttribute = typeof(T).GetAttribute< HydrateUsingAttribute >();
-            if (hydrationAttribute == null || String.IsNullOrEmpty(hydrationAttribute.ProcedureName))
+            if ( hydrationAttribute == null || String.IsNullOrEmpty( hydrationAttribute.ProcedureName ) )
                 throw new PHydrateException(
                     String.Format(
                         "Unable to get object of type {0}.  Define a hydration procedure with [HydrateUsing]",
@@ -54,26 +78,26 @@ namespace PHydrate.Core
             return HydrateFromStoredProcedure( hydrationAttribute, query );
         }
 
-        private T HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute, Expression< Func< T, bool > > query )
+        /// <summary>
+        /// Gets an object of type <typeparamref name="T"/> given the specification.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to return.</typeparam>
+        /// <param name="specification">The specification.</param>
+        /// <returns>The found object, or null.</returns>
+        public IEnumerable< T > Get< T >( ISpecification< T > specification )
         {
-            var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
-                                                                            query.GetDataParameters() );
+            IEnumerable< T > foundObjects;
 
-            if (dataReader.Read())
-            {
-                // TODO: Fix IObjectHydrator so Default and other hydrators don't have different interfaces
-                IObjectHydrator< T > hydrator = GetHydrator< T >();
-                return hydrator == null
-                           ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
-                           : hydrator.Hydrate( dataReader.ToDictionary() );
-            }
+            if ( specification is IDbSpecification< T > )
+                foundObjects = Get( ( (IDbSpecification< T >)specification ).Criteria );
+            else
+                foundObjects = GetAll< T >();
 
-            return default(T);
-        }
+            Func< T, bool > satisifies = x => true;
+            if ( specification is IExplicitSpecification< T > )
+                satisifies = ( (IExplicitSpecification< T >)specification ).Satisfies;
 
-        private IObjectHydrator<T> GetHydrator< T >()
-        {
-            return null;
+            return foundObjects.Where( obj => satisifies( obj ) );
         }
 
         /// <summary>
@@ -84,6 +108,44 @@ namespace PHydrate.Core
         public void Persist< T >( T objectToPersist )
         {
             throw new NotImplementedException();
+        }
+
+        private IEnumerable< T > GetAll< T >()
+        {
+            throw new NotImplementedException();
+        }
+
+        private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
+                                                                  Expression< Func< T, bool > > query )
+        {
+            var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
+                                                                            query.GetDataParameters() );
+
+            // TODO: Fix IObjectHydrator so Default and other hydrators don't have different interfaces
+            IObjectHydrator< T > hydrator = GetHydrator< T >();
+            while ( dataReader.Read() )
+            {
+                yield return hydrator == null
+                                 ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
+                                 : hydrator.Hydrate( dataReader.ToDictionary() );
+            }
+        }
+
+        private static IObjectHydrator< T > GetHydrator< T >()
+        {
+            var objectHydratorAttribute = typeof(T).GetAttribute< ObjectHydratorAttribute >();
+            if ( objectHydratorAttribute == null )
+                return null;
+
+            var hydrator = objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor< IObjectHydrator< T > >();
+
+            // TODO: Remove this restriction to enable dependency injection.  Perhaps hook in structuremap or another IoC container?
+            if (hydrator == null)
+                throw new PHydrateException(
+                    String.Format( "Could not construct custom Hydrator {0}.  Class must have a default constructor!",
+                                   objectHydratorAttribute.HydratorType.FullName ) );
+
+            return hydrator;
         }
 
         #endregion
