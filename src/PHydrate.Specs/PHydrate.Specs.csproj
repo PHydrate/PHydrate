@@ -100,6 +100,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\DataReaderExtensions\DataReaderExtensionsSpecificationBase.cs" />
     <Compile Include="Util\DataReaderExtensions\When_converting_from_datareader_to_dictionary.cs" />
+    <Compile Include="Util\DbCommandExtensions\DbCommandExtensionsSpecificationBase.cs" />
+    <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_explicit_direction.cs" />
+    <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_no_direction.cs" />
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_simple_expression_containing_equals.cs" />

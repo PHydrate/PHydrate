@@ -49,6 +49,11 @@ namespace PHydrate.Specs.Core.DatabaseService
                                         DbCommand.Expect( x => x.CommandText ).SetPropertyWithArgument( ProcedureName );
                                         DbCommand.Expect( x => x.ExecuteReader( CommandBehavior.CloseConnection ) ).
                                             Return( ExpectedDataReader );
+                                        DbCommand.Stub( x => x.CreateParameter() ).Return(
+                                            MockRepository.GenerateStub< IDbDataParameter >() );
+                                        DbCommand.Stub( x => x.Parameters ).Return(
+                                            MockRepository.GenerateStub< IDataParameterCollection >() );
+
                                         ServiceUnderTest = new PHydrate.Core.DatabaseService( _dbConnection );
                                     };
     }
