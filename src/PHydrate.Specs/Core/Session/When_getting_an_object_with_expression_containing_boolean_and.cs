@@ -22,15 +22,26 @@
 
 using System.Linq;
 using Machine.Specifications;
+using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
     public class When_getting_an_object_with_expression_containing_boolean_and : SessionSpecificationBase
     {
-        private Because Of = () => RequestedObject = SessionUnderTest.Get< TestObject >( x => x.Key == 1 && x.Key == 1 ).FirstOrDefault();
+        private Because Of =
+            () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == 1 && x.Key == 1 ).ToList();
+
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
+
+        private It Should_call_stored_procedure_with_parameter_named_key
+            = () => AssertDatabaseServiceParameter( "Key", 1 );
 
         private It Should_not_be_null
-            = () => RequestedObject.ShouldNotBeNull();
+            = () => RequestedObjects.ShouldNotBeNull();
+
+        private It Should_return_correct_record
+            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 1 );
     }
 }

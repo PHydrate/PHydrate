@@ -20,40 +20,30 @@
 
 #endregion
 
+using System;
+using System.Collections.Generic;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
 using PHydrate.Attributes;
 using PHydrate.Core;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.Session
 {
     public abstract class SessionSpecificationBase
     {
-        [ UsedImplicitly ]
-        private Establish Context = () => {
-                                        _dataReaderMock = A.DataReader as DataReaderMock;
-                                        _dataReaderMock.AddRecordSet( "Key" );
-                                        _dataReaderMock.AddRow( 1 );
-                                        _dataReaderMock.Playback();
-
-                                        _databaseService = MockRepository.GenerateStub< IDatabaseService >();
-                                        _databaseService.Stub( x => x.ExecuteStoredProcedureReader( "", null ) ).
-                                            IgnoreArguments().Return( _dataReaderMock );
-                                        SessionUnderTest = new PHydrate.Core.Session( _databaseService, new PHydrate.Core.DefaultObjectHydrator() );
-                                    };
-
         protected static ISession SessionUnderTest;
-        private static IDatabaseService _databaseService;
-        protected static TestObject RequestedObject;
+        protected static IDatabaseService DatabaseService;
+        protected static IList< TestObject > RequestedObjects;
         private static DataReaderMock _dataReaderMock;
 
         #region Test Classes
 
         #region Nested type: TestObject
 
-        [HydrateUsing("TestStoredProcedure")]
+        [ HydrateUsing( "TestStoredProcedure" ) ]
         protected class TestObject
         {
             public int Key { get; set; }
@@ -63,6 +53,7 @@ namespace PHydrate.Specs.Core.Session
 
         #region Nested type: TestObjectNoHydrator
 
+        [UsedImplicitly]
         protected class TestObjectNoHydrator
         {
             public int Key { get; set; }
@@ -70,6 +61,95 @@ namespace PHydrate.Specs.Core.Session
 
         #endregion
 
+        #region Nested type: TestObjectExplicitHydrator
+
+        [HydrateUsing("TestStoredProcedure")]
+        [ObjectHydrator(typeof(TestObjectHydrator))]
+        protected class TestObjectExplicitHydrator
+        {
+            public int Key { get; set; }
+        }
+
         #endregion
+
+        #region Nested type: TestObjectHydrator
+
+        private class TestObjectHydrator : IObjectHydrator<TestObjectExplicitHydrator>
+        {
+            #region Implementation of IObjectHydrator<TestObjectExplicitHydrator>
+
+            public TestObjectExplicitHydrator Hydrate(IDictionary<string, object> columnValues)
+            {
+                return new TestObjectExplicitHydrator { Key = (int)columnValues["Key"] };
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Nested type: TestObjectExplicitHydrator
+
+        [HydrateUsing("TestStoredProcedure")]
+        [ObjectHydrator(typeof(TestObjectHydratorNoDefaultConstructor))]
+        protected class TestObjectExplicitHydratorNoDefaultConstructor
+        {
+            public int Key { get; set; }
+        }
+
+        #endregion
+
+        #region Nested type: TestObjectHydrator
+
+        private class TestObjectHydratorNoDefaultConstructor : IObjectHydrator<TestObjectExplicitHydrator>
+        {
+            [CoverageExclude]
+            public TestObjectHydratorNoDefaultConstructor([UsedImplicitly]int foo)
+            {
+            }
+
+            #region Implementation of IObjectHydrator<TestObjectExplicitHydrator>
+
+            [CoverageExclude]
+            public TestObjectExplicitHydrator Hydrate(IDictionary<string, object> columnValues)
+            {
+                return new TestObjectExplicitHydrator { Key = (int)columnValues["Key"] };
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #endregion
+
+        [ UsedImplicitly ]
+        private Establish Context = () => {
+                                        _dataReaderMock = A.DataReader as DataReaderMock;
+                                        _dataReaderMock.AddRecordSet( "Key" );
+                                        _dataReaderMock.AddRow( 1 );
+                                        _dataReaderMock.AddRow( 2 );
+                                        _dataReaderMock.Playback();
+
+                                        DatabaseService = MockRepository.GenerateStub< IDatabaseService >();
+                                        DatabaseService.Expect( x => x.ExecuteStoredProcedureReader( "", null ) ).
+                                            Constraints( Is.Equal( "TestStoredProcedure" ), Is.NotNull() ).Return(
+                                                _dataReaderMock );
+
+                                        SessionUnderTest = new PHydrate.Core.Session( DatabaseService,
+                                                                                      new PHydrate.Core.
+                                                                                          DefaultObjectHydrator() );
+                                    };
+
+        protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue )
+        {
+            var parameters =
+                (IDictionary< string, object >)
+                DatabaseService.GetArgumentsForCallsMadeOn( x => x.ExecuteStoredProcedureReader( "", null ) )[ 0 ][
+                    parameterValue ];
+            parameters.Keys.ShouldContain( parameterName );
+            parameters[ parameterName ].ShouldEqual( parameterValue );
+        }
     }
 }

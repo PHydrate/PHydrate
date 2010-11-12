@@ -132,15 +132,22 @@ namespace PHydrate.Core
             if ( objectHydratorAttribute == null )
                 return null;
 
-            var hydrator = objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor< IObjectHydrator< T > >();
+            try
+            {
+                var hydrator =
+                    objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor< IObjectHydrator< T > >();
 
-            // TODO: Remove this restriction to enable dependency injection.  Perhaps hook in structuremap or another IoC container?
-            if (hydrator == null)
+                return hydrator;
+            }
+            catch ( PHydrateInternalException )
+            {
+                // No default constructor found.  Promote to a PHydrateException
+                // TODO: Remove this restriction to enable dependency injection.  Perhaps hook in structuremap or another IoC container?
                 throw new PHydrateException(
-                    String.Format( "Could not construct custom Hydrator {0}.  Class must have a default constructor!",
-                                   objectHydratorAttribute.HydratorType.FullName ) );
-
-            return hydrator;
+                    String.Format(
+                        "Could not construct custom Hydrator {0}.  Class must have a default constructor!",
+                        objectHydratorAttribute.HydratorType.FullName ) );
+            }
         }
 
         #endregion

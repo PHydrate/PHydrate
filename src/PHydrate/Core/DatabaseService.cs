@@ -56,6 +56,11 @@ namespace PHydrate.Core
             }
         }
 
+        public IDataReader ExecuteStoredProcedureReader(string storedProcedureName)
+        {
+            return ExecuteStoredProcedureReader( storedProcedureName, null );
+        }
+
         #endregion
     }
 }

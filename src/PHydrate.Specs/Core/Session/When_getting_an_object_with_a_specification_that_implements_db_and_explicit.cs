@@ -20,16 +20,18 @@
 
 #endregion
 
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Machine.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_simple_expression : SessionSpecificationBase
+    public class When_getting_an_object_with_a_specification_that_implements_db_and_explicit : SessionSpecificationBase
     {
-        private Because Of = () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == 1 ).ToList();
+        private Because Of = () => RequestedObjects = SessionUnderTest.Get( new TestSpecification() ).ToList();
 
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
@@ -41,6 +43,34 @@ namespace PHydrate.Specs.Core.Session
             = () => RequestedObjects.ShouldNotBeNull();
 
         private It Should_return_correct_record
-            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 1 );
+            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 2 );
+
+        private It Should_return_one_record
+            = () => RequestedObjects.Count.ShouldEqual( 1 );
+
+        #region Test Specification Class
+
+        private class TestSpecification : IExplicitSpecification< TestObject >, IDbSpecification< TestObject >
+        {
+            #region Implementation of IExplicitSpecification<TestObject>
+
+            public bool Satisfies( TestObject obj )
+            {
+                return obj.Key == 2;
+            }
+
+            #endregion
+
+            #region Implementation of IDbSpecification<TestObject>
+
+            public Expression< Func< TestObject, bool > > Criteria
+            {
+                get { return x => x.Key == 1; }
+            }
+
+            #endregion
+        }
+
+        #endregion
     }
 }
