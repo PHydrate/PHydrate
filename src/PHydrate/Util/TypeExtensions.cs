@@ -21,6 +21,7 @@
 #endregion
 
 using System;
+using System.Reflection;
 
 namespace PHydrate.Util
 {
@@ -41,6 +42,31 @@ namespace PHydrate.Util
             if ( attributes.Length > 0 )
                 return attributes[ 0 ] as T;
             return null;
+        }
+
+        /// <summary>
+        /// Gets the default constructor.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static ConstructorInfo GetDefaultConstructor(this Type type)
+        {
+            return type.GetConstructor( Type.EmptyTypes );
+        }
+
+        /// <summary>
+        /// Constructs the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type to cast to on return.</typeparam>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static T ConstructUsingDefaultConstructor<T>(this Type type)
+        {
+            ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
+            if (defaultConstructor == null)
+                throw new PHydrateInternalException( "Unable to construct object {0}, no default constructor." );
+
+            return (T)defaultConstructor.Invoke( new object[] {} );
         }
     }
 }

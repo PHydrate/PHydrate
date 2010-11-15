@@ -21,38 +21,27 @@
 #endregion
 
 using System;
+using System.Linq;
 using Machine.Specifications;
-using PHydrate.Core;
 
-namespace PHydrate.Specs.Core
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(DefaultObjectHydrator) ) ]
-    public class When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments :
-        DefaultObjectHydratorSpecificationBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public class When_getting_an_object_with_an_explicit_hydrator_that_has_no_default_constructor :
+        SessionSpecificationBase
     {
+        private static Exception _exception;
+
         private Because Of =
             () =>
             _exception =
-            Catch.Exception( () => ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
-
-        private It Should_throw_exception_of_type_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+            Catch.Exception(
+                () => SessionUnderTest.Get< TestObjectExplicitHydratorNoDefaultConstructor >( x => x.Key == 1 ).ToList() );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private static Exception _exception;
-
-        #region Test Class
-
-        private class TestHydrationTargetWithExplicitConstructor : TestHydrationTarget
-        {
-            [CoverageExclude]
-            public TestHydrationTargetWithExplicitConstructor( int fakeProperty, string anotherFakeProperty )
-            {
-            }
-        }
-
-        #endregion
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }

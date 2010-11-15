@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -21,15 +21,14 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Core;
 
-namespace PHydrate.Specs.Core
+namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
-    [ Subject( typeof(DefaultObjectHydrator) ) ]
-    public class When_hydrating_an_object_using_default_object_hydrator : DefaultObjectHydratorSpecificationBase
+    [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
+    public class When_hydrating_an_object_without_a_parameterless_constructor : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
-            () => ReturnedObject = ObjectHydrator.Hydrate< TestHydrationTarget >( ColumnValues );
+            () => ReturnedObject = ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues );
 
         private It Should_populate_the_integer_property_correctly
             = () => ( (TestHydrationTarget)ReturnedObject ).IntegerProperty.ShouldEqual( RandomInteger );
@@ -37,7 +36,20 @@ namespace PHydrate.Specs.Core
         private It Should_populate_the_string_property_correctly
             = () => ( (TestHydrationTarget)ReturnedObject ).StringProperty.ShouldEqual( RandomString );
 
-        private It Should_return_object_of_type_test_hydration_target
-            = () => ReturnedObject.ShouldBeOfType< TestHydrationTarget >();
+        private It Should_return_object_of_type_test_hydration_target_with_explicit_constructor
+            = () => ReturnedObject.ShouldBeOfType< TestHydrationTargetWithExplicitConstructor >();
+
+        #region Test Class
+
+        private class TestHydrationTargetWithExplicitConstructor : TestHydrationTarget
+        {
+            public TestHydrationTargetWithExplicitConstructor( int integerProperty, string stringProperty )
+            {
+                IntegerProperty = integerProperty;
+                StringProperty = stringProperty;
+            }
+        }
+
+        #endregion
     }
 }

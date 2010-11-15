@@ -28,6 +28,7 @@
           <Item>unsafe</Item>
           <Item>volatile</Item>
         </MODIFIERS_ORDER>
+        <PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>False</PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>
         <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
         <SIMPLE_EMBEDDED_STATEMENT_STYLE>LINE_BREAK</SIMPLE_EMBEDDED_STATEMENT_STYLE>
         <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
@@ -158,6 +159,42 @@ Copyright 2010, Stephen Michael Czetty
     </Naming2>
   </CodeStyleSettings>
   <SharedSolutionTemplateManager>
+    <LiveTemplates>
+      <Template uid="3075e2fe-4991-4b03-baff-42f24d682df3" shortcut="po" description="" text="=()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="48476a4e-7329-4d23-ab38-35937c835b98" shortcut="sc" description="Specification Context" text="private Establish Context =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="04b79314-6f96-4ea4-bb51-777c5f1d192e" shortcut="sb" description="Specification Because" text="private Because Of =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="6164c5ca-7c47-47a7-bcea-eeffad47ae75" shortcut="st" description="Specification It" text="private It Should_$SPECNAME$&#xD;&#xA; =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="SPECNAME" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+    </LiveTemplates>
     <FileTemplates>
       <Template uid="f929b89c-a576-4414-8b96-5c36498b7f8b" shortcut="" description="Attribute Class" text="using System;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$ &#xD;&#xA;{&#xD;&#xA;    /// &lt;summary&gt;&#xD;&#xA;	/// $SUMMARY$&#xD;&#xA;	/// &lt;/summary&gt;&#xD;&#xA;	[AttributeUsage(AttributeTargets.$TARGET$, AllowMultiple = $MULTIPLE$, Inherited = $INHERITED$)]&#xD;&#xA;	public class $CLASS$ : Attribute&#xD;&#xA;    {&#xD;&#xA;        $END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
         <Context>
@@ -174,6 +211,22 @@ Copyright 2010, Stephen Michael Czetty
         </Variables>
         <CustomProperties>
           <Property key="FileName" value="Attribute" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="False" />
+        </CustomProperties>
+      </Template>
+      <Template uid="2b702d26-6885-4d82-8943-423be844eb35" shortcut="" description="Specification" text="using Machine.Specifications;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;    [ Subject( typeof($CLASS$) ) ]&#xD;&#xA;    public class $SPECIFICATIONCONTEXT$&#xD;&#xA;    {&#xD;&#xA;		$END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="CLASS" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
+          <Variable name="SPECIFICATIONCONTEXT" expression="getFileNameWithoutExtension()" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Class" />
           <Property key="Extension" value="cs" />
           <Property key="ValidateFileName" value="False" />
         </CustomProperties>

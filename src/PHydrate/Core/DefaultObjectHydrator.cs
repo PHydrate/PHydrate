@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using PHydrate.Util;
 
 namespace PHydrate.Core
 {
@@ -54,7 +55,7 @@ namespace PHydrate.Core
         private static T GetObject< T >( IDictionary< string, object > columnValues )
         {
             // Try to get a default constructor
-            ConstructorInfo defaultConstructor = typeof(T).GetConstructor( Type.EmptyTypes );
+            ConstructorInfo defaultConstructor = typeof(T).GetDefaultConstructor();
 
             // ReSharper disable ConditionIsAlwaysTrueOrFalse
             if ( defaultConstructor != null )
