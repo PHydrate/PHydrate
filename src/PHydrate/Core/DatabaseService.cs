@@ -20,7 +20,9 @@
 
 #endregion
 
+using System.Collections.Generic;
 using System.Data;
+using PHydrate.Util;
 
 namespace PHydrate.Core
 {
@@ -43,17 +45,22 @@ namespace PHydrate.Core
         #region Implementation of IDatabaseService
 
         public IDataReader ExecuteStoredProcedureReader( string storedProcedureName,
-                                                         params IDataParameter[] dataParameters )
+                                                         IDictionary<string, object> dataParameters )
         {
             using ( IDbCommand command = _dbConnection.CreateCommand() )
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = storedProcedureName;
-                foreach ( IDataParameter dataParameter in dataParameters )
-                    command.Parameters.Add( dataParameter );
-                IDataReader executeStoredProcedureReader = command.ExecuteReader( CommandBehavior.CloseConnection );
+                if (dataParameters != null)
+                    foreach (var parameter in dataParameters)
+                        command.AddParameter( parameter );
                 return executeStoredProcedureReader;
             }
+        }
+
+        public IDataReader ExecuteStoredProcedureReader(string storedProcedureName)
+        {
+            return ExecuteStoredProcedureReader( storedProcedureName, null );
         }
 
         #endregion

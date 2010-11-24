@@ -52,6 +52,8 @@
     <Compile Include="Core\IDictionaryExtensions.cs" />
     <Compile Include="Core\IObjectHydrator.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
+    <Compile Include="Core\Session.cs" />
+    <Compile Include="Core\SessionFactory.cs" />
     <Compile Include="IDBSpecification.cs" />
     <Compile Include="IExplicitSpecification.cs" />
     <Compile Include="IObjectHydrator.cs" />
@@ -60,7 +62,11 @@
     <Compile Include="ISpecification.cs" />
     <Compile Include="ITransaction.cs" />
     <Compile Include="PHydrateException.cs" />
+    <Compile Include="PHydrateInternalException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\DbCommandExtensions.cs" />
+    <Compile Include="Util\ExpressionExtensions.cs" />
+    <Compile Include="Util\DataReaderExtensions.cs" />
     <Compile Include="Util\TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

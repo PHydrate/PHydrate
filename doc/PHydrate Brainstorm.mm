@@ -152,6 +152,9 @@
 </node>
 </node>
 </node>
+<node CREATED="1289326072396" ID="ID_312542251" MODIFIED="1289326083158" TEXT="T Get&lt;T&gt;(ISpecification&lt;T&gt;)">
+<node CREATED="1289326083159" ID="ID_204332774" MODIFIED="1289326088084" TEXT="Get using a specification"/>
+</node>
 <node CREATED="1286997871040" ID="ID_553916446" MODIFIED="1286997928445" TEXT="void Persist&lt;T&gt;(T)">
 <node CREATED="1286997899651" ID="ID_807384461" MODIFIED="1286999015047" TEXT="Saves changed aggregates"/>
 </node>
@@ -204,6 +207,19 @@
 </node>
 </node>
 <node CREATED="1287079913757" ID="ID_1809966007" MODIFIED="1287699728208" TEXT="T Hydrate(IDictionary&lt;string, object&gt;)"/>
+</node>
+<node CREATED="1289325784850" ID="ID_557463192" MODIFIED="1289325992551" TEXT="ISpecification&lt;in T&gt;">
+<node CREATED="1289325793507" ID="ID_1277587093" MODIFIED="1289325800138" TEXT="Empty interface, parent to others">
+<node CREATED="1289326036631" ID="ID_1436901366" MODIFIED="1289326044221" TEXT="Is there something that&apos;s appropriate here?"/>
+</node>
+<node CREATED="1289325804326" ID="ID_474018383" MODIFIED="1289325816900" TEXT="IExplicitSpecification&lt;in T&gt;">
+<node CREATED="1289325816901" ID="ID_1305461854" MODIFIED="1289325833509" TEXT="Represents a code-based specification"/>
+<node CREATED="1289325836529" ID="ID_1896832001" MODIFIED="1289325851275" TEXT="bool Satisfys(T)"/>
+</node>
+<node CREATED="1289325852951" ID="ID_713422040" MODIFIED="1289325858402" TEXT="IDBSpecification&lt;in T&gt;">
+<node CREATED="1289325858402" ID="ID_1860296489" MODIFIED="1289325874195" TEXT="Represents an expression-based specification, passed to stored procedure"/>
+<node CREATED="1289325874863" ID="ID_1129812426" MODIFIED="1289325932573" TEXT="Expression&lt;Func&lt;T, bool&gt;&gt; Criteria {get;}"/>
+</node>
 </node>
 </node>
 </node>
