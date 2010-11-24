@@ -31,6 +31,7 @@ namespace PHydrate.Core
     /// </summary>
     public class DatabaseService : IDatabaseService
     {
+        // TODO: Change this to a DbConnectionFactory
         private readonly IDbConnection _dbConnection;
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace PHydrate.Core
                 if (dataParameters != null)
                     foreach (var parameter in dataParameters)
                         command.AddParameter( parameter );
-                return executeStoredProcedureReader;
+                return command.ExecuteReader();
             }
         }
 

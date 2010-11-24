@@ -30,17 +30,6 @@ namespace PHydrate.Specs.Util.TypeExtensions
     public class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
         TypeExtensionsSpecificationBase
     {
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
-
-        private It Should_throw_exception_of_type_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
-
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
-
         private static Exception _exception;
 
         private Because Of =
