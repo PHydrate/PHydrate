@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,22 +20,15 @@
 
 #endregion
 
-using System.Data;
-using Machine.Specifications;
-using Rhino.Mocks;
+using PHydrate.Core;
 
-namespace PHydrate.Specs.Core.DatabaseService
+namespace PHydrate
 {
-    [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    public static class Fluently
     {
-        private static IDataReader _dataReader;
-        private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );
-
-        private It Should_call_all_expected_methods
-            = () => DbCommand.VerifyAllExpectations();
-
-        private It Should_return_datareader
-            = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
+        public static FluentConfiguration Configure
+        {
+            get { return new FluentConfiguration(); }
+        }
     }
 }

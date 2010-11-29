@@ -156,6 +156,7 @@ Copyright 2010, Stephen Michael Czetty
           <Kind Name="Machine.Specifications_SupportingField" />
         </ElementKinds>
       </UserRule>
+      <Abbreviation Text="SQ" />
     </Naming2>
   </CodeStyleSettings>
   <SharedSolutionTemplateManager>

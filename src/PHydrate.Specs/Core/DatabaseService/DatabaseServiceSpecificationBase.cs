@@ -23,6 +23,7 @@
 using System.Data;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
+using PHydrate.Core;
 using Rhino.Mocks;
 using UMMO.TestingUtils;
 
@@ -33,7 +34,7 @@ namespace PHydrate.Specs.Core.DatabaseService
         private static IDbConnection _dbConnection;
         protected static IDbCommand DbCommand;
         protected static string ProcedureName;
-        protected static PHydrate.Core.DatabaseService ServiceUnderTest;
+        protected static DatabaseServiceBase ServiceUnderTest;
         protected static IDataReader ExpectedDataReader;
 
         [ UsedImplicitly ]
@@ -54,7 +55,26 @@ namespace PHydrate.Specs.Core.DatabaseService
                                         DbCommand.Stub( x => x.Parameters ).Return(
                                             MockRepository.GenerateStub< IDataParameterCollection >() );
 
-                                        ServiceUnderTest = new PHydrate.Core.DatabaseService( _dbConnection );
+                                        ServiceUnderTest = new TestDatabaseService( _dbConnection );
                                     };
+
+        private class TestDatabaseService : DatabaseServiceBase
+        {
+            private readonly IDbConnection _connection;
+
+            public TestDatabaseService( IDbConnection dbConnection )
+            {
+                _connection = dbConnection;
+            }
+
+            #region Overrides of DatabaseServiceBase
+
+            protected override IDbConnection GetConnection()
+            {
+                return _connection;
+            }
+
+            #endregion
+        }
     }
 }

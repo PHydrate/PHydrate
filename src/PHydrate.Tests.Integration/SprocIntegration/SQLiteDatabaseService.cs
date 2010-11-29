@@ -20,22 +20,25 @@
 
 #endregion
 
+using System;
 using System.Data;
-using Machine.Specifications;
-using Rhino.Mocks;
+using System.IO;
+using PHydrate.Core;
 
-namespace PHydrate.Specs.Core.DatabaseService
+namespace PHydrate.Tests.Integration.SprocIntegration
 {
-    [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    internal class SQLiteDatabaseService : DatabaseServiceBase
     {
-        private static IDataReader _dataReader;
-        private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );
+        #region Overrides of DatabaseServiceBase
 
-        private It Should_call_all_expected_methods
-            = () => DbCommand.VerifyAllExpectations();
+        protected override IDbConnection GetConnection()
+        {
+            return
+                new SQLiteProcConnection( String.Format( "Data Source={0};Version=3",
+                                                         Path.Combine( Environment.CurrentDirectory,
+                                                                       "IntegrationTestDb.sqlite" ) ) );
+        }
 
-        private It Should_return_datareader
-            = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
+        #endregion
     }
 }

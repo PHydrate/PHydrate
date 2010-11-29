@@ -27,27 +27,20 @@ using PHydrate.Util;
 namespace PHydrate.Core
 {
     /// <summary>
-    /// Implementation of IDatabaseService for Sql Server
+    /// Base implementation of IDatabaseService
     /// </summary>
-    public class DatabaseService : IDatabaseService
+    public abstract class DatabaseServiceBase : IDatabaseService
     {
-        private readonly IDbConnection _dbConnection;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseService"/> class.
-        /// </summary>
-        /// <param name="dbConnection">The db connection.</param>
-        public DatabaseService( IDbConnection dbConnection )
-        {
-            _dbConnection = dbConnection;
-        }
-
         #region Implementation of IDatabaseService
 
         public IDataReader ExecuteStoredProcedureReader( string storedProcedureName,
                                                          IDictionary<string, object> dataParameters )
         {
-            using ( IDbCommand command = _dbConnection.CreateCommand() )
+            IDbConnection dbConnection = GetConnection();
+            if (dbConnection.State != ConnectionState.Open)
+                dbConnection.Open();
+
+            using ( IDbCommand command = dbConnection.CreateCommand() )
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = storedProcedureName;
@@ -64,5 +57,7 @@ namespace PHydrate.Core
         }
 
         #endregion
+
+        protected abstract IDbConnection GetConnection();
     }
 }

@@ -21,21 +21,22 @@
 #endregion
 
 using System.Data;
-using Machine.Specifications;
-using Rhino.Mocks;
+using System.Data.SqlClient;
 
-namespace PHydrate.Specs.Core.DatabaseService
+namespace PHydrate.Core
 {
-    [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    public sealed class SqlServerDatabaseService : DatabaseServiceBase
     {
-        private static IDataReader _dataReader;
-        private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );
+        private readonly string _connectionString;
 
-        private It Should_call_all_expected_methods
-            = () => DbCommand.VerifyAllExpectations();
+        public SqlServerDatabaseService( string connectionString )
+        {
+            _connectionString = connectionString;
+        }
 
-        private It Should_return_datareader
-            = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
+        protected override IDbConnection GetConnection()
+        {
+            return new SqlConnection( _connectionString );
+        }
     }
 }

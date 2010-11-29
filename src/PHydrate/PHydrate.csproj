@@ -46,7 +46,10 @@
     <Compile Include="Attributes\HydrateUsingAttribute.cs" />
     <Compile Include="Attributes\ObjectHydratorAttribute.cs" />
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
-    <Compile Include="Core\DatabaseService.cs" />
+    <Compile Include="Core\FluentConfiguration.cs" />
+    <Compile Include="Core\SqlServerDatabaseService.cs" />
+    <Compile Include="Fluently.cs" />
+    <Compile Include="Core\DatabaseServiceBase.cs" />
     <Compile Include="Core\IDatabaseService.cs" />
     <Compile Include="Core\IDictionaryExtensions.cs" />
     <Compile Include="Core\IObjectHydrator.cs" />

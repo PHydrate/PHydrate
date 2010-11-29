@@ -20,22 +20,18 @@
 
 #endregion
 
-using System.Data;
 using Machine.Specifications;
-using Rhino.Mocks;
+using Machine.Specifications.Annotations;
+using PHydrate.Tests.Integration.SprocIntegration;
 
-namespace PHydrate.Specs.Core.DatabaseService
+namespace PHydrate.Tests.Integration
 {
-    [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    public abstract class PHydrateIntegrationTestBase
     {
-        private static IDataReader _dataReader;
-        private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );
+        protected static ISessionFactory SessionFactory;
 
-        private It Should_call_all_expected_methods
-            = () => DbCommand.VerifyAllExpectations();
-
-        private It Should_return_datareader
-            = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
+        [ UsedImplicitly ]
+        private Establish Context =
+            () => SessionFactory = Fluently.Configure.Database( new SQLiteDatabaseService() ).BuildSessionFactory();
     }
 }
