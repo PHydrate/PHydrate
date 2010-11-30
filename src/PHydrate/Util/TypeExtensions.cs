@@ -22,6 +22,7 @@
 
 using System;
 using System.Reflection;
+using PHydrate.Attributes;
 
 namespace PHydrate.Util
 {
@@ -36,6 +37,7 @@ namespace PHydrate.Util
         /// <typeparam name="T">The attribute to retrieve</typeparam>
         /// <param name="type">The type.</param>
         /// <returns>The attribute, or null if not found.</returns>
+        [CanBeNull]
         public static T GetAttribute< T >( this Type type ) where T : Attribute
         {
             object[] attributes = type.GetCustomAttributes( typeof(T), true );
@@ -48,7 +50,8 @@ namespace PHydrate.Util
         /// Gets the default constructor.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <returns></returns>
+        /// <returns>The default constructor for the type, or null if it does not exist.</returns>
+        [CanBeNull]
         public static ConstructorInfo GetDefaultConstructor(this Type type)
         {
             return type.GetConstructor( Type.EmptyTypes );
@@ -59,7 +62,8 @@ namespace PHydrate.Util
         /// </summary>
         /// <typeparam name="T">The type to cast to on return.</typeparam>
         /// <param name="type">The type.</param>
-        /// <returns></returns>
+        /// <returns>The constructed type.</returns>
+        [NotNull]
         public static T ConstructUsingDefaultConstructor<T>(this Type type)
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();

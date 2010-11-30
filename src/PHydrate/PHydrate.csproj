@@ -45,6 +45,7 @@
     <Compile Include="Attributes\DeleteUsingAttribute.cs" />
     <Compile Include="Attributes\HydrateUsingAttribute.cs" />
     <Compile Include="Attributes\ObjectHydratorAttribute.cs" />
+    <Compile Include="Attributes\ResharperAnnotations.cs" />
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
     <Compile Include="Core\SqlServerDatabaseService.cs" />

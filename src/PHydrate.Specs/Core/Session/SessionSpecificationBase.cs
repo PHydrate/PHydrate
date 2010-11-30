@@ -20,10 +20,8 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using Machine.Specifications;
-using Machine.Specifications.Annotations;
 using PHydrate.Attributes;
 using PHydrate.Core;
 using Rhino.Mocks;

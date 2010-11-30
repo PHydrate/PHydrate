@@ -237,6 +237,7 @@ Copyright 2010, Stephen Michael Czetty
   <CodeAnnotations>
     <Namespace>JetBrains.Annotations</Namespace>
     <Namespace>Machine.Specifications.Annotations</Namespace>
+    <Namespace>PHydrate.Attributes</Namespace>
     <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
   </CodeAnnotations>
 </Configuration>
