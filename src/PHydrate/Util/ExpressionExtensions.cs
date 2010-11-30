@@ -36,39 +36,40 @@ namespace PHydrate.Util
         /// </summary>
         /// <typeparam name="T">The type being acted on</typeparam>
         /// <param name="expression">The expression.</param>
+        /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
-        public static IDictionary< string, Object > GetDataParameters< T >( this Expression< Func< T, bool > > expression )
+        public static IDictionary< string, Object > GetDataParameters< T >( this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
             var dataParameters = new Dictionary< string, Object >();
 
             // Go through the expression using tail recursion
             if (expression != null)
-                GetDataParametersRecursive( expression.Body, dataParameters );
+                GetDataParametersRecursive( expression.Body, dataParameters, parameterPrefix );
             return dataParameters;
         }
 
-        private static void GetDataParametersRecursive( Expression expression, IDictionary< string, object > dataParameters )
+        private static void GetDataParametersRecursive( Expression expression, IDictionary< string, object > dataParameters, string parameterPrefix )
         {
             var operation = expression as BinaryExpression;
-            if (operation != null)
+            if ( operation == null )
+                return;
+
+            switch ( operation.NodeType )
             {
-                switch (operation.NodeType)
-                {
-                    case ExpressionType.Equal:
-                        string name = ( (MemberExpression)operation.Left ).Member.Name;
-                        if ( !dataParameters.ContainsKey( name ) )
-                            dataParameters.Add( name, GetValue( operation.Right ) );
-                        break;
+                case ExpressionType.Equal:
+                    string name = parameterPrefix + ( (MemberExpression)operation.Left ).Member.Name;
+                    if ( !dataParameters.ContainsKey( name ) )
+                        dataParameters.Add( name, GetValue( operation.Right ) );
+                    break;
 
-                    case ExpressionType.AndAlso:
-                    case ExpressionType.And:
-                        GetDataParametersRecursive( operation.Left, dataParameters );
-                        GetDataParametersRecursive( operation.Right, dataParameters );
-                        break;
+                case ExpressionType.AndAlso:
+                case ExpressionType.And:
+                    GetDataParametersRecursive( operation.Left, dataParameters, parameterPrefix );
+                    GetDataParametersRecursive( operation.Right, dataParameters, parameterPrefix );
+                    break;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                default:
+                    throw new NotImplementedException();
             }
         }
 

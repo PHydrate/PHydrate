@@ -32,6 +32,9 @@ namespace PHydrate.Tests.Integration
 
         [ UsedImplicitly ]
         private Establish Context =
-            () => SessionFactory = Fluently.Configure.Database( new SQLiteDatabaseService() ).BuildSessionFactory();
+            () =>
+            SessionFactory =
+            Fluently.Configure.Database( new SQLiteDatabaseService() ).ParameterPrefix( ":" ).BuildSessionFactory();
+
     }
 }

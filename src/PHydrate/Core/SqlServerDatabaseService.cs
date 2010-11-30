@@ -25,15 +25,26 @@ using System.Data.SqlClient;
 
 namespace PHydrate.Core
 {
+    /// <summary>
+    /// MS Sql Server implementation of IDatabaseService
+    /// </summary>
     public sealed class SqlServerDatabaseService : DatabaseServiceBase
     {
         private readonly string _connectionString;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqlServerDatabaseService"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
         public SqlServerDatabaseService( string connectionString )
         {
             _connectionString = connectionString;
         }
 
+        /// <summary>
+        /// Gets the connection.
+        /// </summary>
+        /// <returns>The driver-specific connection object</returns>
         protected override IDbConnection GetConnection()
         {
             return new SqlConnection( _connectionString );

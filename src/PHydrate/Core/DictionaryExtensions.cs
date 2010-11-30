@@ -25,8 +25,21 @@ using System.Linq;
 
 namespace PHydrate.Core
 {
-    public static class IDictionaryExtensions
+    /// <summary>
+    /// Extension methods on IDictionary&lt;TKEY, TVALUE&gt;
+    /// </summary>
+    public static class DictionaryExtensions
     {
+        /// <summary>
+        /// Case insensitive version of ContainsKey.
+        /// </summary>
+        /// <typeparam name="T">The type of the object values</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="actualName">The actual name.</param>
+        /// <returns>
+        /// 	<c>true</c> if the dictionary contains the key; otherwise, <c>false</c>.
+        /// </returns>
         public static bool ContainsKeyNoCase< T >( this IDictionary< string, T > dictionary, string key,
                                                    out string actualName )
         {

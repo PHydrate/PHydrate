@@ -33,6 +33,12 @@ namespace PHydrate.Core
     {
         #region Implementation of IDatabaseService
 
+        /// <summary>
+        /// Executes a stored procedure.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="dataParameters">The data parameters.</param>
+        /// <returns>An IDataReader containing the results.</returns>
         public IDataReader ExecuteStoredProcedureReader( string storedProcedureName,
                                                          IDictionary<string, object> dataParameters )
         {
@@ -51,6 +57,11 @@ namespace PHydrate.Core
             }
         }
 
+        /// <summary>
+        /// Executes a stored procedure.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns>An IDataReader containing the results.</returns>
         public IDataReader ExecuteStoredProcedureReader(string storedProcedureName)
         {
             return ExecuteStoredProcedureReader( storedProcedureName, null );
@@ -58,6 +69,10 @@ namespace PHydrate.Core
 
         #endregion
 
+        /// <summary>
+        /// Gets the connection.
+        /// </summary>
+        /// <returns>The driver-specific connection object</returns>
         protected abstract IDbConnection GetConnection();
     }
 }

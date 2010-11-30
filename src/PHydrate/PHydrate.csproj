@@ -51,7 +51,7 @@
     <Compile Include="Fluently.cs" />
     <Compile Include="Core\DatabaseServiceBase.cs" />
     <Compile Include="Core\IDatabaseService.cs" />
-    <Compile Include="Core\IDictionaryExtensions.cs" />
+    <Compile Include="Core\DictionaryExtensions.cs" />
     <Compile Include="Core\IObjectHydrator.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
     <Compile Include="Core\Session.cs" />

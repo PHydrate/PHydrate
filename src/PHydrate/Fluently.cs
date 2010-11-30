@@ -24,8 +24,14 @@ using PHydrate.Core;
 
 namespace PHydrate
 {
+    /// <summary>
+    /// Entry point for PHydrate configuration
+    /// </summary>
     public static class Fluently
     {
+        /// <summary>
+        /// Gets a configuration object
+        /// </summary>
         public static FluentConfiguration Configure
         {
             get { return new FluentConfiguration(); }

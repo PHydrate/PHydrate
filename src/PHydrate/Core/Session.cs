@@ -36,16 +36,20 @@ namespace PHydrate.Core
     {
         private readonly IDatabaseService _databaseService;
         private readonly IObjectHydrator _defaultObjectHydrator;
+        private readonly string _parameterPrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
         /// <param name="defaultObjectHydrator">The object hydrator to use by default</param>
-        internal Session( IDatabaseService databaseService, IObjectHydrator defaultObjectHydrator )
+        /// <param name="parameterPrefix">The string to prepend to parameter names</param>
+        internal Session( IDatabaseService databaseService, IObjectHydrator defaultObjectHydrator,
+                          string parameterPrefix )
         {
             _databaseService = databaseService;
             _defaultObjectHydrator = defaultObjectHydrator;
+            _parameterPrefix = parameterPrefix;
         }
 
         #region Implementation of ISession
@@ -114,7 +118,7 @@ namespace PHydrate.Core
                                                                   Expression< Func< T, bool > > query )
         {
             var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
-                                                                            query.GetDataParameters() );
+                                                                            query.GetDataParameters( _parameterPrefix ) );
 
             // TODO: Fix IObjectHydrator so Default and other hydrators don't have different interfaces
             IObjectHydrator< T > hydrator = GetHydrator< T >();

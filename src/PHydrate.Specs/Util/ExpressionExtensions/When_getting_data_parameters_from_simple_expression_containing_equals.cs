@@ -33,13 +33,13 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
         private static IDictionary< string, object > _dictionary;
         private Establish Context = () => ExpressionToTest = ( TestClass x ) => x.TestKey1 == RandomInteger1;
 
-        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters();
+        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters("@");
 
         private It Should_contain_correct_value
-            = () => _dictionary[ "TestKey1" ].ShouldEqual( RandomInteger1 );
+            = () => _dictionary[ "@TestKey1" ].ShouldEqual( RandomInteger1 );
 
         private It Should_contain_key_named_testkey1
-            = () => _dictionary.Keys.ShouldContain( "TestKey1" );
+            = () => _dictionary.Keys.ShouldContain( "@TestKey1" );
 
         private It Should_return_dictionary
             = () => _dictionary.ShouldNotBeNull();

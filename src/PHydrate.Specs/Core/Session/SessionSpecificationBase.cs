@@ -139,7 +139,7 @@ namespace PHydrate.Specs.Core.Session
 
                                         SessionUnderTest = new PHydrate.Core.Session( DatabaseService,
                                                                                       new PHydrate.Core.
-                                                                                          DefaultObjectHydrator() );
+                                                                                          DefaultObjectHydrator(), "@" );
                                     };
 
         protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue )

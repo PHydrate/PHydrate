@@ -22,23 +22,47 @@
 
 namespace PHydrate.Core
 {
+    /// <summary>
+    /// Configuration class for PHydrate
+    /// </summary>
     public class FluentConfiguration
     {
         private IDatabaseService _databaseService;
+        private string _prefix = "@";
 
         internal FluentConfiguration()
         {
         }
 
+        /// <summary>
+        /// Specifies the database service to use.
+        /// </summary>
+        /// <param name="databaseService">The database service.</param>
+        /// <returns></returns>
         public FluentConfiguration Database( IDatabaseService databaseService )
         {
             _databaseService = databaseService;
             return this;
         }
 
+        /// <summary>
+        /// Specifies a string to prepend to parameter names.  Defaults to "@".
+        /// </summary>
+        /// <param name="prefix">The prefix.</param>
+        /// <returns></returns>
+        public FluentConfiguration ParameterPrefix(string prefix)
+        {
+            _prefix = prefix;
+            return this;
+        }
+
+        /// <summary>
+        /// Builds the session factory.
+        /// </summary>
+        /// <returns></returns>
         public ISessionFactory BuildSessionFactory()
         {
-            return new SessionFactory( _databaseService );
+            return new SessionFactory( _databaseService, _prefix );
         }
     }
 }

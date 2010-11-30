@@ -30,25 +30,17 @@ namespace PHydrate.Core
     public sealed class SessionFactory : ISessionFactory
     {
         private readonly IDatabaseService _databaseService;
-
-        private static SessionFactory _instance;
+        private readonly string _parameterPrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionFactory"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
-        internal SessionFactory(IDatabaseService databaseService)
+        /// <param name="parameterPrefix">The prefix to place in front of parameter names.</param>
+        internal SessionFactory(IDatabaseService databaseService, string parameterPrefix)
         {
             _databaseService = databaseService;
-        }
-
-        /// <summary>
-        /// Creates an instance of the SessionFactory.
-        /// </summary>
-        /// <returns></returns>
-        public static ISessionFactory Create()
-        {
-            return _instance ?? ( _instance = null ); // TODO
+            _parameterPrefix = parameterPrefix;
         }
 
         #region Implementation of ISessionFactory
@@ -70,7 +62,7 @@ namespace PHydrate.Core
         /// </returns>
         public ISession GetSession()
         {
-            return new Session( _databaseService, new DefaultObjectHydrator() );
+            return new Session( _databaseService, new DefaultObjectHydrator(), _parameterPrefix );
         }
 
         #endregion

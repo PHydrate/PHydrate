@@ -27,12 +27,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[ assembly: AssemblyTitle( "PHydrate.Test" ) ]
+[ assembly: AssemblyTitle( "PHydrate.Specs" ) ]
 [ assembly: AssemblyDescription( "" ) ]
 [ assembly: AssemblyConfiguration( "" ) ]
 [ assembly: AssemblyCompany( "" ) ]
-[ assembly: AssemblyProduct( "PHydrate.Test" ) ]
-[ assembly: AssemblyCopyright( "Copyright ©  2010" ) ]
+[ assembly: AssemblyProduct( "PHydrate.Specs" ) ]
+[ assembly: AssemblyCopyright( "Copyright © Stephen Czetty 2010" ) ]
 [ assembly: AssemblyTrademark( "" ) ]
 [ assembly: AssemblyCulture( "" ) ]
 
@@ -58,4 +58,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [ assembly: AssemblyVersion( "0.1.0.*" ) ]
-[ assembly: AssemblyFileVersion( "0.1.0.*" ) ]
+//[ assembly: AssemblyFileVersion( "0.1.0.0" ) ]

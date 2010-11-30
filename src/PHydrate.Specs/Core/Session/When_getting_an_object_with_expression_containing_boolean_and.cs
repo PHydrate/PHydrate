@@ -36,7 +36,7 @@ namespace PHydrate.Specs.Core.Session
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "Key", 1 );
+            = () => AssertDatabaseServiceParameter( "@Key", 1 );
 
         private It Should_not_be_null
             = () => RequestedObjects.ShouldNotBeNull();
