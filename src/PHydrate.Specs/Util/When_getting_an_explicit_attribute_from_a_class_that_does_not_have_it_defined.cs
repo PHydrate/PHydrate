@@ -20,30 +20,19 @@
 
 #endregion
 
-using System;
 using Machine.Specifications;
+using PHydrate.Attributes;
 using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Util
 {
-    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
+    [ Subject( typeof(TypeExtensions) ) ]
+    public class When_getting_an_explicit_attribute_from_a_class_that_does_not_have_it_defined :
         TypeExtensionsSpecificationBase
     {
-        private static Exception _exception;
+        private Because Of = () => ExpectedAttribute = typeof(TestClass).GetAttribute< DeleteUsingAttribute >();
 
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception(
-                () =>
-                typeof(TestClassWithNoDefaultConstructor).ConstructUsingDefaultConstructor
-                    < TestClassWithNoDefaultConstructor >() );
-
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
-
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
+        private It Should_be_null
+            = () => ExpectedAttribute.ShouldBeNull();
     }
 }

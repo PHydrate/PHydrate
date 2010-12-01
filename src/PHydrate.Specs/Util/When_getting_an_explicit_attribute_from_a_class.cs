@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,22 +20,21 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
+using Machine.Specifications;
+using PHydrate.Attributes;
+using PHydrate.Util;
 
-namespace PHydrate
+namespace PHydrate.Specs.Util
 {
-    /// <summary>
-    ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
-    /// </summary>
-    /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
-    public interface IObjectHydrator< T >
+    [ Subject( typeof(TypeExtensions) ) ]
+    public class When_getting_an_explicit_attribute_from_a_class : TypeExtensionsSpecificationBase
     {
-        /// <summary>
-        ///   Hydrates the object of type <typeparamref name = "T" />.
-        /// </summary>
-        /// <param name = "columnValues">The column values from the database.</param>
-        /// <returns>The hydrated object</returns>
-        T Hydrate( IDictionary< string, Object > columnValues );
+        private Because Of = () => ExpectedAttribute = typeof(TestClass).GetAttribute< CreateUsingAttribute >();
+
+        private It Should_be_of_the_correct_type
+            = () => ExpectedAttribute.ShouldBeOfType< CreateUsingAttribute >();
+
+        private It Should_return_attribute_with_the_correct_values
+            = () => ( (CreateUsingAttribute)ExpectedAttribute ).ProcedureName.ShouldEqual( "test" );
     }
 }

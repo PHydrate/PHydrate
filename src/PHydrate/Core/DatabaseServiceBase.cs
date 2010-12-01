@@ -53,7 +53,7 @@ namespace PHydrate.Core
                 if (dataParameters != null)
                     foreach (var parameter in dataParameters)
                         command.AddParameter( parameter );
-                return command.ExecuteReader( CommandBehavior.CloseConnection );
+                return command.ExecuteReader();
             }
         }
 

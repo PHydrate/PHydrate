@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate", "PHydrate\PHydrate.csproj", "{5427851E-6732-435D-A982-13DC7DA2489F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate.Specs", "PHydrate.Specs\PHydrate.Specs.csproj", "{E48A20EE-AEE0-469B-847E-D0812262D63D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate.Tests.Integration", "PHydrate.Tests.Integration\PHydrate.Tests.Integration.csproj", "{4C12D3E9-B639-4B8A-87C4-47A0C49BE27D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate", "PHydrate\PHydrate.csproj", "{5427851E-6732-435D-A982-13DC7DA2489F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5427851E-6732-435D-A982-13DC7DA2489F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5427851E-6732-435D-A982-13DC7DA2489F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5427851E-6732-435D-A982-13DC7DA2489F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5427851E-6732-435D-A982-13DC7DA2489F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E48A20EE-AEE0-469B-847E-D0812262D63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E48A20EE-AEE0-469B-847E-D0812262D63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E48A20EE-AEE0-469B-847E-D0812262D63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -25,6 +21,10 @@ Global
 		{4C12D3E9-B639-4B8A-87C4-47A0C49BE27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C12D3E9-B639-4B8A-87C4-47A0C49BE27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C12D3E9-B639-4B8A-87C4-47A0C49BE27D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5427851E-6732-435D-A982-13DC7DA2489F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5427851E-6732-435D-A982-13DC7DA2489F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5427851E-6732-435D-A982-13DC7DA2489F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5427851E-6732-435D-A982-13DC7DA2489F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

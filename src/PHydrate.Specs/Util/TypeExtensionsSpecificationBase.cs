@@ -21,21 +21,21 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
+using PHydrate.Attributes;
 
-namespace PHydrate
+namespace PHydrate.Specs.Util
 {
-    /// <summary>
-    ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
-    /// </summary>
-    /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
-    public interface IObjectHydrator< T >
+    public abstract class TypeExtensionsSpecificationBase
     {
-        /// <summary>
-        ///   Hydrates the object of type <typeparamref name = "T" />.
-        /// </summary>
-        /// <param name = "columnValues">The column values from the database.</param>
-        /// <returns>The hydrated object</returns>
-        T Hydrate( IDictionary< string, Object > columnValues );
+        protected static Attribute ExpectedAttribute;
+
+        #region Test Class
+
+        [ CreateUsing( "test" ) ]
+        protected class TestClass
+        {
+        }
+
+        #endregion
     }
 }
