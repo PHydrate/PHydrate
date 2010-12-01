@@ -15,11 +15,13 @@
 	<assemblyfileset id="test.dependencies">
 		<lib>
 			<include name="lib/*" />
+			<include name="lib/SQLite/bin" />
 			<include name="${outputdir}" />
 		</lib>
 		<include name="UMMO.TestingUtils.dll" />
 		<include name="Machine.Specifications.dll" />
 		<include name="Rhino.Mocks.dll" />
+		<include name="System.Data.SQLite.dll" />
 		<include name="PHydrate.dll" />
 	</assemblyfileset>
 
@@ -50,20 +52,31 @@
 			<sources>
 				<include name="src/PHydrate.Specs/**/*.cs" />
 			</sources>
-			<references refid="test.dependencies">
-				<lib>
-					<include name="${outputdir}" />
-				</lib>
-				<include name="PHydrate.dll" />
-			</references>
+			<references refid="test.dependencies" />
+		</csc>
+
+		<echo message="Building PHydrate.Tests.Integration.dll..." />
+
+		<csc output="${outputdir}/PHydrate.Tests.Integration.dll" target="library">
+			<sources>
+				<include name="src/PHydrate.Tests.Integration/**/*.cs" />
+			</sources>
+			<references refid="test.dependencies" />
 		</csc>
 
 		<copy todir="${outputdir}" flatten="true">
 			<fileset refid="test.dependencies" />
 		</copy>
 
+		<copy todir="${outputdir}" flatten="true">
+			<fileset>
+				<include name="src/PHydrate.Tests.Integration/IntegrationTestDb.sqlite" />
+			</fileset>
+		</copy>
+
 		<assemblyfileset id="test.assemblies">
 			<include name="${outputdir}/*.Specs.dll" />
+			<include name="${outputdir}/*.Tests.*.dll" />
 		</assemblyfileset>
 	</target>
 	
