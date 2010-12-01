@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -23,17 +23,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using PHydrate.Tests.Integration.TestDomain;
 
-namespace PHydrate.Tests.Integration
+namespace PHydrate.Tests.Integration.Simple
 {
-    [ Subject( typeof(Simple) ) ]
+    [ Subject( typeof(TestDomain.Simple) ) ]
     public class When_getting_simple_type : PHydrateIntegrationTestBase
     {
-        private static IList< Simple > _simpleList;
+        private static IList< TestDomain.Simple > _simpleList;
 
         private Because Of =
-            () => _simpleList = SessionFactory.GetSession().Get< Simple >( x => x.SimpleId == 1 ).ToList();
+            () => _simpleList = SessionFactory.GetSession().Get< TestDomain.Simple >( x => x.SimpleId == 1 ).ToList();
 
         private It Should_populate_integer_value_with_one
             = () => _simpleList[ 0 ].IntegerValue.ShouldEqual( 1 );
