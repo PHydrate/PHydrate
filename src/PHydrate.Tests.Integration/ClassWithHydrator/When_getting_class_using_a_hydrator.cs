@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -24,22 +24,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
 
-namespace PHydrate.Tests.Integration.Simple
+namespace PHydrate.Tests.Integration.ClassWithHydrator
 {
-    [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
-    [ Tags("Integration") ]
-    public class When_getting_simple_type : PHydrateIntegrationTestBase
+    [ Subject( typeof(TestDomain.ClassWithHydrator), "Integration" ) ]
+    [ Tags( "Integration" ) ]
+    public class When_getting_class_using_a_hydrator : PHydrateIntegrationTestBase
     {
-        private static IList< TestDomain.Simple > _simpleList;
+        private static IList< TestDomain.ClassWithHydrator > _simpleList;
 
         private Because Of =
-            () => _simpleList = SessionFactory.GetSession().Get< TestDomain.Simple >( x => x.SimpleId == 1 ).ToList();
+            () =>
+            _simpleList =
+            SessionFactory.GetSession().Get< TestDomain.ClassWithHydrator >( x => x.ClassWithHydratorId == 1 ).ToList();
 
         private It Should_populate_integer_value_with_one
             = () => _simpleList[ 0 ].IntegerValue.ShouldEqual( 1 );
 
         private It Should_populate_simple_id_with_one
-            = () => _simpleList[ 0 ].SimpleId.ShouldEqual( 1 );
+            = () => _simpleList[ 0 ].ClassWithHydratorId.ShouldEqual( 1 );
 
         private It Should_populate_string_value_with_test
             = () => _simpleList[ 0 ].StringValue.ShouldEqual( "test" );

@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,31 +20,49 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Machine.Specifications;
 
-namespace PHydrate.Tests.Integration.Simple
+namespace PHydrate.Tests.Integration.ClassWithHydrator
 {
-    [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
-    [ Tags("Integration") ]
-    public class When_getting_simple_type : PHydrateIntegrationTestBase
+    [ Subject( typeof(TestDomain.ClassWithHydrator), "Integration" ) ]
+    [ Tags( "Integration" ) ]
+    public class When_getting_class_using_a_hydrator_and_db_specification : PHydrateIntegrationTestBase
     {
-        private static IList< TestDomain.Simple > _simpleList;
+        private static IList< TestDomain.ClassWithHydrator > _simpleList;
 
         private Because Of =
-            () => _simpleList = SessionFactory.GetSession().Get< TestDomain.Simple >( x => x.SimpleId == 1 ).ToList();
+            () => _simpleList = SessionFactory.GetSession().Get( new TestSimpleDbSpecification() ).ToList();
 
         private It Should_populate_integer_value_with_one
             = () => _simpleList[ 0 ].IntegerValue.ShouldEqual( 1 );
 
         private It Should_populate_simple_id_with_one
-            = () => _simpleList[ 0 ].SimpleId.ShouldEqual( 1 );
+            = () => _simpleList[ 0 ].ClassWithHydratorId.ShouldEqual( 1 );
 
         private It Should_populate_string_value_with_test
             = () => _simpleList[ 0 ].StringValue.ShouldEqual( "test" );
 
         private It Should_return_a_single_record
             = () => _simpleList.Count.ShouldEqual( 1 );
+
+        #region Test Specification Class
+
+        private class TestSimpleDbSpecification : IDbSpecification< TestDomain.ClassWithHydrator >
+        {
+            #region Implementation of IDbSpecification<Simple>
+
+            public Expression< Func< TestDomain.ClassWithHydrator, bool > > Criteria
+            {
+                get { return x => x.ClassWithHydratorId == 1; }
+            }
+
+            #endregion
+        }
+
+        #endregion
     }
 }
