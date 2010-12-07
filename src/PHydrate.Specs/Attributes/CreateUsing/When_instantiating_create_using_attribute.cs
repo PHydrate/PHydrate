@@ -23,7 +23,7 @@
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Specs.Attributes
+namespace PHydrate.Specs.Attributes.CreateUsing
 {
     [ Subject( typeof(CreateUsingAttribute) ) ]
     public class When_instantiating_create_using_attribute : CrudAttributeSpecificationBase< CreateUsingAttribute >

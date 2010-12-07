@@ -20,17 +20,20 @@
 
 #endregion
 
+using System;
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Specs.Attributes
+namespace PHydrate.Specs.Attributes.ObjectHydrator
 {
-    [ Subject( typeof(UpdateUsingAttribute) ) ]
-    public class When_instantiating_update_using_attribute : CrudAttributeSpecificationBase< UpdateUsingAttribute >
+    [ Subject( typeof(ObjectHydratorAttribute) ) ]
+    public class
+        When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator
     {
-        private Establish Context = () => InstantiateAttribute = () => new UpdateUsingAttribute( StoredProcedureName );
+        private static Exception _exception;
+        private Because Of = () => _exception = Catch.Exception( () => new ObjectHydratorAttribute( typeof(Object) ) );
 
-        private It Should_store_procedure_name_in_property
-            = () => CrudAttribute.ProcedureName.ShouldEqual( StoredProcedureName );
+        private It Should_throw_custom_exception
+            = () => _exception.ShouldBeOfType( typeof(PHydrateException) );
     }
 }

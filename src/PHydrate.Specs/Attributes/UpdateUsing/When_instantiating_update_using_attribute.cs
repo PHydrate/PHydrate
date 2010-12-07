@@ -23,12 +23,12 @@
 using Machine.Specifications;
 using PHydrate.Attributes;
 
-namespace PHydrate.Specs.Attributes
+namespace PHydrate.Specs.Attributes.UpdateUsing
 {
-    [ Subject( typeof(DeleteUsingAttribute) ) ]
-    public class When_instantiating_delete_using_attribute : CrudAttributeSpecificationBase< DeleteUsingAttribute >
+    [ Subject( typeof(UpdateUsingAttribute) ) ]
+    public class When_instantiating_update_using_attribute : CrudAttributeSpecificationBase< UpdateUsingAttribute >
     {
-        private Establish Context = () => InstantiateAttribute = () => new DeleteUsingAttribute( StoredProcedureName );
+        private Establish Context = () => InstantiateAttribute = () => new UpdateUsingAttribute( StoredProcedureName );
 
         private It Should_store_procedure_name_in_property
             = () => CrudAttribute.ProcedureName.ShouldEqual( StoredProcedureName );

@@ -25,7 +25,7 @@ using Machine.Specifications;
 using PHydrate.Attributes;
 using Rhino.Mocks;
 
-namespace PHydrate.Specs.Attributes
+namespace PHydrate.Specs.Attributes.ObjectHydrator
 {
     [ Subject( typeof(ObjectHydratorAttribute) ) ]
     public class When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator

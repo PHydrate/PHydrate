@@ -34,9 +34,11 @@ namespace PHydrate.Specs.Attributes
         protected static string StoredProcedureName;
         protected static T CrudAttribute;
 
+        [UsedImplicitly]
         private Establish GlobalContext = () => StoredProcedureName = A.Random.String.Resembling.A.Noun;
         // TODO: Add Verb to UMMO.RandomString
 
+        [UsedImplicitly]
         private Because Of = () => CrudAttribute = InstantiateAttribute();
     }
 }

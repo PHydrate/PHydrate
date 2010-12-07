@@ -73,13 +73,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CreateUsing\When_instantiating_create_using_attribute.cs" />
     <Compile Include="Attributes\CrudAttributeSpecificationBase.cs" />
-    <Compile Include="Attributes\When_instantiating_create_using_attribute.cs" />
-    <Compile Include="Attributes\When_instantiating_delete_using_attribute.cs" />
-    <Compile Include="Attributes\When_instantiating_hydrate_using_attribute.cs" />
-    <Compile Include="Attributes\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
-    <Compile Include="Attributes\When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator.cs" />
-    <Compile Include="Attributes\When_instantiating_update_using_attribute.cs" />
+    <Compile Include="Attributes\DeleteUsing\When_instantiating_delete_using_attribute.cs" />
+    <Compile Include="Attributes\HydrateUsing\When_instantiating_hydrate_using_attribute.cs" />
+    <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
+    <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator.cs" />
+    <Compile Include="Attributes\UpdateUsing\When_instantiating_update_using_attribute.cs" />
     <Compile Include="Core\DatabaseService\DatabaseServiceSpecificationBase.cs" />
     <Compile Include="Core\DatabaseService\When_calling_excecute_stored_procedure_reader_with_no_parameters.cs" />
     <Compile Include="Core\DatabaseService\When_calling_excecute_stored_procedure_reader_with_parameters.cs" />

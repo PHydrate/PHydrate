@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace PHydrate.Attributes
 {
+/*
     /// <summary>
     /// Indicates that marked element should be localized or not.
     /// </summary>
@@ -46,7 +46,9 @@ namespace PHydrate.Attributes
             return base.GetHashCode();
         }
     }
+*/
 
+/*
     /// <summary>
     /// Indicates that marked method builds string by format pattern and (optional) arguments. 
     /// Parameter, which contains format string, should be given in constructor.
@@ -74,7 +76,9 @@ namespace PHydrate.Attributes
             get { return myFormatParameterName; }
         }
     }
+*/
 
+/*
     /// <summary>
     /// Indicates that the function argument should be string literal and match one  of the parameters of the caller function.
     /// For example, <see cref="ArgumentNullException"/> has such parameter.
@@ -83,7 +87,9 @@ namespace PHydrate.Attributes
     public sealed class InvokerParameterNameAttribute : Attribute
     {
     }
+*/
 
+/*
     /// <summary>
     /// Indicates that the marked method is assertion method, i.e. it halts control flow if one of the conditions is satisfied. 
     /// To set the condition, mark one of the parameters with <see cref="AssertionConditionAttribute"/> attribute
@@ -93,7 +99,9 @@ namespace PHydrate.Attributes
     public sealed class AssertionMethodAttribute : Attribute
     {
     }
+*/
 
+/*
     /// <summary>
     /// Indicates the condition parameter of the assertion method. 
     /// The method itself should be marked by <see cref="AssertionMethodAttribute"/> attribute.
@@ -122,7 +130,9 @@ namespace PHydrate.Attributes
             get { return myConditionType; }
         }
     }
+*/
 
+/*
     /// <summary>
     /// Specifies assertion type. If the assertion method argument satisifes the condition, then the execution continues. 
     /// Otherwise, execution is assumed to be halted
@@ -149,7 +159,9 @@ namespace PHydrate.Attributes
         /// </summary>
         IS_NOT_NULL = 3,
     }
+*/
 
+/*
     /// <summary>
     /// Indicates that the marked method unconditionally terminates control flow execution.
     /// For example, it could unconditionally throw exception
@@ -158,6 +170,7 @@ namespace PHydrate.Attributes
     public sealed class TerminatesProgramAttribute : Attribute
     {
     }
+*/
 
     /// <summary>
     /// Indicates that the value of marked element could be <c>null</c> sometimes, so the check for <c>null</c> is necessary before its usage
@@ -175,6 +188,7 @@ namespace PHydrate.Attributes
     {
     }
 
+/*
     /// <summary>
     /// Indicates that the value of marked type (or its derivatives) cannot be compared using '==' or '!=' operators.
     /// There is only exception to compare with <c>null</c>, it is permitted
@@ -183,7 +197,9 @@ namespace PHydrate.Attributes
     public sealed class CannotApplyEqualityOperatorAttribute : Attribute
     {
     }
+*/
 
+/*
     /// <summary>
     /// When applied to target attribute, specifies a requirement for any type which is marked with 
     /// target attribute to implement or inherit specific type or types
@@ -222,6 +238,7 @@ namespace PHydrate.Attributes
             get { return _myBaseTypes; }
         }
     }
+*/
 
     /// <summary>
     /// Indicates that the marked symbol is used implicitly (e.g. via reflection, in external library),
@@ -230,12 +247,20 @@ namespace PHydrate.Attributes
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
     public sealed class UsedImplicitlyAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        /// </summary>
         [UsedImplicitly]
         public UsedImplicitlyAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
+        /// <param name="targetFlags">The target flags.</param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
@@ -243,18 +268,30 @@ namespace PHydrate.Attributes
             TargetFlags = targetFlags;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags)
             : this(useKindFlags, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        /// </summary>
+        /// <param name="targetFlags">The target flags.</param>
         [UsedImplicitly]
         public UsedImplicitlyAttribute(ImplicitUseTargetFlags targetFlags)
             : this(ImplicitUseKindFlags.Default, targetFlags)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the use kind flags.
+        /// </summary>
+        /// <value>The use kind flags.</value>
         [UsedImplicitly]
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
 
@@ -271,12 +308,20 @@ namespace PHydrate.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class MeansImplicitUseAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        /// </summary>
         [UsedImplicitly]
         public MeansImplicitUseAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
+        /// <param name="targetFlags">The target flags.</param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
@@ -284,18 +329,30 @@ namespace PHydrate.Attributes
             TargetFlags = targetFlags;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags)
             : this(useKindFlags, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        /// </summary>
+        /// <param name="targetFlags">The target flags.</param>
         [UsedImplicitly]
         public MeansImplicitUseAttribute(ImplicitUseTargetFlags targetFlags)
             : this(ImplicitUseKindFlags.Default, targetFlags)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the use kind flags.
+        /// </summary>
+        /// <value>The use kind flags.</value>
         [UsedImplicitly]
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
 
@@ -306,9 +363,15 @@ namespace PHydrate.Attributes
         public ImplicitUseTargetFlags TargetFlags { get; private set; }
     }
 
+    /// <summary>
+    /// The kind of implicit use that is implied.
+    /// </summary>
     [Flags]
     public enum ImplicitUseKindFlags
     {
+        /// <summary>
+        /// 
+        /// </summary>
         Default = Access | Assign | Instantiated,
 
         /// <summary>
@@ -333,8 +396,14 @@ namespace PHydrate.Attributes
     [Flags]
     public enum ImplicitUseTargetFlags
     {
+        /// <summary>
+        /// Default target is Itself
+        /// </summary>
         Default = Itself,
 
+        /// <summary>
+        /// Entity marked with attribute considered used
+        /// </summary>
         Itself = 1,
 
         /// <summary>
@@ -345,6 +414,7 @@ namespace PHydrate.Attributes
         /// <summary>
         /// Entity marked with attribute and all its members considered used
         /// </summary>
+        [UsedImplicitly]
         WithMembers = Itself | Members
     }
 }
