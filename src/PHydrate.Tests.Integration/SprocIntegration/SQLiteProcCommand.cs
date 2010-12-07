@@ -36,7 +36,6 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         #region Implementation of IDisposable
 
-        [ CoverageExclude ]
         public void Dispose()
         {
             _baseCommand.Dispose();
@@ -49,25 +48,28 @@ namespace PHydrate.Tests.Integration.SprocIntegration
         [ CoverageExclude ]
         public void Prepare()
         {
-            _baseCommand.Prepare();
+            throw new NotImplementedException();
+            //_baseCommand.Prepare();
         }
 
         [ CoverageExclude ]
         public void Cancel()
         {
-            _baseCommand.Cancel();
+            throw new NotImplementedException();
+            //_baseCommand.Cancel();
         }
 
-        [ CoverageExclude ]
         public IDbDataParameter CreateParameter()
         {
             return _baseCommand.CreateParameter();
         }
 
+        [ CoverageExclude ]
         public int ExecuteNonQuery()
         {
-            ConvertToTextQuery();
-            return _baseCommand.ExecuteNonQuery();
+            throw new NotImplementedException();
+            //ConvertToTextQuery();
+            //return _baseCommand.ExecuteNonQuery();
         }
 
         public IDataReader ExecuteReader()
@@ -76,64 +78,97 @@ namespace PHydrate.Tests.Integration.SprocIntegration
             return _baseCommand.ExecuteReader();
         }
 
+        [ CoverageExclude ]
         public IDataReader ExecuteReader( CommandBehavior behavior )
         {
-            ConvertToTextQuery();
-            return _baseCommand.ExecuteReader( behavior );
+            throw new NotImplementedException();
+            //ConvertToTextQuery();
+            //return _baseCommand.ExecuteReader( behavior );
         }
 
+        [ CoverageExclude ]
         public object ExecuteScalar()
         {
-            ConvertToTextQuery();
-            return _baseCommand.ExecuteScalar();
+            throw new NotImplementedException();
+            //ConvertToTextQuery();
+            //return _baseCommand.ExecuteScalar();
         }
 
         public IDbConnection Connection
         {
-            [ CoverageExclude ]
-            get { return _baseCommand.Connection; }
-            [ CoverageExclude ]
-            set { _baseCommand.Connection = value; }
+            [CoverageExclude]
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseCommand.Connection;
+            }
+            [CoverageExclude]
+            set
+            {
+                throw new NotImplementedException();
+                //_baseCommand.Connection = value;
+            }
         }
 
         public IDbTransaction Transaction
         {
-            [ CoverageExclude ]
-            get { return _baseCommand.Transaction; }
-            [ CoverageExclude ]
-            set { _baseCommand.Transaction = value; }
+            [CoverageExclude]
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseCommand.Transaction;
+            }
+            [CoverageExclude]
+            set
+            {
+                throw new NotImplementedException();
+                //_baseCommand.Transaction = value; 
+            }
         }
 
         public string CommandText
         {
-            [ CoverageExclude ]
             get { return _baseCommand.CommandText; }
-            [ CoverageExclude ]
             set { _baseCommand.CommandText = value; }
         }
 
         public int CommandTimeout
         {
-            [ CoverageExclude ]
-            get { return _baseCommand.CommandTimeout; }
-            [ CoverageExclude ]
-            set { _baseCommand.CommandTimeout = value; }
+            [CoverageExclude]
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseCommand.CommandTimeout; 
+            }
+            [CoverageExclude]
+            set
+            {
+                throw new NotImplementedException();
+                //_baseCommand.CommandTimeout = value; 
+            }
         }
 
         public CommandType CommandType { get; set; }
 
         public IDataParameterCollection Parameters
         {
-            [ CoverageExclude ]
             get { return _baseCommand.Parameters; }
         }
 
         public UpdateRowSource UpdatedRowSource
         {
-            [ CoverageExclude ]
-            get { return _baseCommand.UpdatedRowSource; }
-            [ CoverageExclude ]
-            set { _baseCommand.UpdatedRowSource = value; }
+            [CoverageExclude]
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseCommand.UpdatedRowSource;
+            }
+            [CoverageExclude]
+            set
+            {
+                throw new NotImplementedException();
+                //_baseCommand.UpdatedRowSource = value;
+            }
         }
 
         private void ConvertToTextQuery()
