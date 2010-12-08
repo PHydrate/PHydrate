@@ -28,7 +28,7 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
     public class When_hydrating_an_object_using_default_object_hydrator : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
-            () => ReturnedObject = ObjectHydrator.Hydrate< TestHydrationTarget >( ColumnValues );
+            () => ReturnedObject = DefaultObjectHydrator.Hydrate< TestHydrationTarget >( ColumnValues );
 
         private It Should_populate_the_integer_property_correctly
             = () => ( (TestHydrationTarget)ReturnedObject ).IntegerProperty.ShouldEqual( RandomInteger );

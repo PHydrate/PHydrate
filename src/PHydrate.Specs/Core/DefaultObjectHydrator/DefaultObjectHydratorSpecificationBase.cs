@@ -30,7 +30,7 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
     public abstract class DefaultObjectHydratorSpecificationBase
     {
-        protected static IObjectHydrator ObjectHydrator;
+        protected static IDefaultObjectHydrator DefaultObjectHydrator;
         protected static int RandomInteger;
         protected static string RandomString;
 
@@ -50,7 +50,7 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
 
         [ UsedImplicitly ]
         private Establish Context = () => {
-                                        ObjectHydrator = new PHydrate.Core.DefaultObjectHydrator();
+                                        DefaultObjectHydrator = new PHydrate.Core.DefaultObjectHydrator();
                                         RandomInteger = A.Random.Integer.Value;
                                         RandomString = A.Random.String.Resembling.A.Noun;
 

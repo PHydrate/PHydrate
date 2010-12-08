@@ -28,7 +28,7 @@ namespace PHydrate.Core
     /// <summary>
     ///   Default hydrator implementation
     /// </summary>
-    public interface IObjectHydrator
+    public interface IDefaultObjectHydrator
     {
         /// <summary>
         ///   Hydrates the specified object type.

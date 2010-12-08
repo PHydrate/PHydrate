@@ -35,7 +35,7 @@ namespace PHydrate.Core
     public class Session : ISession
     {
         private readonly IDatabaseService _databaseService;
-        private readonly IObjectHydrator _defaultObjectHydrator;
+        private readonly IDefaultObjectHydrator _defaultObjectHydrator;
         private readonly string _parameterPrefix;
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace PHydrate.Core
         /// <param name="databaseService">The database service.</param>
         /// <param name="defaultObjectHydrator">The object hydrator to use by default</param>
         /// <param name="parameterPrefix">The string to prepend to parameter names</param>
-        internal Session( IDatabaseService databaseService, IObjectHydrator defaultObjectHydrator,
+        internal Session( IDatabaseService databaseService, IDefaultObjectHydrator defaultObjectHydrator,
                           string parameterPrefix )
         {
             _databaseService = databaseService;

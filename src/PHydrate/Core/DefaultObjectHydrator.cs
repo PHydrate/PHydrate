@@ -32,7 +32,7 @@ namespace PHydrate.Core
     /// <summary>
     ///   Default hydrator
     /// </summary>
-    internal class DefaultObjectHydrator : IObjectHydrator
+    internal class DefaultObjectHydrator : IDefaultObjectHydrator
     {
         #region IObjectHydrator Members
 

@@ -46,7 +46,7 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
         private Because Of =
             () =>
             _exception =
-            Catch.Exception( () => ObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
+            Catch.Exception( () => DefaultObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
