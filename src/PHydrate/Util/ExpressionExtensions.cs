@@ -38,6 +38,7 @@ namespace PHydrate.Util
         /// <param name="expression">The expression.</param>
         /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
+        // TODO: Return type should be changed to IEnumerable<KeyValuePair<string, Object>>
         public static IDictionary< string, Object > GetDataParameters< T >( this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
             var dataParameters = new Dictionary< string, Object >();

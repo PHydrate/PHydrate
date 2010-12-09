@@ -21,24 +21,24 @@
 #endregion
 
 using System;
-using System.Data;
-using System.IO;
-using PHydrate.Core;
+using Machine.Specifications;
 
-namespace PHydrate.Tests.Integration.SprocIntegration
+namespace PHydrate.Specs.Core.Session
 {
-    internal class SQLiteDatabaseService : DatabaseServiceBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_persisting_a_new_object_with_no_creation_method : SessionSpecificationCreateBase
     {
-        #region Overrides of DatabaseServiceBase
+        private static Exception _exception;
+        private Establish Context = () => _objectUnderTest = new TestObjectNoHydrator { Key = ExpectedKey };
 
-        protected override IDbConnection GetDatabaseConnection()
-        {
-            return
-                new SQLiteProcConnection( String.Format( "Data Source={0};Version=3",
-                                                         Path.Combine( Environment.CurrentDirectory,
-                                                                       "IntegrationTestDb.sqlite" ) ) );
-        }
+        private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Persist( _objectUnderTest ) );
 
-        #endregion
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
+
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
+
+        private static TestObjectNoHydrator _objectUnderTest;
     }
 }

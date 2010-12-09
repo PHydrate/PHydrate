@@ -20,25 +20,21 @@
 
 #endregion
 
-using System;
-using System.Data;
-using System.IO;
-using PHydrate.Core;
+using Machine.Specifications;
+using Machine.Specifications.Annotations;
+using Rhino.Mocks;
+using UMMO.TestingUtils;
 
-namespace PHydrate.Tests.Integration.SprocIntegration
+namespace PHydrate.Specs.Core.DatabaseService
 {
-    internal class SQLiteDatabaseService : DatabaseServiceBase
+    public class DatabaseServiceSpecificationScalarBase : DatabaseServiceSpecificationBase
     {
-        #region Overrides of DatabaseServiceBase
+        protected static int ExpectedInteger;
 
-        protected override IDbConnection GetDatabaseConnection()
-        {
-            return
-                new SQLiteProcConnection( String.Format( "Data Source={0};Version=3",
-                                                         Path.Combine( Environment.CurrentDirectory,
-                                                                       "IntegrationTestDb.sqlite" ) ) );
-        }
-
-        #endregion
+        [ UsedImplicitly ]
+        private Establish Context = () => {
+                                        ExpectedInteger = A.Random.Integer;
+                                        DbCommand.Expect( x => x.ExecuteScalar() ).Return( ExpectedInteger );
+                                    };
     }
 }

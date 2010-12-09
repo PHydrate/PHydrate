@@ -70,6 +70,7 @@
     <Compile Include="Util\DbCommandExtensions.cs" />
     <Compile Include="Util\ExpressionExtensions.cs" />
     <Compile Include="Util\DataReaderExtensions.cs" />
+    <Compile Include="Util\GenericExtensions.cs" />
     <Compile Include="Util\TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

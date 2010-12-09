@@ -26,7 +26,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_an_explicit_specification : SessionSpecificationBase
+    public class When_getting_an_object_with_an_explicit_specification : SessionSpecificationHydrateBase
     {
         private Because Of = () => RequestedObjects = SessionUnderTest.Get( new TestSpecification() ).ToList();
 

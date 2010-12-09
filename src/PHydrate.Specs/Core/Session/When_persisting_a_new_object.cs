@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,45 +20,24 @@
 
 #endregion
 
-using System;
-using System.Linq;
-using System.Linq.Expressions;
 using Machine.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_a_db_specification : SessionSpecificationHydrateBase
+    public class When_persisting_a_new_object : SessionSpecificationCreateBase
     {
-        private Because Of = () => RequestedObjects = SessionUnderTest.Get( new TestSpecification() ).ToList();
+        private Establish Context = () => _objectUnderTest = new TestObject { Key = ExpectedKey };
+
+        private Because Of = () => SessionUnderTest.Persist( _objectUnderTest );
 
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "@Key", 1, x => x.ExecuteStoredProcedureReader( "", null ) );
+            = () => AssertDatabaseServiceParameter( "@Key", ExpectedKey, x => x.ExecuteStoredProcedureScalar<int>( "", null ) );
 
-        private It Should_not_be_null
-            = () => RequestedObjects.ShouldNotBeNull();
-
-        private It Should_return_correct_record
-            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 1 );
-
-        #region Test Specification Class
-
-        private class TestSpecification : IDbSpecification< TestObject >
-        {
-            #region Implementation of IDbSpecification<TestObject>
-
-            public Expression< Func< TestObject, bool > > Criteria
-            {
-                get { return x => x.Key == 1; }
-            }
-
-            #endregion
-        }
-
-        #endregion
+        private static TestObject _objectUnderTest;
     }
 }

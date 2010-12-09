@@ -45,7 +45,7 @@ namespace PHydrate.Core
         /// Gets the connection.
         /// </summary>
         /// <returns>The driver-specific connection object</returns>
-        protected override IDbConnection GetConnection()
+        protected override IDbConnection GetDatabaseConnection()
         {
             return new SqlConnection( _connectionString );
         }

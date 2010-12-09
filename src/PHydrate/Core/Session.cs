@@ -95,7 +95,7 @@ namespace PHydrate.Core
             if ( specification is IDbSpecification< T > )
                 foundObjects = Get( ( (IDbSpecification< T >)specification ).Criteria );
             else
-                foundObjects = Get< T >( null as Expression< Func< T, bool > > );
+                foundObjects = Get( null as Expression< Func< T, bool > > );
 
             Func< T, bool > satisifies = x => true;
             if ( specification is IExplicitSpecification< T > )
@@ -111,7 +111,15 @@ namespace PHydrate.Core
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
         {
-            throw new NotImplementedException();
+            var createAttribute = typeof(T).GetAttribute< CreateUsingAttribute >();
+            if (createAttribute == null || String.IsNullOrEmpty(createAttribute.ProcedureName))
+                throw new PHydrateException(
+                    String.Format(
+                        "Unable to persist object of type {0}.  Define a creation procedure with [CreateUsing]",
+                        typeof(T).FullName ) );
+
+            _databaseService.ExecuteStoredProcedureScalar< int >( createAttribute.ProcedureName,
+                                                                  objectToPersist.GetDataParameters( _parameterPrefix ) );
         }
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,

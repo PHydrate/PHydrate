@@ -40,19 +40,13 @@ namespace PHydrate.Core
         /// <param name="dataParameters">The data parameters.</param>
         /// <returns>An IDataReader containing the results.</returns>
         public IDataReader ExecuteStoredProcedureReader( string storedProcedureName,
-                                                         IDictionary<string, object> dataParameters )
+                                                         IEnumerable< KeyValuePair< string, object > > dataParameters )
         {
-            IDbConnection dbConnection = GetConnection();
-            if (dbConnection.State != ConnectionState.Open)
-                dbConnection.Open();
+            IDbConnection dbConnection = GetDbConnection();
 
             using ( IDbCommand command = dbConnection.CreateCommand() )
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = storedProcedureName;
-                if (dataParameters != null)
-                    foreach (var parameter in dataParameters)
-                        command.AddParameter( parameter );
+                SetupCommand( command, storedProcedureName, dataParameters );
                 return command.ExecuteReader();
             }
         }
@@ -62,9 +56,57 @@ namespace PHydrate.Core
         /// </summary>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns>An IDataReader containing the results.</returns>
-        public IDataReader ExecuteStoredProcedureReader(string storedProcedureName)
+        public IDataReader ExecuteStoredProcedureReader( string storedProcedureName )
         {
             return ExecuteStoredProcedureReader( storedProcedureName, null );
+        }
+
+        /// <summary>
+        /// Executes the stored procedure, returning the first column of the first record.
+        /// </summary>
+        /// <typeparam name="T">The type to cast the return value to.</typeparam>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns></returns>
+        public T ExecuteStoredProcedureScalar< T >( string storedProcedureName )
+        {
+            return ExecuteStoredProcedureScalar< T >( storedProcedureName, null );
+        }
+
+        /// <summary>
+        /// Executes the stored procedure, returning the first column of the first record.
+        /// </summary>
+        /// <typeparam name="T">The type to cast the return value to.</typeparam>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="dataParameters">The data parameters.</param>
+        /// <returns></returns>
+        public T ExecuteStoredProcedureScalar< T >( string storedProcedureName,
+                                                    IEnumerable< KeyValuePair< string, object > > dataParameters )
+        {
+            IDbConnection dbConnection = GetDbConnection();
+
+            using ( IDbCommand dbCommand = dbConnection.CreateCommand() )
+            {
+                SetupCommand( dbCommand, storedProcedureName, dataParameters );
+                return (T)dbCommand.ExecuteScalar();
+            }
+        }
+
+        private static void SetupCommand( IDbCommand command, string storedProcedureName,
+                                          IEnumerable< KeyValuePair< string, object > > dataParameters )
+        {
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = storedProcedureName;
+            if ( dataParameters != null )
+                foreach ( var parameter in dataParameters )
+                    command.AddParameter( parameter );
+        }
+
+        private IDbConnection GetDbConnection()
+        {
+            IDbConnection dbConnection = GetDatabaseConnection();
+            if ( dbConnection.State != ConnectionState.Open )
+                dbConnection.Open();
+            return dbConnection;
         }
 
         #endregion
@@ -73,6 +115,6 @@ namespace PHydrate.Core
         /// Gets the connection.
         /// </summary>
         /// <returns>The driver-specific connection object</returns>
-        protected abstract IDbConnection GetConnection();
+        protected abstract IDbConnection GetDatabaseConnection();
     }
 }

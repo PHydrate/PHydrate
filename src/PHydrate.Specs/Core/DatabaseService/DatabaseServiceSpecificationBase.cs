@@ -35,21 +35,17 @@ namespace PHydrate.Specs.Core.DatabaseService
         protected static IDbCommand DbCommand;
         protected static string ProcedureName;
         protected static DatabaseServiceBase ServiceUnderTest;
-        protected static IDataReader ExpectedDataReader;
 
         [ UsedImplicitly ]
         private Establish Context = () => {
                                         ProcedureName = A.Random.String;
                                         _dbConnection = MockRepository.GenerateMock< IDbConnection >();
                                         DbCommand = MockRepository.GenerateMock< IDbCommand >();
-                                        ExpectedDataReader = MockRepository.GenerateStub< IDataReader >();
 
                                         _dbConnection.Expect( x => x.CreateCommand() ).Return( DbCommand );
                                         DbCommand.Expect( x => x.CommandType ).SetPropertyWithArgument(
                                             CommandType.StoredProcedure );
                                         DbCommand.Expect( x => x.CommandText ).SetPropertyWithArgument( ProcedureName );
-                                        DbCommand.Expect( x => x.ExecuteReader( ) ).
-                                            Return( ExpectedDataReader );
                                         DbCommand.Stub( x => x.CreateParameter() ).Return(
                                             MockRepository.GenerateStub< IDbDataParameter >() );
                                         DbCommand.Stub( x => x.Parameters ).Return(
@@ -69,7 +65,7 @@ namespace PHydrate.Specs.Core.DatabaseService
 
             #region Overrides of DatabaseServiceBase
 
-            protected override IDbConnection GetConnection()
+            protected override IDbConnection GetDatabaseConnection()
             {
                 return _connection;
             }

@@ -28,7 +28,7 @@ namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
     public class When_getting_an_object_with_an_explicit_hydrator_that_has_no_default_constructor :
-        SessionSpecificationBase
+        SessionSpecificationHydrateBase
     {
         private static Exception _exception;
 

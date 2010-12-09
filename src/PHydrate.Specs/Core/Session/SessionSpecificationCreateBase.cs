@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,28 +20,26 @@
 
 #endregion
 
-using System.Linq;
+using System;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
+using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_expression_containing_boolean_and : SessionSpecificationHydrateBase
+    public class SessionSpecificationCreateBase : SessionSpecificationBase
     {
-        private Because Of =
-            () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == 1 && x.Key == 1 ).ToList();
+        protected static int ExpectedKey;
 
-        private It Should_call_stored_procedure
-            = () => DatabaseService.VerifyAllExpectations();
-
-        private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "@Key", 1, x => x.ExecuteStoredProcedureReader( "", null ) );
-
-        private It Should_not_be_null
-            = () => RequestedObjects.ShouldNotBeNull();
-
-        private It Should_return_correct_record
-            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 1 );
+        [ UsedImplicitly ]
+        private Establish Context = () => {
+                                        DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< int >( "", null ) )
+                                            .
+                                            Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return(
+                                                1 );
+                                        ExpectedKey = A.Random.Integer;
+                                    };
     }
 }

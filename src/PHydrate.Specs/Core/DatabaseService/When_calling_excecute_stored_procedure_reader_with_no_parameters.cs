@@ -27,7 +27,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.DatabaseService
 {
     [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationReaderBase
     {
         private static IDataReader _dataReader;
         private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );

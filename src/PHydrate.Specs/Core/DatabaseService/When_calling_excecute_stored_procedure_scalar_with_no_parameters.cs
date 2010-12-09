@@ -20,25 +20,23 @@
 
 #endregion
 
-using System;
-using System.Data;
-using System.IO;
+using Machine.Specifications;
 using PHydrate.Core;
+using Rhino.Mocks;
 
-namespace PHydrate.Tests.Integration.SprocIntegration
+namespace PHydrate.Specs.Core.DatabaseService
 {
-    internal class SQLiteDatabaseService : DatabaseServiceBase
+    [ Subject( typeof(DatabaseServiceBase) ) ]
+    public class When_calling_excecute_stored_procedure_scalar_with_no_parameters :
+        DatabaseServiceSpecificationScalarBase
     {
-        #region Overrides of DatabaseServiceBase
+        private static int _actualReturn;
+        private Because Of = () => _actualReturn = ServiceUnderTest.ExecuteStoredProcedureScalar< int >( ProcedureName );
 
-        protected override IDbConnection GetDatabaseConnection()
-        {
-            return
-                new SQLiteProcConnection( String.Format( "Data Source={0};Version=3",
-                                                         Path.Combine( Environment.CurrentDirectory,
-                                                                       "IntegrationTestDb.sqlite" ) ) );
-        }
+        private It Should_call_all_expected_methods
+            = () => DbCommand.VerifyAllExpectations();
 
-        #endregion
+        private It Should_return_integer
+            = () => _actualReturn.ShouldEqual( ExpectedInteger );
     }
 }
