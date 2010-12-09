@@ -32,7 +32,7 @@ namespace PHydrate.Core
     /// <summary>
     ///   Default hydrator
     /// </summary>
-    internal class DefaultObjectHydrator : IObjectHydrator
+    internal class DefaultObjectHydrator : IDefaultObjectHydrator
     {
         #region IObjectHydrator Members
 
@@ -57,12 +57,9 @@ namespace PHydrate.Core
             // Try to get a default constructor
             ConstructorInfo defaultConstructor = typeof(T).GetDefaultConstructor();
 
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             if ( defaultConstructor != null )
                 return (T)defaultConstructor.Invoke( new object[] {} );
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
 
-            // ReSharper disable HeuristicUnreachableCode
             ConstructorInfo[] otherConstructors = typeof(T).GetConstructors();
             foreach ( ConstructorInfo ci in otherConstructors )
             {
@@ -80,7 +77,6 @@ namespace PHydrate.Core
             }
             throw new PHydrateException( String.Format( "Could not find constructor for hydration of object {0}",
                                                         typeof(T).FullName ) );
-            // ReSharper restore HeuristicUnreachableCode
         }
     }
 }

@@ -28,7 +28,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationBase
+    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
     {
         private static Exception _exception;
 
@@ -43,7 +43,7 @@ namespace PHydrate.Specs.Core.Session
     }
 
     [Subject(typeof(PHydrate.Core.Session))]
-    public class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationBase
+    public class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationHydrateBase
     {
         private Because Of =
             () => _explicitHydratorObjects = SessionUnderTest.Get< TestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();

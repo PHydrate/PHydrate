@@ -35,19 +35,19 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
         private Establish Context =
             () => ExpressionToTest = ( TestClass x ) => x.TestKey1 == RandomInteger1 && x.TestKey2 == RandomInteger2;
 
-        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters();
+        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters("@");
 
         private It Should_contain_correct_value_in_testkey1
-            = () => _dictionary[ "TestKey1" ].ShouldEqual( RandomInteger1 );
+            = () => _dictionary[ "@TestKey1" ].ShouldEqual( RandomInteger1 );
 
         private It Should_contain_correct_value_in_testkey2
-            = () => _dictionary[ "TestKey2" ].ShouldEqual( RandomInteger2 );
+            = () => _dictionary[ "@TestKey2" ].ShouldEqual( RandomInteger2 );
 
         private It Should_contain_key_named_testkey1
-            = () => _dictionary.Keys.ShouldContain( "TestKey1" );
+            = () => _dictionary.Keys.ShouldContain( "@TestKey1" );
 
         private It Should_contain_key_named_testkey2
-            = () => _dictionary.Keys.ShouldContain( "TestKey2" );
+            = () => _dictionary.Keys.ShouldContain( "@TestKey2" );
 
         private It Should_return_dictionary
             = () => _dictionary.ShouldNotBeNull();

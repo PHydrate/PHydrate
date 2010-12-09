@@ -30,7 +30,5 @@ namespace PHydrate
     /// to group other interfaces.
     /// </remarks>
     /// <typeparam name="T"></typeparam>
-    public interface ISpecification< T >
-    {
-    }
+    public interface ISpecification< in T > {}
 }

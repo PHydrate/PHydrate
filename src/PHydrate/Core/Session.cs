@@ -35,17 +35,21 @@ namespace PHydrate.Core
     public class Session : ISession
     {
         private readonly IDatabaseService _databaseService;
-        private readonly IObjectHydrator _defaultObjectHydrator;
+        private readonly IDefaultObjectHydrator _defaultObjectHydrator;
+        private readonly string _parameterPrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
         /// <param name="defaultObjectHydrator">The object hydrator to use by default</param>
-        internal Session( IDatabaseService databaseService, IObjectHydrator defaultObjectHydrator )
+        /// <param name="parameterPrefix">The string to prepend to parameter names</param>
+        internal Session( IDatabaseService databaseService, IDefaultObjectHydrator defaultObjectHydrator,
+                          string parameterPrefix )
         {
             _databaseService = databaseService;
             _defaultObjectHydrator = defaultObjectHydrator;
+            _parameterPrefix = parameterPrefix;
         }
 
         #region Implementation of ISession
@@ -91,7 +95,7 @@ namespace PHydrate.Core
             if ( specification is IDbSpecification< T > )
                 foundObjects = Get( ( (IDbSpecification< T >)specification ).Criteria );
             else
-                foundObjects = Get< T >( null as Expression< Func< T, bool > > );
+                foundObjects = Get( null as Expression< Func< T, bool > > );
 
             Func< T, bool > satisifies = x => true;
             if ( specification is IExplicitSpecification< T > )
@@ -107,14 +111,22 @@ namespace PHydrate.Core
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
         {
-            throw new NotImplementedException();
+            var createAttribute = typeof(T).GetAttribute< CreateUsingAttribute >();
+            if (createAttribute == null || String.IsNullOrEmpty(createAttribute.ProcedureName))
+                throw new PHydrateException(
+                    String.Format(
+                        "Unable to persist object of type {0}.  Define a creation procedure with [CreateUsing]",
+                        typeof(T).FullName ) );
+
+            _databaseService.ExecuteStoredProcedureScalar< int >( createAttribute.ProcedureName,
+                                                                  objectToPersist.GetDataParameters( _parameterPrefix ) );
         }
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
                                                                   Expression< Func< T, bool > > query )
         {
             var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
-                                                                            query.GetDataParameters() );
+                                                                            query.GetDataParameters( _parameterPrefix ) );
 
             // TODO: Fix IObjectHydrator so Default and other hydrators don't have different interfaces
             IObjectHydrator< T > hydrator = GetHydrator< T >();

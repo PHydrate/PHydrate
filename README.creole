@@ -19,3 +19,8 @@ some startup configuration, PHydrate will stay out of your code's way.
 
 At this point, everything else is in flux.  As I solidify things, I will add
 to this README.
+
+Example code can be found in the PHydrate.Tests.Integration project.
+I will be adding to this as I add functionality and/or find use cases
+that I didn't think of.
+

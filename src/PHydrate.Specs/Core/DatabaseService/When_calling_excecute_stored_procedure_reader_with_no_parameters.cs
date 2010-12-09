@@ -20,15 +20,14 @@
 
 #endregion
 
-using System.Collections.Generic;
 using System.Data;
 using Machine.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.DatabaseService
 {
-    [ Subject( typeof(PHydrate.Core.DatabaseService) ) ]
-    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationBase
+    [ Subject( typeof(PHydrate.Core.DatabaseServiceBase) ) ]
+    public class When_calling_excecute_stored_procedure_reader_with_no_parameters : DatabaseServiceSpecificationReaderBase
     {
         private static IDataReader _dataReader;
         private Because Of = () => _dataReader = ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName );
@@ -38,21 +37,5 @@ namespace PHydrate.Specs.Core.DatabaseService
 
         private It Should_return_datareader
             = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
-    }
-
-    [Subject(typeof(PHydrate.Core.DatabaseService))]
-    public class When_calling_excecute_stored_procedure_reader_with_parameters : DatabaseServiceSpecificationBase
-    {
-        private static IDataReader _dataReader;
-
-        private Because Of =
-            () =>
-            _dataReader =
-            ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName,
-                                                           new Dictionary< string, object >() {{"Key", 1}} );
-
-        private It Should_return_datareader
-            = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
-
     }
 }

@@ -28,7 +28,7 @@ namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
     public class When_getting_an_object_with_simple_expression_with_rhs_containing_a_method_call :
-        SessionSpecificationBase
+        SessionSpecificationHydrateBase
     {
         private Because Of =
             () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == Test() ).ToList();
@@ -37,7 +37,7 @@ namespace PHydrate.Specs.Core.Session
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "Key", 1 );
+            = () => AssertDatabaseServiceParameter( "@Key", 1, x => x.ExecuteStoredProcedureReader( "", null ) );
 
         private It Should_not_be_null
             = () => RequestedObjects.ShouldNotBeNull();

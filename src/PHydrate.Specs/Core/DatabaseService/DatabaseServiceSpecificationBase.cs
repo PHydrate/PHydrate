@@ -23,6 +23,7 @@
 using System.Data;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
+using PHydrate.Core;
 using Rhino.Mocks;
 using UMMO.TestingUtils;
 
@@ -33,28 +34,43 @@ namespace PHydrate.Specs.Core.DatabaseService
         private static IDbConnection _dbConnection;
         protected static IDbCommand DbCommand;
         protected static string ProcedureName;
-        protected static PHydrate.Core.DatabaseService ServiceUnderTest;
-        protected static IDataReader ExpectedDataReader;
+        protected static DatabaseServiceBase ServiceUnderTest;
 
         [ UsedImplicitly ]
         private Establish Context = () => {
                                         ProcedureName = A.Random.String;
                                         _dbConnection = MockRepository.GenerateMock< IDbConnection >();
                                         DbCommand = MockRepository.GenerateMock< IDbCommand >();
-                                        ExpectedDataReader = MockRepository.GenerateStub< IDataReader >();
 
                                         _dbConnection.Expect( x => x.CreateCommand() ).Return( DbCommand );
                                         DbCommand.Expect( x => x.CommandType ).SetPropertyWithArgument(
                                             CommandType.StoredProcedure );
                                         DbCommand.Expect( x => x.CommandText ).SetPropertyWithArgument( ProcedureName );
-                                        DbCommand.Expect( x => x.ExecuteReader( ) ).
-                                            Return( ExpectedDataReader );
                                         DbCommand.Stub( x => x.CreateParameter() ).Return(
                                             MockRepository.GenerateStub< IDbDataParameter >() );
                                         DbCommand.Stub( x => x.Parameters ).Return(
                                             MockRepository.GenerateStub< IDataParameterCollection >() );
 
-                                        ServiceUnderTest = new PHydrate.Core.DatabaseService( _dbConnection );
+                                        ServiceUnderTest = new TestDatabaseService( _dbConnection );
                                     };
+
+        private class TestDatabaseService : DatabaseServiceBase
+        {
+            private readonly IDbConnection _connection;
+
+            public TestDatabaseService( IDbConnection dbConnection )
+            {
+                _connection = dbConnection;
+            }
+
+            #region Overrides of DatabaseServiceBase
+
+            protected override IDbConnection GetDatabaseConnection()
+            {
+                return _connection;
+            }
+
+            #endregion
+        }
     }
 }

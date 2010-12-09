@@ -25,14 +25,14 @@ namespace PHydrate.Attributes
     /// <summary>
     ///   Annotate a class with the stored procedure used to get an object
     /// </summary>
+    [ MeansImplicitUse( ImplicitUseKindFlags.Instantiated, ImplicitUseTargetFlags.Itself ) ]
     public class HydrateUsingAttribute : CrudAttributeBase
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "HydrateUsingAttribute" /> class.
         /// </summary>
         /// <param name = "procedureName">Name of the procedure.</param>
-        public HydrateUsingAttribute( string procedureName ) : base( procedureName )
-        {
-        }
+        public HydrateUsingAttribute( string procedureName )
+            : base( procedureName ) {}
     }
 }
