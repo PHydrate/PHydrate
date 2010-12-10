@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -35,7 +34,7 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
         private Establish Context =
             () => ExpressionToTest = ( TestClass x ) => x.TestKey1 == RandomInteger1 && x.TestKey2 == RandomInteger2;
 
-        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters("@");
+        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
 
         private It Should_contain_correct_value_in_testkey1
             = () => _dictionary[ "@TestKey1" ].ShouldEqual( RandomInteger1 );

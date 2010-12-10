@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -42,19 +41,19 @@ namespace PHydrate.Specs.Core.Session
             = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 
-    [Subject(typeof(PHydrate.Core.Session))]
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
     public class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationHydrateBase
     {
+        private static IList< TestObjectExplicitHydrator > _explicitHydratorObjects;
+
         private Because Of =
-            () => _explicitHydratorObjects = SessionUnderTest.Get< TestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();
+            () =>
+            _explicitHydratorObjects = SessionUnderTest.Get< TestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();
 
         private It Should_return_object
             = () => _explicitHydratorObjects.ShouldNotBeNull();
 
         private It Should_return_two_objects
             = () => _explicitHydratorObjects.Count.ShouldEqual( 2 );
-
-        
-        private static IList< TestObjectExplicitHydrator > _explicitHydratorObjects;
     }
 }

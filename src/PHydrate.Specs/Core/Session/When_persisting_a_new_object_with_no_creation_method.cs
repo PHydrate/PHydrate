@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -29,6 +28,7 @@ namespace PHydrate.Specs.Core.Session
     public sealed class When_persisting_a_new_object_with_no_creation_method : SessionSpecificationCreateBase
     {
         private static Exception _exception;
+        private static TestObjectNoHydrator _objectUnderTest;
         private Establish Context = () => _objectUnderTest = new TestObjectNoHydrator { Key = ExpectedKey };
 
         private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Persist( _objectUnderTest ) );
@@ -38,7 +38,5 @@ namespace PHydrate.Specs.Core.Session
 
         private It Should_throw_phydrate_exception
             = () => _exception.ShouldBeOfType< PHydrateException >();
-
-        private static TestObjectNoHydrator _objectUnderTest;
     }
 }

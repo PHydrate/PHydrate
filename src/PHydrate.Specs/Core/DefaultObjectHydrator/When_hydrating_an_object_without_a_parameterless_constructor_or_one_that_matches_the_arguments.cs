@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -35,10 +34,8 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
 
         private class TestHydrationTargetWithExplicitConstructor : TestHydrationTarget
         {
-            [CoverageExclude]
-            public TestHydrationTargetWithExplicitConstructor( int fakeProperty, string anotherFakeProperty )
-            {
-            }
+            [ CoverageExclude ]
+            public TestHydrationTargetWithExplicitConstructor( int fakeProperty, string anotherFakeProperty ) {}
         }
 
         #endregion
@@ -46,7 +43,8 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
         private Because Of =
             () =>
             _exception =
-            Catch.Exception( () => DefaultObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
+            Catch.Exception(
+                () => DefaultObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues ) );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();

@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -36,7 +35,7 @@ namespace PHydrate.Specs.Core.DatabaseService
             () =>
             _dataReader =
             ServiceUnderTest.ExecuteStoredProcedureReader( ProcedureName,
-                                                           new Dictionary< string, object > {{"Key", 1}} );
+                                                           new Dictionary< string, object > { { "Key", 1 } } );
 
         private It Should_return_datareader
             = () => _dataReader.ShouldBeTheSameAs( ExpectedDataReader );
