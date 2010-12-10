@@ -21,6 +21,7 @@
 #endregion
 
 using System;
+using PHydrate.Attributes;
 
 namespace PHydrate
 {
@@ -36,5 +37,14 @@ namespace PHydrate
         public PHydrateException( string message ) : base( message )
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PHydrateException"/> class.
+        /// </summary>
+        /// <param name="formatString">The format string.</param>
+        /// <param name="formatValues">The format values.</param>
+        [StringFormatMethod("formatString")]
+        public PHydrateException(string formatString, params string[] formatValues)
+            : this(string.Format(formatString, formatValues)) {}
     }
 }

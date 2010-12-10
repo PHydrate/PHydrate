@@ -48,7 +48,6 @@ namespace PHydrate.Attributes
     }
 */
 
-/*
     /// <summary>
     /// Indicates that marked method builds string by format pattern and (optional) arguments. 
     /// Parameter, which contains format string, should be given in constructor.
@@ -76,7 +75,6 @@ namespace PHydrate.Attributes
             get { return myFormatParameterName; }
         }
     }
-*/
 
 /*
     /// <summary>
