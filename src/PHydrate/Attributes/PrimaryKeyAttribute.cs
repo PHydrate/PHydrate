@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,17 +19,13 @@
 
 #endregion
 
-using Machine.Specifications;
-using PHydrate.Attributes;
+using System;
 
-namespace PHydrate.Specs.Attributes.CreateUsing
+namespace PHydrate.Attributes
 {
-    [ Subject( typeof(CreateUsingAttribute) ) ]
-    public class When_instantiating_create_using_attribute : CrudAttributeSpecificationBase< CreateUsingAttribute >
-    {
-        private Establish Context = () => InstantiateAttribute = () => new CreateUsingAttribute( StoredProcedureName );
-
-        private It Should_store_procedure_name_in_property
-            = () => CrudAttribute.ProcedureName.ShouldEqual( StoredProcedureName );
-    }
+    /// <summary>
+    /// Mark an item in a class as the primary key
+    /// </summary>
+    [ AttributeUsage( AttributeTargets.Property, AllowMultiple = false, Inherited = false ) ]
+    public class PrimaryKeyAttribute : Attribute {}
 }

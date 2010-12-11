@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -29,7 +28,8 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_a_specification_that_implements_db_and_explicit : SessionSpecificationHydrateBase
+    public class When_getting_an_object_with_a_specification_that_implements_db_and_explicit :
+        SessionSpecificationHydrateBase
     {
         private Because Of = () => RequestedObjects = SessionUnderTest.Get( new TestSpecification() ).ToList();
 

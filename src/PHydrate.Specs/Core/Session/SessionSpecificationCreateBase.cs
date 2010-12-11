@@ -16,11 +16,9 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-using System;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
 using Rhino.Mocks;

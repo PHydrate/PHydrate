@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -54,6 +53,8 @@ namespace PHydrate.Specs.Core.DatabaseService
                                         ServiceUnderTest = new TestDatabaseService( _dbConnection );
                                     };
 
+        #region Nested type: TestDatabaseService
+
         private class TestDatabaseService : DatabaseServiceBase
         {
             private readonly IDbConnection _connection;
@@ -72,5 +73,7 @@ namespace PHydrate.Specs.Core.DatabaseService
 
             #endregion
         }
+
+        #endregion
     }
 }

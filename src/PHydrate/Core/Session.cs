@@ -118,8 +118,11 @@ namespace PHydrate.Core
                         "Unable to persist object of type {0}.  Define a creation procedure with [CreateUsing]",
                         typeof(T).FullName ) );
 
-            _databaseService.ExecuteStoredProcedureScalar< int >( createAttribute.ProcedureName,
-                                                                  objectToPersist.GetDataParameters( _parameterPrefix ) );
+            var primaryKeyValue = _databaseService.ExecuteStoredProcedureScalar< object >(
+                createAttribute.ProcedureName,
+                objectToPersist.GetDataParameters( _parameterPrefix ) );
+
+            objectToPersist.SetPropertyWithAttribute< T, PrimaryKeyAttribute >( primaryKeyValue );
         }
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,

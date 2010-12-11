@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -28,6 +27,7 @@ namespace PHydrate.Specs.Core.Session
     [ Subject( typeof(PHydrate.Core.Session) ) ]
     public class When_persisting_a_new_object : SessionSpecificationCreateBase
     {
+        private static TestObject _objectUnderTest;
         private Establish Context = () => _objectUnderTest = new TestObject { Key = ExpectedKey };
 
         private Because Of = () => SessionUnderTest.Persist( _objectUnderTest );
@@ -36,8 +36,8 @@ namespace PHydrate.Specs.Core.Session
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "@Key", ExpectedKey, x => x.ExecuteStoredProcedureScalar<int>( "", null ) );
-
-        private static TestObject _objectUnderTest;
+            =
+            () =>
+            AssertDatabaseServiceParameter( "@Key", ExpectedKey, x => x.ExecuteStoredProcedureScalar< object >( "", null ) );
     }
 }

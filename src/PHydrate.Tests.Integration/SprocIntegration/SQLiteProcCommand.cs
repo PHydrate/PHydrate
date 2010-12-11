@@ -86,12 +86,10 @@ namespace PHydrate.Tests.Integration.SprocIntegration
             //return _baseCommand.ExecuteReader( behavior );
         }
 
-        [ CoverageExclude ]
         public object ExecuteScalar()
         {
-            throw new NotImplementedException();
-            //ConvertToTextQuery();
-            //return _baseCommand.ExecuteScalar();
+            ConvertToTextQuery();
+            return _baseCommand.ExecuteScalar();
         }
 
         public IDbConnection Connection

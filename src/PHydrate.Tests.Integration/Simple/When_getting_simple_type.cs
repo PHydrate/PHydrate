@@ -23,6 +23,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
+using UMMO.TestingUtils;
+using UMMO.TestingUtils.RandomData;
 
 namespace PHydrate.Tests.Integration.Simple
 {
@@ -46,5 +48,28 @@ namespace PHydrate.Tests.Integration.Simple
 
         private It Should_return_a_single_record
             = () => _simpleList.Count.ShouldEqual( 1 );
+    }
+
+    [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
+    [ Tags( "Integration" ) ]
+    public class When_creating_simple_type : PHydrateIntegrationTestBase
+    {
+        private Establish Context = () => {
+                                        _integerValue = A.Random.Integer;
+                                        _stringValue = A.Random.String;
+                                        _newSimple = new TestDomain.Simple {
+                                                                               IntegerValue = _integerValue,
+                                                                               StringValue = _stringValue
+                                                                           };
+                                    };
+
+        private Because Of = () => SessionFactory.GetSession().Persist( _newSimple );
+
+        private It Should_populate_instance_with_id
+            = () => _newSimple.SimpleId.ShouldBeGreaterThan( 0 );       
+
+        private static int _integerValue;
+        private static string _stringValue;
+        private static TestDomain.Simple _newSimple;
     }
 }

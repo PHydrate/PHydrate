@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -28,7 +27,8 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
     public class When_hydrating_an_object_without_a_parameterless_constructor : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
-            () => ReturnedObject = DefaultObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues );
+            () =>
+            ReturnedObject = DefaultObjectHydrator.Hydrate< TestHydrationTargetWithExplicitConstructor >( ColumnValues );
 
         private It Should_populate_the_integer_property_correctly
             = () => ( (TestHydrationTarget)ReturnedObject ).IntegerProperty.ShouldEqual( RandomInteger );

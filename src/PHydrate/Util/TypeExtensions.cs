@@ -70,9 +70,23 @@ namespace PHydrate.Util
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
             if (defaultConstructor == null)
-                throw new PHydrateInternalException( "Unable to construct object {0}, no default constructor." );
+                throw new PHydrateInternalException(
+                    String.Format( "Unable to construct object {0}, no default constructor.", typeof(T).Name ) );
 
             return (T)defaultConstructor.Invoke( new object[] {} );
+        }
+
+        /// <summary>
+        /// Gets the members with attribute.
+        /// </summary>
+        /// <typeparam name="T">The attribute</typeparam>
+        /// <param name="type">The type.</param>
+        /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
+        [NotNull]
+        public static IEnumerable<MemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
+        {
+            return
+                type.GetMembers().Where( x => x.GetCustomAttributes( typeof(T), true ).Length > 0 );
         }
     }
 }

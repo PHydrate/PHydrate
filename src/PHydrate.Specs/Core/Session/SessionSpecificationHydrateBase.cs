@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -34,14 +33,10 @@ namespace PHydrate.Specs.Core.Session
 
         #region Test Classes
 
-        #region Nested type: TestObjectNoHydrator
-
-        #endregion
-
         #region Nested type: TestObjectExplicitHydrator
 
-        [HydrateUsing("TestStoredProcedure")]
-        [ObjectHydrator(typeof(TestObjectHydrator))]
+        [ HydrateUsing( "TestStoredProcedure" ) ]
+        [ ObjectHydrator( typeof(TestObjectHydrator) ) ]
         protected class TestObjectExplicitHydrator
         {
             public int Key { get; set; }
@@ -49,26 +44,10 @@ namespace PHydrate.Specs.Core.Session
 
         #endregion
 
-        #region Nested type: TestObjectHydrator
+        #region Nested type: TestObjectExplicitHydratorNoDefaultConstructor
 
-        private class TestObjectHydrator : IObjectHydrator<TestObjectExplicitHydrator>
-        {
-            #region Implementation of IObjectHydrator<TestObjectExplicitHydrator>
-
-            public TestObjectExplicitHydrator Hydrate(IDictionary<string, object> columnValues)
-            {
-                return new TestObjectExplicitHydrator { Key = (int)columnValues["Key"] };
-            }
-
-            #endregion
-        }
-
-        #endregion
-
-        #region Nested type: TestObjectExplicitHydrator
-
-        [HydrateUsing("TestStoredProcedure")]
-        [ObjectHydrator(typeof(TestObjectHydratorNoDefaultConstructor))]
+        [ HydrateUsing( "TestStoredProcedure" ) ]
+        [ ObjectHydrator( typeof(TestObjectHydratorNoDefaultConstructor) ) ]
         protected class TestObjectExplicitHydratorNoDefaultConstructor
         {
             public int Key { get; set; }
@@ -78,19 +57,33 @@ namespace PHydrate.Specs.Core.Session
 
         #region Nested type: TestObjectHydrator
 
-        private class TestObjectHydratorNoDefaultConstructor : IObjectHydrator<TestObjectExplicitHydrator>
+        private class TestObjectHydrator : IObjectHydrator< TestObjectExplicitHydrator >
         {
-            [CoverageExclude]
-            public TestObjectHydratorNoDefaultConstructor([UsedImplicitly]int foo)
+            #region Implementation of IObjectHydrator<TestObjectExplicitHydrator>
+
+            public TestObjectExplicitHydrator Hydrate( IDictionary< string, object > columnValues )
             {
+                return new TestObjectExplicitHydrator { Key = (int)columnValues[ "Key" ] };
             }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Nested type: TestObjectHydratorNoDefaultConstructor
+
+        private class TestObjectHydratorNoDefaultConstructor : IObjectHydrator< TestObjectExplicitHydrator >
+        {
+            [ CoverageExclude ]
+            public TestObjectHydratorNoDefaultConstructor( [ UsedImplicitly ] int foo ) {}
 
             #region Implementation of IObjectHydrator<TestObjectExplicitHydrator>
 
-            [CoverageExclude]
-            public TestObjectExplicitHydrator Hydrate(IDictionary<string, object> columnValues)
+            [ CoverageExclude ]
+            public TestObjectExplicitHydrator Hydrate( IDictionary< string, object > columnValues )
             {
-                return new TestObjectExplicitHydrator { Key = (int)columnValues["Key"] };
+                return new TestObjectExplicitHydrator { Key = (int)columnValues[ "Key" ] };
             }
 
             #endregion

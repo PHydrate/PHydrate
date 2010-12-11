@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -34,11 +33,12 @@ namespace PHydrate.Specs.Attributes
         protected static string StoredProcedureName;
         protected static T CrudAttribute;
 
-        [UsedImplicitly]
+        [ UsedImplicitly ]
         private Establish GlobalContext = () => StoredProcedureName = A.Random.String.Resembling.A.Noun;
+
         // TODO: Add Verb to UMMO.RandomString
 
-        [UsedImplicitly]
+        [ UsedImplicitly ]
         private Because Of = () => CrudAttribute = InstantiateAttribute();
     }
 }

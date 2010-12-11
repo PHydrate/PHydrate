@@ -1,3 +1,24 @@
+#region Copyright
+
+// This file is part of PHydrate.
+// 
+// PHydrate is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PHydrate is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Copyright 2010, Stephen Michael Czetty
+
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +30,8 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.Session
 {
-    public abstract class SessionSpecificationBase {
+    public abstract class SessionSpecificationBase
+    {
         protected static ISession SessionUnderTest;
         protected static IDatabaseService DatabaseService;
         protected static DataReaderMock DataReaderMock;
@@ -34,20 +56,25 @@ namespace PHydrate.Specs.Core.Session
                                                                                           DefaultObjectHydrator(), "@" );
                                     };
 
-        protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue, Action< IDatabaseService > action )
+        protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue,
+                                                              Action< IDatabaseService > action )
         {
             var parameters =
-                (IEnumerable<KeyValuePair< string, object >>)
+                (IEnumerable< KeyValuePair< string, object > >)
                 DatabaseService.GetArgumentsForCallsMadeOn( action )[ 0 ][ 1 ];
             // TODO: Add ShouldContainItemMatching to MSpec
             parameters.Where( x => x.Key == parameterName ).FirstOrDefault().ShouldNotBeNull();
             parameters.Where( x => x.Key == parameterName ).FirstOrDefault().Value.ShouldEqual( parameterValue );
         }
 
-        [UsedImplicitly]
+        #region Nested type: TestObjectNoHydrator
+
+        [ UsedImplicitly ]
         protected class TestObjectNoHydrator
         {
             public int Key { get; set; }
         }
+
+        #endregion
     }
 }

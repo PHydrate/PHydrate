@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -29,9 +28,7 @@ namespace PHydrate.Specs.Util.TypeExtensions
         #region Nested type: TestClass
 
         [ CreateUsing( "" ) ]
-        protected class TestClass
-        {
-        }
+        protected class TestClass {}
 
         #endregion
 
@@ -39,10 +36,8 @@ namespace PHydrate.Specs.Util.TypeExtensions
 
         protected class TestClassWithNoDefaultConstructor
         {
-            [CoverageExclude]
-            public TestClassWithNoDefaultConstructor( int blank )
-            {
-            }
+            [ CoverageExclude ]
+            public TestClassWithNoDefaultConstructor( int blank ) {}
         }
 
         #endregion

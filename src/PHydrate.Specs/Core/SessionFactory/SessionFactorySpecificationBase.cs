@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -35,7 +34,8 @@ namespace PHydrate.Specs.Core.SessionFactory
         [ UsedImplicitly ]
         private Establish Context = () => {
                                         _databaseService = MockRepository.GenerateStub< IDatabaseService >();
-                                        SessionFactoryUnderTest = new PHydrate.Core.SessionFactory( _databaseService, "@" );
+                                        SessionFactoryUnderTest = new PHydrate.Core.SessionFactory( _databaseService,
+                                                                                                    "@" );
                                     };
     }
 }
