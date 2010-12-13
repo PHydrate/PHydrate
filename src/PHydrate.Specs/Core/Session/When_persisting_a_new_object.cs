@@ -35,9 +35,8 @@ namespace PHydrate.Specs.Core.Session
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
 
-        private It Should_call_stored_procedure_with_parameter_named_key
-            =
-            () =>
-            AssertDatabaseServiceParameter( "@Key", ExpectedKey, x => x.ExecuteStoredProcedureScalar< object >( "", null ) );
+        private It Should_reset_key_to_value_returned_by_creation_procedure
+            = () => _objectUnderTest.Key.ShouldEqual( NewKey );
+
     }
 }

@@ -42,6 +42,7 @@ namespace PHydrate.Specs.Core.Session
         [ CreateUsing( "TestCreateStoredProcedure" ) ]
         protected class TestObject
         {
+            [PrimaryKey]
             public int Key { get; set; }
         }
 
@@ -63,8 +64,9 @@ namespace PHydrate.Specs.Core.Session
                 (IEnumerable< KeyValuePair< string, object > >)
                 DatabaseService.GetArgumentsForCallsMadeOn( action )[ 0 ][ 1 ];
             // TODO: Add ShouldContainItemMatching to MSpec
-            parameters.Where( x => x.Key == parameterName ).FirstOrDefault().ShouldNotBeNull();
-            parameters.Where( x => x.Key == parameterName ).FirstOrDefault().Value.ShouldEqual( parameterValue );
+            KeyValuePair< string, object > parameter = parameters.Where( x => x.Key == parameterName ).FirstOrDefault();
+            parameter.ShouldNotBeNull();
+            parameter.Value.ShouldEqual( parameterValue );
         }
 
         #region Nested type: TestObjectNoHydrator
