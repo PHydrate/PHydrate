@@ -33,11 +33,14 @@ namespace PHydrate.Specs.Core.Session
 
         [ UsedImplicitly ]
         private Establish Context = () => {
-                                        DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< int >( "", null ) )
+                                        NewKey = A.Random.Integer;
+                                        DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< object >( "", null ) )
                                             .
                                             Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return(
-                                                1 );
+                                                NewKey );
                                         ExpectedKey = A.Random.Integer;
                                     };
+
+        protected static int NewKey;
     }
 }

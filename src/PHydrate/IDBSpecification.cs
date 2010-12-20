@@ -29,7 +29,7 @@ namespace PHydrate
     /// Database criteria for a type
     /// </summary>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IDbSpecification< /* in */ T > : ISpecification< T >
+    public interface IDbSpecification< T > : ISpecification< T >
     {
         /// <summary>
         /// Gets the criteria.

@@ -6,6 +6,7 @@ namespace PHydrate.Tests.Integration.TestDomain
     [CreateUsing("CreateSimple")]
     public class Simple
     {
+        [PrimaryKey]
         public long SimpleId { get; private set; }
 
         public long IntegerValue { get; set; }
