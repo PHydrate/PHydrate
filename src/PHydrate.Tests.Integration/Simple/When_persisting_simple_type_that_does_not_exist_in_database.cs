@@ -26,7 +26,7 @@ namespace PHydrate.Tests.Integration.Simple
 {
     [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
     [ Tags( "Integration" ) ]
-    public class When_creating_simple_type : PHydrateIntegrationTestBase
+    public class When_persisting_simple_type_that_does_not_exist_in_database : PHydrateIntegrationTestBase
     {
         private static int _integerValue;
         private static string _stringValue;
