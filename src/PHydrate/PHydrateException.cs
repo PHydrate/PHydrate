@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -34,17 +33,15 @@ namespace PHydrate
         ///   Initializes a new instance of the <see cref = "PHydrateException" /> class.
         /// </summary>
         /// <param name = "message">The message.</param>
-        public PHydrateException( string message ) : base( message )
-        {
-        }
+        public PHydrateException( string message ) : base( message ) {}
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PHydrateException"/> class.
+        ///   Initializes a new instance of the <see cref = "PHydrateException" /> class.
         /// </summary>
-        /// <param name="formatString">The format string.</param>
-        /// <param name="formatValues">The format values.</param>
-        [StringFormatMethod("formatString")]
-        public PHydrateException(string formatString, params string[] formatValues)
-            : this(string.Format(formatString, formatValues)) {}
+        /// <param name = "formatString">The format string.</param>
+        /// <param name = "formatValues">The format values.</param>
+        [ StringFormatMethod( "formatString" ) ]
+        public PHydrateException( string formatString, params string[] formatValues )
+            : this( string.Format( formatString, formatValues ) ) {}
     }
 }
