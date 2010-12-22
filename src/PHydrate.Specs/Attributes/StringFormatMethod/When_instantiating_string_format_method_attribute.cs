@@ -16,19 +16,26 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using PHydrate.Attributes;
+using UMMO.TestingUtils;
+
+namespace PHydrate.Specs.Attributes.StringFormatMethod
 {
-    /// <summary>
-    /// Base interface for specification types
-    /// </summary>
-    /// <remarks>
-    /// Nothing is implemented by this interface, it is simply necessary
-    /// to group other interfaces.
-    /// </remarks>
-    /// <typeparam name="T"></typeparam>
-    public interface ISpecification< T > {}
+    [ Subject( typeof(StringFormatMethodAttribute) ) ]
+    public class When_instantiating_string_format_method_attribute
+    {
+        private Establish Context = () => _methodName = A.Random.String;
+
+        private Because Of = () => _formatMethodAttribute = new StringFormatMethodAttribute( _methodName );
+
+        private It Should_store_method_name_in_property
+            = () => _formatMethodAttribute.FormatParameterName.ShouldEqual( _methodName );
+
+        private static string _methodName;
+        private static StringFormatMethodAttribute _formatMethodAttribute;
+    }
 }

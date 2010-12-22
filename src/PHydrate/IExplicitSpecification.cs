@@ -26,7 +26,7 @@ namespace PHydrate
     /// A code-based specification.
     /// </summary>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    public interface IExplicitSpecification< /* in */ T > : ISpecification< T >
     {
         /// <summary>
         /// Determine if an object satifies the specification

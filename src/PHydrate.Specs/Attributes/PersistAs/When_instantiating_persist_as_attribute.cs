@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,19 +16,26 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using PHydrate.Attributes;
+using UMMO.TestingUtils;
+
+namespace PHydrate.Specs.Attributes.PersistAs
 {
-    /// <summary>
-    /// Base interface for specification types
-    /// </summary>
-    /// <remarks>
-    /// Nothing is implemented by this interface, it is simply necessary
-    /// to group other interfaces.
-    /// </remarks>
-    /// <typeparam name="T"></typeparam>
-    public interface ISpecification< T > {}
+    [ Subject( typeof(PersistAsAttribute) ) ]
+    public class When_instantiating_persist_as_attribute
+    {
+        private Establish Context = () => _columnName = A.Random.String;
+
+        private Because Of = () => _persistAsAttribute = new PersistAsAttribute( _columnName );
+
+        private It Should_store_column_name_in_property
+            = () => _persistAsAttribute.ColumnName.ShouldEqual( _columnName );      
+
+        private static string _columnName;
+        private static PersistAsAttribute _persistAsAttribute;
+    }
 }

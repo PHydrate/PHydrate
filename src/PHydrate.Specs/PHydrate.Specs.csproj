@@ -82,6 +82,8 @@
     <Compile Include="Attributes\MeansImplicitUse\When_instantiating_means_implicit_use_attribute_with_default_constructor.cs" />
     <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
     <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator.cs" />
+    <Compile Include="Attributes\PersistAs\When_instantiating_persist_as_attribute.cs" />
+    <Compile Include="Attributes\StringFormatMethod\When_instantiating_string_format_method_attribute.cs" />
     <Compile Include="Attributes\UpdateUsing\When_instantiating_update_using_attribute.cs" />
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_specifying_target.cs" />
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_specifying_kind.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_simple_expression_containing_equals.cs" />
+    <Compile Include="Util\GenericExtensions\When_getting_data_parameters_from_object.cs" />
     <Compile Include="Util\TypeExtensions\TypeExtensionsSpecificationBase.cs" />
     <Compile Include="Util\TypeExtensions\When_constructing_using_the_default_constructor.cs" />
     <Compile Include="Util\TypeExtensions\When_constructing_using_the_default_constructor_but_the_class_does_not_have_one.cs" />

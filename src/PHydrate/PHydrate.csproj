@@ -63,6 +63,7 @@
     <Compile Include="Attributes\DeleteUsingAttribute.cs" />
     <Compile Include="Attributes\HydrateUsingAttribute.cs" />
     <Compile Include="Attributes\ObjectHydratorAttribute.cs" />
+    <Compile Include="Attributes\PersistAsAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Attributes\ResharperAnnotations.cs" />
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
