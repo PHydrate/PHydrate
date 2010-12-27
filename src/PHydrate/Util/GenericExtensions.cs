@@ -56,7 +56,7 @@ namespace PHydrate.Util
         /// <param name="obj">The obj.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="PHydrateException">Thrown if the member is not settable.</exception>
-        public static void SetPropertyWithAttribute<TInstance, TAttributeType>(this TInstance obj, object value)
+        public static void SetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj, object value )
             where TAttributeType : Attribute
         {
             MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
@@ -75,7 +75,40 @@ namespace PHydrate.Util
                 default:
                     throw new PHydrateException(
                         "Cannot set value on member {0}, because it is not a field or property.", member.Name );
+            }
+        }
 
+        /// <summary>
+        /// Gets the property value with attribute.
+        /// </summary>
+        /// <typeparam name="TInstance">The type of the instance.</typeparam>
+        /// <typeparam name="TAttributeType">The type of the attribute type.</typeparam>
+        /// <param name="obj">The obj.</param>
+        /// <param name="propertyType">Type of the property.</param>
+        /// <returns></returns>
+        public static object GetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj,
+                                                                                         out Type propertyType )
+            where TAttributeType : Attribute
+        {
+            MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
+            propertyType = null;
+
+            if ( member == null )
+                return null;
+
+            switch ( member.MemberType )
+            {
+                case MemberTypes.Field:
+                    propertyType = ( (FieldInfo)member ).FieldType;
+                    return ( (FieldInfo)member ).GetValue( obj );
+                case MemberTypes.Property:
+                    propertyType = ( (PropertyInfo)member ).PropertyType;
+                    return ( (PropertyInfo)member ).GetValue( obj,
+                                                              BindingFlags.Instance | BindingFlags.Public |
+                                                              BindingFlags.NonPublic, null, null, null );
+                default:
+                    throw new PHydrateException(
+                        "Cannot get value from member {0}, because it is not a field or property.", member.Name );
             }
         }
     }
