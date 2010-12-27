@@ -57,6 +57,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\machine.specifications\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -84,6 +88,21 @@
     <Compile Include="SprocIntegration\SQLiteDatabaseService.cs" />
     <Compile Include="SprocIntegration\SQLiteProcConnection.cs" />
     <Compile Include="SprocIntegration\SQLiteProcCommand.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\SQLiteProcCommandSpecificationBase.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_calling_create_parameter_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_calling_dispose_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_calling_execute_reader_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_calling_execute_reader_on_command_that_does_not_find_a_procedure_to_run.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_calling_execute_scalar_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_getting_command_text_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_getting_parameters_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_setting_command_text_on_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcCommand\When_using_sql_lite_proc_command.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcConnection\SQLiteProcConnectionSpecificationBase.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcConnection\When_calling_create_command_on_connection.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcConnection\When_calling_get_state_on_connection.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcConnection\When_calling_open_on_connection.cs" />
+    <Compile Include="SprocIntegration\Tests\SQLiteProcConnection\When_using_sql_lite_proc_connection.cs" />
     <Compile Include="TestDomain\ClassWithHydrator.cs" />
     <Compile Include="TestDomain\Simple.cs" />
   </ItemGroup>

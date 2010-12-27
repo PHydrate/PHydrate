@@ -45,14 +45,12 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         #region Implementation of IDbCommand
 
-        [ CoverageExclude ]
         public void Prepare()
         {
             throw new NotImplementedException();
             //_baseCommand.Prepare();
         }
 
-        [ CoverageExclude ]
         public void Cancel()
         {
             throw new NotImplementedException();
@@ -64,7 +62,6 @@ namespace PHydrate.Tests.Integration.SprocIntegration
             return _baseCommand.CreateParameter();
         }
 
-        [ CoverageExclude ]
         public int ExecuteNonQuery()
         {
             throw new NotImplementedException();
@@ -78,7 +75,6 @@ namespace PHydrate.Tests.Integration.SprocIntegration
             return _baseCommand.ExecuteReader();
         }
 
-        [ CoverageExclude ]
         public IDataReader ExecuteReader( CommandBehavior behavior )
         {
             throw new NotImplementedException();
@@ -94,13 +90,11 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         public IDbConnection Connection
         {
-            [CoverageExclude]
             get
             {
                 throw new NotImplementedException();
                 //return _baseCommand.Connection;
             }
-            [CoverageExclude]
             set
             {
                 throw new NotImplementedException();
@@ -110,13 +104,11 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         public IDbTransaction Transaction
         {
-            [CoverageExclude]
             get
             {
                 throw new NotImplementedException();
                 //return _baseCommand.Transaction;
             }
-            [CoverageExclude]
             set
             {
                 throw new NotImplementedException();
@@ -132,13 +124,11 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         public int CommandTimeout
         {
-            [CoverageExclude]
             get
             {
                 throw new NotImplementedException();
                 //return _baseCommand.CommandTimeout; 
             }
-            [CoverageExclude]
             set
             {
                 throw new NotImplementedException();
@@ -155,13 +145,11 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         public UpdateRowSource UpdatedRowSource
         {
-            [CoverageExclude]
             get
             {
                 throw new NotImplementedException();
                 //return _baseCommand.UpdatedRowSource;
             }
-            [CoverageExclude]
             set
             {
                 throw new NotImplementedException();

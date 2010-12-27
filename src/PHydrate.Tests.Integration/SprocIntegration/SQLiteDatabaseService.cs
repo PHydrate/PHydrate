@@ -22,6 +22,7 @@
 
 using System;
 using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using PHydrate.Core;
 
@@ -29,14 +30,21 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 {
     internal class SQLiteDatabaseService : DatabaseServiceBase
     {
+        private readonly IDbConnection _databaseConnection;
+
+        public SQLiteDatabaseService()
+        {
+            _databaseConnection = new SQLiteConnection( String.Format( "Data Source={0};Version=3",
+                                                                       Path.Combine( Environment.CurrentDirectory,
+                                                                                     "IntegrationTestDb.sqlite" ) ) );
+        }
+
         #region Overrides of DatabaseServiceBase
 
         protected override IDbConnection GetDatabaseConnection()
         {
             return
-                new SQLiteProcConnection( String.Format( "Data Source={0};Version=3",
-                                                         Path.Combine( Environment.CurrentDirectory,
-                                                                       "IntegrationTestDb.sqlite" ) ) );
+                new SQLiteProcConnection( _databaseConnection );
         }
 
         #endregion
