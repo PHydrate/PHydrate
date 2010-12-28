@@ -86,7 +86,8 @@ namespace PHydrate.Util
         public static IEnumerable<MemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
         {
             return
-                type.GetMembers().Where( x => x.GetCustomAttributes( typeof(T), true ).Length > 0 );
+                type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Where(
+                    x => x.GetCustomAttributes( typeof(T), true ).Length > 0 );
         }
     }
 }

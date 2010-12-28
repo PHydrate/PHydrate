@@ -75,8 +75,8 @@ namespace PHydrate.Core
                 if ( arguments.Count == parameters.Length )
                     return (T)ci.Invoke( arguments.ToArray() );
             }
-            throw new PHydrateException( String.Format( "Could not find constructor for hydration of object {0}",
-                                                        typeof(T).FullName ) );
+            throw new PHydrateException( "Could not find constructor for hydration of object {0}",
+                                         typeof(T).FullName );
         }
     }
 }

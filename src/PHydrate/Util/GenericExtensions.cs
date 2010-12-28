@@ -62,7 +62,9 @@ namespace PHydrate.Util
             MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
 
             if ( member == null )
-                return;
+                throw new PHydrateException( "Member with attribute {0} not found in type {1}",
+                                             typeof(TAttributeType).Name, typeof(TInstance).Name );
+
 
             switch ( member.MemberType )
             {
@@ -73,7 +75,10 @@ namespace PHydrate.Util
                     ( (PropertyInfo)member ).SetValue( obj, value, null );
                     break;
                 default:
-                    throw new PHydrateException(
+                    // Throw an internal exception, because the code should never be looking for
+                    // anything with attributes that are allowed on anything other than fields or
+                    // properties.  (At least not at this time.)
+                    throw new PHydrateInternalException(
                         "Cannot set value on member {0}, because it is not a field or property.", member.Name );
             }
         }

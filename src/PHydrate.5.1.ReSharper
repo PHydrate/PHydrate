@@ -238,6 +238,6 @@ Copyright 2010, Stephen Michael Czetty]]></FileHeader>
     <Namespace>JetBrains.Annotations</Namespace>
     <Namespace>Machine.Specifications.Annotations</Namespace>
     <Namespace>PHydrate.Attributes</Namespace>
-    <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
+    <DefaultNamespace>PHydrate.Attributes</DefaultNamespace>
   </CodeAnnotations>
 </Configuration>

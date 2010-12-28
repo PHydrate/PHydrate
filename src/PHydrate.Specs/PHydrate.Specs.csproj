@@ -124,6 +124,16 @@
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_simple_expression_containing_equals.cs" />
     <Compile Include="Util\GenericExtensions\When_getting_data_parameters_from_object.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_an_event_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_an_internal_field_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_an_internal_property_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_private_field_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_private_property_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_protected_field_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_protected_property_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_public_field_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_public_property_tagged_with_a_specific_attribute.cs" />
+    <Compile Include="Util\GenericExtensions\When_setting_a_value_with_no_specific_attribute_set.cs" />
     <Compile Include="Util\TypeExtensions\TypeExtensionsSpecificationBase.cs" />
     <Compile Include="Util\TypeExtensions\When_constructing_using_the_default_constructor.cs" />
     <Compile Include="Util\TypeExtensions\When_constructing_using_the_default_constructor_but_the_class_does_not_have_one.cs" />
