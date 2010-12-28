@@ -16,7 +16,6 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
@@ -111,8 +110,35 @@ namespace PHydrate.Core
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
         {
+            Type primaryKeyType;
+            object primaryKeyValue =
+                objectToPersist.GetPropertyValueWithAttribute< T, PrimaryKeyAttribute >( out primaryKeyType );
+
+            // TODO: This breaks existing unit tests, which are probably not valid.
+            //if ( primaryKeyValue == null || ( primaryKeyValue is ValueType && primaryKeyValue.Equals( 0 ) ) )
+            InsertObject( objectToPersist );
+            //else
+            //    UpdateObject( objectToPersist );
+        }
+
+        private void UpdateObject< T >( T objectToPersist )
+        {
+            var updateAttribute = typeof(T).GetAttribute< UpdateUsingAttribute >();
+            if ( updateAttribute == null || String.IsNullOrEmpty( updateAttribute.ProcedureName ) )
+                throw new PHydrateException(
+                    "Unable to persist object of type {0}.  Define an update procedure with [UpdateUsing]",
+                    typeof(T).FullName );
+
+            if ( !_databaseService.ExecuteStoredProcedureScalar< bool >( updateAttribute.ProcedureName,
+                                                                         objectToPersist.GetDataParameters(
+                                                                             _parameterPrefix ) ) )
+                throw new PHydrateException( "Update of object failed." );
+        }
+
+        private void InsertObject< T >( T objectToPersist )
+        {
             var createAttribute = typeof(T).GetAttribute< CreateUsingAttribute >();
-            if (createAttribute == null || String.IsNullOrEmpty(createAttribute.ProcedureName))
+            if ( createAttribute == null || String.IsNullOrEmpty( createAttribute.ProcedureName ) )
                 throw new PHydrateException(
                     String.Format(
                         "Unable to persist object of type {0}.  Define a creation procedure with [CreateUsing]",
@@ -122,7 +148,7 @@ namespace PHydrate.Core
                 createAttribute.ProcedureName,
                 objectToPersist.GetDataParameters( _parameterPrefix ) );
 
-            objectToPersist.SetPropertyWithAttribute< T, PrimaryKeyAttribute >( primaryKeyValue );
+            objectToPersist.SetPropertyValueWithAttribute< T, PrimaryKeyAttribute >( primaryKeyValue );
         }
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,

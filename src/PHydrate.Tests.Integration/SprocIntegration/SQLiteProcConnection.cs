@@ -16,58 +16,57 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
+using System;
 using System.Data;
-using System.Data.SQLite;
 
 namespace PHydrate.Tests.Integration.SprocIntegration
 {
     public class SQLiteProcConnection : IDbConnection
     {
-        private readonly SQLiteConnection _baseConnection;
+        private readonly IDbConnection _baseConnection;
 
-        public SQLiteProcConnection( string connectionString )
+        public SQLiteProcConnection( IDbConnection baseConnection )
         {
-            _baseConnection = new SQLiteConnection( connectionString );
+            _baseConnection = baseConnection;
         }
 
         #region Implementation of IDisposable
 
-        [ CoverageExclude ]
         public void Dispose()
         {
-            _baseConnection.Dispose();
+            throw new NotImplementedException();
+            //_baseConnection.Dispose();
         }
 
         #endregion
 
         #region Implementation of IDbConnection
 
-        [ CoverageExclude ]
         public IDbTransaction BeginTransaction()
         {
-            return _baseConnection.BeginTransaction();
+            throw new NotImplementedException();
+            //return _baseConnection.BeginTransaction();
         }
 
-        [ CoverageExclude ]
         public IDbTransaction BeginTransaction( IsolationLevel il )
         {
-            return _baseConnection.BeginTransaction( il );
+            throw new NotImplementedException();
+            //return _baseConnection.BeginTransaction( il );
         }
 
-        [ CoverageExclude ]
         public void Close()
         {
-            _baseConnection.Close();
+            throw new NotImplementedException();
+            //_baseConnection.Close();
         }
 
-        [ CoverageExclude ]
         public void ChangeDatabase( string databaseName )
         {
-            _baseConnection.ChangeDatabase( databaseName );
+            throw new NotImplementedException();
+            //_baseConnection.ChangeDatabase( databaseName );
         }
 
         public IDbCommand CreateCommand()
@@ -75,7 +74,6 @@ namespace PHydrate.Tests.Integration.SprocIntegration
             return new SQLiteProcCommand( _baseConnection.CreateCommand() );
         }
 
-        [ CoverageExclude ]
         public void Open()
         {
             _baseConnection.Open();
@@ -83,28 +81,42 @@ namespace PHydrate.Tests.Integration.SprocIntegration
 
         public string ConnectionString
         {
-            [ CoverageExclude ]
-            get { return _baseConnection.ConnectionString; }
-            [ CoverageExclude ]
-            set { _baseConnection.ConnectionString = value; }
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseConnection.ConnectionString; 
+            }
+            set
+            {
+                throw new NotImplementedException();
+                //_baseConnection.ConnectionString = value;
+            }
         }
 
         public int ConnectionTimeout
         {
-            [ CoverageExclude ]
-            get { return _baseConnection.ConnectionTimeout; }
+            get
+            {
+                throw new NotImplementedException();
+                // return _baseConnection.ConnectionTimeout);
+            }
         }
 
         public string Database
         {
-            [ CoverageExclude ]
-            get { return _baseConnection.Database; }
+            get
+            {
+                throw new NotImplementedException();
+                //return _baseConnection.Database; 
+            }
         }
 
         public ConnectionState State
         {
-            [ CoverageExclude ]
-            get { return _baseConnection.State; }
+            get
+            {
+                return _baseConnection.State;
+            }
         }
 
         #endregion

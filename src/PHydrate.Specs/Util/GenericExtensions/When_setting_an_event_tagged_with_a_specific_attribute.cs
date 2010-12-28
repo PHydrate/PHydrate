@@ -46,7 +46,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
 
         private Because Of =
             () =>
-            _exception = Catch.Exception( () => _dataObject.SetPropertyWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
+            _exception = Catch.Exception( () => _dataObject.SetPropertyValueWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
