@@ -1,4 +1,25 @@
-﻿using System;
+﻿#region Copyright
+
+// This file is part of PHydrate.
+// 
+// PHydrate is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PHydrate is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Copyright 2010, Stephen Michael Czetty
+
+#endregion
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +28,10 @@ using PHydrate.Util;
 
 namespace PHydrate.Core
 {
-    internal class WeakReferenceObjectCache : ICollection<object>
+    internal class WeakReferenceObjectCache : ICollection< object >
     {
         private readonly IDictionary< int, WeakReference > _internalDictionary = new Dictionary< int, WeakReference >();
+
         #region Implementation of IEnumerable
 
         /// <summary>
@@ -21,7 +43,8 @@ namespace PHydrate.Core
         /// <filterpriority>1</filterpriority>
         public IEnumerator< object > GetEnumerator()
         {
-            return _internalDictionary.Values.Select( val => val.Target ).Where( result => result != null ).GetEnumerator();
+            return
+                _internalDictionary.Values.Select( val => val.Target ).Where( result => result != null ).GetEnumerator();
         }
 
         /// <summary>
@@ -48,31 +71,7 @@ namespace PHydrate.Core
         ///                 </exception>
         public void Add( object item )
         {
-            _internalDictionary.Add( GetObjectsHashCode( item ), new WeakReference(item) );
-
-        }
-
-        private static int GetObjectsHashCode( object item )
-        {
-            unchecked
-            {
-                int hash = 73;
-                bool primaryKeyFound = false;
-                
-                // Throw the type of the object into the hash, to prevent collisions
-                hash = hash * 137 + item.GetType().GetHashCode();
-
-                foreach ( var primaryKeyField in item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >() )
-                {
-                    primaryKeyFound = true;
-                    hash = hash * 137 + primaryKeyField.GetHashCode();
-                }
-
-                if (!primaryKeyFound)   // If there were no PKs defined
-                    hash = hash * 137 + item.GetHashCode();
-
-                return hash;
-            }
+            _internalDictionary.Add( GetObjectsHashCode( item ), new WeakReference( item ) );
         }
 
         /// <summary>
@@ -113,16 +112,17 @@ namespace PHydrate.Core
         ///                 </exception>
         public void CopyTo( object[] array, int arrayIndex )
         {
-            if (array == null)
+            if ( array == null )
                 throw new ArgumentNullException( "array" );
 
-            if (arrayIndex < 0)
+            if ( arrayIndex < 0 )
                 throw new ArgumentOutOfRangeException( "arrayIndex" );
 
             if ( array.Rank > 1 || arrayIndex >= array.Length || _internalDictionary.Count > array.Length - arrayIndex )
                 throw new ArgumentException();
 
-            foreach ( var result in _internalDictionary.Values.Select( obj => obj.Target ).Where( result => result != null ) )
+            foreach (
+                var result in _internalDictionary.Values.Select( obj => obj.Target ).Where( result => result != null ) )
                 array[ arrayIndex++ ] = result;
         }
 
@@ -160,6 +160,29 @@ namespace PHydrate.Core
         public bool IsReadOnly
         {
             get { return false; }
+        }
+
+        private static int GetObjectsHashCode( object item )
+        {
+            unchecked
+            {
+                int hash = 73;
+                bool primaryKeyFound = false;
+
+                // Throw the type of the object into the hash, to prevent collisions
+                hash = hash * 137 + item.GetType().GetHashCode();
+
+                foreach ( var primaryKeyField in item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >() )
+                {
+                    primaryKeyFound = true;
+                    hash = hash * 137 + primaryKeyField.GetHashCode();
+                }
+
+                if ( !primaryKeyFound ) // If there were no PKs defined
+                    hash = hash * 137 + item.GetHashCode();
+
+                return hash;
+            }
         }
 
         #endregion
