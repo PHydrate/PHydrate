@@ -34,6 +34,11 @@ namespace PHydrate
         /// <param name = "message">The message.</param>
         public PHydrateInternalException( string message ) : base( message ) {}
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PHydrateInternalException"/> class.
+        /// </summary>
+        /// <param name="formatString">The format string.</param>
+        /// <param name="formatValues">The format values.</param>
         [ StringFormatMethod( "formatString" ) ]
         public PHydrateInternalException( string formatString, params string[] formatValues )
             : this( string.Format( formatString, formatValues ) ) {}

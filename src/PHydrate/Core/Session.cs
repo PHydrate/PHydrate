@@ -36,6 +36,7 @@ namespace PHydrate.Core
         private readonly IDatabaseService _databaseService;
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
         private readonly string _parameterPrefix;
+        private readonly WeakReferenceObjectCache _hydratedObjects = new WeakReferenceObjectCache();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
@@ -110,15 +111,10 @@ namespace PHydrate.Core
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
         {
-            Type primaryKeyType;
-            object primaryKeyValue =
-                objectToPersist.GetPropertyValueWithAttribute< T, PrimaryKeyAttribute >( out primaryKeyType );
-
-            // TODO: This breaks existing unit tests, which are probably not valid.
-            //if ( primaryKeyValue == null || ( primaryKeyValue is ValueType && primaryKeyValue.Equals( 0 ) ) )
-            InsertObject( objectToPersist );
-            //else
-            //    UpdateObject( objectToPersist );
+            if ( _hydratedObjects.Contains( objectToPersist ) )
+                UpdateObject( objectToPersist );
+            else
+                InsertObject( objectToPersist );
         }
 
         private void UpdateObject< T >( T objectToPersist )
@@ -149,6 +145,8 @@ namespace PHydrate.Core
                 objectToPersist.GetDataParameters( _parameterPrefix ) );
 
             objectToPersist.SetPropertyValueWithAttribute< T, PrimaryKeyAttribute >( primaryKeyValue );
+
+            _hydratedObjects.Add( objectToPersist );
         }
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
@@ -161,9 +159,13 @@ namespace PHydrate.Core
             IObjectHydrator< T > hydrator = GetHydrator< T >();
             while ( dataReader.Read() )
             {
-                yield return hydrator == null
-                                 ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
-                                 : hydrator.Hydrate( dataReader.ToDictionary() );
+                T hydratedObject = ( hydrator == null )
+                                       ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
+                                       : hydrator.Hydrate( dataReader.ToDictionary() );
+
+                _hydratedObjects.Add( hydratedObject );
+
+                yield return hydratedObject;
             }
         }
 

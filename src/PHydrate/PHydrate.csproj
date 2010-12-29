@@ -69,6 +69,7 @@
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
     <Compile Include="Core\SqlServerDatabaseService.cs" />
+    <Compile Include="Core\WeakReferenceObjectCache.cs" />
     <Compile Include="Fluently.cs" />
     <Compile Include="Core\DatabaseServiceBase.cs" />
     <Compile Include="Core\IDatabaseService.cs" />

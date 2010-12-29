@@ -91,7 +91,7 @@ namespace PHydrate.Util
         /// <param name="obj">The obj.</param>
         /// <param name="propertyType">Type of the property.</param>
         /// <returns></returns>
-        public static object GetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj,
+        public static object GetFirstPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj,
                                                                                          out Type propertyType )
             where TAttributeType : Attribute
         {
@@ -114,6 +114,34 @@ namespace PHydrate.Util
                 default:
                     throw new PHydrateException(
                         "Cannot get value from member {0}, because it is not a field or property.", member.Name );
+            }
+        }
+
+        /// <summary>
+        /// Gets the property values with attribute.
+        /// </summary>
+        /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
+        /// <param name="obj">The object to work on.</param>
+        /// <returns></returns>
+        public static IEnumerable<object> GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
+            where TAttributeType : Attribute
+        {
+            foreach (var member in obj.GetType().GetMembersWithAttribute< TAttributeType >())
+            {
+                switch (member.MemberType)
+                {
+                    case MemberTypes.Field:
+                        yield return ((FieldInfo)member).GetValue(obj);
+                        break;
+                    case MemberTypes.Property:
+                        yield return ((PropertyInfo)member).GetValue(obj,
+                                                                  BindingFlags.Instance | BindingFlags.Public |
+                                                                  BindingFlags.NonPublic, null, null, null);
+                        break;
+                    default:
+                        throw new PHydrateException(
+                            "Cannot get value from member {0}, because it is not a field or property.", member.Name);
+                }
             }
         }
     }
