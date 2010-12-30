@@ -84,40 +84,6 @@ namespace PHydrate.Util
         }
 
         /// <summary>
-        /// Gets the property value with attribute.
-        /// </summary>
-        /// <typeparam name="TInstance">The type of the instance.</typeparam>
-        /// <typeparam name="TAttributeType">The type of the attribute type.</typeparam>
-        /// <param name="obj">The obj.</param>
-        /// <param name="propertyType">Type of the property.</param>
-        /// <returns></returns>
-        public static object GetFirstPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj,
-                                                                                         out Type propertyType )
-            where TAttributeType : Attribute
-        {
-            MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
-            propertyType = null;
-
-            if ( member == null )
-                return null;
-
-            switch ( member.MemberType )
-            {
-                case MemberTypes.Field:
-                    propertyType = ( (FieldInfo)member ).FieldType;
-                    return ( (FieldInfo)member ).GetValue( obj );
-                case MemberTypes.Property:
-                    propertyType = ( (PropertyInfo)member ).PropertyType;
-                    return ( (PropertyInfo)member ).GetValue( obj,
-                                                              BindingFlags.Instance | BindingFlags.Public |
-                                                              BindingFlags.NonPublic, null, null, null );
-                default:
-                    throw new PHydrateException(
-                        "Cannot get value from member {0}, because it is not a field or property.", member.Name );
-            }
-        }
-
-        /// <summary>
         /// Gets the property values with attribute.
         /// </summary>
         /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
