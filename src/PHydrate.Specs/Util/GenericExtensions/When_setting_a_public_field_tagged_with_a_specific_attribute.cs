@@ -38,7 +38,8 @@ namespace PHydrate.Specs.Util.GenericExtensions
         {
             [ PrimaryKey ]
             // ReSharper disable MemberCanBePrivate.Local
-            public int _intValue;
+                public int _intValue;
+
             // ReSharper restore MemberCanBePrivate.Local
 
             public int IntValue
@@ -54,7 +55,8 @@ namespace PHydrate.Specs.Util.GenericExtensions
                                         _dataObject = new TestObject();
                                     };
 
-        private Because Of = () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
+        private Because Of =
+            () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
 
         private It Should_set_the_field_in_the_object
             = () => _dataObject.IntValue.ShouldEqual( _intValue );

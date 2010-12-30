@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Linq;
 using Machine.Specifications;
 using PHydrate.Attributes;
 using PHydrate.Util;
@@ -27,12 +28,9 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_event_tagged_with_a_specific_attribute
+    public class When_getting_property_values_for_event_tagged_with_a_specific_attribute
     {
-        private static TestObject _dataObject;
-        private static Exception _exception;
-
-        #region TestObject
+        #region Test Object
 
         private class TestObject
         {
@@ -42,17 +40,20 @@ namespace PHydrate.Specs.Util.GenericExtensions
 
         #endregion
 
+        private static TestObject _dataObject;
+        private static Exception _exception;
         private Establish Context = () => _dataObject = new TestObject();
 
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => _dataObject.SetPropertyValueWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
+        // Need to add .ToList() so that the code actually runs.
+        private Because Of
+            = () => _exception =
+                    Catch.Exception(
+                        () => _dataObject.GetPropertyValuesWithAttribute< UsedImplicitlyAttribute >().ToList() );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }

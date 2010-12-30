@@ -37,6 +37,5 @@ namespace PHydrate.Specs.Core.Session
 
         private It Should_reset_key_to_value_returned_by_creation_procedure
             = () => _objectUnderTest.Key.ShouldEqual( NewKey );
-
     }
 }

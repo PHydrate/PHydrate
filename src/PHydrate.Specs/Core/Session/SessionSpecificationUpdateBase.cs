@@ -20,37 +20,24 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
+using Machine.Specifications.Annotations;
+using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 using UMMO.TestingUtils;
 
-namespace PHydrate.Specs.Util.GenericExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_a_protected_property_tagged_with_a_specific_attribute
+    public abstract class SessionSpecificationUpdateBase : SessionSpecificationBase
     {
-        private static int _intValue;
-        private static TestObject _dataObject;
+        protected static int ExpectedKey;
 
-        #region TestObject
-
-        private class TestObject
-        {
-            [ PrimaryKey ]
-            public int IntValue { get; protected set; }
-        }
-
-        #endregion
-
+        [ UsedImplicitly ]
         private Establish Context = () => {
-                                        _intValue = A.Random.Integer;
-                                        _dataObject = new TestObject();
+                                        ExpectedKey = A.Random.Integer;
+
+                                        DatabaseService.Stub( x => x.ExecuteStoredProcedureScalar< object >( "", null ) )
+                                            .Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return
+                                            ( ExpectedKey );
                                     };
-
-        private Because Of =
-            () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
-
-        private It Should_set_the_field_in_the_object
-            = () => _dataObject.IntValue.ShouldEqual( _intValue );
     }
 }

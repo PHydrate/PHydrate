@@ -21,21 +21,27 @@
 
 using System;
 using Machine.Specifications;
+using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
+    public class When_persisting_an_existing_object : SessionSpecificationUpdateSucceedsBase
     {
+        private static TestObject _objectUnderTest;
         private static Exception _exception;
 
-        private Because Of =
-            () => _exception = Catch.Exception( () => SessionUnderTest.Get< TestObjectNoHydrator >( x => x.Key == 1 ) );
+        private Establish Context = () => {
+                                        _objectUnderTest = new TestObject { Key = ExpectedKey };
+                                        SessionUnderTest.Persist( _objectUnderTest );
+                                    };
 
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
+        private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Persist( _objectUnderTest ) );
 
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
+
+        private It Should_not_throw_exception
+            = () => _exception.ShouldBeNull();
     }
 }

@@ -19,23 +19,25 @@
 
 #endregion
 
-using System;
 using Machine.Specifications;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
+    [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
+    public class When_adding_an_item_to_the_cache : WeakReferenceObjectCacheSpecificationBase
     {
-        private static Exception _exception;
+        private Because Of = () => CacheUnderTest.Add( TestObject );
 
-        private Because Of =
-            () => _exception = Catch.Exception( () => SessionUnderTest.Get< TestObjectNoHydrator >( x => x.Key == 1 ) );
+        private It Should_not_be_read_only
+            = () => CacheUnderTest.IsReadOnly.ShouldBeFalse();
 
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
+        private It Should_return_count_of_one
+            = () => CacheUnderTest.Count.ShouldEqual( 1 );
 
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_specify_that_the_cache_contains_the_object
+            = () => CacheUnderTest.Contains( TestObject ).ShouldBeTrue();
+
+        private It Should_store_object
+            = () => CacheUnderTest.ShouldContain( TestObject );
     }
 }

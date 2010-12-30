@@ -20,28 +20,29 @@
 #endregion
 
 using Machine.Specifications;
-using Machine.Specifications.Annotations;
-using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
-using UMMO.TestingUtils;
+using PHydrate.Attributes;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    public abstract class SessionSpecificationCreateBase : SessionSpecificationBase
+    public abstract class WeakReferenceObjectCacheSpecificationBase
     {
-        protected static int ExpectedKey;
+        internal static PHydrate.Core.WeakReferenceObjectCache CacheUnderTest;
+        protected static CacheTestObject TestObject;
 
-        protected static int NewKey;
-
-        [ UsedImplicitly ]
+        [ Machine.Specifications.Annotations.UsedImplicitly ]
         private Establish Context = () => {
-                                        NewKey = A.Random.Integer;
-                                        DatabaseService.Expect(
-                                            x => x.ExecuteStoredProcedureScalar< object >( "", null ) )
-                                            .
-                                            Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return(
-                                                NewKey );
-                                        ExpectedKey = A.Random.Integer;
+                                        CacheUnderTest = new PHydrate.Core.WeakReferenceObjectCache();
+                                        TestObject = new CacheTestObject();
                                     };
+
+        #region Nested type: CacheTestObject
+
+        protected class CacheTestObject
+        {
+            [ PrimaryKey ]
+            public int PrimaryKey { get; set; }
+        }
+
+        #endregion
     }
 }

@@ -37,11 +37,11 @@ namespace PHydrate.Specs.Util.GenericExtensions
         private class TestObject
         {
             [ PrimaryKey ]
-            private int _intValue;
+            private int _internalIntValue;
 
-            public int IntValue
+            public int InternalIntValue
             {
-                get { return _intValue; }
+                get { return _internalIntValue; }
             }
         }
 
@@ -52,9 +52,10 @@ namespace PHydrate.Specs.Util.GenericExtensions
                                         _dataObject = new TestObject();
                                     };
 
-        private Because Of = () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
+        private Because Of =
+            () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
 
         private It Should_set_the_field_in_the_object
-            = () => _dataObject.IntValue.ShouldEqual( _intValue );
+            = () => _dataObject.InternalIntValue.ShouldEqual( _intValue );
     }
 }

@@ -21,38 +21,27 @@
 
 using System;
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.GenericExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_event_tagged_with_a_specific_attribute
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_persisting_an_existing_object_with_no_creation_method :
+        SessionSpecificationUpdateSucceedsBase
     {
-        private static TestObject _dataObject;
         private static Exception _exception;
+        private static TestObjectNoUpdate _objectUnderTest;
 
-        #region TestObject
+        private Establish Context = () => {
+                                        _objectUnderTest = new TestObjectNoUpdate { Key = ExpectedKey };
+                                        SessionUnderTest.Persist( _objectUnderTest );
+                                    };
 
-        private class TestObject
-        {
-            [ UsedImplicitly ]
-            public event EventHandler TestEvent;
-        }
-
-        #endregion
-
-        private Establish Context = () => _dataObject = new TestObject();
-
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => _dataObject.SetPropertyValueWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
+        private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Persist( _objectUnderTest ) );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }

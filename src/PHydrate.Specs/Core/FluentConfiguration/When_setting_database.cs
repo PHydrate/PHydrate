@@ -19,23 +19,24 @@
 
 #endregion
 
-using System;
 using Machine.Specifications;
+using PHydrate.Core;
+using Rhino.Mocks;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Core.FluentConfiguration
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
+    [ Subject( typeof(PHydrate.Core.FluentConfiguration) ) ]
+    public class When_setting_database : FluentConfigurationSpecificationBase
     {
-        private static Exception _exception;
+        private static IDatabaseService _databaseService;
+        private static PHydrate.Core.FluentConfiguration _returnedObject;
 
-        private Because Of =
-            () => _exception = Catch.Exception( () => SessionUnderTest.Get< TestObjectNoHydrator >( x => x.Key == 1 ) );
+        private Establish Context =
+            () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
 
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
+        private Because Of = () => _returnedObject = FluentConfigurator.Database( _databaseService );
 
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_return_same_object
+            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
     }
 }

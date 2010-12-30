@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,23 +19,16 @@
 
 #endregion
 
-using System;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Core.FluentConfiguration
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
+    public abstract class FluentConfigurationSpecificationBase
     {
-        private static Exception _exception;
+        protected static PHydrate.Core.FluentConfiguration FluentConfigurator;
 
-        private Because Of =
-            () => _exception = Catch.Exception( () => SessionUnderTest.Get< TestObjectNoHydrator >( x => x.Key == 1 ) );
-
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
-
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        [ UsedImplicitly ]
+        private Establish Context = () => FluentConfigurator = Fluently.Configure;
     }
 }

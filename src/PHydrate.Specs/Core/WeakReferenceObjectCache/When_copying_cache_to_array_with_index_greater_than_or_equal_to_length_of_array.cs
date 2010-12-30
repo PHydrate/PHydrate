@@ -21,38 +21,23 @@
 
 using System;
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.GenericExtensions
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_event_tagged_with_a_specific_attribute
+    [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
+    public class When_copying_cache_to_array_with_index_greater_than_or_equal_to_length_of_array :
+        WeakReferenceObjectCacheSpecificationBase
     {
-        private static TestObject _dataObject;
+        private static object[] _testArray = new object[1];
         private static Exception _exception;
+        private Establish Context = () => CacheUnderTest.Add( TestObject );
 
-        #region TestObject
+        private Because Of = () => _exception = Catch.Exception( () => CacheUnderTest.CopyTo( _testArray, 1 ) );
 
-        private class TestObject
-        {
-            [ UsedImplicitly ]
-            public event EventHandler TestEvent;
-        }
-
-        #endregion
-
-        private Establish Context = () => _dataObject = new TestObject();
-
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => _dataObject.SetPropertyValueWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
+        private It Should_throw_argument_exception
+            = () => _exception.ShouldBeOfType< ArgumentException >();
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
-
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
     }
 }
