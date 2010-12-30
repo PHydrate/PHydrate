@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,19 +19,25 @@
 
 #endregion
 
+using System;
 using Machine.Specifications;
-using PHydrate.Attributes;
 using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Util.ExpressionExtensions
 {
-    [Subject(typeof(PHydrate.Util.TypeExtensions))]
-    public class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
+    [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
+    public class When_getting_data_parameters_from_complex_expression_containing_or :
+        ExpressionExtenionsSpecificationBase
     {
-        private static CreateUsingAttribute _attribute;
-        private Because Of = () => _attribute = typeof(TestClass).GetAttribute<CreateUsingAttribute>();
+        private static Exception _exception;
+        private Establish Context = () => ExpressionToTest = ( TestClass x ) => x.TestKey1 == 0 || x.TestKey2 == 1;
 
-        private It Should_return_requested_attribute
-            = () => _attribute.ShouldNotBeNull();
+        private Because Of = () => _exception = Catch.Exception( () => ExpressionToTest.GetDataParameters( "@" ) );
+
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
+
+        private It Should_throw_not_implemented_exception
+            = () => _exception.ShouldBeOfType< NotImplementedException >();
     }
 }

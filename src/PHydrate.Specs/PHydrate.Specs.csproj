@@ -148,6 +148,8 @@
     <Compile Include="Util\DictionaryExtensions\When_checking_for_key_without_case.cs" />
     <Compile Include="Util\DictionaryExtensions\When_checking_for_non_existant_key_without_case.cs" />
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
+    <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_a_constant_expression.cs" />
+    <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_or.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_simple_expression_containing_equals.cs" />
     <Compile Include="Util\GenericExtensions\When_getting_data_parameters_from_object.cs" />
@@ -168,6 +170,7 @@
     <Compile Include="Util\TypeExtensions\When_constructing_using_the_default_constructor_but_the_class_does_not_have_one.cs" />
     <Compile Include="Util\TypeExtensions\When_getting_an_attribute_from_a_class.cs" />
     <Compile Include="Util\TypeExtensions\When_getting_an_attribute_from_a_class_that_does_not_have_it.cs" />
+    <Compile Include="Util\TypeExtensions\When_getting_members_with_a_particular_attribute.cs" />
     <Compile Include="Util\TypeExtensions\When_getting_the_default_constructor.cs" />
     <Compile Include="Util\TypeExtensions\When_getting_the_default_constructor_when_there_is_none.cs" />
     <Compile Include="When_using_fluently_static_object.cs" />
