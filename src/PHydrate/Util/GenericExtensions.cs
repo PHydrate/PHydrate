@@ -84,36 +84,30 @@ namespace PHydrate.Util
         }
 
         /// <summary>
-        /// Gets the property value with attribute.
+        /// Gets the property values with attribute.
         /// </summary>
-        /// <typeparam name="TInstance">The type of the instance.</typeparam>
-        /// <typeparam name="TAttributeType">The type of the attribute type.</typeparam>
-        /// <param name="obj">The obj.</param>
-        /// <param name="propertyType">Type of the property.</param>
+        /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
+        /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
-        public static object GetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj,
-                                                                                         out Type propertyType )
+        public static IEnumerable<object> GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
             where TAttributeType : Attribute
         {
-            MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
-            propertyType = null;
-
-            if ( member == null )
-                return null;
-
-            switch ( member.MemberType )
+            foreach (var member in obj.GetType().GetMembersWithAttribute< TAttributeType >())
             {
-                case MemberTypes.Field:
-                    propertyType = ( (FieldInfo)member ).FieldType;
-                    return ( (FieldInfo)member ).GetValue( obj );
-                case MemberTypes.Property:
-                    propertyType = ( (PropertyInfo)member ).PropertyType;
-                    return ( (PropertyInfo)member ).GetValue( obj,
-                                                              BindingFlags.Instance | BindingFlags.Public |
-                                                              BindingFlags.NonPublic, null, null, null );
-                default:
-                    throw new PHydrateException(
-                        "Cannot get value from member {0}, because it is not a field or property.", member.Name );
+                switch (member.MemberType)
+                {
+                    case MemberTypes.Field:
+                        yield return ((FieldInfo)member).GetValue(obj);
+                        break;
+                    case MemberTypes.Property:
+                        yield return ((PropertyInfo)member).GetValue(obj,
+                                                                  BindingFlags.Instance | BindingFlags.Public |
+                                                                  BindingFlags.NonPublic, null, null, null);
+                        break;
+                    default:
+                        throw new PHydrateException(
+                            "Cannot get value from member {0}, because it is not a field or property.", member.Name);
+                }
             }
         }
     }

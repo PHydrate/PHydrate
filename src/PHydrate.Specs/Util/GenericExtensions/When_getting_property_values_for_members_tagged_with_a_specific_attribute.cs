@@ -19,6 +19,7 @@
 
 #endregion
 
+using System.Collections.Generic;
 using Machine.Specifications;
 using PHydrate.Attributes;
 using PHydrate.Util;
@@ -27,30 +28,40 @@ using UMMO.TestingUtils;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_a_protected_property_tagged_with_a_specific_attribute
+    public class When_getting_property_values_for_members_tagged_with_a_specific_attribute
     {
-        private static int _intValue;
-        private static TestObject _dataObject;
-
-        #region TestObject
+        #region Test Object
 
         private class TestObject
         {
             [ PrimaryKey ]
-            public int IntValue { get; protected set; }
+            private int _privateInt;
+
+            public TestObject( int intValue )
+            {
+                _privateInt = intValue;
+            }
+
+            [ PrimaryKey ]
+            public int PublicInt { get; set; }
         }
 
         #endregion
 
+        private static int _publicIntValue;
+        private static int _privateIntValue;
+        private static TestObject _dataObject;
+        private static IEnumerable< object > _values;
+
         private Establish Context = () => {
-                                        _intValue = A.Random.Integer;
-                                        _dataObject = new TestObject();
+                                        _publicIntValue = A.Random.Integer;
+                                        _privateIntValue = A.Random.Integer;
+                                        _dataObject = new TestObject( _privateIntValue ) { PublicInt = _publicIntValue };
                                     };
 
-        private Because Of =
-            () => _dataObject.SetPropertyValueWithAttribute< TestObject, PrimaryKeyAttribute >( _intValue );
+        private Because Of = () => _values = _dataObject.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >();
 
-        private It Should_set_the_field_in_the_object
-            = () => _dataObject.IntValue.ShouldEqual( _intValue );
+        private It Should_contain_value_for_public_and_private_ints
+            = () => _values.ShouldContainOnly( _publicIntValue, _privateIntValue );
     }
 }

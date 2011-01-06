@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,27 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using PHydrate.Core;
+using Rhino.Mocks;
+
+namespace PHydrate.Specs.Core.FluentConfiguration
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    [ Subject( typeof(PHydrate.Core.FluentConfiguration) ) ]
+    public class When_setting_database : FluentConfigurationSpecificationBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        private static IDatabaseService _databaseService;
+        private static PHydrate.Core.FluentConfiguration _returnedObject;
+
+        private Establish Context =
+            () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
+
+        private Because Of = () => _returnedObject = FluentConfigurator.Database( _databaseService );
+
+        private It Should_return_same_object
+            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
     }
 }

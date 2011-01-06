@@ -16,23 +16,19 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using Machine.Specifications.Annotations;
+
+namespace PHydrate.Specs.Core.FluentConfiguration
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    public abstract class FluentConfigurationSpecificationBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        protected static PHydrate.Core.FluentConfiguration FluentConfigurator;
+
+        [ UsedImplicitly ]
+        private Establish Context = () => FluentConfigurator = Fluently.Configure;
     }
 }

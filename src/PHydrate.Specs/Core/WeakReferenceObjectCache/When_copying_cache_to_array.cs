@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,22 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
+    public class When_copying_cache_to_array : WeakReferenceObjectCacheSpecificationBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        private static object[] _testArray = new object[1];
+        private Establish Context = () => CacheUnderTest.Add( TestObject );
+
+        private Because Of = () => CacheUnderTest.CopyTo( _testArray, 0 );
+
+        private It Should_copy_object_into_array
+            = () => _testArray[ 0 ].ShouldBeTheSameAs( TestObject );
     }
 }

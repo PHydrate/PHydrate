@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,24 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using PHydrate.Util;
+using UMMO.TestingUtils;
+
+namespace PHydrate.Specs.Util.DictionaryExtensions
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    [ Subject( typeof(PHydrate.Util.DictionaryExtensions) ) ]
+    public class When_checking_for_non_existant_key_without_case : DictionaryExtensionsSpecificationBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        private Because Of = () => Result = TestDictionary.ContainsKeyNoCase( A.Random.String, out ActualName );
+
+        private It Should_place_null_in_actual_name
+            = () => ActualName.ShouldBeNull();
+
+        private It Should_return_false
+            = () => Result.ShouldBeFalse();
     }
 }

@@ -40,9 +40,10 @@ namespace PHydrate.Specs.Core.Session
 
         [ HydrateUsing( "TestStoredProcedure" ) ]
         [ CreateUsing( "TestCreateStoredProcedure" ) ]
+        [ UpdateUsing( "TestUpdateStoredProcedure" ) ]
         protected class TestObject
         {
-            [PrimaryKey]
+            [ PrimaryKey ]
             public int Key { get; set; }
         }
 
@@ -74,6 +75,18 @@ namespace PHydrate.Specs.Core.Session
         [ UsedImplicitly ]
         protected class TestObjectNoHydrator
         {
+            public int Key { get; set; }
+        }
+
+        #endregion
+
+        #region Nested type: TestObjectNoUpdate
+
+        [ UsedImplicitly ]
+        [ CreateUsing( "TestCreateStoredProcedure" ) ]
+        protected class TestObjectNoUpdate
+        {
+            [ PrimaryKey ]
             public int Key { get; set; }
         }
 

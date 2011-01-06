@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,28 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using System.Collections.Generic;
+using System.Linq;
+using Machine.Specifications;
+
+namespace PHydrate.Specs.Core.Session
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationHydrateBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        private static IList< TestObjectExplicitHydrator > _explicitHydratorObjects;
+
+        private Because Of =
+            () =>
+            _explicitHydratorObjects = SessionUnderTest.Get< TestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();
+
+        private It Should_return_object
+            = () => _explicitHydratorObjects.ShouldNotBeNull();
+
+        private It Should_return_two_objects
+            = () => _explicitHydratorObjects.Count.ShouldEqual( 2 );
     }
 }

@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,23 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using Machine.Specifications;
+using Machine.Specifications.Annotations;
+using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
+
+namespace PHydrate.Specs.Core.Session
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    public abstract class SessionSpecificationUpdateFailsBase : SessionSpecificationUpdateBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        [ UsedImplicitly ]
+        private Establish Context = () =>
+                                    DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< bool >( "", null ) )
+                                        .
+                                        Constraints( Is.Equal( "TestUpdateStoredProcedure" ), Is.NotNull() ).Return(
+                                            false );
     }
 }

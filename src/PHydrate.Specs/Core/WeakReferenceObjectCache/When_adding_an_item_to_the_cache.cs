@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,18 +20,24 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    [Subject(typeof(PHydrate.Util.TypeExtensions))]
-    public class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
+    [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
+    public class When_adding_an_item_to_the_cache : WeakReferenceObjectCacheSpecificationBase
     {
-        private static CreateUsingAttribute _attribute;
-        private Because Of = () => _attribute = typeof(TestClass).GetAttribute<CreateUsingAttribute>();
+        private Because Of = () => CacheUnderTest.Add( TestObject );
 
-        private It Should_return_requested_attribute
-            = () => _attribute.ShouldNotBeNull();
+        private It Should_not_be_read_only
+            = () => CacheUnderTest.IsReadOnly.ShouldBeFalse();
+
+        private It Should_return_count_of_one
+            = () => CacheUnderTest.Count.ShouldEqual( 1 );
+
+        private It Should_specify_that_the_cache_contains_the_object
+            = () => CacheUnderTest.Contains( TestObject ).ShouldBeTrue();
+
+        private It Should_store_object
+            = () => CacheUnderTest.ShouldContain( TestObject );
     }
 }

@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -16,23 +16,24 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using System.Collections.Generic;
+using Machine.Specifications;
+using PHydrate.Util;
+
+namespace PHydrate.Specs.Util.ExpressionExtensions
 {
-    /// <summary>
-    /// A code-based specification.
-    /// </summary>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
+    public class When_getting_data_parameters_from_a_constant_expression : ExpressionExtenionsSpecificationBase
     {
-        /// <summary>
-        /// Determine if an object satifies the specification
-        /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if the object is specified, false otherwise.</returns>
-        bool Satisfies( T obj );
+        private static IDictionary< string, object > _dictionary;
+        private Establish Context = () => ExpressionToTest = ( TestClass x ) => true;
+
+        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
+
+        private It Should_return_no_items
+            = () => _dictionary.Count.ShouldEqual( 0 );
     }
 }

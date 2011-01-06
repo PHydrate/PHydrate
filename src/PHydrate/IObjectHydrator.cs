@@ -29,7 +29,7 @@ namespace PHydrate
     ///   Classes with the ability to hydrate an object of type <typeparamref name = "T" />.
     /// </summary>
     /// <typeparam name = "T">The type this class knows how to hydrate.</typeparam>
-    public interface IObjectHydrator</* out */ T >
+    public interface IObjectHydrator< out  T >
     {
         /// <summary>
         ///   Hydrates the object of type <typeparamref name = "T" />.

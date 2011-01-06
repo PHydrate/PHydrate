@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PHydrate.Core
+namespace PHydrate.Util
 {
     /// <summary>
     /// Extension methods on IDictionary&lt;TKEY, TVALUE&gt;

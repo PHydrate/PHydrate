@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,18 +20,24 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
+using Machine.Specifications.Annotations;
+using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
+using UMMO.TestingUtils;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [Subject(typeof(PHydrate.Util.TypeExtensions))]
-    public class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
+    public abstract class SessionSpecificationUpdateBase : SessionSpecificationBase
     {
-        private static CreateUsingAttribute _attribute;
-        private Because Of = () => _attribute = typeof(TestClass).GetAttribute<CreateUsingAttribute>();
+        protected static int ExpectedKey;
 
-        private It Should_return_requested_attribute
-            = () => _attribute.ShouldNotBeNull();
+        [ UsedImplicitly ]
+        private Establish Context = () => {
+                                        ExpectedKey = A.Random.Integer;
+
+                                        DatabaseService.Stub( x => x.ExecuteStoredProcedureScalar< object >( "", null ) )
+                                            .Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return
+                                            ( ExpectedKey );
+                                    };
     }
 }

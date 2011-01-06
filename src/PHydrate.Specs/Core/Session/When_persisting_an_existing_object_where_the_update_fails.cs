@@ -21,38 +21,30 @@
 
 using System;
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Util;
+using Rhino.Mocks;
 
-namespace PHydrate.Specs.Util.GenericExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_event_tagged_with_a_specific_attribute
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public class When_persisting_an_existing_object_where_the_update_fails : SessionSpecificationUpdateFailsBase
     {
-        private static TestObject _dataObject;
+        private static TestObject _objectUnderTest;
         private static Exception _exception;
 
-        #region TestObject
+        private Establish Context = () => {
+                                        _objectUnderTest = new TestObject { Key = ExpectedKey };
+                                        SessionUnderTest.Persist( _objectUnderTest );
+                                    };
 
-        private class TestObject
-        {
-            [ UsedImplicitly ]
-            public event EventHandler TestEvent;
-        }
+        private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Persist( _objectUnderTest ) );
 
-        #endregion
-
-        private Establish Context = () => _dataObject = new TestObject();
-
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception( () => _dataObject.SetPropertyValueWithAttribute< TestObject, UsedImplicitlyAttribute >( 0 ) );
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }

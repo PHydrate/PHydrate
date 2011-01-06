@@ -21,17 +21,28 @@
 
 using Machine.Specifications;
 using PHydrate.Attributes;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
-    [Subject(typeof(PHydrate.Util.TypeExtensions))]
-    public class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
+    public abstract class WeakReferenceObjectCacheSpecificationBase
     {
-        private static CreateUsingAttribute _attribute;
-        private Because Of = () => _attribute = typeof(TestClass).GetAttribute<CreateUsingAttribute>();
+        internal static PHydrate.Core.WeakReferenceObjectCache CacheUnderTest;
+        protected static CacheTestObject TestObject;
 
-        private It Should_return_requested_attribute
-            = () => _attribute.ShouldNotBeNull();
+        [ Machine.Specifications.Annotations.UsedImplicitly ]
+        private Establish Context = () => {
+                                        CacheUnderTest = new PHydrate.Core.WeakReferenceObjectCache();
+                                        TestObject = new CacheTestObject();
+                                    };
+
+        #region Nested type: CacheTestObject
+
+        protected class CacheTestObject
+        {
+            [ PrimaryKey ]
+            public int PrimaryKey { get; set; }
+        }
+
+        #endregion
     }
 }

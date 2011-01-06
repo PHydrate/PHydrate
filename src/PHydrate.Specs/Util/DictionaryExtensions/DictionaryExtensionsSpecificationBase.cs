@@ -19,29 +19,27 @@
 
 #endregion
 
+using System.Collections.Generic;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
-using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
 using UMMO.TestingUtils;
 
-namespace PHydrate.Specs.Core.Session
+namespace PHydrate.Specs.Util.DictionaryExtensions
 {
-    public abstract class SessionSpecificationCreateBase : SessionSpecificationBase
+    public class DictionaryExtensionsSpecificationBase
     {
-        protected static int ExpectedKey;
-
-        protected static int NewKey;
+        protected static Dictionary< string, string > TestDictionary;
+        protected static string RandomKey;
+        protected static bool Result;
+        protected static string ActualName;
 
         [ UsedImplicitly ]
         private Establish Context = () => {
-                                        NewKey = A.Random.Integer;
-                                        DatabaseService.Expect(
-                                            x => x.ExecuteStoredProcedureScalar< object >( "", null ) )
-                                            .
-                                            Constraints( Is.Equal( "TestCreateStoredProcedure" ), Is.NotNull() ).Return(
-                                                NewKey );
-                                        ExpectedKey = A.Random.Integer;
+                                        RandomKey = A.Random.String.Resembling.A.LastName;
+                                        TestDictionary = new Dictionary< string, string >
+                                                         { { RandomKey, A.Random.String } };
+                                        RandomKey.ShouldNotEqual( RandomKey.ToLower() );
+                                            // TODO: Create an UMMO method that ensures this
                                     };
     }
 }
