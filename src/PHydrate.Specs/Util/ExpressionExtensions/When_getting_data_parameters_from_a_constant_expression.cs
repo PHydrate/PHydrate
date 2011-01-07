@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.ExpressionExtensions
 {
     [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
-    public class When_getting_data_parameters_from_a_constant_expression : ExpressionExtenionsSpecificationBase
+    public sealed class When_getting_data_parameters_from_a_constant_expression : ExpressionExtenionsSpecificationBase
     {
         private static IDictionary< string, object > _dictionary;
         private Establish Context = () => ExpressionToTest = ( TestClass x ) => true;

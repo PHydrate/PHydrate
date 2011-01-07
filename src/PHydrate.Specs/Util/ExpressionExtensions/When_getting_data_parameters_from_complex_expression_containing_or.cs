@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.ExpressionExtensions
 {
     [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
-    public class When_getting_data_parameters_from_complex_expression_containing_or :
+    public sealed class When_getting_data_parameters_from_complex_expression_containing_or :
         ExpressionExtenionsSpecificationBase
     {
         private static Exception _exception;

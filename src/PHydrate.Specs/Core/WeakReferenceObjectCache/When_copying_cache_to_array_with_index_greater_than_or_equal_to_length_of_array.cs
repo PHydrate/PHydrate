@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public class When_copying_cache_to_array_with_index_greater_than_or_equal_to_length_of_array :
+    public sealed class When_copying_cache_to_array_with_index_greater_than_or_equal_to_length_of_array :
         WeakReferenceObjectCacheSpecificationBase
     {
         private static object[] _testArray = new object[1];

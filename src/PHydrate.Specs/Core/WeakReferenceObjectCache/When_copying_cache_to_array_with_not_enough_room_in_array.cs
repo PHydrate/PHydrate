@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public class When_copying_cache_to_array_with_not_enough_room_in_array : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_copying_cache_to_array_with_not_enough_room_in_array : WeakReferenceObjectCacheSpecificationBase
     {
         private static object[] _testArray = new object[1];
         private static Exception _exception;

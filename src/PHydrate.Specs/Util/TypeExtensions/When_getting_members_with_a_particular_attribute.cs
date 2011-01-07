@@ -28,7 +28,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.TypeExtensions
 {
     [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public class When_getting_members_with_a_particular_attribute
+    public sealed class When_getting_members_with_a_particular_attribute
     {
         #region TestObject
 

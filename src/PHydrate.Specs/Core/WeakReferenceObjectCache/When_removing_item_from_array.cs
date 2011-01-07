@@ -24,7 +24,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public class When_removing_item_from_array : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_removing_item_from_array : WeakReferenceObjectCacheSpecificationBase
     {
         private Establish Context = () => CacheUnderTest.Add( TestObject );
 

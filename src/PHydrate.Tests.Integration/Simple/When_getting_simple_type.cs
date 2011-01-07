@@ -28,7 +28,7 @@ namespace PHydrate.Tests.Integration.Simple
 {
     [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
     [ Tags("Integration") ]
-    public class When_getting_simple_type : PHydrateIntegrationTestBase
+    public sealed class When_getting_simple_type : PHydrateIntegrationTestBase
     {
         private static IList< TestDomain.Simple > _simpleList;
 

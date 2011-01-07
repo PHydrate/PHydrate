@@ -27,7 +27,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_event_tagged_with_a_specific_attribute
+    public sealed class When_setting_an_event_tagged_with_a_specific_attribute
     {
         private static TestObject _dataObject;
         private static Exception _exception;

@@ -25,7 +25,7 @@ using Rhino.Mocks;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcCommand) ) ]
-    public class When_calling_create_parameter_on_command : SQLiteProcCommandSpecificationBase
+    public sealed class When_calling_create_parameter_on_command : SQLiteProcCommandSpecificationBase
     {
         private Establish Context = () => BaseCommand.Expect( x => x.CreateParameter() );
 

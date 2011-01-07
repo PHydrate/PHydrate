@@ -26,7 +26,7 @@ namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
     [ SetupForEachSpecification ]
-    public class When_getting_enumerator_from_cache : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_getting_enumerator_from_cache : WeakReferenceObjectCacheSpecificationBase
     {
         private static IEnumerator< object > _enumerator;
         private Establish Context = () => CacheUnderTest.Add( TestObject );

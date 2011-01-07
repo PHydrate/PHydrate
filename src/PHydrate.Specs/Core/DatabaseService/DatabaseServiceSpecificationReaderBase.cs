@@ -26,7 +26,7 @@ using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.DatabaseService
 {
-    public class DatabaseServiceSpecificationReaderBase : DatabaseServiceSpecificationBase
+    public abstract class DatabaseServiceSpecificationReaderBase : DatabaseServiceSpecificationBase
     {
         protected static IDataReader ExpectedDataReader;
 

@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcCommand) ) ]
-    public class When_setting_command_text_on_command : SQLiteProcCommandSpecificationBase
+    public sealed class When_setting_command_text_on_command : SQLiteProcCommandSpecificationBase
     {
         private Establish Context = () => BaseCommand.Expect( x => x.CommandText ).SetPropertyAndIgnoreArgument();
 

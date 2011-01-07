@@ -24,7 +24,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
     [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
-    public class When_hydrating_an_object_without_a_parameterless_constructor : DefaultObjectHydratorSpecificationBase
+    public sealed class When_hydrating_an_object_without_a_parameterless_constructor : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
             () =>

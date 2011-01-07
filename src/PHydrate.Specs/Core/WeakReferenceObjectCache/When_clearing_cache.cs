@@ -24,7 +24,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public class When_clearing_cache : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_clearing_cache : WeakReferenceObjectCacheSpecificationBase
     {
         private Establish Context = () => CacheUnderTest.Add( TestObject );
 

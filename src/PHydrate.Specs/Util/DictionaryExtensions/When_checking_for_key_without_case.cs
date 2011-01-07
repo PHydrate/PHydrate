@@ -25,7 +25,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.DictionaryExtensions
 {
     [ Subject( typeof(PHydrate.Util.DictionaryExtensions) ) ]
-    public class When_checking_for_key_without_case : DictionaryExtensionsSpecificationBase
+    public sealed class When_checking_for_key_without_case : DictionaryExtensionsSpecificationBase
     {
         private Because Of = () => Result = TestDictionary.ContainsKeyNoCase( RandomKey.ToLower(), out ActualName );
 

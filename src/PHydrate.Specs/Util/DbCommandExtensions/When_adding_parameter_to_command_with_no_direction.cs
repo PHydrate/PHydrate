@@ -27,7 +27,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Util.DbCommandExtensions
 {
     [ Subject( typeof(PHydrate.Util.DbCommandExtensions) ) ]
-    public class When_adding_parameter_to_command_with_no_direction : DbCommandExtensionsSpecificationBase
+    public sealed class When_adding_parameter_to_command_with_no_direction : DbCommandExtensionsSpecificationBase
     {
         private Because Of = () => Command.AddParameter( new KeyValuePair< string, object >( ParameterName, 0 ) );
 

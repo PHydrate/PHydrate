@@ -4,7 +4,7 @@ namespace PHydrate.Tests.Integration.TestDomain
 {
     [HydrateUsing("GetSimple")]
     [CreateUsing("CreateSimple")]
-    public class Simple
+    public sealed class Simple
     {
         [PrimaryKey]
         public long SimpleId { get; private set; }

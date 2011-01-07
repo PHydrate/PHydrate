@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcCommand) ) ]
-    public class When_getting_parameters_on_command : SQLiteProcCommandSpecificationBase
+    public sealed class When_getting_parameters_on_command : SQLiteProcCommandSpecificationBase
     {
         private static IDataParameterCollection _x;
 

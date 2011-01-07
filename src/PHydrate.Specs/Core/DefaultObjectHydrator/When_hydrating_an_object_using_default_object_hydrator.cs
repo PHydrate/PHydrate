@@ -24,7 +24,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
     [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
-    public class When_hydrating_an_object_using_default_object_hydrator : DefaultObjectHydratorSpecificationBase
+    public sealed class When_hydrating_an_object_using_default_object_hydrator : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
             () => ReturnedObject = DefaultObjectHydrator.Hydrate< TestHydrationTarget >( ColumnValues );

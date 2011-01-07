@@ -26,7 +26,7 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Util.DictionaryExtensions
 {
-    public class DictionaryExtensionsSpecificationBase
+    public abstract class DictionaryExtensionsSpecificationBase
     {
         protected static Dictionary< string, string > TestDictionary;
         protected static string RandomKey;

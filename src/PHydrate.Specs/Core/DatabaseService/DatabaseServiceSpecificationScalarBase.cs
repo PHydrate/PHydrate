@@ -26,7 +26,7 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.DatabaseService
 {
-    public class DatabaseServiceSpecificationScalarBase : DatabaseServiceSpecificationBase
+    public abstract class DatabaseServiceSpecificationScalarBase : DatabaseServiceSpecificationBase
     {
         protected static int ExpectedInteger;
 

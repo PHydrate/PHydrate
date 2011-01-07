@@ -27,7 +27,7 @@ using Rhino.Mocks;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcCommand) ) ]
-    public class When_calling_execute_reader_on_command_that_does_not_find_a_procedure_to_run :
+    public sealed class When_calling_execute_reader_on_command_that_does_not_find_a_procedure_to_run :
         SQLiteProcCommandSpecificationBase
     {
         private static Exception _exception;

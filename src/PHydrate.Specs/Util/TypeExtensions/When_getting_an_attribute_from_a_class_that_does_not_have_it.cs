@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.TypeExtensions
 {
     [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public class When_getting_an_attribute_from_a_class_that_does_not_have_it : TypeExtensionsSpecificationBase
+    public sealed class When_getting_an_attribute_from_a_class_that_does_not_have_it : TypeExtensionsSpecificationBase
     {
         private static UpdateUsingAttribute _attribute;
         private Because Of = () => _attribute = typeof(TestClass).GetAttribute< UpdateUsingAttribute >();

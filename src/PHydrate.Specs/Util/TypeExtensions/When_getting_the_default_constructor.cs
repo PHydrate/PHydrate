@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.TypeExtensions
 {
     [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public class When_getting_the_default_constructor : TypeExtensionsSpecificationBase
+    public sealed class When_getting_the_default_constructor : TypeExtensionsSpecificationBase
     {
         private static ConstructorInfo _constructorInfo;
         private Because Of = () => _constructorInfo = typeof(TestClass).GetDefaultConstructor();

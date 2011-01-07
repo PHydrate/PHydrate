@@ -26,7 +26,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.SqlServerDatabaseService
 {
     [ Subject( typeof(PHydrate.Core.SqlServerDatabaseService) ) ]
-    public class When_using_sql_server_database_service
+    public sealed class When_using_sql_server_database_service
     {
         private static PHydrate.Core.SqlServerDatabaseService _databaseService;
         private static Exception _exception;

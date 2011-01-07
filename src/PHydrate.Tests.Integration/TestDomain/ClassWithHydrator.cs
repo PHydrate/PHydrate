@@ -27,7 +27,7 @@ namespace PHydrate.Tests.Integration.TestDomain
 {
     [ HydrateUsing( "GetClassWithHydrator" ) ]
     [ ObjectHydrator( typeof(CustomHydrator) ) ]
-    public class ClassWithHydrator
+    public sealed class ClassWithHydrator
     {
         public long ClassWithHydratorId { get; set; }
 

@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.TypeExtensions
 {
     [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
+    public sealed class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
         TypeExtensionsSpecificationBase
     {
         private static Exception _exception;

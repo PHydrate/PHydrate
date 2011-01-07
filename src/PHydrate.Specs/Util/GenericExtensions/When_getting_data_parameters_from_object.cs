@@ -28,7 +28,7 @@ using UMMO.TestingUtils;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_getting_data_parameters_from_object
+    public sealed class When_getting_data_parameters_from_object
     {
         private static TestObject _dataObject;
         private static int _intValue;
