@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,22 +20,16 @@
 #endregion
 
 using Machine.Specifications;
-using Rhino.Mocks;
+using Machine.Specifications.Annotations;
+using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_persisting_a_new_object : SessionSpecificationCreateBase
+    public abstract class SessionSpecificationDeleteBase : SessionSpecificationBase
     {
-        private static TestObject _objectUnderTest;
-        private Establish Context = () => _objectUnderTest = new TestObject { Key = ExpectedKey };
+        protected static int ExpectedKey;
 
-        private Because Of = () => SessionUnderTest.Persist( _objectUnderTest );
-
-        private It Should_call_stored_procedure
-            = () => DatabaseService.VerifyAllExpectations();
-
-        private It Should_reset_key_to_value_returned_by_creation_procedure
-            = () => _objectUnderTest.Key.ShouldEqual( NewKey );
+        [ UsedImplicitly ]
+        private Establish Context = () => ExpectedKey = A.Random.Integer;
     }
 }

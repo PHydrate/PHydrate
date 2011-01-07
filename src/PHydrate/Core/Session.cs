@@ -35,8 +35,8 @@ namespace PHydrate.Core
     {
         private readonly IDatabaseService _databaseService;
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
-        private readonly string _parameterPrefix;
         private readonly WeakReferenceObjectCache _hydratedObjects = new WeakReferenceObjectCache();
+        private readonly string _parameterPrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
@@ -117,18 +117,56 @@ namespace PHydrate.Core
                 InsertObject( objectToPersist );
         }
 
+        /// <summary>
+        /// Deletes the specified object from the database store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectToDelete">The object to delete.</param>
+        public void Delete< T >( T objectToDelete )
+        {
+            try
+            {
+                if (
+                    !ExecuteBooleanProcedureFromAttribute< T, DeleteUsingAttribute >( objectToDelete.GetDataParameters(
+                        _parameterPrefix ) ) )
+                    throw new PHydrateException( "Delete of object failed." );
+            }
+            catch ( PHydrateInternalException )
+            {
+                throw new PHydrateException(
+                    "Unable to delete object {0}.  Define an delete procedure with [DeleteUsing].", typeof(T).FullName );
+            }
+
+            // Remove from our cache.
+            _hydratedObjects.Remove( objectToDelete );
+        }
+
         private void UpdateObject< T >( T objectToPersist )
         {
-            var updateAttribute = typeof(T).GetAttribute< UpdateUsingAttribute >();
-            if ( updateAttribute == null || String.IsNullOrEmpty( updateAttribute.ProcedureName ) )
+            try
+            {
+                if (
+                    !ExecuteBooleanProcedureFromAttribute< T, UpdateUsingAttribute >( objectToPersist.GetDataParameters(
+                        _parameterPrefix ) ) )
+                    throw new PHydrateException( "Update of object failed." );
+            }
+            catch ( PHydrateInternalException )
+            {
                 throw new PHydrateException(
-                    "Unable to persist object of type {0}.  Define an update procedure with [UpdateUsing]",
-                    typeof(T).FullName );
+                    "Unable to persist object {0}.  Define an update procedure with [UpdateUsing].", typeof(T).FullName );
+            }
+        }
 
-            if ( !_databaseService.ExecuteStoredProcedureScalar< bool >( updateAttribute.ProcedureName,
-                                                                         objectToPersist.GetDataParameters(
-                                                                             _parameterPrefix ) ) )
-                throw new PHydrateException( "Update of object failed." );
+        private bool ExecuteBooleanProcedureFromAttribute< T, TAttribute >(
+            IEnumerable< KeyValuePair< string, object > > keyValuePairs )
+            where TAttribute : CrudAttributeBase
+        {
+            var crudAttribute = typeof(T).GetAttribute< TAttribute >();
+            if ( crudAttribute == null || String.IsNullOrEmpty( crudAttribute.ProcedureName ) )
+                throw new PHydrateInternalException( "Error persisting object." );
+
+            return _databaseService.ExecuteStoredProcedureScalar< bool >( crudAttribute.ProcedureName,
+                                                                          keyValuePairs );
         }
 
         private void InsertObject< T >( T objectToPersist )

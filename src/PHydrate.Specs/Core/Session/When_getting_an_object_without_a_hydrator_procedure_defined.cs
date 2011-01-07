@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
+    public sealed class When_getting_an_object_without_a_hydrator_procedure_defined : SessionSpecificationHydrateBase
     {
         private static Exception _exception;
 

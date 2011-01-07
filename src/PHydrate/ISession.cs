@@ -59,5 +59,12 @@ namespace PHydrate
         /// <typeparam name = "T">The type of the object to persist.</typeparam>
         /// <param name = "objectToPersist">The object to persist.</param>
         void Persist< T >( T objectToPersist );
+
+        /// <summary>
+        /// Deletes the specified object from the database store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectToDelete">The object to delete.</param>
+        void Delete< T >( T objectToDelete );
     }
 }

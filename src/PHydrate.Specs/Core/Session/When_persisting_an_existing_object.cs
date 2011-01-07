@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_persisting_an_existing_object : SessionSpecificationUpdateSucceedsBase
+    public sealed class When_persisting_an_existing_object : SessionSpecificationUpdateSucceedsBase
     {
         private static TestObject _objectUnderTest;
         private static Exception _exception;

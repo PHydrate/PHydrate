@@ -29,10 +29,10 @@ namespace PHydrate.Specs.Core.Session
         SessionSpecificationUpdateSucceedsBase
     {
         private static Exception _exception;
-        private static TestObjectNoUpdate _objectUnderTest;
+        private static TestObjectNoUpdateOrDelete _objectUnderTest;
 
         private Establish Context = () => {
-                                        _objectUnderTest = new TestObjectNoUpdate { Key = ExpectedKey };
+                                        _objectUnderTest = new TestObjectNoUpdateOrDelete { Key = ExpectedKey };
                                         SessionUnderTest.Persist( _objectUnderTest );
                                     };
 
