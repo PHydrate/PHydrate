@@ -70,6 +70,7 @@ namespace PHydrate.Core
         /// <param name="query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
         public IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
+            where T : class
         {
             // Get the name of the stored procedure that will hydrate this object
             var hydrationAttribute = typeof(T).GetAttribute< HydrateUsingAttribute >();
@@ -89,6 +90,7 @@ namespace PHydrate.Core
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
         public IEnumerable< T > Get< T >( ISpecification< T > specification )
+            where T : class
         {
             IEnumerable< T > foundObjects;
 
@@ -110,6 +112,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object to persist.</typeparam>
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
+            where T : class
         {
             if ( _hydratedObjects.Contains( objectToPersist ) )
                 UpdateObject( objectToPersist );
@@ -123,13 +126,18 @@ namespace PHydrate.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToDelete">The object to delete.</param>
         public void Delete< T >( T objectToDelete )
+            where T : class
         {
             try
             {
-                if (
-                    !ExecuteBooleanProcedureFromAttribute< T, DeleteUsingAttribute >( objectToDelete.GetDataParameters(
-                        _parameterPrefix ) ) )
+                long recordCount = ExecuteIntegerProcedureFromAttribute< T, DeleteUsingAttribute >( objectToDelete.GetDataParameters(
+                    _parameterPrefix ) );
+                if ( recordCount == 0 )
                     throw new PHydrateException( "Delete of object failed." );
+                else if (recordCount > 1)
+                {
+                    // TODO: Add a warning here
+                }
             }
             catch ( PHydrateInternalException )
             {
@@ -142,13 +150,19 @@ namespace PHydrate.Core
         }
 
         private void UpdateObject< T >( T objectToPersist )
+            where T : class
         {
             try
             {
-                if (
-                    !ExecuteBooleanProcedureFromAttribute< T, UpdateUsingAttribute >( objectToPersist.GetDataParameters(
-                        _parameterPrefix ) ) )
+                long recordsAffected =
+                    ExecuteIntegerProcedureFromAttribute< T, UpdateUsingAttribute >( objectToPersist.GetDataParameters(
+                        _parameterPrefix ) );
+                if ( recordsAffected == 0 )
                     throw new PHydrateException( "Update of object failed." );
+                else if (recordsAffected > 1)
+                {
+                    // TODO: Need a runtime warning here.  Figure out how to handle those!
+                }
             }
             catch ( PHydrateInternalException )
             {
@@ -157,19 +171,20 @@ namespace PHydrate.Core
             }
         }
 
-        private bool ExecuteBooleanProcedureFromAttribute< T, TAttribute >(
+        private long ExecuteIntegerProcedureFromAttribute< T, TAttribute >(
             IEnumerable< KeyValuePair< string, object > > keyValuePairs )
-            where TAttribute : CrudAttributeBase
+            where T : class where TAttribute : CrudAttributeBase
         {
             var crudAttribute = typeof(T).GetAttribute< TAttribute >();
             if ( crudAttribute == null || String.IsNullOrEmpty( crudAttribute.ProcedureName ) )
                 throw new PHydrateInternalException( "Error persisting object." );
 
-            return _databaseService.ExecuteStoredProcedureScalar< bool >( crudAttribute.ProcedureName,
+            return _databaseService.ExecuteStoredProcedureScalar< long >( crudAttribute.ProcedureName,
                                                                           keyValuePairs );
         }
 
         private void InsertObject< T >( T objectToPersist )
+            where T : class
         {
             var createAttribute = typeof(T).GetAttribute< CreateUsingAttribute >();
             if ( createAttribute == null || String.IsNullOrEmpty( createAttribute.ProcedureName ) )
@@ -189,6 +204,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
                                                                   Expression< Func< T, bool > > query )
+            where T : class
         {
             var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
                                                                             query.GetDataParameters( _parameterPrefix ) );
@@ -200,14 +216,26 @@ namespace PHydrate.Core
                 T hydratedObject = ( hydrator == null )
                                        ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
                                        : hydrator.Hydrate( dataReader.ToDictionary() );
+                T target = null;
 
-                _hydratedObjects.Add( hydratedObject );
+                if (_hydratedObjects.Contains(hydratedObject))
+                {
+                    target = _hydratedObjects[ hydratedObject ].Target as T;
+                    if (target == null)
+                        _hydratedObjects.Remove( hydratedObject );
+                    else
+                        hydratedObject = target;
+                }
+
+                if (target == null)
+                    _hydratedObjects.Add( hydratedObject );
 
                 yield return hydratedObject;
             }
         }
 
         private static IObjectHydrator< T > GetHydrator< T >()
+            where T : class
         {
             var objectHydratorAttribute = typeof(T).GetAttribute< ObjectHydratorAttribute >();
             if ( objectHydratorAttribute == null )

@@ -30,9 +30,9 @@ namespace PHydrate.Specs.Core.Session
     {
         [ UsedImplicitly ]
         private Establish Context = () =>
-                                    DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< bool >( "", null ) )
+                                    DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< long >( "", null ) )
                                         .
                                         Constraints( Is.Equal( "TestDeleteStoredProcedure" ), Is.NotNull() ).Return(
-                                            true );
+                                            1 );
     }
 }

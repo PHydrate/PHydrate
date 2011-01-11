@@ -26,7 +26,7 @@ namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
     public sealed class When_deleting_an_existing_object_with_no_delete_method :
-        SessionSpecificationUpdateSucceedsBase
+        SessionSpecificationDeleteSucceedsBase
     {
         private static Exception _exception;
         private static TestObjectNoUpdateOrDelete _objectUnderTest;

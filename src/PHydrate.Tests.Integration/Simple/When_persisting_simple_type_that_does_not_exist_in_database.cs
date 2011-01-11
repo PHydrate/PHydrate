@@ -24,26 +24,28 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Tests.Integration.Simple
 {
-    [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
-    [ Tags( "Integration" ) ]
+    [Subject(typeof(TestDomain.Simple), "Integration")]
+    [Tags("Integration")]
     public sealed class When_persisting_simple_type_that_does_not_exist_in_database : PHydrateIntegrationTestBase
     {
         private static int _integerValue;
         private static string _stringValue;
         private static TestDomain.Simple _newSimple;
 
-        private Establish Context = () => {
-                                        _integerValue = A.Random.Integer;
-                                        _stringValue = A.Random.String;
-                                        _newSimple = new TestDomain.Simple {
-                                                                               IntegerValue = _integerValue,
-                                                                               StringValue = _stringValue
-                                                                           };
-                                    };
+        private Establish Context = () =>
+        {
+            _integerValue = A.Random.Integer;
+            _stringValue = A.Random.String;
+            _newSimple = new TestDomain.Simple
+            {
+                IntegerValue = _integerValue,
+                StringValue = _stringValue
+            };
+        };
 
-        private Because Of = () => SessionFactory.GetSession().Persist( _newSimple );
+        private Because Of = () => SessionFactory.GetSession().Persist(_newSimple);
 
         private It Should_populate_instance_with_id
-            = () => _newSimple.SimpleId.ShouldBeGreaterThan( 0 );
+            = () => _newSimple.SimpleId.ShouldBeGreaterThan(0);
     }
 }
