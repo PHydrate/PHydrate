@@ -26,7 +26,7 @@ using Rhino.Mocks;
 
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
-    public class SQLiteProcCommandSpecificationBase
+    public abstract class SQLiteProcCommandSpecificationBase
     {
         protected static IDbCommand BaseCommand;
         protected static SprocIntegration.SQLiteProcCommand ProcCommand;

@@ -27,7 +27,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_a_value_with_no_specific_attribute_set
+    public sealed class When_setting_a_value_with_no_specific_attribute_set
     {
         private static TestObject _dataObject;
         private static Exception _exception;

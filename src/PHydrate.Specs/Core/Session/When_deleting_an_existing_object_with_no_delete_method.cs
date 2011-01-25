@@ -21,28 +21,27 @@
 
 using System;
 using Machine.Specifications;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public sealed class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
-        TypeExtensionsSpecificationBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_deleting_an_existing_object_with_no_delete_method :
+        SessionSpecificationDeleteSucceedsBase
     {
         private static Exception _exception;
+        private static TestObjectNoUpdateOrDelete _objectUnderTest;
 
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception(
-                () =>
-                typeof(TestClassWithNoDefaultConstructor).ConstructUsingDefaultConstructor
-                    < TestClassWithNoDefaultConstructor >() );
+        private Establish Context = () => {
+                                        _objectUnderTest = new TestObjectNoUpdateOrDelete { Key = ExpectedKey };
+                                        SessionUnderTest.Persist( _objectUnderTest );
+                                    };
+
+        private Because Of = () => _exception = Catch.Exception( () => SessionUnderTest.Delete( _objectUnderTest ) );
 
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_internal_exception
-            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
     }
 }

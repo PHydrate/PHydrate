@@ -4,7 +4,7 @@ using PHydrate.Core;
 namespace PHydrate.Specs
 {
     [ Subject( typeof(Fluently) ) ]
-    public class When_using_fluently_static_object
+    public sealed class When_using_fluently_static_object
     {
         private Because Of = () => _returnedObject = Fluently.Configure;
 

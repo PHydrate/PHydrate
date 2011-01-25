@@ -24,7 +24,7 @@ using System.Data;
 
 namespace PHydrate.Tests.Integration.SprocIntegration
 {
-    public class SQLiteProcConnection : IDbConnection
+    public sealed class SQLiteProcConnection : IDbConnection
     {
         private readonly IDbConnection _baseConnection;
 

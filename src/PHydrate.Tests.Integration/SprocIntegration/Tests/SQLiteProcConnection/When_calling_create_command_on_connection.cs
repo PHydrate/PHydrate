@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcConnection
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcConnection) ) ]
-    public class When_calling_create_command_on_connection : SQLiteProcConnectionSpecificationBase
+    public sealed class When_calling_create_command_on_connection : SQLiteProcConnectionSpecificationBase
     {
         private static IDbCommand _command;
         private Establish Context = () => BaseConnection.Expect( x => x.CreateCommand() );

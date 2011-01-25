@@ -26,7 +26,7 @@ using UMMO.TestingUtils;
 namespace PHydrate.Specs.Util.DictionaryExtensions
 {
     [ Subject( typeof(PHydrate.Util.DictionaryExtensions) ) ]
-    public class When_checking_for_non_existant_key_without_case : DictionaryExtensionsSpecificationBase
+    public sealed class When_checking_for_non_existant_key_without_case : DictionaryExtensionsSpecificationBase
     {
         private Because Of = () => Result = TestDictionary.ContainsKeyNoCase( A.Random.String, out ActualName );
 

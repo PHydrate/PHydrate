@@ -30,7 +30,7 @@ namespace PHydrate.Tests.Integration.Simple
 {
     [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
     [ Tags( "Integration" ) ]
-    public class When_getting_a_simple_class_with_a_db_specification_and_explicit_specification :
+    public sealed class When_getting_a_simple_class_with_a_db_specification_and_explicit_specification :
         PHydrateIntegrationTestBase
     {
         private static IList< TestDomain.Simple > _simpleList;

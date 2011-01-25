@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_simple_expression : SessionSpecificationHydrateBase
+    public sealed class When_getting_an_object_with_simple_expression : SessionSpecificationHydrateBase
     {
         private Because Of = () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == 1 ).ToList();
 

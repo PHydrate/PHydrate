@@ -43,7 +43,8 @@ namespace PHydrate
         /// <typeparam name = "T">The type of object to return.</typeparam>
         /// <param name = "query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
-        IEnumerable< T > Get< T >( Expression< Func< T, bool > > query );
+        IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
+            where T : class;
 
         /// <summary>
         /// Gets an object of type <typeparamref name="T"/> given the specification.
@@ -51,13 +52,23 @@ namespace PHydrate
         /// <typeparam name="T">The type of the object to return.</typeparam>
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
-        IEnumerable< T > Get< T >( ISpecification< T > specification );
+        IEnumerable< T > Get< T >( ISpecification< T > specification )
+            where T : class;
 
         /// <summary>
         ///   Persists the specified object.
         /// </summary>
         /// <typeparam name = "T">The type of the object to persist.</typeparam>
         /// <param name = "objectToPersist">The object to persist.</param>
-        void Persist< T >( T objectToPersist );
+        void Persist< T >( T objectToPersist )
+            where T : class;
+
+        /// <summary>
+        /// Deletes the specified object from the database store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectToDelete">The object to delete.</param>
+        void Delete< T >( T objectToDelete )
+            where T : class;
     }
 }

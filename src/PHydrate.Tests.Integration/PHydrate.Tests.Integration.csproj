@@ -81,6 +81,7 @@
     <Compile Include="ClassWithHydrator\When_getting_class_using_a_hydrator_and_db_specification_and_explicit_specification.cs" />
     <Compile Include="PHydrateIntegrationTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simple\When_deleting_simple_type_from_database.cs" />
     <Compile Include="Simple\When_persisting_simple_type_that_does_not_exist_in_database.cs" />
     <Compile Include="Simple\When_getting_a_simple_class_with_a_db_specification_and_explicit_specification.cs" />
     <Compile Include="Simple\When_getting_simple_type.cs" />

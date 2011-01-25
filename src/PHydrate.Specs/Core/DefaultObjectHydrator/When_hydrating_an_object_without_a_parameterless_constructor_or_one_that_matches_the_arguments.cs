@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
     [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
-    public class When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments :
+    public sealed class When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments :
         DefaultObjectHydratorSpecificationBase
     {
         private static Exception _exception;

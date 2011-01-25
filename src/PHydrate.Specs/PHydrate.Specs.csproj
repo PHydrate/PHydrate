@@ -104,10 +104,16 @@
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
     <Compile Include="Core\Session\SessionSpecificationBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationCreateBase.cs" />
+    <Compile Include="Core\Session\SessionSpecificationDeleteBase.cs" />
+    <Compile Include="Core\Session\SessionSpecificationDeleteFailsBase.cs" />
+    <Compile Include="Core\Session\SessionSpecificationDeleteSucceedsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationHydrateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateFailsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateSucceedsBase.cs" />
+    <Compile Include="Core\Session\When_deleting_an_existing_object.cs" />
+    <Compile Include="Core\Session\When_deleting_an_existing_object_with_no_delete_method.cs" />
+    <Compile Include="Core\Session\When_deleting_a_non_existant_object.cs" />
     <Compile Include="Core\Session\When_getting_an_object_without_a_hydrator_procedure_defined.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator_that_has_no_default_constructor.cs" />

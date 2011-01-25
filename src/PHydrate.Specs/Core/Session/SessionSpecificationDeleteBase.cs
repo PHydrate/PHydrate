@@ -20,18 +20,16 @@
 #endregion
 
 using Machine.Specifications;
-using Rhino.Mocks;
+using Machine.Specifications.Annotations;
+using UMMO.TestingUtils;
 
-namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcConnection
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(SprocIntegration.SQLiteProcConnection) ) ]
-    public sealed class When_calling_open_on_connection : SQLiteProcConnectionSpecificationBase
+    public abstract class SessionSpecificationDeleteBase : SessionSpecificationBase
     {
-        private Establish Context = () => BaseConnection.Expect( x => x.Open() );
+        protected static int ExpectedKey;
 
-        private Because Of = () => ProcConnection.Open();
-
-        private It Should_call_open_on_base_command
-            = () => BaseConnection.VerifyAllExpectations();
+        [ UsedImplicitly ]
+        private Establish Context = () => ExpectedKey = A.Random.Integer;
     }
 }

@@ -27,7 +27,7 @@ using UMMO.TestingUtils;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_setting_an_internal_field_tagged_with_a_specific_attribute
+    public sealed class When_setting_an_internal_field_tagged_with_a_specific_attribute
     {
         private static int _intValue;
         private static TestObject _dataObject;

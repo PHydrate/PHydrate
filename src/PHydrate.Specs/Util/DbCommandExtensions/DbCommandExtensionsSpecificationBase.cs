@@ -27,7 +27,7 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Util.DbCommandExtensions
 {
-    public class DbCommandExtensionsSpecificationBase
+    public abstract class DbCommandExtensionsSpecificationBase
     {
         protected static IDbCommand Command;
         protected static IDbDataParameter DataParameter;

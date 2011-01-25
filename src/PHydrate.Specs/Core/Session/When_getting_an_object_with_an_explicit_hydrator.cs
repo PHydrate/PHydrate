@@ -26,7 +26,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationHydrateBase
+    public sealed class When_getting_an_object_with_an_explicit_hydrator : SessionSpecificationHydrateBase
     {
         private static IList< TestObjectExplicitHydrator > _explicitHydratorObjects;
 

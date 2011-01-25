@@ -162,6 +162,14 @@ namespace PHydrate.Core
             get { return false; }
         }
 
+        public WeakReference this[object obj]
+        {
+            get
+            {
+                return _internalDictionary[ GetObjectsHashCode( obj ) ];
+            }
+        }
+
         private static int GetObjectsHashCode( object item )
         {
             unchecked

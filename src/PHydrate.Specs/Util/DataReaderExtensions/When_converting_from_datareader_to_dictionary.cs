@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.DataReaderExtensions
 {
     [ Subject( typeof(PHydrate.Util.DataReaderExtensions) ) ]
-    public class When_converting_from_datareader_to_dictionary : DataReaderExtensionsSpecificationBase
+    public sealed class When_converting_from_datareader_to_dictionary : DataReaderExtensionsSpecificationBase
     {
         private static IDictionary< string, object > _dictionary;
         private Because Of = () => _dictionary = DataReaderToTest.ToDictionary();

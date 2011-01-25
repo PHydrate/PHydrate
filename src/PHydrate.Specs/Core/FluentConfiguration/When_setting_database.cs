@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.FluentConfiguration
 {
     [ Subject( typeof(PHydrate.Core.FluentConfiguration) ) ]
-    public class When_setting_database : FluentConfigurationSpecificationBase
+    public sealed class When_setting_database : FluentConfigurationSpecificationBase
     {
         private static IDatabaseService _databaseService;
         private static PHydrate.Core.FluentConfiguration _returnedObject;

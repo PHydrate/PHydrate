@@ -22,16 +22,17 @@
 using Machine.Specifications;
 using Rhino.Mocks;
 
-namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcConnection
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(SprocIntegration.SQLiteProcConnection) ) ]
-    public sealed class When_calling_open_on_connection : SQLiteProcConnectionSpecificationBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_deleting_an_existing_object : SessionSpecificationDeleteSucceedsBase
     {
-        private Establish Context = () => BaseConnection.Expect( x => x.Open() );
+        private static TestObject _objectUnderTest;
+        private Establish Context = () => { _objectUnderTest = new TestObject { Key = ExpectedKey }; };
 
-        private Because Of = () => ProcConnection.Open();
+        private Because Of = () => SessionUnderTest.Delete( _objectUnderTest );
 
-        private It Should_call_open_on_base_command
-            = () => BaseConnection.VerifyAllExpectations();
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
     }
 }

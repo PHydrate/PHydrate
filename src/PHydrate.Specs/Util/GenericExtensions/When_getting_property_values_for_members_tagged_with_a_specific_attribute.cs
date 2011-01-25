@@ -28,7 +28,7 @@ using UMMO.TestingUtils;
 namespace PHydrate.Specs.Util.GenericExtensions
 {
     [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
-    public class When_getting_property_values_for_members_tagged_with_a_specific_attribute
+    public sealed class When_getting_property_values_for_members_tagged_with_a_specific_attribute
     {
         #region Test Object
 

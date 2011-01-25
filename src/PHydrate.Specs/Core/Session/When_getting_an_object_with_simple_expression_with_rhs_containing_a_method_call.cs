@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_getting_an_object_with_simple_expression_with_rhs_containing_a_method_call :
+    public sealed class When_getting_an_object_with_simple_expression_with_rhs_containing_a_method_call :
         SessionSpecificationHydrateBase
     {
         private Because Of =

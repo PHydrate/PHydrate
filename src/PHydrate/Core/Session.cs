@@ -35,8 +35,8 @@ namespace PHydrate.Core
     {
         private readonly IDatabaseService _databaseService;
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
-        private readonly string _parameterPrefix;
         private readonly WeakReferenceObjectCache _hydratedObjects = new WeakReferenceObjectCache();
+        private readonly string _parameterPrefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
@@ -70,6 +70,7 @@ namespace PHydrate.Core
         /// <param name="query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
         public IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
+            where T : class
         {
             // Get the name of the stored procedure that will hydrate this object
             var hydrationAttribute = typeof(T).GetAttribute< HydrateUsingAttribute >();
@@ -89,6 +90,7 @@ namespace PHydrate.Core
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
         public IEnumerable< T > Get< T >( ISpecification< T > specification )
+            where T : class
         {
             IEnumerable< T > foundObjects;
 
@@ -110,6 +112,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object to persist.</typeparam>
         /// <param name="objectToPersist">The object to persist.</param>
         public void Persist< T >( T objectToPersist )
+            where T : class
         {
             if ( _hydratedObjects.Contains( objectToPersist ) )
                 UpdateObject( objectToPersist );
@@ -117,21 +120,71 @@ namespace PHydrate.Core
                 InsertObject( objectToPersist );
         }
 
-        private void UpdateObject< T >( T objectToPersist )
+        /// <summary>
+        /// Deletes the specified object from the database store.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objectToDelete">The object to delete.</param>
+        public void Delete< T >( T objectToDelete )
+            where T : class
         {
-            var updateAttribute = typeof(T).GetAttribute< UpdateUsingAttribute >();
-            if ( updateAttribute == null || String.IsNullOrEmpty( updateAttribute.ProcedureName ) )
+            try
+            {
+                long recordCount = ExecuteIntegerProcedureFromAttribute< T, DeleteUsingAttribute >( objectToDelete.GetDataParameters(
+                    _parameterPrefix ) );
+                if ( recordCount == 0 )
+                    throw new PHydrateException( "Delete of object failed." );
+                else if (recordCount > 1)
+                {
+                    // TODO: Add a warning here
+                }
+            }
+            catch ( PHydrateInternalException )
+            {
                 throw new PHydrateException(
-                    "Unable to persist object of type {0}.  Define an update procedure with [UpdateUsing]",
-                    typeof(T).FullName );
+                    "Unable to delete object {0}.  Define an delete procedure with [DeleteUsing].", typeof(T).FullName );
+            }
 
-            if ( !_databaseService.ExecuteStoredProcedureScalar< bool >( updateAttribute.ProcedureName,
-                                                                         objectToPersist.GetDataParameters(
-                                                                             _parameterPrefix ) ) )
-                throw new PHydrateException( "Update of object failed." );
+            // Remove from our cache.
+            _hydratedObjects.Remove( objectToDelete );
+        }
+
+        private void UpdateObject< T >( T objectToPersist )
+            where T : class
+        {
+            try
+            {
+                long recordsAffected =
+                    ExecuteIntegerProcedureFromAttribute< T, UpdateUsingAttribute >( objectToPersist.GetDataParameters(
+                        _parameterPrefix ) );
+                if ( recordsAffected == 0 )
+                    throw new PHydrateException( "Update of object failed." );
+                else if (recordsAffected > 1)
+                {
+                    // TODO: Need a runtime warning here.  Figure out how to handle those!
+                }
+            }
+            catch ( PHydrateInternalException )
+            {
+                throw new PHydrateException(
+                    "Unable to persist object {0}.  Define an update procedure with [UpdateUsing].", typeof(T).FullName );
+            }
+        }
+
+        private long ExecuteIntegerProcedureFromAttribute< T, TAttribute >(
+            IEnumerable< KeyValuePair< string, object > > keyValuePairs )
+            where T : class where TAttribute : CrudAttributeBase
+        {
+            var crudAttribute = typeof(T).GetAttribute< TAttribute >();
+            if ( crudAttribute == null || String.IsNullOrEmpty( crudAttribute.ProcedureName ) )
+                throw new PHydrateInternalException( "Error persisting object." );
+
+            return _databaseService.ExecuteStoredProcedureScalar< long >( crudAttribute.ProcedureName,
+                                                                          keyValuePairs );
         }
 
         private void InsertObject< T >( T objectToPersist )
+            where T : class
         {
             var createAttribute = typeof(T).GetAttribute< CreateUsingAttribute >();
             if ( createAttribute == null || String.IsNullOrEmpty( createAttribute.ProcedureName ) )
@@ -151,6 +204,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
                                                                   Expression< Func< T, bool > > query )
+            where T : class
         {
             var dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
                                                                             query.GetDataParameters( _parameterPrefix ) );
@@ -162,14 +216,26 @@ namespace PHydrate.Core
                 T hydratedObject = ( hydrator == null )
                                        ? _defaultObjectHydrator.Hydrate< T >( dataReader.ToDictionary() )
                                        : hydrator.Hydrate( dataReader.ToDictionary() );
+                T target = null;
 
-                _hydratedObjects.Add( hydratedObject );
+                if (_hydratedObjects.Contains(hydratedObject))
+                {
+                    target = _hydratedObjects[ hydratedObject ].Target as T;
+                    if (target == null)
+                        _hydratedObjects.Remove( hydratedObject );
+                    else
+                        hydratedObject = target;
+                }
+
+                if (target == null)
+                    _hydratedObjects.Add( hydratedObject );
 
                 yield return hydratedObject;
             }
         }
 
         private static IObjectHydrator< T > GetHydrator< T >()
+            where T : class
         {
             var objectHydratorAttribute = typeof(T).GetAttribute< ObjectHydratorAttribute >();
             if ( objectHydratorAttribute == null )

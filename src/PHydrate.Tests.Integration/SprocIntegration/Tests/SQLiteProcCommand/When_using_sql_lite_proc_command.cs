@@ -26,7 +26,7 @@ using Machine.Specifications;
 namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcCommand
 {
     [ Subject( typeof(SprocIntegration.SQLiteProcCommand) ) ]
-    public class When_using_sql_lite_proc_command : SQLiteProcCommandSpecificationBase
+    public sealed class When_using_sql_lite_proc_command : SQLiteProcCommandSpecificationBase
     {
         private static object _x;
 

@@ -25,7 +25,7 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public class When_copying_cache_to_null_array : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_copying_cache_to_null_array : WeakReferenceObjectCacheSpecificationBase
     {
         private static Exception _exception;
         private Establish Context = () => CacheUnderTest.Add( TestObject );

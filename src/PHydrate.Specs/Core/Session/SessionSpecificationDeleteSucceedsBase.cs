@@ -20,18 +20,19 @@
 #endregion
 
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 
-namespace PHydrate.Tests.Integration.SprocIntegration.Tests.SQLiteProcConnection
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(SprocIntegration.SQLiteProcConnection) ) ]
-    public sealed class When_calling_open_on_connection : SQLiteProcConnectionSpecificationBase
+    public abstract class SessionSpecificationDeleteSucceedsBase : SessionSpecificationDeleteBase
     {
-        private Establish Context = () => BaseConnection.Expect( x => x.Open() );
-
-        private Because Of = () => ProcConnection.Open();
-
-        private It Should_call_open_on_base_command
-            = () => BaseConnection.VerifyAllExpectations();
+        [ UsedImplicitly ]
+        private Establish Context = () =>
+                                    DatabaseService.Expect( x => x.ExecuteStoredProcedureScalar< long >( "", null ) )
+                                        .
+                                        Constraints( Is.Equal( "TestDeleteStoredProcedure" ), Is.NotNull() ).Return(
+                                            1 );
     }
 }

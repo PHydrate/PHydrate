@@ -25,7 +25,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public class When_persisting_a_new_object : SessionSpecificationCreateBase
+    public sealed class When_persisting_a_new_object : SessionSpecificationCreateBase
     {
         private static TestObject _objectUnderTest;
         private Establish Context = () => _objectUnderTest = new TestObject { Key = ExpectedKey };

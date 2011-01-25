@@ -28,7 +28,7 @@ namespace PHydrate.Tests.Integration.ClassWithHydrator
 {
     [ Subject( typeof(TestDomain.ClassWithHydrator), "Integration" ) ]
     [ Tags( "Integration" ) ]
-    public class When_getting_class_using_a_hydrator : PHydrateIntegrationTestBase
+    public sealed class When_getting_class_using_a_hydrator : PHydrateIntegrationTestBase
     {
         private static IList< TestDomain.ClassWithHydrator > _simpleList;
 

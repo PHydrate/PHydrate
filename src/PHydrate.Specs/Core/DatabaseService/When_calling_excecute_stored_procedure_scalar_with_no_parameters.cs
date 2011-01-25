@@ -26,7 +26,7 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.DatabaseService
 {
     [ Subject( typeof(DatabaseServiceBase) ) ]
-    public class When_calling_excecute_stored_procedure_scalar_with_no_parameters :
+    public sealed class When_calling_excecute_stored_procedure_scalar_with_no_parameters :
         DatabaseServiceSpecificationScalarBase
     {
         private static int _actualReturn;

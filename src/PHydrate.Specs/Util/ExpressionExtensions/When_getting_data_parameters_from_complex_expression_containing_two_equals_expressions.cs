@@ -26,7 +26,7 @@ using PHydrate.Util;
 namespace PHydrate.Specs.Util.ExpressionExtensions
 {
     [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
-    public class When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions :
+    public sealed class When_getting_data_parameters_from_complex_expression_containing_two_equals_expressions :
         ExpressionExtenionsSpecificationBase
     {
         private static IDictionary< string, object > _dictionary;
