@@ -20,6 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Machine.Specifications;
 using PHydrate.Attributes;
@@ -58,7 +59,9 @@ namespace PHydrate.Specs.Util.TypeExtensions
                                                 [ 0 ];
                                     };
 
-        private Because Of = () => _members = typeof(TestObject).GetMembersWithAttribute< PrimaryKeyAttribute >();
+        private Because Of =
+            () =>
+            _members = typeof(TestObject).GetMembersWithAttribute< PrimaryKeyAttribute >().Select( x => x.Wrapped );
 
         private It Should_contain_member_info_for_both_test_item_1_and_test_item_2
             = () => _members.ShouldContainOnly( _memberInfo1, _memberInfo2 );

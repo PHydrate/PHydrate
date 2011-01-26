@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using PHydrate.Attributes;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -83,11 +84,11 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
         [NotNull]
-        public static IEnumerable<MemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
+        public static IEnumerable<IMemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
         {
             return
                 type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Where(
-                    x => x.GetCustomAttributes( typeof(T), true ).Length > 0 );
+                    x => x.GetCustomAttributes( typeof(T), true ).Length > 0 ).Select( x => x.CreateWrapper() );
         }
     }
 }

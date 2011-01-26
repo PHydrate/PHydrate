@@ -92,6 +92,11 @@
     <Compile Include="Util\ExpressionExtensions.cs" />
     <Compile Include="Util\DataReaderExtensions.cs" />
     <Compile Include="Util\GenericExtensions.cs" />
+    <Compile Include="Util\MemberInfoWrapper\FieldInfoWrapper.cs" />
+    <Compile Include="Util\MemberInfoWrapper\IMemberInfo.cs" />
+    <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapper.cs" />
+    <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapperFactory.cs" />
+    <Compile Include="Util\MemberInfoWrapper\PropertyInfoWrapper.cs" />
     <Compile Include="Util\TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
