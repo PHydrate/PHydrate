@@ -33,6 +33,8 @@ namespace PHydrate.Util
     /// </summary>
     public static class GenericExtensions
     {
+        private static readonly IDictionary<Type, PropertyInfo[]> PropertyInfoCache = new Dictionary< Type, PropertyInfo[] >();
+
         /// <summary>
         /// Gets the data parameters from an instance.
         /// </summary>
@@ -43,7 +45,11 @@ namespace PHydrate.Util
         public static IEnumerable< KeyValuePair< string, object > > GetDataParameters< T >( this T instance,
                                                                                             string parameterPrefix )
         {
-            PropertyInfo[] properties = typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public );
+            if (!PropertyInfoCache.ContainsKey(typeof(T)))
+                PropertyInfoCache.Add( typeof(T),
+                                        typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public ) );
+
+            PropertyInfo[] properties = PropertyInfoCache[ typeof(T) ];
 
             return properties.Select( property => new KeyValuePair< string, object >( parameterPrefix + property.Name,
                                                                                       property.GetValue( instance, null ) ) );
@@ -75,6 +81,7 @@ namespace PHydrate.Util
         /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
+        [ NotNull ]
         public static IEnumerable<object> GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
             where TAttributeType : Attribute
         {

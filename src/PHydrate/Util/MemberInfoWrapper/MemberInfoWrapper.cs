@@ -28,6 +28,9 @@ namespace PHydrate.Util.MemberInfoWrapper
     /// </summary>
     public class MemberInfoWrapper : IMemberInfo
     {
+        /// <summary>
+        /// The internal MemberInfo being wrapped.
+        /// </summary>
         protected readonly MemberInfo MemberInfo;
 
         /// <summary>
