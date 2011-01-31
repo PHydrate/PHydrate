@@ -80,7 +80,7 @@ namespace PHydrate.Util
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
             if (defaultConstructor == null)
-                throw new PHydrateInternalException(
+                throw new PHydrateException(
                     String.Format( "Unable to construct object {0}, no default constructor.", typeof(T).Name ) );
 
             return (T)defaultConstructor.Invoke( new object[] {} );

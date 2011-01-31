@@ -15,12 +15,10 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -58,7 +56,7 @@ namespace PHydrate.Core
             ConstructorInfo defaultConstructor = typeof(T).GetDefaultConstructor();
 
             if ( defaultConstructor != null )
-                return (T)defaultConstructor.Invoke( new object[] {} );
+                return (T)defaultConstructor.Invoke( new object[] { } );
 
             ConstructorInfo[] otherConstructors = typeof(T).GetConstructors();
             foreach ( ConstructorInfo ci in otherConstructors )
