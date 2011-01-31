@@ -21,24 +21,46 @@
 
 using System;
 using Machine.Specifications;
+using UMMO.TestingUtils.RandomData;
 
 namespace UMMO.TestingUtils.Specs.DataReaderMock
 {
-    [ Subject( typeof(TestingUtils.DataReaderMock) ) ]
+    [Subject(typeof(TestingUtils.DataReaderMock))]
     public class When_in_playback_mode : DataReaderMockSpecsBase
     {
         private Establish Context = () => MockUnderTest.Playback();
 
         private It Should_return_zero_when_calling_depth
-            = () => MockUnderTest.Depth.ShouldEqual( 0 );
+            = () => MockUnderTest.Depth.ShouldEqual(0);
 
         private It Should_return_zero_when_calling_recordsaffected
-            = () => MockUnderTest.RecordsAffected.ShouldEqual( 0 );
+            = () => MockUnderTest.RecordsAffected.ShouldEqual(0);
 
         private It Should_throw_exception_when_adding_a_recordset
-            = () => typeof(InvalidOperationException).ShouldBeThrownBy( () => MockUnderTest.AddRecordSet( "test" ) );
+            = () => typeof(InvalidOperationException).ShouldBeThrownBy(() => MockUnderTest.AddRecordSet("test"));
 
         private It Should_throw_exception_when_adding_a_row
-            = () => typeof(InvalidOperationException).ShouldBeThrownBy( () => MockUnderTest.AddRow( 0 ) );
+            = () => typeof(InvalidOperationException).ShouldBeThrownBy(() => MockUnderTest.AddRow(0));
+    }
+
+    [Subject(typeof(TestingUtils.DataReaderMock))]
+    public class When_calling_reset : DataReaderMockSpecsBase
+    {
+        private Establish Context = () =>
+                                        {
+                                            MockUnderTest.AddRecordSet( "test" );
+                                            ExpectedInteger = A.Random.Integer;
+                                            MockUnderTest.AddRow( ExpectedInteger );
+                                            MockUnderTest.Playback();
+                                            MockUnderTest.Read();
+                                            MockUnderTest.Reset();
+                                        };
+
+        private Because Of = () => MockUnderTest.Read();
+
+        private It Should_return_record
+            = () => MockUnderTest.GetValue( 0 ).ShouldEqual( ExpectedInteger );
+
+        private static int ExpectedInteger;
     }
 }

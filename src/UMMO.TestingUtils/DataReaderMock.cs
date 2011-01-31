@@ -697,6 +697,18 @@ namespace UMMO.TestingUtils
             return this;
         }
 
+        /// <summary>
+        /// Resets this instance.
+        /// </summary>
+        public void Reset()
+        {
+            ThrowUnlessInPlaybackMode();
+
+            _recordsetNumber = 0;
+            _rowNumber = -1;
+            _isClosed = false;
+        }
+
         private void ThrowIfInPlaybackMode()
         {
             if ( _readyForPlayback )
