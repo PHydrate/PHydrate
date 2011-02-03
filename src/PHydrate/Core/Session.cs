@@ -26,6 +26,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
 using PHydrate.Util;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {
@@ -98,6 +99,33 @@ namespace PHydrate.Core
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
+            return HydrateFromDataReader< T >( dataReader );
+        }
+
+        private IEnumerable< T > HydrateFromDataReader< T >( IDataReader dataReader ) where T : class
+        {
+            IList< IMemberInfo > internalRecordsets = typeof(T).GetMembersWithAttribute< RecordsetAttribute >().ToList();
+            return internalRecordsets.Count > 0
+                       ? HydrateRecordsetWithInternals< T >( dataReader, internalRecordsets )
+                       : HydrateRecordset< T >( dataReader );
+        }
+
+        private IEnumerable<T> HydrateRecordsetWithInternals<T>(IDataReader dataReader, IEnumerable< IMemberInfo > internalRecordsets) where T : class
+        {
+            IList< T > aggregateRoot = HydrateRecordset< T >( dataReader ).ToList();
+            
+            foreach(IMemberInfo internalRecordset in internalRecordsets)
+            {
+                // TODO
+                // Get generic method of HydrateFromDataReader for data type
+                // Assign values to appropriate member in aggregateRoot
+                // Support IEnumerable and IList for now.  IDictionary later.
+            }
+            return aggregateRoot;
+        }
+
+        private IEnumerable<T> HydrateRecordset< T >( IDataReader dataReader ) where T : class
+        {
             Func< IDictionary< string, object >, T > hydratorFunction = GetHydratorFunction< T >();
 
             while ( dataReader.Read() )

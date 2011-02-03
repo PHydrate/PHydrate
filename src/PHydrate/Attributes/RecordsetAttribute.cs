@@ -29,11 +29,18 @@ namespace PHydrate.Attributes
     [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
     public class RecordsetAttribute : Attribute
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecordsetAttribute"/> class.
+        /// </summary>
+        /// <param name="recordsetNumber">The recordset number.</param>
         public RecordsetAttribute( int recordsetNumber )
         {
             RecordsetNumber = recordsetNumber;
         }
 
+        /// <summary>
+        /// Gets the recordset number.
+        /// </summary>
         public int RecordsetNumber { get; private set; }
     }
 }
