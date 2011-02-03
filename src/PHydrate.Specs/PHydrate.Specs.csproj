@@ -84,6 +84,7 @@
     <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_an_implementation_of_i_object_hydrator.cs" />
     <Compile Include="Attributes\ObjectHydrator\When_instantiating_object_hydrator_attribute_specifying_a_class_that_does_not_implement_i_object_hydrator.cs" />
     <Compile Include="Attributes\PersistAs\When_instantiating_persist_as_attribute.cs" />
+    <Compile Include="Attributes\Recordset\When_instantiating_recordset_attribute.cs" />
     <Compile Include="Attributes\StringFormatMethod\When_instantiating_string_format_method_attribute.cs" />
     <Compile Include="Attributes\UpdateUsing\When_instantiating_update_using_attribute.cs" />
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_specifying_target.cs" />
