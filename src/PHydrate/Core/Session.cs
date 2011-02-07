@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util;
 using PHydrate.Util.MemberInfoWrapper;
@@ -116,8 +117,14 @@ namespace PHydrate.Core
             
             foreach(IMemberInfo internalRecordset in internalRecordsets)
             {
+                if ( !dataReader.NextResult() ) // TODO: Throw an exception?
+                    break;
+
+                var genericMethod = GetType().GetMethod( "HydrateFromDataReader",
+                                                         BindingFlags.NonPublic | BindingFlags.Instance );
+                genericMethod.MakeGenericMethod( internalRecordset.Type ).Invoke( this, new object[] { dataReader } );
                 // TODO
-                // Get generic method of HydrateFromDataReader for data type
+                // Get generic method of HydrateFromDataReader for data type (done)
                 // Assign values to appropriate member in aggregateRoot
                 // Support IEnumerable and IList for now.  IDictionary later.
             }

@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 
 namespace PHydrate.Util.MemberInfoWrapper
@@ -55,6 +56,11 @@ namespace PHydrate.Util.MemberInfoWrapper
         public override void SetValue( object obj, object value )
         {
             ((FieldInfo)MemberInfo).SetValue(obj, value);
+        }
+
+        public override Type Type
+        {
+            get { return ( (FieldInfo)MemberInfo ).FieldType; }
         }
     }
 }

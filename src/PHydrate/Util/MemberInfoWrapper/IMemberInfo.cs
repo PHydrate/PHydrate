@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 
 namespace PHydrate.Util.MemberInfoWrapper
@@ -39,13 +40,18 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// <param name="obj">The obj.</param>
         /// <param name="invokeAttr">The invoke attr.</param>
         /// <returns></returns>
-        object GetValue( object obj, BindingFlags invokeAttr );
+        object GetValue(object obj, BindingFlags invokeAttr);
 
         /// <summary>
         /// Sets the value.
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <param name="value">The value.</param>
-        void SetValue( object obj, object value );
+        void SetValue(object obj, object value);
+
+        /// <summary>
+        /// Gets the type of the member.
+        /// </summary>
+        Type Type { get; }
     }
 }

@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 
 namespace PHydrate.Util.MemberInfoWrapper
@@ -73,6 +74,14 @@ namespace PHydrate.Util.MemberInfoWrapper
         public virtual MemberInfo Wrapped
         {
             get { return MemberInfo; }
+        }
+
+        /// <summary>
+        /// Gets the type of the member.
+        /// </summary>
+        public virtual Type Type
+        {
+            get { throw new PHydrateInternalException( "Could not get type from generic MemberInfo" ); }
         }
 
         #endregion
