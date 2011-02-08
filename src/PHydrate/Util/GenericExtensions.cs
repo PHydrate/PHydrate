@@ -33,7 +33,7 @@ namespace PHydrate.Util
     /// </summary>
     public static class GenericExtensions
     {
-        private static readonly IDictionary<Type, PropertyInfo[]> PropertyInfoCache = new Dictionary< Type, PropertyInfo[] >();
+        private static readonly IDictionary< Type, PropertyInfo[] > PropertyInfoCache = new Dictionary< Type, PropertyInfo[] >();
 
         /// <summary>
         /// Gets the data parameters from an instance.
@@ -82,13 +82,46 @@ namespace PHydrate.Util
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
         [ NotNull ]
-        public static IEnumerable<object> GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
+        public static IEnumerable< object > GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
             where TAttributeType : Attribute
         {
             return
                 obj.GetType().GetMembersWithAttribute< TAttributeType >().Select(
                     member =>
                     member.GetValue( obj, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+        }
+
+        /// <summary>
+        /// Gets the objects hash code based on the type and the primary keys defined.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        public static int GetObjectsHashCodeByPrimaryKeys(this object item)
+        {
+            IEnumerable< object > primaryKeyFields = item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >();
+            if (primaryKeyFields.Count() == 0)
+                primaryKeyFields = new List< object > { item };
+
+            return item.GetType().GetObjectsHashCodeByFieldValues( primaryKeyFields );
+        }
+
+        /// <summary>
+        /// Gets the objects hash code based on arbritary field values.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="values">The values.</param>
+        /// <returns></returns>
+        public static int GetObjectsHashCodeByFieldValues(this Type type, IEnumerable<object> values)
+        {
+            unchecked
+            {
+                int hash = 73;
+
+                // Throw the type of the object into the hash, to prevent collisions
+                hash = hash * 137 + type.GetHashCode();
+
+                return values.Aggregate( hash, ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
+            }
         }
     }
 }

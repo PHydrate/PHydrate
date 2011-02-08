@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -100,75 +101,7 @@ namespace PHydrate.Core
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
-            return HydrateFromDataReader< T >( dataReader );
-        }
-
-        private IEnumerable< T > HydrateFromDataReader< T >( IDataReader dataReader ) where T : class
-        {
-            IList< IMemberInfo > internalRecordsets = typeof(T).GetMembersWithAttribute< RecordsetAttribute >().ToList();
-            return internalRecordsets.Count > 0
-                       ? HydrateRecordsetWithInternals< T >( dataReader, internalRecordsets )
-                       : HydrateRecordset< T >( dataReader );
-        }
-
-        private IEnumerable<T> HydrateRecordsetWithInternals<T>(IDataReader dataReader, IEnumerable< IMemberInfo > internalRecordsets) where T : class
-        {
-            IList< T > aggregateRoot = HydrateRecordset< T >( dataReader ).ToList();
-            
-            foreach(IMemberInfo internalRecordset in internalRecordsets)
-            {
-                if ( !dataReader.NextResult() ) // TODO: Throw an exception?
-                    break;
-
-                var genericMethod = GetType().GetMethod( "HydrateFromDataReader",
-                                                         BindingFlags.NonPublic | BindingFlags.Instance );
-                genericMethod.MakeGenericMethod( internalRecordset.Type ).Invoke( this, new object[] { dataReader } );
-                // TODO
-                // Get generic method of HydrateFromDataReader for data type (done)
-                // Assign values to appropriate member in aggregateRoot
-                // Support IEnumerable and IList for now.  IDictionary later.
-            }
-            return aggregateRoot;
-        }
-
-        private IEnumerable<T> HydrateRecordset< T >( IDataReader dataReader ) where T : class
-        {
-            Func< IDictionary< string, object >, T > hydratorFunction = GetHydratorFunction< T >();
-
-            while ( dataReader.Read() )
-            {
-                T hydratedObject = hydratorFunction( dataReader.ToDictionary() );
-                yield return GetHydratedObjectFromCache( hydratedObject );
-            }
-        }
-
-        private Func< IDictionary< string, object >, T > GetHydratorFunction< T >() where T : class
-        {
-            IObjectHydrator< T > hydrator = GetHydrator< T >();
-            return hydrator == null
-                       ? (Func< IDictionary< string, object >, T >)
-                         ( x => _defaultObjectHydrator.Hydrate< T >( x ) )
-                       : ( hydrator.Hydrate );
-        }
-
-        private static IObjectHydrator< T > GetHydrator< T >()
-            where T : class
-        {
-            var objectHydratorAttribute = typeof(T).GetAttribute< ObjectHydratorAttribute >();
-            return objectHydratorAttribute == null
-                       ? null
-                       : objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor< IObjectHydrator< T > >();
-        }
-
-        private T GetHydratedObjectFromCache< T >( T hydratedObject ) where T : class
-        {
-            if ( _hydratedObjects.Contains( hydratedObject ) )
-                return
-                    ( _hydratedObjects[ hydratedObject ].Target ??
-                      ( _hydratedObjects[ hydratedObject ].Target = hydratedObject ) ) as T;
-
-            _hydratedObjects.Add( hydratedObject );
-            return hydratedObject;
+            return new DataHydrator<T>(_defaultObjectHydrator, _hydratedObjects).HydrateFromDataReader( dataReader );
         }
 
         /// <summary>
@@ -271,5 +204,92 @@ namespace PHydrate.Core
         }
 
         #endregion
+
+        private class DataHydrator<T> where T : class
+        {
+            private readonly IDefaultObjectHydrator _defaultObjectHydrator;
+            private readonly WeakReferenceObjectCache _hydratedObjects;
+
+            public DataHydrator(IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects)
+            {
+                _defaultObjectHydrator = defaultObjectHydrator;
+                _hydratedObjects = hydratedObjects;
+            }
+
+            public IEnumerable<T> HydrateFromDataReader(IDataReader dataReader)
+            {
+                IEnumerable<IMemberInfo> internalRecordsets = typeof(T).GetMembersWithAttribute<RecordsetAttribute>();
+                return internalRecordsets.Any()
+                           ? HydrateRecordsetWithInternals(dataReader, internalRecordsets)
+                           : HydrateRecordset(dataReader);
+            }
+
+            private IEnumerable<T> HydrateRecordsetWithInternals(IDataReader dataReader, IEnumerable<IMemberInfo> internalRecordsets)
+            {
+                IDictionary< int, T > aggregateRoot =
+                    HydrateRecordset( dataReader ).ToDictionary( x => x.GetObjectsHashCodeByPrimaryKeys() );
+
+                foreach (IMemberInfo internalRecordset in internalRecordsets)
+                {
+                    if (!dataReader.NextResult()) // TODO: Throw an exception?
+                        break;
+
+                    // TODO
+                    // Get generic copy of DataHydrator<> for data type
+                    // Assign values to appropriate member in aggregateRoot
+                    // Support IEnumerable and IList for now.  IDictionary later.
+                    Type innerClass = typeof(DataHydrator< >).MakeGenericType( internalRecordset.Type );
+                    ConstructorInfo constructor = innerClass.GetConstructor( new[]
+                                                                             { typeof(IDefaultObjectHydrator), typeof(WeakReferenceObjectCache) } );
+                    object c = constructor.Invoke( new object[] { _defaultObjectHydrator, _hydratedObjects } );
+                    var method = innerClass.GetMethod( "HydrateFromDataReader" );
+                    var enumerator = method.Invoke( c, new object[] { dataReader } ) as IEnumerable;
+                    foreach (object o in enumerator)
+                    {
+                        // TODO: Look up the appropriate object in aggregateRoot, and add this object to the appropriate field.
+                    }
+                }
+                return aggregateRoot.Values;
+            }
+
+            private IEnumerable<T> HydrateRecordset(IDataReader dataReader)
+            {
+                Func<IDictionary<string, object>, T> hydratorFunction = GetHydratorFunction();
+
+                while (dataReader.Read())
+                {
+                    T hydratedObject = hydratorFunction(dataReader.ToDictionary());
+                    yield return GetHydratedObjectFromCache(hydratedObject);
+                }
+            }
+
+            private Func<IDictionary<string, object>, T> GetHydratorFunction()
+            {
+                IObjectHydrator<T> hydrator = GetHydrator();
+                return hydrator == null
+                           ? (Func<IDictionary<string, object>, T>)
+                             (x => _defaultObjectHydrator.Hydrate<T>(x))
+                           : (hydrator.Hydrate);
+            }
+
+            private static IObjectHydrator<T> GetHydrator()
+            {
+                var objectHydratorAttribute = typeof(T).GetAttribute<ObjectHydratorAttribute>();
+                return objectHydratorAttribute == null
+                           ? null
+                           : objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor<IObjectHydrator<T>>();
+            }
+
+            private T GetHydratedObjectFromCache(T hydratedObject)
+            {
+                if (_hydratedObjects.Contains(hydratedObject))
+                    return
+                        (_hydratedObjects[hydratedObject].Target ??
+                         (_hydratedObjects[hydratedObject].Target = hydratedObject)) as T;
+
+                _hydratedObjects.Add(hydratedObject);
+                return hydratedObject;
+            }
+        }
     }
 }

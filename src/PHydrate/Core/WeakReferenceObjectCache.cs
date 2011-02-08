@@ -23,7 +23,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using PHydrate.Attributes;
 using PHydrate.Util;
 
 namespace PHydrate.Core
@@ -71,7 +70,7 @@ namespace PHydrate.Core
         ///                 </exception>
         public void Add( object item )
         {
-            _internalDictionary.Add( GetObjectsHashCode( item ), new WeakReference( item ) );
+            _internalDictionary.Add( item.GetObjectsHashCodeByPrimaryKeys(), new WeakReference( item ) );
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace PHydrate.Core
         ///                 </param>
         public bool Contains( object item )
         {
-            return _internalDictionary.ContainsKey( GetObjectsHashCode( item ) );
+            return _internalDictionary.ContainsKey( item.GetObjectsHashCodeByPrimaryKeys() );
         }
 
         /// <summary>
@@ -137,7 +136,7 @@ namespace PHydrate.Core
         ///                 </exception>
         public bool Remove( object item )
         {
-            return _internalDictionary.Remove( GetObjectsHashCode( item ) );
+            return _internalDictionary.Remove( item.GetObjectsHashCodeByPrimaryKeys() );
         }
 
         /// <summary>
@@ -166,30 +165,7 @@ namespace PHydrate.Core
         {
             get
             {
-                return _internalDictionary[ GetObjectsHashCode( obj ) ];
-            }
-        }
-
-        private static int GetObjectsHashCode( object item )
-        {
-            unchecked
-            {
-                int hash = 73;
-                bool primaryKeyFound = false;
-
-                // Throw the type of the object into the hash, to prevent collisions
-                hash = hash * 137 + item.GetType().GetHashCode();
-
-                foreach ( var primaryKeyField in item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >() )
-                {
-                    primaryKeyFound = true;
-                    hash = hash * 137 + primaryKeyField.GetHashCode();
-                }
-
-                if ( !primaryKeyFound ) // If there were no PKs defined
-                    hash = hash * 137 + item.GetHashCode();
-
-                return hash;
+                return _internalDictionary[ obj.GetObjectsHashCodeByPrimaryKeys() ];
             }
         }
 
