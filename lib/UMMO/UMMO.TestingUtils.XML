@@ -4,11 +4,21 @@
         <name>UMMO.TestingUtils</name>
     </assembly>
     <members>
+        <member name="T:UMMO.TestingUtils.RandomData.RandomDouble">
+            <summary>
+            Fluent random double.
+            </summary>
+        </member>
         <member name="T:UMMO.TestingUtils.RandomData.RandomNumericType`1">
             <summary>
             Base class for fluent random classes
             </summary>
             <typeparam name="T">The type of random value being created</typeparam>
+        </member>
+        <member name="F:UMMO.TestingUtils.RandomData.RandomNumericType`1.Random">
+            <summary>
+            The random number generator
+            </summary>
         </member>
         <member name="M:UMMO.TestingUtils.RandomData.RandomNumericType`1.#ctor(UMMO.TestingUtils.IRandom)">
             <summary>
@@ -46,7 +56,7 @@
         </member>
         <member name="M:UMMO.TestingUtils.RandomData.RandomNumericType`1.op_Implicit(UMMO.TestingUtils.RandomData.RandomNumericType{`0})~`0">
             <summary>
-            Performs an implicit conversion from <see cref="T:UMMO.TestingUtils.RandomData.RandomNumericType`1"/> to <see cref="!:T"/>.
+            Performs an implicit conversion from <see cref="T:UMMO.TestingUtils.RandomData.RandomNumericType`1"/> to <typeparamref name="T"/>.
             </summary>
             <param name="randomNumeric">The random numeric.</param>
             <returns>The result of the conversion.</returns>
@@ -61,36 +71,9 @@
         </member>
         <member name="P:UMMO.TestingUtils.RandomData.RandomNumericType`1.Value">
             <summary>
-            Gets the value.
+            Gets the random value.
             </summary>
-            <value>The value.</value>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomData.RandomLong">
-            <summary>
-            Fluent random long.
-            </summary>
-        </member>
-        <member name="M:UMMO.TestingUtils.RandomData.RandomLong.#ctor(UMMO.TestingUtils.IRandom)">
-            <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomLong"/> class.
-            </summary>
-            <param name="random">The random number generator.</param>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomData.RandomDecimal">
-            <summary>
-            Fluent random decimal.
-            </summary>
-        </member>
-        <member name="M:UMMO.TestingUtils.RandomData.RandomDecimal.#ctor(UMMO.TestingUtils.IRandom)">
-            <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomDecimal"/> class.
-            </summary>
-            <param name="random">The random number generator.</param>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomData.RandomDouble">
-            <summary>
-            Fluent random double.
-            </summary>
+            <value>The random value.</value>
         </member>
         <member name="M:UMMO.TestingUtils.RandomData.RandomDouble.#ctor(UMMO.TestingUtils.IRandom)">
             <summary>
@@ -98,10 +81,148 @@
             </summary>
             <param name="random">The random number generator.</param>
         </member>
-        <member name="T:UMMO.TestingUtils.RandomData.Waffle.WafflePhrases">
+        <member name="M:UMMO.TestingUtils.RandomData.RandomDouble.GetBetween(System.Double,System.Double)">
             <summary>
-            Phrases used by the WaffleEngine.
+            Return a random value of type double between the minimum and maximum.
             </summary>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns></returns>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomData.RandomDouble.Value">
+            <summary>
+            Gets the random value.
+            </summary>
+            <value>The random value.</value>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine">
+            <summary>
+            Generate random text.
+            </summary>
+            <remarks>
+            This class is borrowed from Andrew Clarke from Red Gate
+            Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/
+            </remarks>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine.#ctor(UMMO.TestingUtils.IRandom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine"/> class.
+            </summary>
+            <param name="random">The random number generator.</param>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomDataGenerator">
+            <summary>
+            Class for syntatic sugar returned by A.Random
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomDataGenerator.#ctor(UMMO.TestingUtils.IRandom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomDataGenerator"/> class.
+            </summary>
+            <param name="random">The random number generator.</param>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.String">
+            <summary>
+            A random fluent string.
+            </summary>
+            <value>The string.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Integer">
+            <summary>
+            A random fluent integer.
+            </summary>
+            <value>The integer.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Boolean">
+            <summary>
+            A random boolean.
+            </summary>
+            <value>The boolean.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Byte">
+            <summary>
+            A random byte.
+            </summary>
+            <value>The byte.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Character">
+            <summary>
+            A random character.
+            </summary>
+            <value>The character.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Guid">
+            <summary>
+            A random GUID.
+            </summary>
+            <value>The GUID.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Short">
+            <summary>
+            A random short.
+            </summary>
+            <value>The short.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.LongInteger">
+            <summary>
+            A random fluent long integer.
+            </summary>
+            <value>The long integer.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Float">
+            <summary>
+            A random float.
+            </summary>
+            <value>The float.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Double">
+            <summary>
+            A random fluent double.
+            </summary>
+            <value>The double.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Decimal">
+            <summary>
+            A random fluent decimal.
+            </summary>
+            <value>The decimal.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomDataGenerator.DateTime">
+            <summary>
+            A random date time.
+            </summary>
+            <value>The date time.</value>
+        </member>
+        <member name="T:UMMO.TestingUtils.A">
+            <summary>
+            Utility class to simplify test code
+            </summary>
+            <summary>
+            Utility class to simplify test code.
+            </summary>
+        </member>
+        <member name="P:UMMO.TestingUtils.A.Random">
+            <summary>
+            Fluent accessor for random data.
+            </summary>
+            <value>The random data accessor.</value>
+        </member>
+        <member name="P:UMMO.TestingUtils.A.DataReader">
+            <summary>
+            Gets a mock data reader.
+            </summary>
+            <value>The data reader.</value>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomDataException">
+            <summary>
+            An exception thrown by the RandomData classes.
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomDataException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomDataException"/> class.
+            </summary>
+            <param name="message">The message.</param>
         </member>
         <member name="T:UMMO.TestingUtils.RandomData.RandomString">
             <summary>
@@ -162,26 +283,6 @@
             A random verb.
             </summary>
             <value>The verb.</value>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine">
-            <summary>
-            Generate random text.
-            </summary>
-            <remarks>
-            This class is borrowed from Andrew Clarke from Red Gate
-            Original article can be found here: http://www.simple-talk.com/dotnet/.net-tools/the-waffle-generator/
-            </remarks>
-        </member>
-        <member name="M:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine.#ctor(UMMO.TestingUtils.IRandom)">
-            <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.Waffle.WaffleEngine"/> class.
-            </summary>
-            <param name="random">The random number generator.</param>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomData.ExtendedRandom">
-            <summary>
-            Implementation of IRandom
-            </summary>
         </member>
         <member name="T:UMMO.TestingUtils.IRandom">
             <summary>
@@ -287,6 +388,64 @@
             <param name="maxValue">The maximum value.</param>
             <returns>A 64-bit signed integer.</returns>
         </member>
+        <member name="T:UMMO.TestingUtils.RandomData.RandomInteger">
+            <summary>
+            Fluent random int
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.RandomInteger.#ctor(UMMO.TestingUtils.IRandom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomInteger"/> class.
+            </summary>
+            <param name="random">The random number generator.</param>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.RandomInteger.GetBetween(System.Int32,System.Int32)">
+            <summary>
+            Return a random value of type int between the minimum and maximum.
+            </summary>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns></returns>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomData.RandomInteger.Value">
+            <summary>
+            Gets the random value.
+            </summary>
+            <value>The random value.</value>
+        </member>
+        <member name="T:CoverageExcludeAttribute">
+            <summary>
+            Exclude the class or method from coverage
+            </summary>
+            <remarks>
+            You really shouldn't have to use this outside of test assemblies, or for severe edge cases!
+            </remarks>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomData.RandomLong">
+            <summary>
+            Fluent random long.
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.RandomLong.#ctor(UMMO.TestingUtils.IRandom)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomLong"/> class.
+            </summary>
+            <param name="random">The random number generator.</param>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.RandomLong.GetBetween(System.Int64,System.Int64)">
+            <summary>
+            Return a random value of type long between the minimum and maximum.
+            </summary>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns></returns>
+        </member>
+        <member name="P:UMMO.TestingUtils.RandomData.RandomLong.Value">
+            <summary>
+            Gets the random value.
+            </summary>
+            <value>The random value.</value>
+        </member>
         <member name="T:UMMO.TestingUtils.DataReaderMock">
             <summary>
             Implementation of IDataReader, intended for testing ADO-based code.
@@ -306,6 +465,297 @@
             <summary>
             Initializes a new instance of the <see cref="T:UMMO.TestingUtils.DataReaderMock"/> class.
             </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.Dispose">
+            <summary>
+            Marks the datareader as closed
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetName(System.Int32)">
+            <summary>
+            Gets the name for the field to find.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The name of the field or the empty string (""), if there is no value to return.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetDataTypeName(System.Int32)">
+            <summary>
+            Gets the data type information for the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The data type information for the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetFieldType(System.Int32)">
+            <summary>
+            Gets the <see cref="T:System.Type"/> information corresponding to the type of <see cref="T:System.Object"/> that would be returned from <see cref="M:System.Data.IDataRecord.GetValue(System.Int32)"/>.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The <see cref="T:System.Type"/> information corresponding to the type of <see cref="T:System.Object"/> that would be returned from <see cref="M:System.Data.IDataRecord.GetValue(System.Int32)"/>.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetValue(System.Int32)">
+            <summary>
+            Return the value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The <see cref="T:System.Object"/> which will contain the field value upon return.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetValues(System.Object[])">
+            <summary>
+            Gets all the attribute fields in the collection for the current record.
+            </summary>
+            <param name="values">An array of <see cref="T:System.Object"/> to copy the attribute fields into.</param>
+            <returns>
+            The number of instances of <see cref="T:System.Object"/> in the array.
+            </returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetOrdinal(System.String)">
+            <summary>
+            Return the index of the named field.
+            </summary>
+            <param name="name">The name of the field to find.</param>
+            <returns>The index of the named field.</returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetBoolean(System.Int32)">
+            <summary>
+            Gets the value of the specified column as a Boolean.
+            </summary>
+            <param name="i">The zero-based column ordinal.</param>
+            <returns>The value of the column.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetByte(System.Int32)">
+            <summary>
+            Gets the 8-bit unsigned integer value of the specified column.
+            </summary>
+            <param name="i">The zero-based column ordinal.</param>
+            <returns>
+            The 8-bit unsigned integer value of the specified column.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetBytes(System.Int32,System.Int64,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of bytes from the specified column offset into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="i">The zero-based column ordinal.</param>
+            <param name="fieldOffset">The index within the field from which to start the read operation.</param>
+            <param name="buffer">The buffer into which to read the stream of bytes.</param>
+            <param name="bufferoffset">The index for <paramref name="buffer"/> to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+            <returns>The actual number of bytes read.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetChar(System.Int32)">
+            <summary>
+            Gets the character value of the specified column.
+            </summary>
+            <param name="i">The zero-based column ordinal.</param>
+            <returns>
+            The character value of the specified column.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetChars(System.Int32,System.Int64,System.Char[],System.Int32,System.Int32)">
+            <summary>
+            Reads a stream of characters from the specified column offset into the buffer as an array, starting at the given buffer offset.
+            </summary>
+            <param name="i">The zero-based column ordinal.</param>
+            <param name="fieldoffset">The index within the row from which to start the read operation.</param>
+            <param name="buffer">The buffer into which to read the stream of bytes.</param>
+            <param name="bufferoffset">The index for <paramref name="buffer"/> to start the read operation.</param>
+            <param name="length">The number of bytes to read.</param>
+            <returns>The actual number of characters read.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetGuid(System.Int32)">
+            <summary>
+            Returns the GUID value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>The GUID value of the specified field.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetInt16(System.Int32)">
+            <summary>
+            Gets the 16-bit signed integer value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The 16-bit signed integer value of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetInt32(System.Int32)">
+            <summary>
+            Gets the 32-bit signed integer value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The 32-bit signed integer value of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetInt64(System.Int32)">
+            <summary>
+            Gets the 64-bit signed integer value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The 64-bit signed integer value of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetFloat(System.Int32)">
+            <summary>
+            Gets the single-precision floating point number of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The single-precision floating point number of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetDouble(System.Int32)">
+            <summary>
+            Gets the double-precision floating point number of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The double-precision floating point number of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetString(System.Int32)">
+            <summary>
+            Gets the string value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>The string value of the specified field.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetDecimal(System.Int32)">
+            <summary>
+            Gets the fixed-position numeric value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The fixed-position numeric value of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetDateTime(System.Int32)">
+            <summary>
+            Gets the date and time data value of the specified field.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            The date and time data value of the specified field.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetData(System.Int32)">
+            <summary>
+            Returns an <see cref="T:System.Data.IDataReader"/> for the specified column ordinal.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            An <see cref="T:System.Data.IDataReader"/>.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.IsDBNull(System.Int32)">
+            <summary>
+            Return whether the specified field is set to null.
+            </summary>
+            <param name="i">The index of the field to find.</param>
+            <returns>
+            true if the specified field is set to null; otherwise, false.
+            </returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            The index passed was outside the range of 0 through <see cref="P:System.Data.IDataRecord.FieldCount"/>.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.Close">
+            <summary>
+            Closes the <see cref="T:System.Data.IDataReader"/> Object.
+            </summary>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.GetSchemaTable">
+            <summary>
+            Returns a <see cref="T:System.Data.DataTable"/> that describes the column metadata of the <see cref="T:System.Data.IDataReader"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.Data.DataTable"/> that describes the column metadata.
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            The <see cref="T:System.Data.IDataReader"/> is closed.
+            </exception>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.NextResult">
+            <summary>
+            Advances the data reader to the next result, when reading the results of batch SQL statements.
+            </summary>
+            <returns>
+            true if there are more rows; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.DataReaderMock.Read">
+            <summary>
+            Advances the <see cref="T:System.Data.IDataReader"/> to the next record.
+            </summary>
+            <returns>
+            true if there are more rows; otherwise, false.
+            </returns>
         </member>
         <member name="M:UMMO.TestingUtils.DataReaderMock.AddRecordSet(System.String[])">
             <summary>
@@ -328,138 +778,145 @@
             </summary>
             <returns>The current instance, for chaining calls.</returns>
         </member>
-        <member name="T:UMMO.TestingUtils.A">
+        <member name="M:UMMO.TestingUtils.DataReaderMock.Reset">
             <summary>
-            Utility class to simplify test code.
-            </summary>
-            <summary>
-            Utility class to simplify test code
+            Resets this instance.
             </summary>
         </member>
-        <member name="P:UMMO.TestingUtils.A.DataReader">
+        <member name="P:UMMO.TestingUtils.DataReaderMock.FieldCount">
             <summary>
-            Gets a mock data reader.
+            Gets the number of columns in the current row.
             </summary>
-            <value>The data reader.</value>
+            <value></value>
+            <returns>
+            When not positioned in a valid recordset, 0; otherwise, the number of columns in the current record. The default is -1.
+            </returns>
         </member>
-        <member name="P:UMMO.TestingUtils.A.Random">
+        <member name="P:UMMO.TestingUtils.DataReaderMock.System#Data#IDataRecord#Item(System.Int32)">
             <summary>
-            Fluent accessor for random data.
+            Gets the <see cref="T:System.Object"/> with the specified index.
             </summary>
-            <value>The random data accessor.</value>
+            <value></value>
         </member>
-        <member name="T:UMMO.TestingUtils.RandomDataGenerator">
+        <member name="P:UMMO.TestingUtils.DataReaderMock.System#Data#IDataRecord#Item(System.String)">
             <summary>
-            Class for syntatic sugar returned by A.Random
+            Gets the <see cref="T:System.Object"/> with the specified name.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:UMMO.TestingUtils.DataReaderMock.Depth">
+            <summary>
+            Gets a value indicating the depth of nesting for the current row.
+            </summary>
+            <value></value>
+            <returns>
+            The level of nesting.
+            </returns>
+        </member>
+        <member name="P:UMMO.TestingUtils.DataReaderMock.IsClosed">
+            <summary>
+            Gets a value indicating whether the data reader is closed.
+            </summary>
+            <value></value>
+            <returns>true if the data reader is closed; otherwise, false.
+            </returns>
+        </member>
+        <member name="P:UMMO.TestingUtils.DataReaderMock.RecordsAffected">
+            <summary>
+            Gets the number of rows changed, inserted, or deleted by execution of the SQL statement.
+            </summary>
+            <value></value>
+            <returns>
+            The number of rows changed, inserted, or deleted; 0 if no rows were affected or the statement failed; and -1 for SELECT statements.
+            </returns>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomData.RandomDecimal">
+            <summary>
+            Fluent random decimal.
             </summary>
         </member>
-        <member name="M:UMMO.TestingUtils.RandomDataGenerator.#ctor(UMMO.TestingUtils.IRandom)">
+        <member name="M:UMMO.TestingUtils.RandomData.RandomDecimal.#ctor(UMMO.TestingUtils.IRandom)">
             <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomDataGenerator"/> class.
+            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomDecimal"/> class.
             </summary>
             <param name="random">The random number generator.</param>
         </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.String">
+        <member name="M:UMMO.TestingUtils.RandomData.RandomDecimal.GetBetween(System.Decimal,System.Decimal)">
             <summary>
-            A random fluent string.
+            Return a random value of type decimal between the minimum and maximum.
             </summary>
-            <value>The string.</value>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns></returns>
         </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Integer">
+        <member name="P:UMMO.TestingUtils.RandomData.RandomDecimal.Value">
             <summary>
-            A random fluent integer.
+            Gets the random value.
             </summary>
-            <value>The integer.</value>
+            <value>The random value.</value>
         </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Boolean">
+        <member name="T:UMMO.TestingUtils.RandomData.ExtendedRandom">
             <summary>
-            A random boolean.
-            </summary>
-            <value>The boolean.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Byte">
-            <summary>
-            A random byte.
-            </summary>
-            <value>The byte.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Character">
-            <summary>
-            A random character.
-            </summary>
-            <value>The character.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Guid">
-            <summary>
-            A random GUID.
-            </summary>
-            <value>The GUID.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Short">
-            <summary>
-            A random short.
-            </summary>
-            <value>The short.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.LongInteger">
-            <summary>
-            A random fluent long integer.
-            </summary>
-            <value>The long integer.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Float">
-            <summary>
-            A random float.
-            </summary>
-            <value>The float.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Double">
-            <summary>
-            A random fluent double.
-            </summary>
-            <value>The double.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.Decimal">
-            <summary>
-            A random fluent decimal.
-            </summary>
-            <value>The decimal.</value>
-        </member>
-        <member name="P:UMMO.TestingUtils.RandomDataGenerator.DateTime">
-            <summary>
-            A random date time.
-            </summary>
-            <value>The date time.</value>
-        </member>
-        <member name="T:UMMO.TestingUtils.RandomDataException">
-            <summary>
-            An exception thrown by the RandomData classes.
+            Implementation of IRandom
             </summary>
         </member>
-        <member name="M:UMMO.TestingUtils.RandomDataException.#ctor(System.String)">
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextBytes(System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomDataException"/> class.
+            Returns an array of bytes of the specified length filled with random numbers.
             </summary>
-            <param name="message">The message.</param>
+            <param name="bufferLength">Length of the buffer.</param>
+            <returns>A random array of bytes.</returns>
         </member>
-        <member name="T:UMMO.TestingUtils.RandomData.RandomInteger">
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextDecimal">
             <summary>
-            Fluent random int
+            Returns a random decimal number.
             </summary>
+            <returns>A fixed-point decimal number</returns>
         </member>
-        <member name="M:UMMO.TestingUtils.RandomData.RandomInteger.#ctor(UMMO.TestingUtils.IRandom)">
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextDecimal(System.Decimal)">
             <summary>
-            Initializes a new instance of the <see cref="T:UMMO.TestingUtils.RandomData.RandomInteger"/> class.
+            Returns a random decimal number less than or equal to <paramref name="maxValue"/>.
             </summary>
-            <param name="random">The random number generator.</param>
+            <param name="maxValue">The maximum possible value.</param>
+            <returns>
+            A fixed-point decimal number less than or equal to <paramref name="maxValue"/>
+            </returns>
         </member>
-        <member name="T:CoverageExcludeAttribute">
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextDecimal(System.Decimal,System.Decimal)">
             <summary>
-            Exclude the class or method from coverage
+            Returns a random decimal number between <paramref name="minValue"/> and <paramref name="maxValue"/>.
             </summary>
-            <remarks>
-            You really shouldn't have to use this outside of test assemblies, or for severe edge cases!
-            </remarks>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns>
+            A fixed-point decimal number between <paramref name="minValue"/> and <paramref name="maxValue"/>.
+            </returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextLong">
+            <summary>
+            Returns a random 64-bit integer.
+            </summary>
+            <returns>A 64-bit signed integer.</returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextLong(System.Int64)">
+            <summary>
+            Returns a random 64-bit integer less than <paramref name="maxValue"/>.
+            </summary>
+            <param name="maxValue">The maximum value.</param>
+            <returns>A 64-bit signed integer.</returns>
+        </member>
+        <member name="M:UMMO.TestingUtils.RandomData.ExtendedRandom.NextLong(System.Int64,System.Int64)">
+            <summary>
+            Returns a random 64-bit integer between <paramref name="minValue"/> and <paramref name="maxValue"/>.
+            </summary>
+            <param name="minValue">The minimum value.</param>
+            <param name="maxValue">The maximum value.</param>
+            <returns>A 64-bit signed integer.</returns>
+        </member>
+        <member name="T:UMMO.TestingUtils.RandomData.Waffle.WafflePhrases">
+            <summary>
+            Phrases used by the WaffleEngine.
+            </summary>
         </member>
     </members>
 </doc>

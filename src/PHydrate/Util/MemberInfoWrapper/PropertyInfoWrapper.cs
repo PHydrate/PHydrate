@@ -16,19 +16,34 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010, Stephen Michael Czetty
-// 
 
 #endregion
 
-namespace PHydrate
+using System;
+using System.Reflection;
+
+namespace PHydrate.Util.MemberInfoWrapper
 {
     /// <summary>
-    /// Base interface for specification types
+    /// Wrapper for PropertyInfo types
     /// </summary>
-    /// <remarks>
-    /// Nothing is implemented by this interface, it is simply necessary
-    /// to group other interfaces.
-    /// </remarks>
-    /// <typeparam name="T"></typeparam>
-    public interface ISpecification< T > {}
+    internal class PropertyInfoWrapper : MemberInfoWrapper
+    {
+        public PropertyInfoWrapper( MemberInfo propertyInfo ) : base( propertyInfo ) {}
+
+        public override object GetValue( object obj, BindingFlags invokeAttr )
+        {
+            return ( (PropertyInfo)MemberInfo ).GetValue( obj, invokeAttr, null, null, null );
+        }
+
+        public override void SetValue( object obj, object value )
+        {
+            ( (PropertyInfo)MemberInfo ).SetValue( obj, value, null );
+        }
+
+        public override Type Type
+        {
+            get { return ( (PropertyInfo)MemberInfo ).PropertyType; }
+        }
+    }
 }

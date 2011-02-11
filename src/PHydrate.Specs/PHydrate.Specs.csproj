@@ -115,6 +115,8 @@
     <Compile Include="Core\Session\When_deleting_an_existing_object.cs" />
     <Compile Include="Core\Session\When_deleting_an_existing_object_with_no_delete_method.cs" />
     <Compile Include="Core\Session\When_deleting_a_non_existant_object.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached_and_garbage_collected.cs" />
     <Compile Include="Core\Session\When_getting_an_object_without_a_hydrator_procedure_defined.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator_that_has_no_default_constructor.cs" />

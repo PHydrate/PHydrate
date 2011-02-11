@@ -20,27 +20,38 @@
 #endregion
 
 using System;
+using System.Reflection;
 
-namespace PHydrate.Attributes
+namespace PHydrate.Util.MemberInfoWrapper
 {
     /// <summary>
-    ///   Specify that this member is loaded from another recordset
+    /// Wrapper for MemberInfo derivatives
     /// </summary>
-    [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
-    public class RecordsetAttribute : Attribute
+    public interface IMemberInfo
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecordsetAttribute"/> class.
+        /// Gets the wrapped MemberInfo.
         /// </summary>
-        /// <param name="recordsetNumber">The recordset number.</param>
-        public RecordsetAttribute( int recordsetNumber )
-        {
-            RecordsetNumber = recordsetNumber;
-        }
+        MemberInfo Wrapped { get; }
 
         /// <summary>
-        /// Gets the recordset number.
+        /// Gets the value.
         /// </summary>
-        public int RecordsetNumber { get; private set; }
+        /// <param name="obj">The obj.</param>
+        /// <param name="invokeAttr">The invoke attr.</param>
+        /// <returns></returns>
+        object GetValue(object obj, BindingFlags invokeAttr);
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <param name="value">The value.</param>
+        void SetValue(object obj, object value);
+
+        /// <summary>
+        /// Gets the type of the member.
+        /// </summary>
+        Type Type { get; }
     }
 }

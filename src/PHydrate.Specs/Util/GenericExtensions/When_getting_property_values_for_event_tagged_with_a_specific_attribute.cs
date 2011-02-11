@@ -53,7 +53,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
         private It Should_throw_exception
             = () => _exception.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_throw_phydrate_internal_exception
+            = () => _exception.ShouldBeOfType< PHydrateInternalException >();
     }
 }

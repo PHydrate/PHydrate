@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using PHydrate.Attributes;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -33,6 +34,13 @@ namespace PHydrate.Util
     /// </summary>
     public static class TypeExtensions
     {
+        private static readonly IDictionary< Type, object[] > AttributeCache = new Dictionary< Type, object[] >();
+
+        private static readonly IDictionary< Type, ConstructorInfo > ConstructorCache =
+            new Dictionary< Type, ConstructorInfo >();
+
+        private static readonly IDictionary< Type, MemberInfo[] > MemberCache = new Dictionary< Type, MemberInfo[] >();
+
         /// <summary>
         /// Gets a specific attribute from a type.
         /// </summary>
@@ -42,10 +50,10 @@ namespace PHydrate.Util
         [CanBeNull]
         public static T GetAttribute< T >( this Type type ) where T : Attribute
         {
-            object[] attributes = type.GetCustomAttributes( typeof(T), true );
-            if ( attributes.Length > 0 )
-                return attributes[ 0 ] as T;
-            return null;
+            if (!AttributeCache.ContainsKey(type))
+                AttributeCache.Add( type, type.GetCustomAttributes( true ) );
+
+            return AttributeCache[ type ].Where(x => x.GetType() == typeof(T)  ).FirstOrDefault() as T;
         }
 
         /// <summary>
@@ -56,7 +64,9 @@ namespace PHydrate.Util
         [CanBeNull]
         public static ConstructorInfo GetDefaultConstructor(this Type type)
         {
-            return type.GetConstructor( Type.EmptyTypes );
+            if (!ConstructorCache.ContainsKey(type))
+                ConstructorCache.Add( type, type.GetConstructor( Type.EmptyTypes ) );
+            return ConstructorCache[ type ];
         }
 
         /// <summary>
@@ -70,7 +80,7 @@ namespace PHydrate.Util
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
             if (defaultConstructor == null)
-                throw new PHydrateInternalException(
+                throw new PHydrateException(
                     String.Format( "Unable to construct object {0}, no default constructor.", typeof(T).Name ) );
 
             return (T)defaultConstructor.Invoke( new object[] {} );
@@ -83,11 +93,15 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
         [NotNull]
-        public static IEnumerable<MemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
+        public static IEnumerable<IMemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
         {
+            if (!MemberCache.ContainsKey(type))
+                MemberCache.Add( type,
+                                 type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+
             return
-                type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Where(
-                    x => x.GetCustomAttributes( typeof(T), true ).Length > 0 );
+                MemberCache[ type ].Where( x => x.GetCustomAttributes( typeof(T), true ).Length > 0 ).Select(
+                    x => x.CreateWrapper() );
         }
     }
 }

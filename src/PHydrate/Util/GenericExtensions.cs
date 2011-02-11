@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using PHydrate.Attributes;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -32,6 +33,8 @@ namespace PHydrate.Util
     /// </summary>
     public static class GenericExtensions
     {
+        private static readonly IDictionary< Type, PropertyInfo[] > PropertyInfoCache = new Dictionary< Type, PropertyInfo[] >();
+
         /// <summary>
         /// Gets the data parameters from an instance.
         /// </summary>
@@ -42,7 +45,11 @@ namespace PHydrate.Util
         public static IEnumerable< KeyValuePair< string, object > > GetDataParameters< T >( this T instance,
                                                                                             string parameterPrefix )
         {
-            PropertyInfo[] properties = typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public );
+            if (!PropertyInfoCache.ContainsKey(typeof(T)))
+                PropertyInfoCache.Add( typeof(T),
+                                        typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public ) );
+
+            PropertyInfo[] properties = PropertyInfoCache[ typeof(T) ];
 
             return properties.Select( property => new KeyValuePair< string, object >( parameterPrefix + property.Name,
                                                                                       property.GetValue( instance, null ) ) );
@@ -59,28 +66,13 @@ namespace PHydrate.Util
         public static void SetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj, object value )
             where TAttributeType : Attribute
         {
-            MemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
+            IMemberInfo member = typeof(TInstance).GetMembersWithAttribute< TAttributeType >().FirstOrDefault();
 
             if ( member == null )
                 throw new PHydrateException( "Member with attribute {0} not found in type {1}",
                                              typeof(TAttributeType).Name, typeof(TInstance).Name );
 
-
-            switch ( member.MemberType )
-            {
-                case MemberTypes.Field:
-                    ( (FieldInfo)member ).SetValue( obj, value );
-                    break;
-                case MemberTypes.Property:
-                    ( (PropertyInfo)member ).SetValue( obj, value, null );
-                    break;
-                default:
-                    // Throw an internal exception, because the code should never be looking for
-                    // anything with attributes that are allowed on anything other than fields or
-                    // properties.  (At least not at this time.)
-                    throw new PHydrateInternalException(
-                        "Cannot set value on member {0}, because it is not a field or property.", member.Name );
-            }
+            member.SetValue( obj, value );
         }
 
         /// <summary>
@@ -89,25 +81,46 @@ namespace PHydrate.Util
         /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
-        public static IEnumerable<object> GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
+        [ NotNull ]
+        public static IEnumerable< object > GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
             where TAttributeType : Attribute
         {
-            foreach (var member in obj.GetType().GetMembersWithAttribute< TAttributeType >())
+            return
+                obj.GetType().GetMembersWithAttribute< TAttributeType >().Select(
+                    member =>
+                    member.GetValue( obj, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+        }
+
+        /// <summary>
+        /// Gets the objects hash code based on the type and the primary keys defined.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        public static int GetObjectsHashCodeByPrimaryKeys(this object item)
+        {
+            IEnumerable< object > primaryKeyFields = item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >();
+            if (primaryKeyFields.Count() == 0)
+                primaryKeyFields = new List< object > { item };
+
+            return item.GetType().GetObjectsHashCodeByFieldValues( primaryKeyFields );
+        }
+
+        /// <summary>
+        /// Gets the objects hash code based on arbritary field values.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="values">The values.</param>
+        /// <returns></returns>
+        public static int GetObjectsHashCodeByFieldValues(this Type type, IEnumerable<object> values)
+        {
+            unchecked
             {
-                switch (member.MemberType)
-                {
-                    case MemberTypes.Field:
-                        yield return ((FieldInfo)member).GetValue(obj);
-                        break;
-                    case MemberTypes.Property:
-                        yield return ((PropertyInfo)member).GetValue(obj,
-                                                                  BindingFlags.Instance | BindingFlags.Public |
-                                                                  BindingFlags.NonPublic, null, null, null);
-                        break;
-                    default:
-                        throw new PHydrateException(
-                            "Cannot get value from member {0}, because it is not a field or property.", member.Name);
-                }
+                int hash = 73;
+
+                // Throw the type of the object into the hash, to prevent collisions
+                hash = hash * 137 + type.GetHashCode();
+
+                return values.Aggregate( hash, ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
             }
         }
     }

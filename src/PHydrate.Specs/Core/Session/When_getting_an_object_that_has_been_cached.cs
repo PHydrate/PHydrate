@@ -19,30 +19,24 @@
 
 #endregion
 
-using System;
+using System.Linq;
 using Machine.Specifications;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.TypeExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
-    public sealed class When_constructing_using_the_default_constructor_but_the_class_does_not_have_one :
-        TypeExtensionsSpecificationBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_getting_an_object_that_has_been_cached : SessionSpecificationHydrateBase
     {
-        private static Exception _exception;
+        private Establish Context = () => {
+                                        RequestedObjects =
+                                            SessionUnderTest.Get< TestObject >( x => x.Key == 1 ).ToList();
+                                        RequestedObjects = null;
+                                        DataReaderMock.Reset();
+                                    };
 
-        private Because Of =
-            () =>
-            _exception =
-            Catch.Exception(
-                () =>
-                typeof(TestClassWithNoDefaultConstructor).ConstructUsingDefaultConstructor
-                    < TestClassWithNoDefaultConstructor >() );
+        private Because Of = () => RequestedObjects = SessionUnderTest.Get< TestObject >( x => x.Key == 1 ).ToList();
 
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
-
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_return_correct_record
+            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 1 );
     }
 }

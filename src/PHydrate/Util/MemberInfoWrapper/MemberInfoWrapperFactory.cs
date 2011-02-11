@@ -19,28 +19,28 @@
 
 #endregion
 
-using System;
+using System.Reflection;
 
-namespace PHydrate.Attributes
+namespace PHydrate.Util.MemberInfoWrapper
 {
-    /// <summary>
-    ///   Specify that this member is loaded from another recordset
-    /// </summary>
-    [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
-    public class RecordsetAttribute : Attribute
+    internal static class MemberInfoWrapperFactory
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecordsetAttribute"/> class.
+        /// Creates the wrapper.
         /// </summary>
-        /// <param name="recordsetNumber">The recordset number.</param>
-        public RecordsetAttribute( int recordsetNumber )
+        /// <param name="memberInfo">The member info.</param>
+        /// <returns></returns>
+        public static IMemberInfo CreateWrapper( this MemberInfo memberInfo )
         {
-            RecordsetNumber = recordsetNumber;
+            switch ( memberInfo.MemberType )
+            {
+                case MemberTypes.Property:
+                    return new PropertyInfoWrapper( memberInfo );
+                case MemberTypes.Field:
+                    return new FieldInfoWrapper( (FieldInfo)memberInfo );
+                default:
+                    return new MemberInfoWrapper( memberInfo );
+            }
         }
-
-        /// <summary>
-        /// Gets the recordset number.
-        /// </summary>
-        public int RecordsetNumber { get; private set; }
     }
 }
