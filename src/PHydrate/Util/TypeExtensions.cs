@@ -93,7 +93,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
         [NotNull]
-        public static IEnumerable<IMemberInfo> GetMembersWithAttribute<T>(this Type type) where T : Attribute
+        public static IEnumerable< IMemberInfo > GetMembersWithAttribute<T>(this Type type) where T : Attribute
         {
             if (!MemberCache.ContainsKey(type))
                 MemberCache.Add( type,
@@ -102,6 +102,18 @@ namespace PHydrate.Util
             return
                 MemberCache[ type ].Where( x => x.GetCustomAttributes( typeof(T), true ).Length > 0 ).Select(
                     x => x.CreateWrapper() );
+        }
+
+        public static TReturn ExecuteGenericMethod<TReturn, TSource>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters ) where TReturn : class
+        {
+            Type innerClass = typeof(TSource).GetGenericTypeDefinition().MakeGenericType( genericType );
+            ConstructorInfo[] constructors = innerClass.GetConstructors();
+            ConstructorInfo constructor =
+                constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
+                                    
+            object c = constructor.Invoke( constructorParameters );
+            var method = innerClass.GetMethod( methodName );
+            return method.Invoke( c, methodParameters ) as TReturn;
         }
     }
 }

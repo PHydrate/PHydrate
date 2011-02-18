@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util;
 using PHydrate.Util.MemberInfoWrapper;
@@ -238,12 +237,14 @@ namespace PHydrate.Core
                     // Get generic copy of DataHydrator<> for data type
                     // Assign values to appropriate member in aggregateRoot
                     // Support IEnumerable and IList for now.  IDictionary later.
-                    Type innerClass = typeof(DataHydrator< >).MakeGenericType( internalRecordset.Type );
-                    ConstructorInfo constructor = innerClass.GetConstructor( new[]
-                                                                             { typeof(IDefaultObjectHydrator), typeof(WeakReferenceObjectCache) } );
-                    object c = constructor.Invoke( new object[] { _defaultObjectHydrator, _hydratedObjects } );
-                    var method = innerClass.GetMethod( "HydrateFromDataReader" );
-                    var enumerator = method.Invoke( c, new object[] { dataReader } ) as IEnumerable;
+                    var enumerator =
+                        internalRecordset.Type.ExecuteGenericMethod< IEnumerable, DataHydrator< T > >(
+                            "HydrateFromDataReader",
+                            new object[] {
+                                             _defaultObjectHydrator,
+                                             _hydratedObjects
+                                         },
+                            new object[] { dataReader } );
                     foreach (object o in enumerator)
                     {
                         // TODO: Look up the appropriate object in aggregateRoot, and add this object to the appropriate field.
