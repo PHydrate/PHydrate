@@ -59,8 +59,8 @@ namespace PHydrate.Util
             {
                 case ExpressionType.Equal:
                     string name = parameterPrefix + ( (MemberExpression)operation.Left ).Member.Name;
-                    if ( !dataParameters.ContainsKey( name ) )
-                        dataParameters.Add( name, GetValue( operation.Right ) );
+                    if (!dataParameters.ContainsKey(name))
+                        dataParameters.Add( name, operation.Right.GetValue() );
                     break;
 
                 case ExpressionType.AndAlso:
@@ -74,7 +74,12 @@ namespace PHydrate.Util
             }
         }
 
-        private static object GetValue( Expression expression )
+        /// <summary>
+        /// Gets the value from an expression (invokes it).
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
+        public static object GetValue( this Expression expression )
         {
             var targetMethodInfo = typeof(InvokeGeneric).GetMethod( "GetVariableValue" );
             var genericTargetCall = targetMethodInfo.MakeGenericMethod( expression.Type );

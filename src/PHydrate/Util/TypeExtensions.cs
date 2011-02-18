@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util.MemberInfoWrapper;
@@ -104,9 +105,34 @@ namespace PHydrate.Util
                     x => x.CreateWrapper() );
         }
 
-        public static TReturn ExecuteGenericMethod<TReturn, TSource>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters ) where TReturn : class
+        /// <summary>
+        /// Executes a method on a generic type.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source object.</typeparam>
+        /// <typeparam name="TReturn">The type of the return value.</typeparam>
+        /// <param name="genericType">The generic type parameter to use when constructing the concrete instance.</param>
+        /// <param name="methodCall">The method call to make, including arguments.</param>
+        /// <param name="constructorParameters">The constructor parameters.</param>
+        /// <returns>The return value from the method to be called.</returns>
+        public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters) where TReturn : class
         {
-            Type innerClass = typeof(TSource).GetGenericTypeDefinition().MakeGenericType( genericType );
+            var method = methodCall.Body as MethodCallExpression;
+            if (method == null)
+                throw new PHydrateInternalException( "Lambda does not contain a method call." );
+
+            return genericType.ExecuteGenericMethod< TSource, TReturn >( method.Method.Name, constructorParameters,
+                                                             method.Arguments.Select( x => x.GetValue() ).ToArray() );
+        }
+
+        private static TReturn ExecuteGenericMethod<TSource, TReturn>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters ) where TReturn : class
+        {
+            Type type = typeof(TSource);
+            Type genericTypeDefinition = type.GetGenericTypeDefinition();
+
+            if (!type.IsGenericType || genericTypeDefinition == null)
+                throw new PHydrateInternalException( "Type {0} is not a generic type", type.Name );
+ 
+            Type innerClass = genericTypeDefinition.MakeGenericType( genericType );
             ConstructorInfo[] constructors = innerClass.GetConstructors();
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();

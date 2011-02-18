@@ -234,17 +234,14 @@ namespace PHydrate.Core
                         break;
 
                     // TODO
-                    // Get generic copy of DataHydrator<> for data type
                     // Assign values to appropriate member in aggregateRoot
                     // Support IEnumerable and IList for now.  IDictionary later.
-                    var enumerator =
-                        internalRecordset.Type.ExecuteGenericMethod< IEnumerable, DataHydrator< T > >(
-                            "HydrateFromDataReader",
-                            new object[] {
-                                             _defaultObjectHydrator,
-                                             _hydratedObjects
-                                         },
-                            new object[] { dataReader } );
+                    IEnumerable enumerator =
+                        internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
+                            x => x.HydrateFromDataReader( dataReader ),
+                            _defaultObjectHydrator,
+                            _hydratedObjects
+                            );
                     foreach (object o in enumerator)
                     {
                         // TODO: Look up the appropriate object in aggregateRoot, and add this object to the appropriate field.
