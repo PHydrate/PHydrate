@@ -30,6 +30,15 @@ namespace PHydrate.Specs.Core.Session
     {
         #region Test Classes
 
+        [UsedImplicitly]
+        protected class TestObjectInternal
+        {
+            [PrimaryKey]
+            public int Key { get; set; }
+
+            public int AggregateKey { get; set; }
+        }
+
         [ HydrateUsing( "TestStoredProcedure" ) ]
         protected class TestObjectSecondaryRecordset
         {
@@ -37,7 +46,7 @@ namespace PHydrate.Specs.Core.Session
             public int AggregateKey { get; set; }
 
             [ Recordset( 1 ) ]
-            public TestObject InnerObject { get; set; }
+            public TestObjectInternal InnerObject { get; set; }
         }
 
         #endregion

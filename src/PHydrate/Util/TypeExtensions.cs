@@ -141,5 +141,18 @@ namespace PHydrate.Util
             var method = innerClass.GetMethod( methodName );
             return method.Invoke( c, methodParameters ) as TReturn;
         }
+
+        /// <summary>
+        /// Gets IMemberInfos for a type by name.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="memberNames">The member names.</param>
+        /// <returns></returns>
+        public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, IEnumerable< string > memberNames)
+        {
+            return from memberName in memberNames
+                   select type.GetMember( memberName )
+                   into memberInfos where memberInfos.Length != 0 select memberInfos[ 0 ].CreateWrapper();
+        }
     }
 }

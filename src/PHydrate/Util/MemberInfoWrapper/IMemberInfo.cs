@@ -38,9 +38,8 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// Gets the value.
         /// </summary>
         /// <param name="obj">The obj.</param>
-        /// <param name="invokeAttr">The invoke attr.</param>
         /// <returns></returns>
-        object GetValue(object obj, BindingFlags invokeAttr);
+        object GetValue(object obj);
 
         /// <summary>
         /// Sets the value.

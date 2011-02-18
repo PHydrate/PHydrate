@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace PHydrate.Util.MemberInfoWrapper
@@ -35,15 +36,15 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// <param name="fieldInfo">The field info.</param>
         public FieldInfoWrapper( MemberInfo fieldInfo ) : base(fieldInfo)
         {
+            Debug.Assert( fieldInfo is FieldInfo );
         }
 
         /// <summary>
         /// Gets the value.
         /// </summary>
         /// <param name="obj">The obj.</param>
-        /// <param name="invokeAttr">The invoke attr.</param>
         /// <returns></returns>
-        public override object GetValue( object obj, BindingFlags invokeAttr )
+        public override object GetValue( object obj )
         {
             return ((FieldInfo)MemberInfo).GetValue( obj );
         }
