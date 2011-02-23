@@ -133,13 +133,18 @@ namespace PHydrate.Util
                 throw new PHydrateInternalException( "Type {0} is not a generic type", type.Name );
  
             Type innerClass = genericTypeDefinition.MakeGenericType( genericType );
+            object c = innerClass.ConstructObjectUsingConstructorMatchingParameters( constructorParameters );
+            var method = innerClass.GetMethod( methodName );
+            return method.Invoke( c, methodParameters ) as TReturn;
+        }
+
+        private static object ConstructObjectUsingConstructorMatchingParameters(this Type innerClass, params object[] constructorParameters )
+        {
             ConstructorInfo[] constructors = innerClass.GetConstructors();
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
-                                    
-            object c = constructor.Invoke( constructorParameters );
-            var method = innerClass.GetMethod( methodName );
-            return method.Invoke( c, methodParameters ) as TReturn;
+
+            return constructor.Invoke( constructorParameters );
         }
 
         /// <summary>
@@ -150,9 +155,32 @@ namespace PHydrate.Util
         /// <returns></returns>
         public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, IEnumerable< string > memberNames)
         {
-            return from memberName in memberNames
-                   select type.GetMember( memberName )
-                   into memberInfos where memberInfos.Length != 0 select memberInfos[ 0 ].CreateWrapper();
+            return
+                memberNames.Select( type.GetMember ).Where( memberInfos => memberInfos.Length != 0 ).Select(
+                    memberInfos => memberInfos[ 0 ].CreateWrapper() );
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating that the type inherits from or implements the base type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="baseType">Type of the base.</param>
+        /// <returns></returns>
+        public static bool InheritsFromOrImplements(this Type type, Type baseType)
+        {
+            if (type == baseType)
+                return true;
+
+            if ( baseType.IsInterface )
+                return type.GetInterfaces().Where( x => x.Name == baseType.Name ).Any();
+
+            while (type.BaseType != null)
+            {
+                if (type.BaseType == baseType)
+                    return true;
+                type = type.BaseType;
+            }
+            return false;
         }
     }
 }

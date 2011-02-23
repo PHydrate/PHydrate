@@ -252,8 +252,7 @@ namespace PHydrate.Core
                         if ( !aggregateRoot.ContainsKey( lookupHash ) )
                             continue;
 
-                        // BUG: This will not work with superclasses
-                        if ( internalRecordset.Type == obj.GetType() &&
+                        if ( obj.GetType().InheritsFromOrImplements(internalRecordset.Type) &&
                              internalRecordset.GetValue( aggregateRoot[ lookupHash ] ) == null ) // Simple type
                             internalRecordset.SetValue( aggregateRoot[ lookupHash ], obj );
                     }
