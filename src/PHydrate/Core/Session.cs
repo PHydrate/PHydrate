@@ -247,24 +247,18 @@ namespace PHydrate.Core
                             );
                     foreach ( object obj in enumerator )
                     {
-                        int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
+                        int lookupHash = internalRecordset.GetLookupHash< T >( obj, primaryKeyMembers );
 
                         if ( !aggregateRoot.ContainsKey( lookupHash ) )
                             continue;
 
+                        // BUG: This will not work with superclasses
                         if ( internalRecordset.Type == obj.GetType() &&
                              internalRecordset.GetValue( aggregateRoot[ lookupHash ] ) == null ) // Simple type
                             internalRecordset.SetValue( aggregateRoot[ lookupHash ], obj );
                     }
                 }
                 return aggregateRoot.Values;
-            }
-
-            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, IEnumerable<string> primaryKeyMembers)
-            {
-                return typeof(T).GetObjectsHashCodeByFieldValues(
-                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
-                        x => x.GetValue( obj ) ) );
             }
 
             private IEnumerable<T> HydrateRecordset(IDataReader dataReader)
