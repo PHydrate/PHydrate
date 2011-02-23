@@ -49,9 +49,8 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// Gets the value.
         /// </summary>
         /// <param name="obj">The obj.</param>
-        /// <param name="invokeAttr">The invoke attr.</param>
         /// <returns></returns>
-        public virtual object GetValue( object obj, BindingFlags invokeAttr )
+        public virtual object GetValue( object obj )
         {
             throw new PHydrateInternalException(
                 "Cannot get value from member {0}, because it is not a field or property.", MemberInfo.Name );

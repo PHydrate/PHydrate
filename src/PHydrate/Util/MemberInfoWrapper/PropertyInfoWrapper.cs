@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace PHydrate.Util.MemberInfoWrapper
@@ -29,11 +30,16 @@ namespace PHydrate.Util.MemberInfoWrapper
     /// </summary>
     internal class PropertyInfoWrapper : MemberInfoWrapper
     {
-        public PropertyInfoWrapper( MemberInfo propertyInfo ) : base( propertyInfo ) {}
+        private const BindingFlags PublicNonPublicBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-        public override object GetValue( object obj, BindingFlags invokeAttr )
+        public PropertyInfoWrapper( MemberInfo propertyInfo ) : base( propertyInfo )
         {
-            return ( (PropertyInfo)MemberInfo ).GetValue( obj, invokeAttr, null, null, null );
+            Debug.Assert( propertyInfo is PropertyInfo );
+        }
+
+        public override object GetValue( object obj )
+        {;
+            return ( (PropertyInfo)MemberInfo ).GetValue( obj, PublicNonPublicBindingFlags, null, null, null );
         }
 
         public override void SetValue( object obj, object value )

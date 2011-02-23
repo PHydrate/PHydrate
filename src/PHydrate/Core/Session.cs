@@ -228,29 +228,43 @@ namespace PHydrate.Core
                 IDictionary< int, T > aggregateRoot =
                     HydrateRecordset( dataReader ).ToDictionary( x => x.GetObjectsHashCodeByPrimaryKeys() );
 
-                foreach (IMemberInfo internalRecordset in internalRecordsets)
+                IList< string > primaryKeyMembers =
+                    typeof(T).GetMembersWithAttribute< PrimaryKeyAttribute >().Select( x => x.Wrapped.Name ).ToArray();
+
+                foreach ( IMemberInfo internalRecordset in internalRecordsets )
                 {
-                    if (!dataReader.NextResult()) // TODO: Throw an exception?
+                    if ( !dataReader.NextResult() ) // TODO: Throw an exception?
                         break;
 
                     // TODO
-                    // Get generic copy of DataHydrator<> for data type
                     // Assign values to appropriate member in aggregateRoot
-                    // Support IEnumerable and IList for now.  IDictionary later.
-                    var enumerator =
-                        internalRecordset.Type.ExecuteGenericMethod< IEnumerable, DataHydrator< T > >(
-                            "HydrateFromDataReader",
-                            new object[] {
-                                             _defaultObjectHydrator,
-                                             _hydratedObjects
-                                         },
-                            new object[] { dataReader } );
-                    foreach (object o in enumerator)
+                    // Support single object, IEnumerable, and IList for now.  IDictionary later.
+                    IEnumerable enumerator =
+                        internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
+                            x => x.HydrateFromDataReader( dataReader ),
+                            _defaultObjectHydrator,
+                            _hydratedObjects
+                            );
+                    foreach ( object obj in enumerator )
                     {
-                        // TODO: Look up the appropriate object in aggregateRoot, and add this object to the appropriate field.
+                        int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
+
+                        if ( !aggregateRoot.ContainsKey( lookupHash ) )
+                            continue;
+
+                        if ( internalRecordset.Type == obj.GetType() &&
+                             internalRecordset.GetValue( aggregateRoot[ lookupHash ] ) == null ) // Simple type
+                            internalRecordset.SetValue( aggregateRoot[ lookupHash ], obj );
                     }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, IEnumerable<string> primaryKeyMembers)
+            {
+                return typeof(T).GetObjectsHashCodeByFieldValues(
+                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
+                        x => x.GetValue( obj ) ) );
             }
 
             private IEnumerable<T> HydrateRecordset(IDataReader dataReader)

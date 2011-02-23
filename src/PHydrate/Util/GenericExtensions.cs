@@ -88,7 +88,7 @@ namespace PHydrate.Util
             return
                 obj.GetType().GetMembersWithAttribute< TAttributeType >().Select(
                     member =>
-                    member.GetValue( obj, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
+                    member.GetValue( obj ) );
         }
 
         /// <summary>
