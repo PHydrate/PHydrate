@@ -20,10 +20,10 @@
 #endregion
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using PHydrate.Util;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {
@@ -34,22 +34,36 @@ namespace PHydrate.Core
     {
         #region IObjectHydrator Members
 
+        /// <summary>
+        /// Hydrates the specified object type.
+        /// </summary>
+        /// <typeparam name="T">The type of object to hydrate</typeparam>
+        /// <param name="columnValues">The column values.</param>
+        /// <returns>
+        /// The hydrated object
+        /// </returns>
         public T Hydrate< T >( IDictionary< string, object > columnValues )
         {
             // Find a suitable constructor
             var objToHydrate = GetObject< T >( columnValues );
 
             // Go through all the properties and get them from the dictionary argument
-            PropertyInfo[] propertySetters = typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public );
-            foreach ( PropertyInfo pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Name ) ) )
-                pi.SetValue( objToHydrate, columnValues[ pi.Name ], BindingFlags.Public | BindingFlags.NonPublic, null,
-                             null, CultureInfo.CurrentUICulture );
+            IEnumerable< IMemberInfo > propertySetters = typeof(T).GetSettableMembers();
+            foreach ( IMemberInfo  pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Wrapped.Name ) ) )
+                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DbNullToNull() );
 
             return objToHydrate;
         }
 
         #endregion
 
+        /// <summary>
+        /// Gets the object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="columnValues">The column values.</param>
+        /// <returns></returns>
+        /// <exception cref="PHydrateException">Could not find constructor for hydration of object {0}</exception>
         private static T GetObject< T >( IDictionary< string, object > columnValues )
         {
             // Try to get a default constructor

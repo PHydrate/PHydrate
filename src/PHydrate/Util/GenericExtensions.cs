@@ -123,5 +123,15 @@ namespace PHydrate.Util
                 return values.Aggregate( hash, ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
             }
         }
+
+        /// <summary>
+        /// Returns null if the object is DbNull, else returns the object.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns></returns>
+        public static object DbNullToNull(this object obj)
+        {
+            return obj is DBNull ? null : obj;
+        }
     }
 }

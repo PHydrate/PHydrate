@@ -76,13 +76,13 @@ namespace PHydrate.Util
         /// <typeparam name="T">The type to cast to on return.</typeparam>
         /// <param name="type">The type.</param>
         /// <returns>The constructed type.</returns>
+        /// <exception cref="PHydrateException">Unable to construct object {0}, no default constructor.</exception>
         [NotNull]
         public static T ConstructUsingDefaultConstructor<T>(this Type type)
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
             if (defaultConstructor == null)
-                throw new PHydrateException(
-                    String.Format( "Unable to construct object {0}, no default constructor.", typeof(T).Name ) );
+                throw new PHydrateException( "Unable to construct object {0}, no default constructor.", typeof(T).Name );
 
             return (T)defaultConstructor.Invoke( new object[] {} );
         }
@@ -114,6 +114,7 @@ namespace PHydrate.Util
         /// <param name="methodCall">The method call to make, including arguments.</param>
         /// <param name="constructorParameters">The constructor parameters.</param>
         /// <returns>The return value from the method to be called.</returns>
+        /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
         public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters) where TReturn : class
         {
             var method = methodCall.Body as MethodCallExpression;
@@ -124,6 +125,7 @@ namespace PHydrate.Util
                                                              method.Arguments.Select( x => x.GetValue() ).ToArray() );
         }
 
+        /// <exception cref="PHydrateInternalException">Type {0} is not a generic type</exception>
         private static TReturn ExecuteGenericMethod<TSource, TReturn>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters ) where TReturn : class
         {
             Type type = typeof(TSource);
@@ -181,6 +183,20 @@ namespace PHydrate.Util
                 type = type.BaseType;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets the settable members (properties and fields).
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static IEnumerable<IMemberInfo> GetSettableMembers(this Type type)
+        {
+            return
+                type.GetProperties( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Select(
+                    x => x.CreateWrapper() ).Concat(
+                        type.GetFields( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Select(
+                            x => x.CreateWrapper() ) );
         }
     }
 }

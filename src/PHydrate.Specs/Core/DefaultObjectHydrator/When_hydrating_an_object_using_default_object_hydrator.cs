@@ -20,22 +20,23 @@
 #endregion
 
 using Machine.Specifications;
+using UMMO.TestingUtils.RandomData;
 
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
-    [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
+    [Subject(typeof(PHydrate.Core.DefaultObjectHydrator))]
     public sealed class When_hydrating_an_object_using_default_object_hydrator : DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
-            () => ReturnedObject = DefaultObjectHydrator.Hydrate< TestHydrationTarget >( ColumnValues );
+            () => ReturnedObject = DefaultObjectHydrator.Hydrate<TestHydrationTarget>(ColumnValues);
 
         private It Should_populate_the_integer_property_correctly
-            = () => ( (TestHydrationTarget)ReturnedObject ).IntegerProperty.ShouldEqual( RandomInteger );
+            = () => ((TestHydrationTarget)ReturnedObject).IntegerProperty.ShouldEqual(RandomInteger);
 
         private It Should_populate_the_string_property_correctly
-            = () => ( (TestHydrationTarget)ReturnedObject ).StringProperty.ShouldEqual( RandomString );
+            = () => ((TestHydrationTarget)ReturnedObject).StringProperty.ShouldEqual(RandomString);
 
         private It Should_return_object_of_type_test_hydration_target
-            = () => ReturnedObject.ShouldBeOfType< TestHydrationTarget >();
+            = () => ReturnedObject.ShouldBeOfType<TestHydrationTarget>();
     }
 }

@@ -97,6 +97,7 @@
     <Compile Include="Core\DatabaseService\When_calling_excecute_stored_procedure_reader_with_parameters.cs" />
     <Compile Include="Core\DatabaseService\When_calling_excecute_stored_procedure_scalar_with_no_parameters.cs" />
     <Compile Include="Core\DefaultObjectHydrator\DefaultObjectHydratorSpecificationBase.cs" />
+    <Compile Include="Core\DefaultObjectHydrator\When_hydrating_an_object_using_default_object_hydrator_that_returns_dbnull.cs" />
     <Compile Include="Core\FluentConfiguration\FluentConfigurationSpecificationBase.cs" />
     <Compile Include="Core\FluentConfiguration\When_building_factory.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_database.cs" />
