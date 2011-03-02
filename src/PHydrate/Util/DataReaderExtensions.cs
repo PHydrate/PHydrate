@@ -20,6 +20,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -37,7 +38,7 @@ namespace PHydrate.Util
         /// <returns>The record translated as an IDictionary</returns>
         public static IDictionary< string, object > ToDictionary( this IDataReader dataReader )
         {
-            var dictionary = new Dictionary< string, object >();
+            var dictionary = new Dictionary< string, object >( StringComparer.InvariantCultureIgnoreCase );
             for ( int i = 0; i < dataReader.FieldCount; i++ )
                 dictionary.Add( dataReader.GetName( i ), dataReader.GetValue( i ) );
 

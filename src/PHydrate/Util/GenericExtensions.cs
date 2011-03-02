@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util.MemberInfoWrapper;
@@ -129,9 +130,34 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
-        public static object DbNullToNull(this object obj)
+        public static T DbNullToDefault<T>(this T obj)
         {
-            return obj is DBNull ? null : obj;
+            return obj is DBNull ? default(T) : obj;
+        }
+
+        /// <summary>
+        /// Executes the generic method.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="obj">The obj.</param>
+        /// <param name="methodCall">The method call.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
+        public static object ExecuteGenericMethod<TSource>(this TSource obj, Expression<Func<TSource, object>> methodCall, Type type)
+        {
+            var method = methodCall.Body as MethodCallExpression;
+            if (method == null)
+                throw new PHydrateInternalException("Lambda does not contain a method call.");
+
+            MethodInfo methodInfo = typeof (TSource).GetMethod(method.Method.Name,
+                                                               BindingFlags.Instance | BindingFlags.Static |
+                                                               BindingFlags.Public |
+                                                               BindingFlags.NonPublic);
+
+            MethodInfo genericMethod = methodInfo.MakeGenericMethod(type);
+
+            return genericMethod.Invoke(obj, method.Arguments.Select(x => x.GetValue()).ToArray());
         }
     }
 }

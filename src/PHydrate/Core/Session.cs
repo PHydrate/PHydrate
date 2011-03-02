@@ -81,13 +81,14 @@ namespace PHydrate.Core
             return HydrateFromStoredProcedure( hydrationAttribute, query );
         }
 
+        /// <exception cref="PHydrateException">Unable to process object of type {0}.  Define a stored procedure with [{0}]</exception>
         private static TAttribute GetCrudAttributeFromType< T, TAttribute >() where TAttribute : CrudAttributeBase
         {
             var crudAttribute = typeof(T).GetAttribute< TAttribute >();
             if ( crudAttribute == null || String.IsNullOrEmpty( crudAttribute.ProcedureName ) )
                 throw new PHydrateException(
                     "Unable to process object of type {0}.  Define a stored procedure with [{0}]",
-                    typeof(T).FullName, typeof(TAttribute).Name.Replace( "Attribute", "" ) );
+                    typeof(T).FullName, typeof(TAttribute).Name.Replace( "Attribute", string.Empty ) );
 
             return crudAttribute;
         }
@@ -140,6 +141,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToDelete">The object to delete.</param>
+        /// <exception cref="PHydrateException">Delete of object failed.</exception>
         public void Delete< T >( T objectToDelete )
             where T : class
         {
@@ -177,6 +179,7 @@ namespace PHydrate.Core
                 InsertObject( objectToPersist );
         }
 
+        /// <exception cref="PHydrateException">Update of object failed.</exception>
         private void UpdateObject< T >( T objectToPersist )
             where T : class
         {
@@ -236,25 +239,39 @@ namespace PHydrate.Core
                     if ( !dataReader.NextResult() ) // TODO: Throw an exception?
                         break;
 
-                    // TODO
-                    // Assign values to appropriate member in aggregateRoot
-                    // Support single object, IEnumerable, and IList for now.  IDictionary later.
                     IEnumerable enumerator =
                         internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
                             x => x.HydrateFromDataReader( dataReader ),
                             _defaultObjectHydrator,
                             _hydratedObjects
                             );
+
+                    // TODO: This loop is likely to be unnecessary
                     foreach ( object obj in enumerator )
                     {
-                        int lookupHash = internalRecordset.GetLookupHash< T >( obj, primaryKeyMembers );
+                        if (internalRecordset.Type.IsAssignableFrom( obj.GetType()))
+                        {
+                            // Simple type
+                            int objectHash = obj.GetObjectsHashCodeByPrimaryKeys();
 
-                        if ( !aggregateRoot.ContainsKey( lookupHash ) )
+                            // Find the member in aggregateRoot that contains this member
+                            IMemberInfo recordset = internalRecordset;
+                            foreach (
+                                T o in
+                                    aggregateRoot.Values.AsEnumerable().Where(
+                                        x => recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
+                                recordset.SetValue( o, obj );
                             continue;
+                        }
 
-                        if ( obj.GetType().InheritsFromOrImplements(internalRecordset.Type) &&
-                             internalRecordset.GetValue( aggregateRoot[ lookupHash ] ) == null ) // Simple type
-                            internalRecordset.SetValue( aggregateRoot[ lookupHash ], obj );
+                        // TODO: IEnumerable, IList
+                        //if (internalRecordset.Type.IsAssignableFrom(typeof(IEnumerator<>).MakeGenericType(obj.GetType())))
+                        //{
+                        //    int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
+
+                        //    if ( !aggregateRoot.ContainsKey( lookupHash ) )
+                        //        continue;
+                        //}
                     }
                 }
                 return aggregateRoot.Values;
