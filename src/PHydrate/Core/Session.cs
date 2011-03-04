@@ -226,6 +226,7 @@ namespace PHydrate.Core
                            : HydrateRecordset(dataReader);
             }
 
+            /// <exception cref="PHydrateException">Missing expected recordset from stored procedure</exception>
             private IEnumerable<T> HydrateRecordsetWithInternals(IDataReader dataReader, IEnumerable<IMemberInfo> internalRecordsets)
             {
                 IDictionary< int, T > aggregateRoot =
@@ -236,8 +237,8 @@ namespace PHydrate.Core
 
                 foreach ( IMemberInfo internalRecordset in internalRecordsets )
                 {
-                    if ( !dataReader.NextResult() ) // TODO: Throw an exception?
-                        break;
+                    if (!dataReader.NextResult())
+                        throw new PHydrateException( "Missing expected recordset from stored procedure" ); 
 
                     IEnumerable enumerator =
                         internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
@@ -259,7 +260,7 @@ namespace PHydrate.Core
                             foreach (
                                 T o in
                                     aggregateRoot.Values.AsEnumerable().Where(
-                                        x => recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
+                                        x => recordset.GetValue(x) != null &&  recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
                                 recordset.SetValue( o, obj );
                             continue;
                         }

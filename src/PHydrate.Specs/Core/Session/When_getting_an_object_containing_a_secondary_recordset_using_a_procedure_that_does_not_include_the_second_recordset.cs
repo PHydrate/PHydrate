@@ -19,8 +19,7 @@
 
 #endregion
 
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
 using Rhino.Mocks;
@@ -29,19 +28,15 @@ using Rhino.Mocks.Constraints;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_getting_an_object_containing_a_secondary_recordset :
-        SessionSpecificationHydrateWithSecondaryRecordsetBase
+    public sealed class
+        When_getting_an_object_containing_a_secondary_recordset_using_a_procedure_that_does_not_include_the_second_recordset :
+            SessionSpecificationHydrateWithSecondaryRecordsetBase
     {
-        private static IList< TestObjectSecondaryRecordset > _requestedObjects;
-
         [ UsedImplicitly ]
         private Establish Context = () => {
                                         DataReaderMock.AddRecordSet( "AggregateKey", "Key" );
                                         DataReaderMock.AddRow( 1, 1 );
                                         DataReaderMock.AddRow( 2, 2 );
-                                        DataReaderMock.AddRecordSet( "Key" );
-                                        DataReaderMock.AddRow( 1 );
-                                        DataReaderMock.AddRow( 2 );
                                         DataReaderMock.Playback();
 
                                         DatabaseService.Expect(
@@ -51,26 +46,16 @@ namespace PHydrate.Specs.Core.Session
                                     };
 
         private Because Of =
-            () =>
-            _requestedObjects =
-            SessionUnderTest.Get< TestObjectSecondaryRecordset >( x => x.AggregateKey == 1 ).ToList();
+            () => _exception = Catch.Exception( () =>
+                                                SessionUnderTest.Get< TestObjectSecondaryRecordset >(
+                                                    x => x.AggregateKey == 1 ) );
 
-        private It Should_call_stored_procedure
-            = () => DatabaseService.VerifyAllExpectations();
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
 
-        private It Should_call_stored_procedure_with_parameter_named_aggregate_key
-            = () => AssertDatabaseServiceParameter( "@AggregateKey", 1, x => x.ExecuteStoredProcedureReader( string.Empty, null ) );
+        private It Should_throw_exception_of_type_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
 
-        private It Should_include_correct_internal_record
-            = () => _requestedObjects[ 0 ].InnerObject.Key.ShouldEqual( 1 );
-
-        private It Should_include_internal_record
-            = () => _requestedObjects[ 0 ].InnerObject.ShouldNotBeNull();
-
-        private It Should_not_be_null
-            = () => _requestedObjects.ShouldNotBeNull();
-
-        private It Should_return_correct_record
-            = () => _requestedObjects[ 0 ].AggregateKey.ShouldEqual( 1 );
+        private static Exception _exception;
     }
 }

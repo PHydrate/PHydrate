@@ -19,10 +19,7 @@
 
 #endregion
 
-using Machine.Specifications;
 using PHydrate.Attributes;
-using Rhino.Mocks;
-using Rhino.Mocks.Constraints;
 
 namespace PHydrate.Specs.Core.Session
 {
@@ -35,8 +32,6 @@ namespace PHydrate.Specs.Core.Session
         {
             [PrimaryKey]
             public int Key { get; set; }
-
-            public int AggregateKey { get; set; }
         }
 
         [ HydrateUsing( "TestStoredProcedure" ) ]
@@ -50,22 +45,5 @@ namespace PHydrate.Specs.Core.Session
         }
 
         #endregion
-
-        [ UsedImplicitly ]
-        private Establish Context = () => {
-                                        DataReaderMock.AddRecordSet( "AggregateKey" );
-                                        DataReaderMock.AddRow( 1 );
-                                        DataReaderMock.AddRow( 2 );
-                                        DataReaderMock.AddRecordSet( "AggregateKey", "Key" );
-                                        DataReaderMock.AddRow( 1, 1 );
-                                        DataReaderMock.AddRow( 1, 2 );
-                                        DataReaderMock.AddRow( 2, 3 );
-                                        DataReaderMock.AddRow( 2, 4 );
-                                        DataReaderMock.Playback();
-
-                                        DatabaseService.Expect( x => x.ExecuteStoredProcedureReader( "", null ) ).
-                                            Constraints( Is.Equal( "TestStoredProcedure" ), Is.NotNull() ).Return(
-                                                DataReaderMock );
-                                    };
     }
 }

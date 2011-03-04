@@ -38,7 +38,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         }
 
         public override object GetValue( object obj )
-        {;
+        {
             return ( (PropertyInfo)MemberInfo ).GetValue( obj, PublicNonPublicBindingFlags, null, null, null );
         }
 

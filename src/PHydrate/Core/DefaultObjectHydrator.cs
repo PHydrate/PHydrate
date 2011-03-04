@@ -60,7 +60,7 @@ namespace PHydrate.Core
         /// <exception cref="PHydrateException">Unable to populate Primary Key values for {0}</exception>
         private void PopulateInnerObjects< T >( T objToHydrate, IDictionary< string, object > columnValues, IEnumerable< IMemberInfo > propertySetters )
         {
-            foreach (IMemberInfo mi in propertySetters.Where( x => columnValues.ContainsKey(x.Wrapped.Name + "Id")))
+            foreach (IMemberInfo mi in propertySetters.Where(x=>x.Type.GetMembersWithAttribute<PrimaryKeyAttribute>().Count() > 0))
             {
                 // Add in an empty copy of the object, populate the [PrimaryKey] if possible.
                 object innerObject = this.ExecuteGenericMethod( x => GetObject< object >( columnValues ), mi.Type );
