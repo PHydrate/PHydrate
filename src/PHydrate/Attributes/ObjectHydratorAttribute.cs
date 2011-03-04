@@ -28,12 +28,13 @@ namespace PHydrate.Attributes
     ///   Specify a custom IObjectHydrator for the class
     /// </summary>
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false ) ]
-    public class ObjectHydratorAttribute : Attribute
+    public sealed class ObjectHydratorAttribute : Attribute
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "ObjectHydratorAttribute" /> class.
         /// </summary>
         /// <param name = "hydratorType">Type of the hydrator.</param>
+        /// <exception cref="PHydrateException">The type specified as an [ObjectHydrator] does not implement IObjectHydrator<T></exception>
         public ObjectHydratorAttribute( Type hydratorType )
         {
             if ( hydratorType.GetInterface( "PHydrate.IObjectHydrator`1" ) == null )

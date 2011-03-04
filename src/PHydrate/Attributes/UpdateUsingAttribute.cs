@@ -25,7 +25,7 @@ namespace PHydrate.Attributes
     /// <summary>
     ///   Annotate a class with the stored procedure name used to update a record.
     /// </summary>
-    public class UpdateUsingAttribute : CrudAttributeBase
+    public sealed class UpdateUsingAttribute : CrudAttributeBase
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "UpdateUsingAttribute" /> class.

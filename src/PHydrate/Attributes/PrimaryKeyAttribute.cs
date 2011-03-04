@@ -28,5 +28,5 @@ namespace PHydrate.Attributes
     /// </summary>
     [ AttributeUsage( AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false ) ]
     [ MeansImplicitUse ]
-    public class PrimaryKeyAttribute : Attribute {}
+    public sealed class PrimaryKeyAttribute : Attribute {}
 }

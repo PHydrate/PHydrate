@@ -25,7 +25,7 @@ namespace PHydrate.Attributes
     /// <summary>
     ///   Annotate a class with the stored procedure used to create a new record
     /// </summary>
-    public class CreateUsingAttribute : CrudAttributeBase
+    public sealed class CreateUsingAttribute : CrudAttributeBase
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "CreateUsingAttribute" /> class.
