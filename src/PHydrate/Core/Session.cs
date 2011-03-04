@@ -232,9 +232,6 @@ namespace PHydrate.Core
                 IDictionary< int, T > aggregateRoot =
                     HydrateRecordset( dataReader ).ToDictionary( x => x.GetObjectsHashCodeByPrimaryKeys() );
 
-                IList< string > primaryKeyMembers =
-                    typeof(T).GetMembersWithAttribute< PrimaryKeyAttribute >().Select( x => x.Wrapped.Name ).ToArray();
-
                 foreach ( IMemberInfo internalRecordset in internalRecordsets )
                 {
                     if (!dataReader.NextResult())
@@ -276,6 +273,13 @@ namespace PHydrate.Core
                     }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, params string[] primaryKeyMembers)
+            {
+                return typeof(T).GetObjectsHashCodeByFieldValues(
+                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
+                        x => x.GetValue( obj ) ) );
             }
 
             private IEnumerable<T> HydrateRecordset(IDataReader dataReader)

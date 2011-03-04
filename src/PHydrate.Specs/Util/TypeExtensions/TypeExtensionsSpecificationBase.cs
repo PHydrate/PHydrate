@@ -41,5 +41,19 @@ namespace PHydrate.Specs.Util.TypeExtensions
         }
 
         #endregion
+
+        [UsedImplicitly]
+        protected class TestClassWithMethod<T>
+        {
+            public int TestMethodNoArgs()
+            {
+                return 1;
+            }
+
+            public T TestMethodWithArgs(T longValue)
+            {
+                return longValue;
+            }
+        }
     }
 }

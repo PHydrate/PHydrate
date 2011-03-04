@@ -130,9 +130,9 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
-        public static T DbNullToDefault<T>(this T obj)
+        public static T DbNullToDefault<T>(this object obj)
         {
-            return obj is DBNull ? default(T) : obj;
+            return obj is DBNull ? default(T) : (T)obj;
         }
 
         /// <summary>
@@ -146,7 +146,13 @@ namespace PHydrate.Util
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
         public static object ExecuteGenericMethod<TSource>(this TSource obj, Expression<Func<TSource, object>> methodCall, Type type)
         {
-            var method = methodCall.Body as MethodCallExpression;
+            var unaryExpression = methodCall.Body as UnaryExpression;
+            MethodCallExpression method;
+            if (unaryExpression != null && unaryExpression.NodeType == ExpressionType.Convert)
+                method = unaryExpression.Operand as MethodCallExpression;
+            else
+                method = methodCall.Body as MethodCallExpression;
+
             if (method == null)
                 throw new PHydrateInternalException("Lambda does not contain a method call.");
 

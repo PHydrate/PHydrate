@@ -115,7 +115,7 @@ namespace PHydrate.Util
         /// <param name="constructorParameters">The constructor parameters.</param>
         /// <returns>The return value from the method to be called.</returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
-        public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters) where TReturn : class
+        public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters)
         {
             var method = methodCall.Body as MethodCallExpression;
             if (method == null)
@@ -126,14 +126,15 @@ namespace PHydrate.Util
         }
 
         /// <exception cref="PHydrateInternalException">Type {0} is not a generic type</exception>
-        private static TReturn ExecuteGenericMethod<TSource, TReturn>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters ) where TReturn : class
+        private static TReturn ExecuteGenericMethod<TSource, TReturn>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters )
         {
             Type type = typeof(TSource);
+
+            if (!type.IsGenericType && !type.IsGenericTypeDefinition)
+                throw new PHydrateInternalException("Type {0} is not a generic type", type.Name);
+
             Type genericTypeDefinition = type.GetGenericTypeDefinition();
 
-            if (!type.IsGenericType || genericTypeDefinition == null)
-                throw new PHydrateInternalException( "Type {0} is not a generic type", type.Name );
- 
             Type innerClass = genericTypeDefinition.MakeGenericType( genericType );
             object c = innerClass.ConstructObjectUsingConstructorMatchingParameters( constructorParameters );
             var method = innerClass.GetMethod( methodName );
@@ -145,8 +146,10 @@ namespace PHydrate.Util
             ConstructorInfo[] constructors = innerClass.GetConstructors();
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
-
-            return constructor.Invoke( constructorParameters );
+                                    
+            object c = constructor.Invoke( constructorParameters );
+            var method = innerClass.GetMethod( methodName );
+            return ((TReturn)method.Invoke( c, methodParameters ));
         }
 
         /// <summary>
@@ -155,7 +158,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <param name="memberNames">The member names.</param>
         /// <returns></returns>
-        public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, IEnumerable< string > memberNames)
+        public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, params string[] memberNames)
         {
             return
                 memberNames.Select( type.GetMember ).Where( memberInfos => memberInfos.Length != 0 ).Select(
