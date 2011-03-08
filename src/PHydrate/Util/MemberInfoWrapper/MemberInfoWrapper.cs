@@ -27,7 +27,7 @@ namespace PHydrate.Util.MemberInfoWrapper
     /// <summary>
     /// Default wrapper for MemberInfos that have no Getters or Setters
     /// </summary>
-    public class MemberInfoWrapper : IMemberInfo
+    internal class MemberInfoWrapper : IMemberInfo
     {
         /// <summary>
         /// The internal MemberInfo being wrapped.
@@ -50,6 +50,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
+        /// <exception cref="PHydrateInternalException">Cannot get value from member {0}, because it is not a field or property.</exception>
         public virtual object GetValue( object obj )
         {
             throw new PHydrateInternalException(
@@ -61,6 +62,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <param name="value">The value.</param>
+        /// <exception cref="PHydrateInternalException">Cannot set value on member {0}, because it is not a field or property.</exception>
         public virtual void SetValue( object obj, object value )
         {
             throw new PHydrateInternalException(
@@ -78,6 +80,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// <summary>
         /// Gets the type of the member.
         /// </summary>
+        /// <exception cref="PHydrateInternalException">Could not get type from generic MemberInfo</exception>
         public virtual Type Type
         {
             get { throw new PHydrateInternalException( "Could not get type from generic MemberInfo" ); }

@@ -29,6 +29,6 @@ namespace PHydrate
     /// Nothing is implemented by this interface, it is simply necessary
     /// to group other interfaces.
     /// </remarks>
-    /// <typeparam name="T"></typeparam>
-    public interface ISpecification< in T > {}
+    /// <typeparam name="T">Type this is a specification for</typeparam>
+    public interface ISpecification< T > {}
 }

@@ -23,10 +23,14 @@
 namespace PHydrate
 {
     /// <summary>
-    /// A code-based specification.
+    /// A specification interface that filters results based on a boolean method.
     /// </summary>
+    /// <remarks>
+    /// When this interface is used, the filtering happens after the database has returned
+    /// results.  If possible, you should use <see cref="IDbSpecification{T}"/> instead.
+    /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IExplicitSpecification< in T > : ISpecification< T >
+    public interface IExplicitSpecification< /*in*/ T > : ISpecification< T >
     {
         /// <summary>
         /// Determine if an object satifies the specification

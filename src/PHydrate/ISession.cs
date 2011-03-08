@@ -27,9 +27,12 @@ using System.Linq.Expressions;
 namespace PHydrate
 {
     /// <summary>
-    ///   A single-use session.
+    ///   A session for getting and saving objects to and from the data store
     /// </summary>
-    public interface ISession
+    /// <remarks>
+    /// Sessions are quick to construct, and as such can be used and disposed of often
+    /// </remarks>
+    public interface ISession : IDisposable
     {
         /// <summary>
         ///   Gets the transaction.

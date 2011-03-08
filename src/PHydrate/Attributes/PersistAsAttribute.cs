@@ -5,6 +5,9 @@ namespace PHydrate.Attributes
     /// <summary>
     /// Specify the name of the column that the member uses
     /// </summary>
+    /// <remarks>
+    /// This attribute is currently ignored, please do not use yet!
+    /// </remarks>
     [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
     public sealed class PersistAsAttribute : Attribute
     {

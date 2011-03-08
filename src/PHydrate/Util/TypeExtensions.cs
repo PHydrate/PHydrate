@@ -138,7 +138,7 @@ namespace PHydrate.Util
             Type innerClass = genericTypeDefinition.MakeGenericType( genericType );
             object c = innerClass.ConstructObjectUsingConstructorMatchingParameters( constructorParameters );
             var method = innerClass.GetMethod( methodName );
-            return method.Invoke( c, methodParameters ) as TReturn;
+            return ((TReturn)method.Invoke( c, methodParameters ));
         }
 
         private static object ConstructObjectUsingConstructorMatchingParameters(this Type innerClass, params object[] constructorParameters )
@@ -147,9 +147,7 @@ namespace PHydrate.Util
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
                                     
-            object c = constructor.Invoke( constructorParameters );
-            var method = innerClass.GetMethod( methodName );
-            return ((TReturn)method.Invoke( c, methodParameters ));
+            return constructor.Invoke( constructorParameters );
         }
 
         /// <summary>
@@ -161,7 +159,7 @@ namespace PHydrate.Util
         public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, params string[] memberNames)
         {
             return
-                memberNames.Select( type.GetMember ).Where( memberInfos => memberInfos.Length != 0 ).Select(
+                memberNames.Select( x => type.GetMember(x) ).Where( memberInfos => memberInfos.Length != 0 ).Select(
                     memberInfos => memberInfos[ 0 ].CreateWrapper() );
         }
 

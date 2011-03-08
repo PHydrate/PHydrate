@@ -24,7 +24,7 @@ using System;
 namespace PHydrate.Attributes
 {
     /// <summary>
-    ///   Mark an item in a class as the primary key
+    ///   Mark an item in a class as a part of the primary key
     /// </summary>
     [ AttributeUsage( AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = false ) ]
     [ MeansImplicitUse ]

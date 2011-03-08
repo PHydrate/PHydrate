@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="6dd9b648-13b0-4a87-90e2-555c19210b85" visible="True">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="About" />
+      <HelpKeyword index="K" term="License" />
+      <HelpKeyword index="K" term="Philosophy" />
+    </HelpKeywords>
+  </Topic>
+  <Topic id="f6f6831e-f55e-4e3f-a3fe-c87b60257e18" visible="True" apiParentMode="InsertAsChild" />
+</Topics>

@@ -27,7 +27,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
 using PHydrate.Util;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {
@@ -321,5 +320,17 @@ namespace PHydrate.Core
                 return hydratedObject;
             }
         }
+
+        #region Implementation of IDisposable
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // TODO: Make other objects used by this class disposable
+        }
+
+        #endregion
     }
 }
