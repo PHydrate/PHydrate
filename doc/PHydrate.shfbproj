@@ -28,31 +28,39 @@
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\src\PHydrate\bin\Debug\PHydrate.dll" xmlns="" />
-<DocumentationSource sourceFile="..\src\PHydrate\bin\Debug\PHydrate.XML" xmlns="" /></DocumentationSources>
+      <DocumentationSource sourceFile="..\src\PHydrate\bin\Debug\PHydrate.XML" xmlns="" />
+    </DocumentationSources>
     <Preliminary>True</Preliminary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
     <ApiFilter>
       <Filter entryType="Namespace" fullName="" isExposed="False" xmlns="" />
-<Filter entryType="Namespace" fullName="PHydrate.Attributes" isExposed="True" xmlns="">
-  <Filter entryType="Class" fullName="PHydrate.Attributes.CanBeNullAttribute" filterName="CanBeNullAttribute" isExposed="False" />
-  <Filter entryType="Enumeration" fullName="PHydrate.Attributes.ImplicitUseKindFlags" filterName="ImplicitUseKindFlags" isExposed="False" />
-  <Filter entryType="Enumeration" fullName="PHydrate.Attributes.ImplicitUseTargetFlags" filterName="ImplicitUseTargetFlags" isExposed="False" />
-  <Filter entryType="Class" fullName="PHydrate.Attributes.MeansImplicitUseAttribute" filterName="MeansImplicitUseAttribute" isExposed="False" />
-  <Filter entryType="Class" fullName="PHydrate.Attributes.NotNullAttribute" filterName="NotNullAttribute" isExposed="False" />
-  <Filter entryType="Class" fullName="PHydrate.Attributes.StringFormatMethodAttribute" filterName="StringFormatMethodAttribute" isExposed="False" />
-  <Filter entryType="Class" fullName="PHydrate.Attributes.UsedImplicitlyAttribute" filterName="UsedImplicitlyAttribute" isExposed="False" />
-</Filter></ApiFilter>
+      <Filter entryType="Namespace" fullName="PHydrate.Attributes" isExposed="True" xmlns="">
+        <Filter entryType="Class" fullName="PHydrate.Attributes.CanBeNullAttribute" filterName="CanBeNullAttribute" isExposed="False" />
+        <Filter entryType="Enumeration" fullName="PHydrate.Attributes.ImplicitUseKindFlags" filterName="ImplicitUseKindFlags" isExposed="False" />
+        <Filter entryType="Enumeration" fullName="PHydrate.Attributes.ImplicitUseTargetFlags" filterName="ImplicitUseTargetFlags" isExposed="False" />
+        <Filter entryType="Class" fullName="PHydrate.Attributes.MeansImplicitUseAttribute" filterName="MeansImplicitUseAttribute" isExposed="False" />
+        <Filter entryType="Class" fullName="PHydrate.Attributes.NotNullAttribute" filterName="NotNullAttribute" isExposed="False" />
+        <Filter entryType="Class" fullName="PHydrate.Attributes.StringFormatMethodAttribute" filterName="StringFormatMethodAttribute" isExposed="False" />
+        <Filter entryType="Class" fullName="PHydrate.Attributes.UsedImplicitlyAttribute" filterName="UsedImplicitlyAttribute" isExposed="False" />
+      </Filter>
+    </ApiFilter>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="PHydrate" isDocumented="True">The PHydrate namespace contains public interfaces and configuration access classes for interacting with and setting up PHydrate.
 
 See the Fluently class for the entry point for getting an ISessionFactory object.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="PHydrate.Util.MemberInfoWrapper" isDocumented="False" />
-<NamespaceSummaryItem name="PHydrate.Attributes" isDocumented="True">PHydrate.Attributes includes all of the attributes used by the core to determine what needs to be done with a class</NamespaceSummaryItem>
-<NamespaceSummaryItem name="PHydrate.Core" isDocumented="True">PHydrate.Core contains core functionality for PHydrate.  An application should not have to include this namespace directly.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="PHydrate.Util" isDocumented="True">PHydrate.Util contains utility methods used by PHydrate.  Some may be of use in the general case, but they are subject to change, so use with caution!</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="PHydrate.Util.MemberInfoWrapper" isDocumented="False" />
+      <NamespaceSummaryItem name="PHydrate.Attributes" isDocumented="True">PHydrate.Attributes includes all of the attributes used by the core to determine what needs to be done with a class</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="PHydrate.Core" isDocumented="True">PHydrate.Core contains core functionality for PHydrate.  An application should not have to include this namespace directly.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="PHydrate.Util" isDocumented="True">PHydrate.Util contains utility methods used by PHydrate.  Some may be of use in the general case, but they are subject to change, so use with caution!</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <ProjectSummary>PHydrate is an Object Relational Mapping library, similar in some ways to NHibernate.  It requires that all access to the databases be via stored procedures.</ProjectSummary>
     <IndentHtml>True</IndentHtml>
-    <KeepLogFile>False</KeepLogFile>
+    <KeepLogFile>True</KeepLogFile>
+    <PlugInConfigurations>
+      <PlugInConfig id="Additional Content Only" enabled="False">
+        <configuration />
+      </PlugInConfig>
+    </PlugInConfigurations>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
@@ -78,6 +86,8 @@ See the Fluently class for the entry point for getting an ISessionFactory object
   </ItemGroup>
   <ItemGroup>
     <None Include="About.aml" />
+    <None Include="GNU Lesser Public License.aml" />
+    <None Include="GNU Public License.aml" />
     <None Include="Reference.aml" />
     <None Include="Reference.aml" />
     <None Include="Reference.aml" />

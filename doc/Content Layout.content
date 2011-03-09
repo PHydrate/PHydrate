@@ -4,8 +4,14 @@
     <HelpKeywords>
       <HelpKeyword index="K" term="About" />
       <HelpKeyword index="K" term="License" />
-      <HelpKeyword index="K" term="Philosophy" />
+      <HelpKeyword index="K" term="Motivation" />
     </HelpKeywords>
+    <Topic id="b6d48ad9-bf60-4a23-b2b2-ea1324eaa06a" visible="True" title="GNU General Public License">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="License" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="0146dc9b-c47a-4388-a6b2-c2f3943a8eb6" visible="True" title="GNU Lesser General Public License" />
   </Topic>
   <Topic id="f6f6831e-f55e-4e3f-a3fe-c87b60257e18" visible="True" apiParentMode="InsertAsChild" />
 </Topics>

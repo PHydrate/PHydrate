@@ -99,9 +99,10 @@
 		<msbuild project="doc/PHydrate.shfbproj" />
 		<delete>
 			<fileset>
-				<include name="doc/Help/*.*" />
-				<exclude name="doc/Help/*.chm" />
-				<exclude name="doc/Help/.gitignore" />
+				<include name="${doc.dir}/Help/*.*" />
+				<exclude name="${doc.dir}/Help/*.chm" />
+				<exclude name="${doc.dir}/Help/.gitignore" />
+				<exclude name="${doc.dir}/Help/*.log" />
 			</fileset>
 		</delete>
 	</target>
