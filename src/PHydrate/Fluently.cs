@@ -30,7 +30,7 @@ namespace PHydrate
     /// <remarks>
     /// Use Fluently.Configure to access a <see cref="FluentConfiguration"/> instance to complete the configuration.
     /// <example>
-    /// <code>
+    /// <code lang="C#">
     /// <see cref="ISessionFactory"/> sessionFactory = <see cref="Fluently"/>.Configure.Database(new <see cref="SqlServerDatabaseService"/>(...)).ParameterPrefix("@").BuildSessionFactory();
     /// </code>
     /// </example>
