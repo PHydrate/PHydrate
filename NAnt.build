@@ -8,7 +8,8 @@
 	<property name="build.debug" value="false" overwrite="false" />
 	<property name="build.configuration" value="release" overwrite="false" />
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
-	<property name="outputdir" value="Build/${build.configuration}" overwrite="false" />
+	<property name="bin.dir" value="Build/${build.configuration}" overwrite="false" />
+	<property name="doc.dir" value="doc" overwrite="false" />
 
 	<assemblyfileset id="test.assemblies" />
 
@@ -16,7 +17,7 @@
 		<lib>
 			<include name="lib/*" />
 			<include name="lib/SQLite/bin" />
-			<include name="${outputdir}" />
+			<include name="${bin.dir}" />
 		</lib>
 		<include name="UMMO.TestingUtils.dll" />
 		<include name="Machine.Specifications.dll" />
@@ -30,15 +31,15 @@
 	</target>
 	
 	<target name="makeOutputFolder" description="Create the output folder">
-		<if test="${not directory::exists(outputdir)}">
+		<if test="${not directory::exists(bin.dir)}">
 			<echo message="Creating Build directory..." />
-			<mkdir dir="${outputdir}" />
+			<mkdir dir="${bin.dir}" />
 		</if>
 	</target>
 
 	<target name="buildLibrary" depends="makeOutputFolder" description="Build UMMO">
 		<echo message="Building PHydrate.dll..." />
-		<csc doc="${outputdir}/PHydrate.xml" optimize="${build.optimize}" output="${outputdir}/PHydrate.dll" target="library">
+		<csc doc="${bin.dir}/PHydrate.xml" optimize="${build.optimize}" output="${bin.dir}/PHydrate.dll" target="library">
 			<sources>
 				<include name="src/PHydrate/**/*.cs" />
 			</sources>
@@ -48,7 +49,7 @@
 	<target name="buildTests" depends="buildLibrary" description="Build the test assemblies">
 		<echo message="Building PHydrate.Specs.dll..." />
 
-		<csc output="${outputdir}/PHydrate.Specs.dll" target="library">
+		<csc output="${bin.dir}/PHydrate.Specs.dll" target="library">
 			<sources>
 				<include name="src/PHydrate.Specs/**/*.cs" />
 			</sources>
@@ -57,49 +58,64 @@
 
 		<echo message="Building PHydrate.Tests.Integration.dll..." />
 
-		<csc output="${outputdir}/PHydrate.Tests.Integration.dll" target="library">
+		<csc output="${bin.dir}/PHydrate.Tests.Integration.dll" target="library">
 			<sources>
 				<include name="src/PHydrate.Tests.Integration/**/*.cs" />
 			</sources>
 			<references refid="test.dependencies" />
 		</csc>
 
-		<copy todir="${outputdir}" flatten="true">
+		<copy todir="${bin.dir}" flatten="true">
 			<fileset refid="test.dependencies" />
 		</copy>
 
-		<copy todir="${outputdir}" flatten="true">
+		<copy todir="${bin.dir}" flatten="true">
 			<fileset>
 				<include name="src/PHydrate.Tests.Integration/IntegrationTestDb.sqlite" />
 			</fileset>
 		</copy>
 
 		<assemblyfileset id="test.assemblies">
-			<include name="${outputdir}/*.Specs.dll" />
-			<include name="${outputdir}/*.Tests.*.dll" />
+			<include name="${bin.dir}/*.Specs.dll" />
+			<include name="${bin.dir}/*.Tests.*.dll" />
 		</assemblyfileset>
 	</target>
 	
 	<target name="test" depends="buildTests" description="Execute unit tests">
-		<property name="test.folder" value="${path::combine(outputdir, 'results')}" overwrite="true" />
-		<if test="${not directory::exists(test.folder)}">
+		<property name="test.dir" value="${path::combine(bin.dir, 'results')}" overwrite="true" />
+		<if test="${not directory::exists(test.dir)}">
 			<echo message="Creating test results directory..." />
-			<mkdir dir="${test.folder}" />
+			<mkdir dir="${test.dir}" />
 		</if>
 		<!-- TODO: Get the mspec task from nant-extensions and use that. -->
 		<exec program="lib/Machine.Specifications/mspec.exe">
-			<arg value="--html"/><arg value="${test.folder}" />
+			<arg value="--html"/><arg value="${test.dir}" />
 			<arg line="${fileset::to-string('test.assemblies', ' ')}"/>
 		</exec>
 	</target>
 
-	<target name="distro" depends="buildLibrary">
+	<target name="buildDocs" depends="buildLibrary">
+		<echo message="Building .chm documentation..." />
+		<msbuild project="doc/PHydrate.shfbproj" />
+		<delete>
+			<fileset>
+				<include name="doc/Help/*.*" />
+				<exclude name="doc/Help/*.chm" />
+				<exclude name="doc/Help/.gitignore" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="distro" depends="buildLibrary,buildDocs">
 		<echo message="Creating zip file..." />
-		<zip zipfile="${outputdir}/PHydrate-${build.configuration}.zip">
-			<fileset basedir="${outputdir}">
+		<zip zipfile="${bin.dir}/PHydrate-${build.configuration}.zip">
+			<fileset basedir="${bin.dir}">
 				<include name="*.xml" />
 				<include name="*.dll" />
 				<exclude name="*.Specs.dll" />
+			</fileset>
+			<fileset basedir="${doc.dir}/Help">
+				<include name="*.chm" />
 			</fileset>
 		</zip>
 	</target>
