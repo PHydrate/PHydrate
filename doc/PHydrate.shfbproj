@@ -15,11 +15,11 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>.\Help\</OutputPath>
+    <OutputPath>.</OutputPath>
     <HtmlHelpName>PHydrate</HtmlHelpName>
     <Language>en-US</Language>
     <FrameworkVersion>.NET 3.5</FrameworkVersion>
-    <HelpFileFormat>HtmlHelp1, MSHelp2, MSHelpViewer</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <CopyrightText>Copyright &amp;#169%3b 2010-2011, Stephen M Czetty</CopyrightText>
     <FeedbackEMailAddress>steve.czetty%40gmail.com</FeedbackEMailAddress>
     <HelpTitle>PHydrate Class Library</HelpTitle>
@@ -57,7 +57,7 @@ See the Fluently class for the entry point for getting an ISessionFactory object
     <IndentHtml>True</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <PlugInConfigurations>
-      <PlugInConfig id="Additional Content Only" enabled="False">
+      <PlugInConfig id="Additional Content Only" enabled="True">
         <configuration />
       </PlugInConfig>
     </PlugInConfigurations>
@@ -82,16 +82,31 @@ See the Fluently class for the entry point for getting an ISessionFactory object
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Win32' ">
   </PropertyGroup>
   <ItemGroup>
-    <ContentLayout Include="Content Layout.content" />
+    <ContentLayout Include="Help\Content Layout.content" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="About.aml" />
-    <None Include="GNU Lesser Public License.aml" />
-    <None Include="GNU Public License.aml" />
-    <None Include="Reference.aml" />
-    <None Include="Reference.aml" />
-    <None Include="Reference.aml" />
-    <None Include="Simple Use Case.aml" />
+    <None Include="Help\GettingStarted\Basic Source Code.aml" />
+    <None Include="Help\GettingStarted\Getting an object.aml" />
+    <None Include="Help\GettingStarted\Configuring PHydrate.aml" />
+    <None Include="Help\GettingStarted\Associating the object.aml" />
+    <None Include="Help\GettingStarted\Creating the object.aml" />
+    <None Include="Help\GettingStarted\Setting Up the Sproc.aml" />
+    <None Include="Help\GettingStarted\Basic Walkthrough.aml" />
+    <None Include="Help\About\About.aml" />
+    <None Include="Help\About\GNU Lesser Public License.aml" />
+    <None Include="Help\About\GNU Public License.aml" />
+    <None Include="Help\Reference.aml" />
+    <None Include="Help\Reference.aml" />
+    <None Include="Help\Reference.aml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Help\About\" />
+    <Folder Include="Help\GettingStarted\" />
+    <Folder Include="Help\" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeSnippets Include="Help\GettingStarted\Code.snippets" />
+    <CodeSnippets Include="Help\GettingStarted\Database.snippets" />
   </ItemGroup>
   <!-- Import the SHFB build targets -->
   <Import Project="$(SHFBROOT)\SandcastleHelpFileBuilder.targets" />

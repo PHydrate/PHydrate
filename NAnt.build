@@ -97,14 +97,6 @@
 	<target name="buildDocs" depends="buildLibrary">
 		<echo message="Building .chm documentation..." />
 		<msbuild project="doc/PHydrate.shfbproj" />
-		<delete>
-			<fileset>
-				<include name="${doc.dir}/Help/*.*" />
-				<exclude name="${doc.dir}/Help/*.chm" />
-				<exclude name="${doc.dir}/Help/.gitignore" />
-				<exclude name="${doc.dir}/Help/*.log" />
-			</fileset>
-		</delete>
 	</target>
 
 	<target name="distro" depends="buildLibrary,buildDocs">

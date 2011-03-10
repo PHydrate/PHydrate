@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="cb44c9c3-127a-4bf8-8097-bab9c7a8330f" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <!-- <autoOutline /> -->
+      <para>
+      	PHydrate requires a stored procedure in the database to retrieve database
+      	objects.  This allows the database layer to have fine-grained control
+      	over the management of its objects, and isolates the application
+      	from changes to the schema.
+      </para>
+    </introduction>
+    <section address="SimpleSprocSetup">
+      <title>Setting up the stored procedure</title>
+      <content>
+      	<para>
+      		The stored procedure should take as (optional) parameters
+      		any data columns that you would like the application to
+      		be able to query against.
+      	</para>
+      	<para>
+      		The procedure should also add a path for no parameters being
+      		passed, especially if you plan to use explicit specifications
+      		in your application code.
+      	</para>
+      	<example>
+        	<codeReference>GetProducts#Basic</codeReference>
+        </example>
+      </content>
+    </section>
+    <nextSteps>
+      <content>
+      	<para>
+      		<link xlink:href="27f3514f-4f77-40d5-a83a-3d48afc4ff6e">
+      			Creating the object class
+      		</link>
+      	</para>
+      </content>
+    </nextSteps>
+    <relatedTopics>
+      <!-- One or more of the following:
+           - A local link
+           - An external link
+           - A code entity reference
+
+      <link xlink:href="Other Topic's ID">Link text</link>
+      <externalLink>
+          <linkText>Link text</linkText>
+          <linkAlternateText>Optional alternate link text</linkAlternateText>
+          <linkUri>URI</linkUri>
+      </externalLink>
+      <codeEntityReference>API member ID</codeEntityReference>
+
+      Examples:
+
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8278">Some other topic</link>
+
+      <externalLink>
+          <linkText>SHFB on CodePlex</linkText>
+          <linkAlternateText>Go to CodePlex</linkAlternateText>
+          <linkUri>http://shfb.codeplex.com</linkUri>
+      </externalLink>
+
+      <codeEntityReference>T:TestDoc.TestClass</codeEntityReference>
+      <codeEntityReference>P:TestDoc.TestClass.SomeProperty</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor(System.String,System.Int32)</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.ToString</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.FirstMethod</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.SecondMethod(System.Int32,System.String)</codeEntityReference>
+      -->
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>
