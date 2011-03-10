@@ -57,7 +57,7 @@ See the Fluently class for the entry point for getting an ISessionFactory object
     <IndentHtml>True</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <PlugInConfigurations>
-      <PlugInConfig id="Additional Content Only" enabled="True">
+      <PlugInConfig id="Additional Content Only" enabled="False">
         <configuration />
       </PlugInConfig>
     </PlugInConfigurations>
