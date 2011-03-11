@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="8628a39f-e3e8-45a1-8e8c-7a1ee9763ff5" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">   
+    <introduction>
+      <para>
+      	PHydrate can consume multiple recordsets returned from a single
+      	stored procedure call.  This takes very little additional configuration.
+      </para>
+    </introduction>
+    <!-- Optional additional procedure or section with procedure -->
+    <section address="AddRecordsetsToSproc">
+      <title>Add additional, related recordsets to stored procedure</title>
+      <content>
+       	<para>
+       		The stored procedure should be changed to return any additional
+       		recordsets that you would like to reference from the original
+       		aggregate root.
+       	</para>
+       	<para>
+       		This can complicate the stored procedure some.  The example
+       		below is only an example, I make no claims that it is the
+       		best way to implement this.
+       	</para>
+       	<example>
+       		<codeReference>GetProducts#Complete</codeReference>
+       	</example>
+      </content>
+    </section>
+    <nextSteps>
+      <content>
+      	<para>
+      		<link xlink:href="faea710d-9252-4813-af2a-c1f695997ed3">
+      			Create new classes
+      		</link>
+      	</para>
+      </content>
+    </nextSteps>
+    <relatedTopics>
+      <!-- One or more of the following:
+           - A local link
+           - An external link
+           - A code entity reference
+
+      <link xlink:href="Other Topic's ID">Link text</link>
+      <externalLink>
+          <linkText>Link text</linkText>
+          <linkAlternateText>Optional alternate link text</linkAlternateText>
+          <linkUri>URI</linkUri>
+      </externalLink>
+      <codeEntityReference>API member ID</codeEntityReference>
+
+      Examples:
+
+      <link xlink:href="00e97994-e9e6-46e0-b420-5be86b2f8278">Some other topic</link>
+
+      <externalLink>
+          <linkText>SHFB on CodePlex</linkText>
+          <linkAlternateText>Go to CodePlex</linkAlternateText>
+          <linkUri>http://shfb.codeplex.com</linkUri>
+      </externalLink>
+
+      <codeEntityReference>T:TestDoc.TestClass</codeEntityReference>
+      <codeEntityReference>P:TestDoc.TestClass.SomeProperty</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.#ctor(System.String,System.Int32)</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.ToString</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.FirstMethod</codeEntityReference>
+      <codeEntityReference>M:TestDoc.TestClass.SecondMethod(System.Int32,System.String)</codeEntityReference>
+      -->
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>

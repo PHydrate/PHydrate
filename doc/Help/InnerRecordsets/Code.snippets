@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- This is an example code snippets file -->
+<examples>
+  <item id="ProductCategory.cs#Complete">
+    <sampleCode language="CSharp">
+    	<![CDATA[
+using System;
+using PHydrate.Attributes;
+
+namespace AdventureWorksLib
+{
+    public class ProductCategory : PropertyStringOutput
+    {
+        [PrimaryKey]
+        private int ProductCategoryId { get; set; }
+
+        public ProductCategory ParentProductCategory { get; private set; }
+
+        public string Name { get; private set; }
+
+        public Guid Rowguid { get; private set; }
+
+        public DateTime ModifiedDate { get; private set; }
+    }
+}
+]]>
+    </sampleCode>
+  </item>
+  
+  <item id="ProductModel.cs#Complete">
+  	<sampleCode language="CSharp">
+  		<![CDATA[
+using System;
+using PHydrate.Attributes;
+
+namespace AdventureWorksLib
+{
+    public class ProductModel : PropertyStringOutput
+    {
+        [PrimaryKey]
+        private int ProductModelId { get; set; }
+
+        public string Name { get; private set; }
+
+        public string CatalogDescription { get; private set; }
+
+        public Guid Rowguid { get; set; }
+
+        public DateTime ModifiedDate { get; private set; }
+    }
+}
+]]>
+	  </sampleCode>
+	</item>
+	
+	<item id="Product.cs#InnerClasses">
+		<sampleCode language="CSharp">
+			<![CDATA[
+...
+
+public ProductCategory ProductCategory { get; private set; }
+
+public ProductModel ProductModel { get; private set; }
+
+...
+]]>
+		</sampleCode>
+	</item>
+	
+	<item id="Product.cs#InnerClassesWithAttributes">
+		<sampleCode language="CSharp">
+			<![CDATA[
+...
+
+[Recordset(1)]
+public ProductCategory ProductCategory { get; private set; }
+
+[Recordset(2)]
+public ProductModel ProductModel { get; private set; }
+
+...
+]]>
+		</sampleCode>
+	</item>
+</examples>
+

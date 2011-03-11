@@ -21,7 +21,13 @@
       </content>
     </section>
     <nextSteps>
-      <content><para>Next steps info goes here</para></content>
+      <content>
+      	<para>
+      		<link xlink:href="1ee51ad9-3a62-422e-91c2-9821b91ffdd7">
+      			Retrieving data using multiple recordsets
+      		</link>
+      	</para>
+      </content>
     </nextSteps>
     <relatedTopics>
     	<codeEntityReference>T:PHydrate.ISessionFactory</codeEntityReference>

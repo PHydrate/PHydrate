@@ -85,6 +85,16 @@ See the Fluently class for the entry point for getting an ISessionFactory object
     <ContentLayout Include="Help\Content Layout.content" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Help\UsingSpecifications\UsingSpecifications.aml" />
+    <None Include="Help\InnerRecordsets\Final Source Code.aml" />
+    <None Include="Help\InnerRecordsets\AssociateNewClassMembersToSproc.aml" />
+    <None Include="Help\InnerRecordsets\AddClassesToAggregateRoot.aml" />
+    <None Include="Help\InnerRecordsets\Retrieving data using multiple recordsets.aml" />
+    <None Include="Help\InnerRecordsets\Create new classes.aml" />
+    <None Include="Help\InnerRecordsets\AddInnerRecordsetsToSproc.aml" />
+    <None Include="Help\InnerRecordsets\Create new classes.aml" />
+    <None Include="Help\InnerRecordsets\AddInnerRecordsetsToSproc.aml" />
+    <None Include="Help\InnerRecordsets\Retrieving data using multiple recordsets.aml" />
     <None Include="Help\GettingStarted\Basic Source Code.aml" />
     <None Include="Help\GettingStarted\Getting an object.aml" />
     <None Include="Help\GettingStarted\Configuring PHydrate.aml" />
@@ -100,11 +110,13 @@ See the Fluently class for the entry point for getting an ISessionFactory object
     <None Include="Help\Reference.aml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Help\InnerRecordsets\" />
     <Folder Include="Help\About\" />
     <Folder Include="Help\GettingStarted\" />
     <Folder Include="Help\" />
   </ItemGroup>
   <ItemGroup>
+    <CodeSnippets Include="Help\InnerRecordsets\Code.snippets" />
     <CodeSnippets Include="Help\GettingStarted\Code.snippets" />
     <CodeSnippets Include="Help\GettingStarted\Database.snippets" />
   </ItemGroup>

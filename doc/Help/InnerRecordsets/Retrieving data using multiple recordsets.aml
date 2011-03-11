@@ -1,74 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="35691f60-9937-4e25-8424-8d5b28af41eb" revisionNumber="1">
+<topic id="1ee51ad9-3a62-422e-91c2-9821b91ffdd7" revisionNumber="1">
   <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <autoOutline />
-      <para>Getting started with PHydrate</para>
+      <para>
+      	PHydrate supports pulling data for nested class instances with a
+      	single database call, using multiple recordsets.
+      </para>
     </introduction>
     <prerequisites>
     	<content>
-    		<para>
-	    		This walkthrough assumes that the AdventureWorks sample database
-	    		has been installed.  You can get it at <externalLink>
-					<linkText>http://msftdbprodsamples.codeplex.com/</linkText>
-					<linkUri>http://msftdbprodsamples.codeplex.com/</linkUri>
-					<linkTarget>_blank</linkTarget>
-				</externalLink>.
-    		</para>
+    		This example builds on the "Getting Started" example, also found
+    		in this help file.
     	</content>
     </prerequisites>
     <!-- One or more procedure or section with procedure -->
     <procedure>
-      <title>Getting Started with PHydrate</title>
+      <title>Retrieving data using multiple recordsets</title>
       <steps class="ordered">
         <step>
           <content>
             <para>
-            	<link xlink:href="cb44c9c3-127a-4bf8-8097-bab9c7a8330f" />
+            	<link xlink:href="8628a39f-e3e8-45a1-8e8c-7a1ee9763ff5" />
             </para>
           </content>
         </step>
         <step>
           <content>
             <para>
-            	<link xlink:href="27f3514f-4f77-40d5-a83a-3d48afc4ff6e" />
+            	<link xlink:href="faea710d-9252-4813-af2a-c1f695997ed3" />
             </para>
           </content>
         </step>
         <step>
           <content>
             <para>
-            	<link xlink:href="5f290d82-0308-4804-b25a-fec32edcf9f1" />
+            	<link xlink:href="dab75867-061a-4bbb-a646-25a4ead6c419" />
             </para>
           </content>
         </step>
         <step>
           <content>
-            <para>
-            	<link xlink:href="493d43bc-2eb9-4374-971f-01782c99f547" />
-            </para>
-          </content>
-        </step>
-        <step>
-          <content>
-            <para>
-            	<link xlink:href="3dc488d6-2317-4faa-a583-e03342a71300" />
-            </para>
+            <para>Associate new class members to the stored procedure</para>
           </content>
         </step>
       </steps>
-      <!-- <conclusion>Optional conclusion</conclusion> -->
+      <conclusion>
+      	After making these changes, when application code retrieves the
+      	aggregate root, it will also include the contained classes.
+      </conclusion>
     </procedure>
-    <!-- Optional additional procedure or section with procedure -->
+    <!-- Optional next steps info
     <nextSteps>
-      <content>
-      	<para>
-      		<link xlink:href="1ee51ad9-3a62-422e-91c2-9821b91ffdd7">
-      			Retrieving data using multiple recordsets
-      		</link>
-      	</para>
-      </content>
+      <content><para>Next steps info goes here</para></content>
     </nextSteps>
+    -->
     <relatedTopics>
       <!-- One or more of the following:
            - A local link

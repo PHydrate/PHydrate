@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="faea710d-9252-4813-af2a-c1f695997ed3" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+      	PHydrate needs a class defined for each entity
+      	retrieved from the database.
+      </para>
+    </introduction>
+    <section address="CreateNewClasses">
+      <title>Create New Classes</title>
+      <content>
+       <para>
+       		Simply create new classes, like you did for the aggregate root,
+       		specifying a
+       		[<codeEntityReference>
+       			T:PHydrate.Attributes.PrimaryKeyAttribute
+       		</codeEntityReference>]
+       </para>
+       <example>
+       		<codeReference>ProductCategory.cs#Complete</codeReference>
+       		<codeReference>ProductModel.cs#Complete</codeReference>
+       </example>
+      </content>
+    </section>
+    <nextSteps>
+      <content>
+      	<para>
+      		<link xlink:href="dab75867-061a-4bbb-a646-25a4ead6c419">
+      			Add classes to aggregate root class
+      		</link>
+      	</para>
+      </content>
+    </nextSteps>
+    <relatedTopics>
+    	<codeEntityReference>
+    		T:PHydrate.Attributes.PrimaryKeyAttribute
+    	</codeEntityReference>
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>

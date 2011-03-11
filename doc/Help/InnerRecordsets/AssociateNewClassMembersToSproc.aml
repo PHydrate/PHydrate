@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="75721c0b-516e-454f-870e-df5d88b8b3de" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+      	The final step is to tell PHydrate where to get the data for the
+      	contained classes.
+      </para>
+    </introduction>
+    <section address="Section1">
+      <title>Associate new class members to the stored procedure</title>
+      <content>
+     	<para>
+     		To tell PHydrate which recordset should be used to populate
+     		the contained classes, use
+     		<codeEntityReference>
+     			T:PHydrate.Attributes.RecordsetAttribute
+     		</codeEntityReference>:
+     	</para>
+     	<example>
+     		<codeReference>Product.cs#InnerClassesWithAttributes</codeReference>
+     	</example>
+      </content>
+    </section>
+    <!-- Optional next steps info
+    <nextSteps>
+      <content><para>Next steps info goes here</para></content>
+    </nextSteps>
+    -->
+    <relatedTopics>
+    	<codeEntityReference>
+     		T:PHydrate.Attributes.RecordsetAttribute
+     	</codeEntityReference>
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>
