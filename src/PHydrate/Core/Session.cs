@@ -274,13 +274,6 @@ namespace PHydrate.Core
                 return aggregateRoot.Values;
             }
 
-            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, params string[] primaryKeyMembers)
-            {
-                return typeof(T).GetObjectsHashCodeByFieldValues(
-                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
-                        x => x.GetValue( obj ) ) );
-            }
-
             private IEnumerable<T> HydrateRecordset(IDataReader dataReader)
             {
                 Func<IDictionary<string, object>, T> hydratorFunction = GetHydratorFunction();
