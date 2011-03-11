@@ -27,7 +27,7 @@ namespace PHydrate.Attributes
     ///   Specify that this member is loaded from another recordset
     /// </summary>
     [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
-    public class RecordsetAttribute : Attribute
+    public sealed class RecordsetAttribute : Attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecordsetAttribute"/> class.

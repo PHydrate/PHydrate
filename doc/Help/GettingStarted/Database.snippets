@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- This is an example code snippets file -->
+<examples>
+  <item id="GetProducts#Complete">
+    <sampleCode language="sql">
+		<![CDATA[
+CREATE PROCEDURE [dbo].[GetProduct]
+	@ProductNumber NVARCHAR(25) = NULL, 
+	@Name NVARCHAR(50) = NULL
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+	DECLARE @ProductId INT
+	DECLARE @ProductCategoryId INT
+	DECLARE @ProductModelId INT
+	DECLARE @ProductTable TABLE
+	       (ProductId INT NOT NULL
+	       ,ProductCategoryId INT NOT NULL
+	       ,ProductModelId INT NOT NULL
+	       )
+
+    -- Insert statements for procedure here
+	IF (@ProductNumber IS NOT NULL)
+	BEGIN
+		SELECT @ProductId = ProductID, @ProductCategoryId = ProductCategoryID, @ProductModelId = ProductModelID
+		  FROM AdventureWorksLT2008.SalesLT.Product
+		 WHERE ProductNumber = @ProductNumber
+    END
+	ELSE BEGIN
+		IF (@Name IS NOT NULL)
+		    INSERT INTO @ProductTable
+			SELECT ProductID, ProductCategoryID, ProductModelID
+			  FROM AdventureWorksLT2008.SalesLT.Product
+			 WHERE Name like @Name
+		ELSE
+		    INSERT INTO @ProductTable
+			SELECT ProductID, ProductCategoryId, ProductModelId
+			  FROM AdventureWorksLT2008.SalesLT.Product
+	END
+	
+	SELECT * FROM AdventureWorksLT2008.SalesLT.Product
+	 WHERE ProductID = @ProductId
+	    OR ProductID IN (SELECT ProductID FROM @ProductTable)
+	 
+	SELECT * FROM AdventureWorksLT2008.SalesLT.ProductCategory
+	 WHERE ProductCategoryID = @ProductCategoryId
+	    OR ProductCategoryID IN (SELECT ProductCategoryID FROM @ProductTable)
+	 
+	SELECT * FROM AdventureWorksLT2008.SalesLT.ProductModel
+	 WHERE ProductModelID = @ProductModelId
+	    OR ProductModelID IN (SELECT ProductModelID FROM @ProductTable)
+END
+		]]>
+    </sampleCode>
+  </item>
+  
+  <item id="GetProducts#Basic">
+  	<sampleCode language="sql">
+  		<![CDATA[
+CREATE PROCEDURE [dbo].[GetProduct]
+	@ProductNumber NVARCHAR(25) = NULL, 
+	@Name NVARCHAR(50) = NULL
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+    -- Insert statements for procedure here
+	IF (@ProductNumber IS NOT NULL)
+	BEGIN
+		SELECT *
+		  FROM AdventureWorksLT2008.SalesLT.Product
+		 WHERE ProductNumber = @ProductNumber
+    END
+	ELSE BEGIN
+		IF (@Name IS NOT NULL)
+			SELECT *
+			  FROM AdventureWorksLT2008.SalesLT.Product
+			 WHERE Name like @Name
+		ELSE
+			SELECT *
+			  FROM AdventureWorksLT2008.SalesLT.Product
+	END
+END
+  		]]>
+  	</sampleCode>
+  </item>
+</examples>
+

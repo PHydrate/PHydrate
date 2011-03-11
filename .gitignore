@@ -9,3 +9,4 @@ _ReSharper*
 *.tdnet
 lib/machine.specifications/Tests
 Build/
+~*

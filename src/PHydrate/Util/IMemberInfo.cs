@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -22,7 +22,7 @@
 using System;
 using System.Reflection;
 
-namespace PHydrate.Util.MemberInfoWrapper
+namespace PHydrate.Util
 {
     /// <summary>
     /// Wrapper for MemberInfo derivatives

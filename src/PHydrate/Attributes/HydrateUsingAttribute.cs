@@ -26,7 +26,7 @@ namespace PHydrate.Attributes
     ///   Annotate a class with the stored procedure used to get an object
     /// </summary>
     [ MeansImplicitUse( ImplicitUseKindFlags.Instantiated, ImplicitUseTargetFlags.Itself ) ]
-    public class HydrateUsingAttribute : CrudAttributeBase
+    public sealed class HydrateUsingAttribute : CrudAttributeBase
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "HydrateUsingAttribute" /> class.

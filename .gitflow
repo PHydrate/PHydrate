@@ -1,0 +1,7 @@
+git config --local 'gitflow.branch.master' 'master'
+git config --local 'gitflow.branch.develop' 'develop'
+git config --local 'gitflow.prefix.feature' 'feature/'
+git config --local 'gitflow.prefix.release' 'release/'
+git config --local 'gitflow.prefix.hotfix' 'hotfix/'
+git config --local 'gitflow.prefix.support' 'support/'
+git config --local 'gitflow.prefix.versiontag' 'v'

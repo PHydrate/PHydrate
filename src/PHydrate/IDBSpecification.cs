@@ -26,15 +26,18 @@ using System.Linq.Expressions;
 namespace PHydrate
 {
     /// <summary>
-    /// Database criteria for a type
+    /// A specification interface for providing a boolean <see cref="Expression"/> to be used to filter results from the database
     /// </summary>
+    /// <remarks>
+    /// The parsed expression will be used to pass parameters to the stored procedure.
+    /// You should only use object members that are supported by the underlying stored procedure.
+    /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
     public interface IDbSpecification< T > : ISpecification< T >
     {
         /// <summary>
-        /// Gets the criteria.
+        /// Gets an <see cref="Expression"/> that will be parsed to send parameters to the stored procedure.
         /// </summary>
-        /// <value>The criteria.</value>
         Expression< Func< T, bool > > Criteria { get; }
     }
 }

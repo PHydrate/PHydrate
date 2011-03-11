@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="5f290d82-0308-4804-b25a-fec32edcf9f1" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+      	After you have the stored procedure and the class, you will need to
+      	tell PHydrate how to relate the two.  This is done using attributes,
+      	defined in the <codeEntityReference>N:PHydrate.Attributes</codeEntityReference>
+      	namespace.
+      </para>
+    </introduction>
+    <section address="AssociatingObjectWithSproc">
+      <title>Associating the object with the stored procedure</title>
+      <content>
+        <para>
+        	To tell PHydrate what stored procedure should be called
+        	when getting an object, add the
+        	<codeEntityReference>T:PHydrate.Attributes.HydrateUsingAttribute</codeEntityReference>,
+        	specifying the name of the stored procedure to the class:
+        </para>
+        <example>
+        	<codeReference>Product.cs#HydrateUsing</codeReference>
+        </example>
+        <para>
+        	You will also have to inform PHydrate what the primary key(s) are,
+        	using the <codeEntityReference>T:PHydrate.Attributes.PrimaryKeyAttribute</codeEntityReference>
+        	class:
+        </para>
+        <example>
+        	<codeReference>Product.cs#PrimaryKey</codeReference>
+        </example>
+      </content>
+    </section>
+    <nextSteps>
+      <content>
+      	<para>
+      		<link xlink:href="493d43bc-2eb9-4374-971f-01782c99f547">
+      			Configuring PHydrate
+      		</link>
+      	</para>
+      </content>
+    </nextSteps>
+    <relatedTopics>
+      <codeEntityReference>N:PHydrate.Attributes</codeEntityReference>
+      <codeEntityReference>T:PHydrate.Attributes.HydrateUsingAttribute</codeEntityReference>
+      <codeEntityReference>T:PHydrate.Attributes.PrimaryKeyAttribute</codeEntityReference>
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>

@@ -22,7 +22,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
+using Machine.Specifications.Annotations;
 using Rhino.Mocks;
+using Rhino.Mocks.Constraints;
 
 namespace PHydrate.Specs.Core.Session
 {
@@ -31,6 +33,22 @@ namespace PHydrate.Specs.Core.Session
         SessionSpecificationHydrateWithSecondaryRecordsetBase
     {
         private static IList< TestObjectSecondaryRecordset > _requestedObjects;
+
+        [ UsedImplicitly ]
+        private Establish Context = () => {
+                                        DataReaderMock.AddRecordSet( "AggregateKey", "Key" );
+                                        DataReaderMock.AddRow( 1, 1 );
+                                        DataReaderMock.AddRow( 2, 2 );
+                                        DataReaderMock.AddRecordSet( "Key" );
+                                        DataReaderMock.AddRow( 1 );
+                                        DataReaderMock.AddRow( 2 );
+                                        DataReaderMock.Playback();
+
+                                        DatabaseService.Expect(
+                                            x => x.ExecuteStoredProcedureReader( string.Empty, null ) ).
+                                            Constraints( Is.Equal( "TestStoredProcedure" ), Is.NotNull() ).Return(
+                                                DataReaderMock );
+                                    };
 
         private Because Of =
             () =>
@@ -41,8 +59,7 @@ namespace PHydrate.Specs.Core.Session
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_aggregate_key
-            =
-            () => AssertDatabaseServiceParameter( "@AggregateKey", 1, x => x.ExecuteStoredProcedureReader( "", null ) );
+            = () => AssertDatabaseServiceParameter( "@AggregateKey", 1, x => x.ExecuteStoredProcedureReader( string.Empty, null ) );
 
         private It Should_include_correct_internal_record
             = () => _requestedObjects[ 0 ].InnerObject.Key.ShouldEqual( 1 );

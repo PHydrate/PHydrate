@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="10eb6f7b-27f7-4800-a68c-ba89b37b0423" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <autoOutline />
+      <para>The final source code for this example</para>
+    </introduction>
+    <section address="GetProducts">
+      <title>GetProducts</title>
+      <content>
+		<codeReference>GetProducts#Complete</codeReference>
+      </content>
+    </section>
+    <section address="Product.cs">
+    	<title>Product.cs</title>
+    	<content>
+    		<codeReference>Product.cs#Complete</codeReference>
+    	</content>
+    </section>
+    <section address="ProductCategory.cs">
+    	<title>ProductCategory.cs</title>
+    	<content>
+    		<codeReference>ProductCategory.cs#Complete</codeReference>
+    	</content>
+    </section>
+    <section address="ProductModel.cs">
+    	<title>ProductModel.cs</title>
+    	<content>
+    		<codeReference>ProductModel.cs#Complete</codeReference>
+    	</content>
+    </section>
+    <section address="Program.cs">
+    	<title>Program.cs</title>
+    	<content>
+    		<codeReference>Program.cs#Complete</codeReference>
+    	</content>
+    </section>
+    <relatedTopics />
+  </developerWalkthroughDocument>
+</topic>

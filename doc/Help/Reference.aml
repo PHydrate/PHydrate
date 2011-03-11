@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="f6f6831e-f55e-4e3f-a3fe-c87b60257e18" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>PHydrate Reference</para>
+    </introduction>
+    <section address="Section1">
+      <content>
+        <para>
+        	The sub-topics below are auto-generated from the xmldoc comments
+        	in the PHydrate sourcecode.  Every effort has been made to keep
+        	them in sync with the actual API.
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+    </relatedTopics>
+  </developerConceptualDocument>
+</topic>

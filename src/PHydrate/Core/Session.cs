@@ -27,7 +27,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
 using PHydrate.Util;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {
@@ -81,13 +80,14 @@ namespace PHydrate.Core
             return HydrateFromStoredProcedure( hydrationAttribute, query );
         }
 
+        /// <exception cref="PHydrateException">Unable to process object of type {0}.  Define a stored procedure with [{0}]</exception>
         private static TAttribute GetCrudAttributeFromType< T, TAttribute >() where TAttribute : CrudAttributeBase
         {
             var crudAttribute = typeof(T).GetAttribute< TAttribute >();
             if ( crudAttribute == null || String.IsNullOrEmpty( crudAttribute.ProcedureName ) )
                 throw new PHydrateException(
                     "Unable to process object of type {0}.  Define a stored procedure with [{0}]",
-                    typeof(T).FullName, typeof(TAttribute).Name.Replace( "Attribute", "" ) );
+                    typeof(T).FullName, typeof(TAttribute).Name.Replace( "Attribute", string.Empty ) );
 
             return crudAttribute;
         }
@@ -140,6 +140,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToDelete">The object to delete.</param>
+        /// <exception cref="PHydrateException">Delete of object failed.</exception>
         public void Delete< T >( T objectToDelete )
             where T : class
         {
@@ -177,6 +178,7 @@ namespace PHydrate.Core
                 InsertObject( objectToPersist );
         }
 
+        /// <exception cref="PHydrateException">Update of object failed.</exception>
         private void UpdateObject< T >( T objectToPersist )
             where T : class
         {
@@ -223,41 +225,60 @@ namespace PHydrate.Core
                            : HydrateRecordset(dataReader);
             }
 
+            /// <exception cref="PHydrateException">Missing expected recordset from stored procedure</exception>
             private IEnumerable<T> HydrateRecordsetWithInternals(IDataReader dataReader, IEnumerable<IMemberInfo> internalRecordsets)
             {
                 IDictionary< int, T > aggregateRoot =
                     HydrateRecordset( dataReader ).ToDictionary( x => x.GetObjectsHashCodeByPrimaryKeys() );
 
-                IList< string > primaryKeyMembers =
-                    typeof(T).GetMembersWithAttribute< PrimaryKeyAttribute >().Select( x => x.Wrapped.Name ).ToArray();
-
                 foreach ( IMemberInfo internalRecordset in internalRecordsets )
                 {
-                    if ( !dataReader.NextResult() ) // TODO: Throw an exception?
-                        break;
+                    if (!dataReader.NextResult())
+                        throw new PHydrateException( "Missing expected recordset from stored procedure" ); 
 
-                    // TODO
-                    // Assign values to appropriate member in aggregateRoot
-                    // Support single object, IEnumerable, and IList for now.  IDictionary later.
                     IEnumerable enumerator =
                         internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
                             x => x.HydrateFromDataReader( dataReader ),
                             _defaultObjectHydrator,
                             _hydratedObjects
                             );
+
+                    // TODO: This loop is likely to be unnecessary
                     foreach ( object obj in enumerator )
                     {
-                        int lookupHash = internalRecordset.GetLookupHash< T >( obj, primaryKeyMembers );
+                        if (internalRecordset.Type.IsAssignableFrom( obj.GetType()))
+                        {
+                            // Simple type
+                            int objectHash = obj.GetObjectsHashCodeByPrimaryKeys();
 
-                        if ( !aggregateRoot.ContainsKey( lookupHash ) )
+                            // Find the member in aggregateRoot that contains this member
+                            IMemberInfo recordset = internalRecordset;
+                            foreach (
+                                T o in
+                                    aggregateRoot.Values.AsEnumerable().Where(
+                                        x => recordset.GetValue(x) != null &&  recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
+                                recordset.SetValue( o, obj );
                             continue;
+                        }
 
-                        if ( obj.GetType().InheritsFromOrImplements(internalRecordset.Type) &&
-                             internalRecordset.GetValue( aggregateRoot[ lookupHash ] ) == null ) // Simple type
-                            internalRecordset.SetValue( aggregateRoot[ lookupHash ], obj );
+                        // TODO: IEnumerable, IList
+                        //if (internalRecordset.Type.IsAssignableFrom(typeof(IEnumerator<>).MakeGenericType(obj.GetType())))
+                        //{
+                        //    int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
+
+                        //    if ( !aggregateRoot.ContainsKey( lookupHash ) )
+                        //        continue;
+                        //}
                     }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, params string[] primaryKeyMembers)
+            {
+                return typeof(T).GetObjectsHashCodeByFieldValues(
+                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
+                        x => x.GetValue( obj ) ) );
             }
 
             private IEnumerable<T> HydrateRecordset(IDataReader dataReader)
@@ -299,5 +320,17 @@ namespace PHydrate.Core
                 return hydratedObject;
             }
         }
+
+        #region Implementation of IDisposable
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // TODO: Make other objects used by this class disposable
+        }
+
+        #endregion
     }
 }

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util.MemberInfoWrapper;
@@ -122,6 +123,47 @@ namespace PHydrate.Util
 
                 return values.Aggregate( hash, ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
             }
+        }
+
+        /// <summary>
+        /// Returns null if the object is DbNull, else returns the object.
+        /// </summary>
+        /// <param name="obj">The obj.</param>
+        /// <returns></returns>
+        public static T DbNullToDefault<T>(this object obj)
+        {
+            return obj is DBNull ? default(T) : (T)obj;
+        }
+
+        /// <summary>
+        /// Executes the generic method.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="obj">The obj.</param>
+        /// <param name="methodCall">The method call.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
+        public static object ExecuteGenericMethod<TSource>(this TSource obj, Expression<Func<TSource, object>> methodCall, Type type)
+        {
+            var unaryExpression = methodCall.Body as UnaryExpression;
+            MethodCallExpression method;
+            if (unaryExpression != null && unaryExpression.NodeType == ExpressionType.Convert)
+                method = unaryExpression.Operand as MethodCallExpression;
+            else
+                method = methodCall.Body as MethodCallExpression;
+
+            if (method == null)
+                throw new PHydrateInternalException("Lambda does not contain a method call.");
+
+            MethodInfo methodInfo = typeof (TSource).GetMethod(method.Method.Name,
+                                                               BindingFlags.Instance | BindingFlags.Static |
+                                                               BindingFlags.Public |
+                                                               BindingFlags.NonPublic);
+
+            MethodInfo genericMethod = methodInfo.MakeGenericMethod(type);
+
+            return genericMethod.Invoke(obj, method.Arguments.Select(x => x.GetValue()).ToArray());
         }
     }
 }

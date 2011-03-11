@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="6dd9b648-13b0-4a87-90e2-555c19210b85" visible="True">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="About" />
+      <HelpKeyword index="K" term="License" />
+      <HelpKeyword index="K" term="Motivation" />
+    </HelpKeywords>
+    <Topic id="b6d48ad9-bf60-4a23-b2b2-ea1324eaa06a" visible="True" title="GNU General Public License">
+      <HelpKeywords>
+        <HelpKeyword index="K" term="License" />
+      </HelpKeywords>
+    </Topic>
+    <Topic id="0146dc9b-c47a-4388-a6b2-c2f3943a8eb6" visible="True" title="GNU Lesser General Public License" />
+  </Topic>
+  <Topic id="dd0a92ee-8f26-4f13-85c5-c752c340afd7" visible="True" noFile="true" title="Tutorials">
+    <Topic id="35691f60-9937-4e25-8424-8d5b28af41eb" visible="True" title="Getting Started">
+      <Topic id="cb44c9c3-127a-4bf8-8097-bab9c7a8330f" visible="True" title="Setting up a database procedure" />
+      <Topic id="27f3514f-4f77-40d5-a83a-3d48afc4ff6e" visible="True" title="Creating the object class" />
+      <Topic id="5f290d82-0308-4804-b25a-fec32edcf9f1" visible="True" title="Associating the object with the stored procedure" />
+      <Topic id="493d43bc-2eb9-4374-971f-01782c99f547" visible="True" />
+      <Topic id="3dc488d6-2317-4faa-a583-e03342a71300" visible="True" title="Getting an instance" />
+      <Topic id="8cf66648-693c-4900-a12d-609d5846a258" visible="True" title="Getting Started Source Code" />
+    </Topic>
+    <Topic id="1ee51ad9-3a62-422e-91c2-9821b91ffdd7" visible="True">
+      <Topic id="8628a39f-e3e8-45a1-8e8c-7a1ee9763ff5" visible="True" title="Add additional, related recordsets to stored procedure" />
+      <Topic id="faea710d-9252-4813-af2a-c1f695997ed3" visible="True" />
+      <Topic id="dab75867-061a-4bbb-a646-25a4ead6c419" visible="True" title="Add classes to aggregate root class" />
+      <Topic id="75721c0b-516e-454f-870e-df5d88b8b3de" visible="True" title="Associate new class members to the stored procedure" />
+      <Topic id="10eb6f7b-27f7-4800-a68c-ba89b37b0423" visible="True" />
+    </Topic>
+    <Topic id="d5aebee7-d4be-4672-ae5c-cc1a111e429c" visible="True" title="Using Specifications" />
+  </Topic>
+  <Topic id="f6f6831e-f55e-4e3f-a3fe-c87b60257e18" visible="True" apiParentMode="InsertAsChild" />
+</Topics>

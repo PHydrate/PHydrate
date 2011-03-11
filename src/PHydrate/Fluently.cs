@@ -27,10 +27,18 @@ namespace PHydrate
     /// <summary>
     /// Entry point for PHydrate configuration
     /// </summary>
+    /// <remarks>
+    /// Use Fluently.Configure to access a <see cref="FluentConfiguration"/> instance to complete the configuration.
+    /// <example>
+    /// <code lang="C#">
+    /// <see cref="ISessionFactory"/> sessionFactory = <see cref="Fluently"/>.Configure.Database(new <see cref="SqlServerDatabaseService"/>(...)).ParameterPrefix("@").BuildSessionFactory();
+    /// </code>
+    /// </example>
+    /// </remarks>
     public static class Fluently
     {
         /// <summary>
-        /// Gets a configuration object
+        /// Gets a <see cref="FluentConfiguration"/> instance for configuring PHydrate
         /// </summary>
         public static FluentConfiguration Configure
         {

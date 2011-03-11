@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="3dc488d6-2317-4faa-a583-e03342a71300" revisionNumber="1">
+  <developerWalkthroughDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>Required introduction</para>
+    </introduction>
+    <section address="GettingAnInstance">
+      <title>Getting an instance</title>
+      <content>
+		<para>
+			At this point, PHydrate is set up to retrieve an object from the
+			database.  This is done by getting an 
+			<codeEntityReference>T:PHydrate.ISession</codeEntityReference>
+			from the <codeEntityReference>T:PHydrate.ISessionFactory</codeEntityReference>
+			constructed earlier, and calling
+			<codeEntityReference qualifyHint="false" autoUpgrade="true">M:PHydrate.ISession.Get``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})</codeEntityReference>:
+		</para>
+		<example>
+			<codeReference>Program.cs#GetInstance</codeReference>
+		</example>
+      </content>
+    </section>
+    <nextSteps>
+      <content>
+      	<para>
+      		<link xlink:href="1ee51ad9-3a62-422e-91c2-9821b91ffdd7">
+      			Retrieving data using multiple recordsets
+      		</link>
+      	</para>
+      </content>
+    </nextSteps>
+    <relatedTopics>
+    	<codeEntityReference>T:PHydrate.ISessionFactory</codeEntityReference>
+    	<codeEntityReference>T:PHydrate.ISession</codeEntityReference>
+    	<codeEntityReference qualifyHint="false" autoUpgrade="true">M:PHydrate.ISession.Get``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})</codeEntityReference>
+    </relatedTopics>
+  </developerWalkthroughDocument>
+</topic>

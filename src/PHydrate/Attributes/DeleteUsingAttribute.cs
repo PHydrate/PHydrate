@@ -25,7 +25,7 @@ namespace PHydrate.Attributes
     /// <summary>
     ///   Annotate a class with the stored procedure name used to delete an instance
     /// </summary>
-    public class DeleteUsingAttribute : CrudAttributeBase
+    public sealed class DeleteUsingAttribute : CrudAttributeBase
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "DeleteUsingAttribute" /> class.

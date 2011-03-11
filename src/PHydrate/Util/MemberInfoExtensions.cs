@@ -19,9 +19,7 @@
 
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -39,7 +37,7 @@ namespace PHydrate.Util
         /// <param name = "primaryKeyMembers">The primary key members.</param>
         /// <returns></returns>
         public static int GetLookupHash< T >( this IMemberInfo internalRecordset, object obj,
-                                              IEnumerable< string > primaryKeyMembers ) where T : class
+                                             params string[] primaryKeyMembers ) where T : class
         {
             return typeof(T).GetObjectsHashCodeByFieldValues(
                 internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(

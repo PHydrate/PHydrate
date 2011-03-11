@@ -5,14 +5,17 @@ namespace PHydrate.Attributes
     /// <summary>
     /// Specify the name of the column that the member uses
     /// </summary>
+    /// <remarks>
+    /// This attribute is currently ignored, please do not use yet!
+    /// </remarks>
     [ AttributeUsage( AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true ) ]
-    public class PersistAsAttribute : Attribute
+    public sealed class PersistAsAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the name of the column.
         /// </summary>
         /// <value>The name of the column.</value>
-        public string ColumnName { get; set; }
+        public string ColumnName { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersistAsAttribute"/> class.
