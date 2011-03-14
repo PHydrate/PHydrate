@@ -85,8 +85,9 @@ namespace PHydrate.Util
         /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
-        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         [ NotNull ]
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
         public static IEnumerable< object > GetPropertyValuesWithAttribute< TAttributeType >( this object obj )
             where TAttributeType : Attribute
         {
@@ -135,6 +136,7 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
         public static T DBNullToDefault< T >( this object obj )
         {
             return obj is DBNull ? default( T ) : (T)obj;

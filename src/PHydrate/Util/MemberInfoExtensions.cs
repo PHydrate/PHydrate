@@ -38,6 +38,7 @@ namespace PHydrate.Util
         /// <param name = "primaryKeyMembers">The primary key members.</param>
         /// <returns></returns>
         [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
         public static int GetLookupHash< T >( this IMemberInfo internalRecordset, object obj,
                                               params string[] primaryKeyMembers ) where T : class
         {

@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
@@ -53,7 +54,7 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
                                         RandomInteger = A.Random.Integer.Value;
                                         RandomString = A.Random.String.Resembling.A.Noun;
 
-                                        ColumnValues = new Dictionary< string, object > {
+                                        ColumnValues = new Dictionary< string, object >(StringComparer.OrdinalIgnoreCase) {
                                                                                             {
                                                                                                 "IntegerProperty"
                                                                                                 ,

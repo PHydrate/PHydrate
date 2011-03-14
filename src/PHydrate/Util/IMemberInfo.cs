@@ -15,11 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace PHydrate.Util
@@ -35,18 +36,20 @@ namespace PHydrate.Util
         MemberInfo Wrapped { get; }
 
         /// <summary>
-        /// Gets the value.
+        /// Gets the value from a specific object.
         /// </summary>
-        /// <param name="obj">The obj.</param>
+        /// <param name="obj">The object.</param>
         /// <returns></returns>
-        object GetValue(object obj);
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
+        object GetValue( object obj );
 
         /// <summary>
-        /// Sets the value.
+        /// Sets a value on a specific object.
         /// </summary>
-        /// <param name="obj">The obj.</param>
+        /// <param name="obj">The object.</param>
         /// <param name="value">The value.</param>
-        void SetValue(object obj, object value);
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
+        void SetValue( object obj, object value );
 
         /// <summary>
         /// Gets the type of the member.

@@ -158,9 +158,6 @@
     <Compile Include="Util\DbCommandExtensions\DbCommandExtensionsSpecificationBase.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_explicit_direction.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_no_direction.cs" />
-    <Compile Include="Util\DictionaryExtensions\DictionaryExtensionsSpecificationBase.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_key_without_case.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_non_existant_key_without_case.cs" />
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_a_constant_expression.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_or.cs" />

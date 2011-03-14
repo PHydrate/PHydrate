@@ -100,15 +100,8 @@ namespace PHydrate.Core
             ConstructorInfo[] otherConstructors = typeof(T).GetConstructors();
             foreach ( ConstructorInfo ci in otherConstructors )
             {
-                var arguments = new List< object >();
                 ParameterInfo[] parameters = ci.GetParameters();
-                foreach ( ParameterInfo pi in parameters )
-                {
-                    string actualName;
-                    if ( !columnValues.ContainsKeyNoCase( pi.Name, out actualName ) )
-                        break;
-                    arguments.Add( columnValues[ actualName ] );
-                }
+                var arguments = parameters.TakeWhile( pi => columnValues.ContainsKey( pi.Name ) ).Select( pi => columnValues[ pi.Name ] ).ToList();
                 if ( arguments.Count == parameters.Length )
                     return (T)ci.Invoke( arguments.ToArray() );
             }
