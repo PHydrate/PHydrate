@@ -51,9 +51,9 @@ namespace PHydrate.Tests.Integration.ClassWithHydrator
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : IDbSpecification< TestDomain.ClassWithHydrator >
+        private class TestSimpleDbSpecification : IDBSpecification< TestDomain.ClassWithHydrator >
         {
-            #region Implementation of IDbSpecification<Simple>
+            #region Implementation of IDBSpecification<Simple>
 
             public Expression< Func< TestDomain.ClassWithHydrator, bool > > Criteria
             {

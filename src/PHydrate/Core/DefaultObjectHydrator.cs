@@ -24,7 +24,6 @@ using System.Linq;
 using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {

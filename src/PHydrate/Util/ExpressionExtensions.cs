@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -25,6 +24,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
+using PHydrate.Attributes;
 
 namespace PHydrate.Util
 {
@@ -41,18 +41,22 @@ namespace PHydrate.Util
         /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
         // TODO: Return type should be changed to IEnumerable<KeyValuePair<string, Object>>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-        public static IDictionary< string, Object > GetDataParameters< T >( this Expression< Func< T, bool > > expression, string parameterPrefix )
+        [ NotNull,SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
+        public static IDictionary< string, Object > GetDataParameters< T >(
+            this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
             var dataParameters = new Dictionary< string, Object >();
 
             // Go through the expression using tail recursion
-            if (expression != null)
+            if ( expression != null )
                 GetDataParametersRecursive( expression.Body, dataParameters, parameterPrefix );
             return dataParameters;
         }
 
-        private static void GetDataParametersRecursive( Expression expression, IDictionary< string, object > dataParameters, string parameterPrefix )
+        private static void GetDataParametersRecursive( Expression expression,
+                                                        IDictionary< string, object > dataParameters,
+                                                        string parameterPrefix )
         {
             var operation = expression as BinaryExpression;
             if ( operation == null )
@@ -62,7 +66,7 @@ namespace PHydrate.Util
             {
                 case ExpressionType.Equal:
                     string name = parameterPrefix + ( (MemberExpression)operation.Left ).Member.Name;
-                    if (!dataParameters.ContainsKey(name))
+                    if ( !dataParameters.ContainsKey( name ) )
                         dataParameters.Add( name, operation.Right.GetValue() );
                     break;
 
@@ -84,9 +88,10 @@ namespace PHydrate.Util
         /// <returns></returns>
         public static object GetValue( this Expression expression )
         {
-            var targetMethodInfo = typeof(InvokeGeneric).GetMethod( "GetVariableValue", BindingFlags.Static | BindingFlags.Public );
+            var targetMethodInfo = typeof(InvokeGeneric).GetMethod( "GetVariableValue",
+                                                                    BindingFlags.Static | BindingFlags.Public );
             var genericTargetCall = targetMethodInfo.MakeGenericMethod( expression.Type );
-            return genericTargetCall.Invoke( null, new[] {expression} );
+            return genericTargetCall.Invoke( null, new[] { expression } );
         }
 
         #region InvokeGeneric - Helper class to get the value of the right-hand side of a lambda expression
@@ -95,16 +100,15 @@ namespace PHydrate.Util
         private static class InvokeGeneric
         {
             // ReSharper disable UnusedMember.Local
-            public static T GetVariableValue<T>(Expression expression)
-            // ReSharper restore UnusedMember.Local
+            public static T GetVariableValue< T >( Expression expression )
+                // ReSharper restore UnusedMember.Local
             {
-                var accessorExpression = Expression.Lambda<Func<T>>(expression);
+                var accessorExpression = Expression.Lambda< Func< T > >( expression );
                 var accessor = accessorExpression.Compile();
                 return accessor();
             }
         }
 
         #endregion
-
     }
 }

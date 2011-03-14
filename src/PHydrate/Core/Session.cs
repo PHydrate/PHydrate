@@ -122,7 +122,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > GetItemsFromDbSpecification< T >( ISpecification< T > specification ) where T : class
         {
-            var dbSpecification = specification as IDbSpecification< T >;
+            var dbSpecification = specification as IDBSpecification< T >;
             Expression< Func< T, bool > > criteria = ( dbSpecification == null ) ? null : dbSpecification.Criteria;
             return Get( criteria );
         }
@@ -325,17 +325,5 @@ namespace PHydrate.Core
                 return hydratedObject;
             }
         }
-
-        #region Implementation of IDisposable
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            // TODO: Make other objects used by this class disposable
-        }
-
-        #endregion
     }
 }

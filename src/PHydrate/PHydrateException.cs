@@ -20,6 +20,8 @@
 #endregion
 
 using System;
+using System.Globalization;
+using System.Runtime.Serialization;
 using PHydrate.Attributes;
 
 namespace PHydrate
@@ -27,6 +29,7 @@ namespace PHydrate
     /// <summary>
     ///   Base class for exceptions thrown by PHydrate
     /// </summary>
+    [Serializable]
     public class PHydrateException : Exception
     {
         /// <summary>
@@ -38,10 +41,38 @@ namespace PHydrate
         /// <summary>
         ///   Initializes a new instance of the <see cref = "PHydrateException" /> class.
         /// </summary>
-        /// <param name = "formatString">The format string.</param>
+        /// <param name = "formatMessage">The format string.</param>
         /// <param name = "formatValues">The format values.</param>
-        [ StringFormatMethod( "formatString" ) ]
-        public PHydrateException( string formatString, params string[] formatValues )
-            : this( string.Format( formatString, formatValues ) ) {}
+        [ StringFormatMethod( "formatMessage" ) ]
+        public PHydrateException( string formatMessage, params string[] formatValues )
+            : this( string.Format( CultureInfo.CurrentCulture, formatMessage, formatValues ) ) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PHydrateException"/> class.
+        /// </summary>
+        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
+        /// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
+        /// <exception cref="T:System.ArgumentNullException">
+        /// The <paramref name="info"/> parameter is null.
+        ///   </exception>
+        ///   
+        /// <exception cref="T:System.Runtime.Serialization.SerializationException">
+        /// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+        ///   </exception>
+        protected PHydrateException( [ NotNull ] SerializationInfo info, StreamingContext context ) : base( info, context ) {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PHydrateException"/> class.
+        /// </summary>
+        [ UsedImplicitly ]
+        public PHydrateException() {}
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PHydrateException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="innerException">The inner exception.</param>
+        [ UsedImplicitly ]
+        public PHydrateException( string message, Exception innerException ) : base( message, innerException ) {}
     }
 }

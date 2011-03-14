@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -49,13 +48,13 @@ namespace PHydrate.Util
         /// <typeparam name="T">The attribute to retrieve</typeparam>
         /// <param name="type">The type.</param>
         /// <returns>The attribute, or null if not found.</returns>
-        [CanBeNull]
+        [ CanBeNull ]
         public static T GetAttribute< T >( this Type type ) where T : Attribute
         {
-            if (!AttributeCache.ContainsKey(type))
+            if ( !AttributeCache.ContainsKey( type ) )
                 AttributeCache.Add( type, type.GetCustomAttributes( true ) );
 
-            return AttributeCache[ type ].Where(x => x.GetType() == typeof(T)  ).FirstOrDefault() as T;
+            return AttributeCache[ type ].Where( x => x.GetType() == typeof(T) ).FirstOrDefault() as T;
         }
 
         /// <summary>
@@ -63,10 +62,10 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>The default constructor for the type, or null if it does not exist.</returns>
-        [CanBeNull]
-        public static ConstructorInfo GetDefaultConstructor(this Type type)
+        [ CanBeNull ]
+        public static ConstructorInfo GetDefaultConstructor( this Type type )
         {
-            if (!ConstructorCache.ContainsKey(type))
+            if ( !ConstructorCache.ContainsKey( type ) )
                 ConstructorCache.Add( type, type.GetConstructor( Type.EmptyTypes ) );
             return ConstructorCache[ type ];
         }
@@ -78,14 +77,14 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>The constructed type.</returns>
         /// <exception cref="PHydrateException">Unable to construct object {0}, no default constructor.</exception>
-        [NotNull]
-        public static T ConstructUsingDefaultConstructor<T>(this Type type)
+        [ NotNull ]
+        public static T ConstructUsingDefaultConstructor< T >( this Type type )
         {
             ConstructorInfo defaultConstructor = type.GetDefaultConstructor();
-            if (defaultConstructor == null)
+            if ( defaultConstructor == null )
                 throw new PHydrateException( "Unable to construct object {0}, no default constructor.", typeof(T).Name );
 
-            return (T)defaultConstructor.Invoke( new object[] {} );
+            return (T)defaultConstructor.Invoke( new object[] { } );
         }
 
         /// <summary>
@@ -94,11 +93,11 @@ namespace PHydrate.Util
         /// <typeparam name="T">The attribute</typeparam>
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
-        [NotNull]
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static IEnumerable< IMemberInfo > GetMembersWithAttribute<T>(this Type type) where T : Attribute
+        [ NotNull ]
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
+        public static IEnumerable< IMemberInfo > GetMembersWithAttribute< T >( this Type type ) where T : Attribute
         {
-            if (!MemberCache.ContainsKey(type))
+            if ( !MemberCache.ContainsKey( type ) )
                 MemberCache.Add( type,
                                  type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
 
@@ -117,39 +116,47 @@ namespace PHydrate.Util
         /// <param name="constructorParameters">The constructor parameters.</param>
         /// <returns>The return value from the method to be called.</returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
-        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-        public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters)
+        [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
+        public static TReturn ExecuteGenericMethod< TSource, TReturn >( this Type genericType,
+                                                                        Expression< Func< TSource, TReturn > >
+                                                                            methodCall,
+                                                                        params object[] constructorParameters )
         {
             var method = methodCall.Body as MethodCallExpression;
-            if (method == null)
+            if ( method == null )
                 throw new PHydrateInternalException( "Lambda does not contain a method call." );
 
             return genericType.ExecuteGenericMethod< TSource, TReturn >( method.Method.Name, constructorParameters,
-                                                             method.Arguments.Select( x => x.GetValue() ).ToArray() );
+                                                                         method.Arguments.Select( x => x.GetValue() ).
+                                                                             ToArray() );
         }
 
         /// <exception cref="PHydrateInternalException">Type {0} is not a generic type</exception>
-        private static TReturn ExecuteGenericMethod<TSource, TReturn>( this Type genericType, string methodName, object[] constructorParameters, object[] methodParameters )
+        private static TReturn ExecuteGenericMethod< TSource, TReturn >( this Type genericType, string methodName,
+                                                                         object[] constructorParameters,
+                                                                         object[] methodParameters )
         {
             Type type = typeof(TSource);
 
-            if (!type.IsGenericType && !type.IsGenericTypeDefinition)
-                throw new PHydrateInternalException("Type {0} is not a generic type", type.Name);
+            if ( !type.IsGenericType && !type.IsGenericTypeDefinition )
+                throw new PHydrateInternalException( "Type {0} is not a generic type", type.Name );
 
             Type genericTypeDefinition = type.GetGenericTypeDefinition();
 
             Type innerClass = genericTypeDefinition.MakeGenericType( genericType );
             object c = innerClass.ConstructObjectUsingConstructorMatchingParameters( constructorParameters );
             var method = innerClass.GetMethod( methodName );
-            return ((TReturn)method.Invoke( c, methodParameters ));
+            return ( (TReturn)method.Invoke( c, methodParameters ) );
         }
 
-        private static object ConstructObjectUsingConstructorMatchingParameters(this Type innerClass, params object[] constructorParameters )
+        private static object ConstructObjectUsingConstructorMatchingParameters( this Type innerClass,
+                                                                                 params object[] constructorParameters )
         {
             ConstructorInfo[] constructors = innerClass.GetConstructors();
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
-                                    
+
             return constructor.Invoke( constructorParameters );
         }
 
@@ -159,10 +166,11 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <param name="memberNames">The member names.</param>
         /// <returns></returns>
-        public static IEnumerable<IMemberInfo> GetMembersByName(this Type type, params string[] memberNames)
+        [ NotNull ]
+        public static IEnumerable< IMemberInfo > GetMembersByName( this Type type, params string[] memberNames )
         {
             return
-                memberNames.Select( x => type.GetMember(x) ).Where( memberInfos => memberInfos.Length != 0 ).Select(
+                memberNames.Select( x => type.GetMember( x ) ).Where( memberInfos => memberInfos.Length != 0 ).Select(
                     memberInfos => memberInfos[ 0 ].CreateWrapper() );
         }
 
@@ -172,17 +180,17 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <param name="baseType">Type of the base.</param>
         /// <returns></returns>
-        public static bool InheritsFromOrImplements(this Type type, Type baseType)
+        public static bool InheritsFromOrImplements( this Type type, Type baseType )
         {
-            if (type == baseType)
+            if ( type == baseType )
                 return true;
 
             if ( baseType.IsInterface )
                 return type.GetInterfaces().Where( x => x.Name == baseType.Name ).Any();
 
-            while (type.BaseType != null)
+            while ( type.BaseType != null )
             {
-                if (type.BaseType == baseType)
+                if ( type.BaseType == baseType )
                     return true;
                 type = type.BaseType;
             }
@@ -194,7 +202,8 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        public static IEnumerable<IMemberInfo> GetSettableMembers(this Type type)
+        [ NotNull ]
+        public static IEnumerable< IMemberInfo > GetSettableMembers( this Type type )
         {
             return
                 type.GetProperties( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Select(
