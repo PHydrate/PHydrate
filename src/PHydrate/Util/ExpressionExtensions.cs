@@ -99,9 +99,8 @@ namespace PHydrate.Util
         // This comes from http://stackoverflow.com/questions/238413/lambda-expression-tree-parsing
         private static class InvokeGeneric
         {
-            // ReSharper disable UnusedMember.Local
+           [UsedImplicitly]
             public static T GetVariableValue< T >( Expression expression )
-                // ReSharper restore UnusedMember.Local
             {
                 var accessorExpression = Expression.Lambda< Func< T > >( expression );
                 var accessor = accessorExpression.Compile();

@@ -112,6 +112,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object to return.</typeparam>
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
+        [ NotNull ]
         public IEnumerable< T > Get< T >( ISpecification< T > specification )
             where T : class
         {
@@ -243,33 +244,22 @@ namespace PHydrate.Core
                     if ( !dataReader.NextResult() )
                         throw new PHydrateException( "Missing expected recordset from stored procedure" );
 
-                    IEnumerable enumerator =
+                    IEnumerable enumerable =
                         internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
                             x => x.HydrateFromDataReader( dataReader ),
                             _defaultObjectHydrator,
                             _hydratedObjects
                             );
 
-                    // TODO: This loop is likely to be unnecessary
-                    foreach ( object obj in enumerator )
+                    object obj = enumerable.Cast< object >().FirstOrDefault();
+                    if ( obj == null )
+                        continue;
+
+                    Type typeToCastTo = obj.GetType();
+                    if ( internalRecordset.Type.IsAssignableFrom( typeToCastTo ) ) // Simple type
+                        SetSimpleTypeInAggregateRoot( internalRecordset, obj, aggregateRoot );
                     {
-                        if ( internalRecordset.Type.IsAssignableFrom( obj.GetType() ) )
-                        {
-                            // Simple type
-                            int objectHash = obj.GetObjectsHashCodeByPrimaryKeys();
-
-                            // Find the member in aggregateRoot that contains this member
-                            IMemberInfo recordset = internalRecordset;
-                            foreach (
-                                T o in
-                                    aggregateRoot.Values.AsEnumerable().Where(
-                                        x =>
-                                        recordset.GetValue( x ) != null &&
-                                        recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
-                                recordset.SetValue( o, obj );
                             continue;
-                        }
-
                         // TODO: IEnumerable, IList
                         //if (internalRecordset.Type.IsAssignableFrom(typeof(IEnumerator<>).MakeGenericType(obj.GetType())))
                         //{
@@ -281,6 +271,21 @@ namespace PHydrate.Core
                     }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static void SetSimpleTypeInAggregateRoot( IMemberInfo internalRecordset, object obj,
+                                                              IDictionary< int, T > aggregateRoot )
+            {
+                int objectHash = obj.GetObjectsHashCodeByPrimaryKeys();
+
+                // Find the member(s) in aggregateRoot that contains this member
+                foreach (
+                    T o in
+                        aggregateRoot.Values.AsEnumerable().Where(
+                            x =>
+                            internalRecordset.GetValue( x ) != null &&
+                            internalRecordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
+                    internalRecordset.SetValue( o, obj );
             }
 
             private IEnumerable< T > HydrateRecordset( IDataReader dataReader )

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -29,7 +29,7 @@ namespace PHydrate
     /// <summary>
     ///   Base class for exceptions thrown by PHydrate
     /// </summary>
-    [Serializable]
+    [ Serializable ]
     public class PHydrateException : Exception
     {
         /// <summary>
@@ -59,7 +59,8 @@ namespace PHydrate
         /// <exception cref="T:System.Runtime.Serialization.SerializationException">
         /// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
         ///   </exception>
-        protected PHydrateException( [ NotNull ] SerializationInfo info, StreamingContext context ) : base( info, context ) {}
+        protected PHydrateException( [ NotNull ] SerializationInfo info, StreamingContext context )
+            : base( info, context ) {}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PHydrateException"/> class.
