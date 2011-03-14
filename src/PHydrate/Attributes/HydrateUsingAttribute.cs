@@ -20,12 +20,15 @@
 
 #endregion
 
+using System;
+
 namespace PHydrate.Attributes
 {
     /// <summary>
     ///   Annotate a class with the stored procedure used to get an object
     /// </summary>
     [ MeansImplicitUse( ImplicitUseKindFlags.Instantiated, ImplicitUseTargetFlags.Itself ) ]
+    [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
     public sealed class HydrateUsingAttribute : CrudAttributeBase
     {
         /// <summary>

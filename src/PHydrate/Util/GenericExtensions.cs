@@ -21,11 +21,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -64,6 +64,7 @@ namespace PHydrate.Util
         /// <param name="obj">The obj.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="PHydrateException">Thrown if the member is not settable.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         public static void SetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj, object value )
             where TAttributeType : Attribute
         {
@@ -82,6 +83,7 @@ namespace PHydrate.Util
         /// <typeparam name="TAttributeType">The type of the attribute to grab property values from.</typeparam>
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [ NotNull ]
         public static IEnumerable< object > GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
             where TAttributeType : Attribute
@@ -130,7 +132,7 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
-        public static T DbNullToDefault<T>(this object obj)
+        public static T DBNullToDefault<T>(this object obj)
         {
             return obj is DBNull ? default(T) : (T)obj;
         }
@@ -144,6 +146,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns></returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static object ExecuteGenericMethod<TSource>(this TSource obj, Expression<Func<TSource, object>> methodCall, Type type)
         {
             var unaryExpression = methodCall.Body as UnaryExpression;

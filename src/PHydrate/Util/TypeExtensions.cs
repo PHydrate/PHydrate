@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -94,6 +95,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
         [NotNull]
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         public static IEnumerable< IMemberInfo > GetMembersWithAttribute<T>(this Type type) where T : Attribute
         {
             if (!MemberCache.ContainsKey(type))
@@ -115,6 +117,7 @@ namespace PHydrate.Util
         /// <param name="constructorParameters">The constructor parameters.</param>
         /// <returns>The return value from the method to be called.</returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static TReturn ExecuteGenericMethod<TSource, TReturn>(this Type genericType, Expression<Func<TSource, TReturn>> methodCall, params object[] constructorParameters)
         {
             var method = methodCall.Body as MethodCallExpression;

@@ -69,7 +69,7 @@ namespace PHydrate.Core
                     if ( !columnValues.ContainsKey( primaryKey.Wrapped.Name ) )
                         throw new PHydrateException( "Unable to populate Primary Key values for {0}", mi.Wrapped.Name );
 
-                    primaryKey.SetValue( innerObject, columnValues[ primaryKey.Wrapped.Name ].DbNullToDefault<object>() );
+                    primaryKey.SetValue( innerObject, columnValues[ primaryKey.Wrapped.Name ].DBNullToDefault<object>() );
                 }
                 mi.SetValue( objToHydrate, innerObject );
             }
@@ -78,7 +78,7 @@ namespace PHydrate.Core
         private static void PopulateObjectProperties< T >( T objToHydrate, IDictionary< string, object > columnValues, IEnumerable< IMemberInfo > propertySetters )
         {
             foreach ( IMemberInfo  pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Wrapped.Name ) ) )
-                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DbNullToDefault<object>() );
+                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DBNullToDefault<object>() );
         }
 
         #endregion

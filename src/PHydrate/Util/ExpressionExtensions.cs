@@ -22,7 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace PHydrate.Util
 {
@@ -39,6 +41,7 @@ namespace PHydrate.Util
         /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
         // TODO: Return type should be changed to IEnumerable<KeyValuePair<string, Object>>
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static IDictionary< string, Object > GetDataParameters< T >( this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
             var dataParameters = new Dictionary< string, Object >();
@@ -81,18 +84,18 @@ namespace PHydrate.Util
         /// <returns></returns>
         public static object GetValue( this Expression expression )
         {
-            var targetMethodInfo = typeof(InvokeGeneric).GetMethod( "GetVariableValue" );
+            var targetMethodInfo = typeof(InvokeGeneric).GetMethod( "GetVariableValue", BindingFlags.Static | BindingFlags.Public );
             var genericTargetCall = targetMethodInfo.MakeGenericMethod( expression.Type );
-            return genericTargetCall.Invoke( new InvokeGeneric(), new[] {expression} );
+            return genericTargetCall.Invoke( null, new[] {expression} );
         }
 
         #region InvokeGeneric - Helper class to get the value of the right-hand side of a lambda expression
 
         // This comes from http://stackoverflow.com/questions/238413/lambda-expression-tree-parsing
-        private class InvokeGeneric
+        private static class InvokeGeneric
         {
             // ReSharper disable UnusedMember.Local
-            public T GetVariableValue<T>(Expression expression)
+            public static T GetVariableValue<T>(Expression expression)
             // ReSharper restore UnusedMember.Local
             {
                 var accessorExpression = Expression.Lambda<Func<T>>(expression);

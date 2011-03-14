@@ -20,6 +20,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -64,3 +65,5 @@ using System.Runtime.InteropServices;
 // Allow the Specifications to see the internals
 
 [ assembly: InternalsVisibleTo( "PHydrate.Specs" ) ]
+
+[ assembly: CLSCompliant( true ) ]

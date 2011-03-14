@@ -40,33 +40,6 @@
   <Settings />
  </Rules>
  <FxCopReport Version="10.0">
-  <Namespaces>
-   <Namespace Name="PHydrate.Util">
-    <Messages>
-     <Message Id="Util" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-03-04 19:11:05Z">
-      <Issue Name="Namespace">
-       <Item>Util</Item>
-       <Item>PHydrate.Util</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-   <Namespace Name="PHydrate.Util.MemberInfoWrapper">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2011-03-04 19:11:05Z">
-      <Issue>
-       <Item>PHydrate.Util.MemberInfoWrapper</Item>
-      </Issue>
-     </Message>
-     <Message Id="Util" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-03-04 19:11:05Z">
-      <Issue Name="Namespace">
-       <Item>Util</Item>
-       <Item>PHydrate.Util.MemberInfoWrapper</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-  </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/PHydrate/bin/Debug/PHydrate.dll">
     <Modules>
@@ -74,11 +47,6 @@
       <Messages>
        <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2011-03-04 19:11:05Z">
         <Issue Name="NoStrongName">
-         <Item>'PHydrate.dll'</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2011-03-04 19:11:05Z">
-        <Issue>
          <Item>'PHydrate.dll'</Item>
         </Issue>
        </Message>
@@ -248,223 +216,6 @@
          </Type>
         </Types>
        </Namespace>
-       <Namespace Name="PHydrate.Attributes">
-        <Types>
-         <Type Name="CreateUsingAttribute">
-          <Messages>
-           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Inherited" Certainty="75" Level="Warning">
-             <Item>'CreateUsingAttribute'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="DeleteUsingAttribute">
-          <Messages>
-           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Inherited" Certainty="75" Level="Warning">
-             <Item>'DeleteUsingAttribute'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="HydrateUsingAttribute">
-          <Messages>
-           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Inherited" Certainty="75" Level="Warning">
-             <Item>'HydrateUsingAttribute'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ImplicitUseKindFlags">
-          <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'ImplicitUseKindFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ImplicitUseTargetFlags">
-          <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-            <Issue Name="TypeNoAlternate">
-             <Item>Flags</Item>
-             <Item>'ImplicitUseTargetFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="MeansImplicitUseAttribute">
-          <Members>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseKindFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'useKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseKindFlags,PHydrate.Attributes.ImplicitUseTargetFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'targetFlags'</Item>
-              </Issue>
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'useKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseTargetFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'targetFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TargetFlags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'MeansImplicitUseAttribute.TargetFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#UseKindFlags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'MeansImplicitUseAttribute.UseKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="RecordsetAttribute">
-          <Messages>
-           <Message Id="Recordset" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Type">
-             <Item>Recordset</Item>
-             <Item>'RecordsetAttribute'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#.ctor(System.Int32)">
-            <Messages>
-             <Message Id="recordset" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameter">
-               <Item>'RecordsetAttribute.RecordsetAttribute(int)'</Item>
-               <Item>recordset</Item>
-               <Item>'recordsetNumber'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#RecordsetNumber">
-            <Messages>
-             <Message Id="Recordset" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2011-03-04 19:11:05Z">
-              <Issue Name="Member">
-               <Item>Recordset</Item>
-               <Item>'RecordsetAttribute.RecordsetNumber'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="UpdateUsingAttribute">
-          <Messages>
-           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Inherited" Certainty="75" Level="Warning">
-             <Item>'UpdateUsingAttribute'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="UsedImplicitlyAttribute">
-          <Members>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseKindFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'useKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseKindFlags,PHydrate.Attributes.ImplicitUseTargetFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'targetFlags'</Item>
-              </Issue>
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'useKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(PHydrate.Attributes.ImplicitUseTargetFlags)">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberParameterNoAlternate">
-               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseTargetFlags)'</Item>
-               <Item>Flags</Item>
-               <Item>'targetFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TargetFlags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'UsedImplicitlyAttribute.TargetFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#UseKindFlags">
-            <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2011-03-04 19:11:05Z">
-              <Issue Name="MemberNoAlternate">
-               <Item>Flags</Item>
-               <Item>'UsedImplicitlyAttribute.UseKindFlags'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
        <Namespace Name="PHydrate.Core">
         <Types>
          <Type Name="DatabaseServiceBase">
@@ -505,7 +256,29 @@
           </Members>
          </Type>
          <Type Name="Session">
+          <Messages>
+           <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2011-03-14 14:48:14Z">
+            <Issue Name="ProvideDisposeBool">
+             <Item>'Session'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
+           <Member Name="#Dispose()">
+            <Messages>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2011-03-14 14:48:14Z">
+              <Issue Name="NotCalled">
+               <Item>'Session.Dispose()'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Created="2011-03-14 14:48:14Z">
+              <Issue Name="DisposeImplementation">
+               <Item>'Session.Dispose()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#FilterUsingExplicitSpecification`1(PHydrate.ISpecification`1&lt;!!0&gt;,System.Collections.Generic.IEnumerable`1&lt;!!0&gt;)">
             <Messages>
              <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2011-03-04 19:11:05Z">
@@ -591,68 +364,6 @@
        </Namespace>
        <Namespace Name="PHydrate.Util">
         <Types>
-         <Type Name="ConstructorInfoExtensions">
-          <Members>
-           <Member Name="#MatchesParameters(System.Reflection.ConstructorInfo,System.Collections.Generic.IList`1&lt;System.Object&gt;)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'ci'</Item>
-               <Item>'ConstructorInfoExtensions.MatchesParameters(this ConstructorInfo, IList&lt;object&gt;)'</Item>
-               <Item>'ConstructorInfo'</Item>
-               <Item>'MethodBase'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="DataReaderExtensions">
-          <Members>
-           <Member Name="#ToDictionary(System.Data.IDataReader)">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'dataReader'</Item>
-               <Item>'DataReaderExtensions.ToDictionary(this IDataReader)'</Item>
-               <Item>'IDataReader'</Item>
-               <Item>'IDataRecord'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Collections.Generic.Dictionary`2&lt;System.String,System.Object&gt;.#ctor(System.Collections.Generic.IEqualityComparer`1&lt;System.String&gt;)" TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309" Created="2011-03-04 19:11:05Z">
-              <Issue Name="StringComparer">
-               <Item>'DataReaderExtensions.ToDictionary(this IDataReader)'</Item>
-               <Item>StringComparer.InvariantCultureIgnoreCase</Item>
-               <Item>'Dictionary&lt;string, object&gt;.Dictionary(IEqualityComparer&lt;string&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="DbCommandExtensions">
-          <Messages>
-           <Message Id="Db" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2011-03-04 19:11:05Z">
-            <Issue Name="Type">
-             <Item>Db</Item>
-             <Item>'DbCommandExtensions'</Item>
-             <Item>DB</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#AddParameter`1(System.Data.IDbCommand,System.String,System.Data.ParameterDirection)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'DbCommandExtensions.AddParameter&lt;T&gt;(this IDbCommand, string, ParameterDirection)'</Item>
-               <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="DictionaryExtensions">
           <Members>
            <Member Name="#ContainsKeyNoCase`1(System.Collections.Generic.IDictionary`2&lt;System.String,!!0&gt;,System.String,System.String&amp;)">
@@ -660,16 +371,6 @@
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Created="2011-03-04 19:11:05Z">
               <Issue>
                <Item>'actualName'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308" Created="2011-03-04 19:11:05Z">
-              <Issue Name="ToUpperInvariant">
-               <Item>'DictionaryExtensions.ContainsKeyNoCase&lt;T&gt;(this IDictionary&lt;string, T&gt;, string, out string)'</Item>
-               <Item>'string.ToLowerInvariant()'</Item>
-              </Issue>
-              <Issue Name="ToUpperInvariant">
-               <Item>'DictionaryExtensions.ContainsKeyNoCase&lt;T&gt;(this IDictionary&lt;string, T&gt;, string, out string)'</Item>
-               <Item>'string.ToLowerInvariant()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -680,14 +381,6 @@
           <Members>
            <Member Name="#GetDataParameters`1(System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,System.Boolean&gt;&gt;,System.String)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'expression'</Item>
-               <Item>'ExpressionExtensions.GetDataParameters&lt;T&gt;(this Expression&lt;Func&lt;T, bool&gt;&gt;, string)'</Item>
-               <Item>'Expression&lt;Func&lt;T, bool&gt;&gt;'</Item>
-               <Item>'LambdaExpression'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2011-03-04 19:11:05Z">
               <Issue>
                <Item>'ExpressionExtensions.GetDataParameters&lt;T&gt;(this Expression&lt;Func&lt;T, bool&gt;&gt;, string)'</Item>
@@ -698,33 +391,13 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ExpressionExtensions+InvokeGeneric">
-          <Members>
-           <Member Name="#GetVariableValue`1(System.Linq.Expressions.Expression)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2011-03-04 19:11:05Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'ExpressionExtensions.InvokeGeneric.GetVariableValue&lt;T&gt;(Expression)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="GenericExtensions">
           <Members>
-           <Member Name="#DbNullToDefault`1(System.Object)">
+           <Member Name="#DBNullToDefault`1(System.Object)">
             <Messages>
-             <Message Id="Db" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2011-03-04 23:14:30Z">
-              <Issue Name="Member">
-               <Item>Db</Item>
-               <Item>'GenericExtensions.DbNullToDefault&lt;T&gt;(this object)'</Item>
-               <Item>DB</Item>
-              </Issue>
-             </Message>
-             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-04 23:14:30Z">
+             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-14 16:39:12Z">
               <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'GenericExtensions.DbNullToDefault&lt;T&gt;(this object)'</Item>
+               <Item>'GenericExtensions.DBNullToDefault&lt;T&gt;(this object)'</Item>
                <Item>obj</Item>
                <Item>'obj'</Item>
               </Issue>
@@ -733,14 +406,6 @@
            </Member>
            <Member Name="#ExecuteGenericMethod`1(!!0,System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,System.Object&gt;&gt;,System.Type)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'methodCall'</Item>
-               <Item>'GenericExtensions.ExecuteGenericMethod&lt;TSource&gt;(this TSource, Expression&lt;Func&lt;TSource, object&gt;&gt;, Type)'</Item>
-               <Item>'Expression&lt;Func&lt;TSource, object&gt;&gt;'</Item>
-               <Item>'LambdaExpression'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2011-03-04 19:11:05Z">
               <Issue>
                <Item>'GenericExtensions.ExecuteGenericMethod&lt;TSource&gt;(this TSource, Expression&lt;Func&lt;TSource, object&gt;&gt;, Type)'</Item>
@@ -761,12 +426,6 @@
            </Member>
            <Member Name="#GetPropertyValuesWithAttribute`1(System.Object)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'GenericExtensions.GetPropertyValuesWithAttribute&lt;TAttributeType&gt;(this object)'</Item>
-               <Item>'TAttributeType'</Item>
-              </Issue>
-             </Message>
              <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-04 19:11:05Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'GenericExtensions.GetPropertyValuesWithAttribute&lt;TAttributeType&gt;(this object)'</Item>
@@ -776,59 +435,13 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#SetPropertyValueWithAttribute`2(!!0,System.Object)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'GenericExtensions.SetPropertyValueWithAttribute&lt;TInstance, TAttributeType&gt;(this TInstance, object)'</Item>
-               <Item>'TAttributeType'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
-         <Type Name="TypeExtensions">
-          <Members>
-           <Member Name="#ExecuteGenericMethod`2(System.Type,System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,!!1&gt;&gt;,System.Object[])">
-            <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'methodCall'</Item>
-               <Item>'TypeExtensions.ExecuteGenericMethod&lt;TSource, TReturn&gt;(this Type, Expression&lt;Func&lt;TSource, TReturn&gt;&gt;, params object[])'</Item>
-               <Item>'Expression&lt;Func&lt;TSource, TReturn&gt;&gt;'</Item>
-               <Item>'LambdaExpression'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'TypeExtensions.ExecuteGenericMethod&lt;TSource, TReturn&gt;(this Type, Expression&lt;Func&lt;TSource, TReturn&gt;&gt;, params object[])'</Item>
-               <Item>'Expression&lt;Func&lt;TSource, TReturn&gt;&gt;'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetMembersWithAttribute`1(System.Type)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'TypeExtensions.GetMembersWithAttribute&lt;T&gt;(this Type)'</Item>
-               <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="PHydrate.Util.MemberInfoWrapper">
-        <Types>
          <Type Name="IMemberInfo">
           <Members>
            <Member Name="#GetValue(System.Object)">
             <Messages>
-             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-04 19:11:05Z">
+             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-14 14:48:14Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'IMemberInfo.GetValue(object)'</Item>
                <Item>obj</Item>
@@ -839,7 +452,7 @@
            </Member>
            <Member Name="#SetValue(System.Object,System.Object)">
             <Messages>
-             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-04 19:11:05Z">
+             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-14 14:48:14Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'IMemberInfo.SetValue(object, object)'</Item>
                <Item>obj</Item>
@@ -850,38 +463,32 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="MemberInfoWrapper">
-          <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2011-03-04 19:11:05Z">
-            <Issue>
-             <Item>'MemberInfoWrapper'</Item>
-             <Item>PHydrate.Util.MemberInfoWrapper</Item>
-            </Issue>
-           </Message>
-          </Messages>
+         <Type Name="MemberInfoExtensions">
           <Members>
-           <Member Name="#MemberInfo">
+           <Member Name="#GetLookupHash`1(PHydrate.Util.IMemberInfo,System.Object,System.String[])">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2011-03-04 19:11:05Z">
-              <Issue>
-               <Item>'MemberInfoWrapper.MemberInfo'</Item>
+             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2011-03-14 14:48:14Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'MemberInfoExtensions.GetLookupHash&lt;T&gt;(this IMemberInfo, object, params string[])'</Item>
+               <Item>obj</Item>
+               <Item>'obj'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Type">
-            <Accessors>
-             <Accessor Name="#get_Type()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2011-03-04 19:11:05Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'MemberInfoWrapper.Type.get()'</Item>
-                 <Item>'PHydrateInternalException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
+          </Members>
+         </Type>
+         <Type Name="TypeExtensions">
+          <Members>
+           <Member Name="#ExecuteGenericMethod`2(System.Type,System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,!!1&gt;&gt;,System.Object[])">
+            <Messages>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Created="2011-03-04 19:11:05Z">
+              <Issue>
+               <Item>'TypeExtensions.ExecuteGenericMethod&lt;TSource, TReturn&gt;(this Type, Expression&lt;Func&lt;TSource, TReturn&gt;&gt;, params object[])'</Item>
+               <Item>'Expression&lt;Func&lt;TSource, TReturn&gt;&gt;'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
           </Members>
          </Type>
@@ -899,20 +506,14 @@
    <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
     <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
-    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021">
     <Resolution Name="Default">Consider a design that does not require that {0} be an out parameter.</Resolution>
    </Rule>
-   <Rule TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011">
-    <Resolution Name="Default">Consider changing the type of parameter {0} in {1} from {2} to its base type {3}. This method appears to only require base class members in its implementation. Suppress this violation if there is a compelling reason to require the more derived type in the method signature.</Resolution>
+   <Rule TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816">
+    <Resolution Name="NotCalled">Change {0} to call {1}. This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.</Resolution>
    </Rule>
    <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
     <Resolution Name="Parameter">{0}, a parameter, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
-    <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
    </Rule>
    <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
     <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
@@ -920,18 +521,8 @@
    <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
     <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
    </Rule>
-   <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
-    <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
-    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
     <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
-    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
-    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
-    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
@@ -939,40 +530,21 @@
    <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
     <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
    </Rule>
+   <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+    <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+    <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
+   </Rule>
    <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
     <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
    </Rule>
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="NoArguments">Call the {0} constructor that contains a message and/or paramName parameter.</Resolution>
    </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018">
-    <Resolution Name="Inherited">Even though attribute {0} inherits AttributeUsage from its base type, you should consider explicitly specifying AttributeUsage on the type to improve code readability and documentation.</Resolution>
-   </Rule>
    <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
     <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
    </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
-   <Rule TypeName="NormalizeStringsToUppercase" Category="Microsoft.Globalization" CheckId="CA1308">
-    <Resolution Name="ToUpperInvariant">In method {0}, replace the call to {1} with String.ToUpperInvariant().</Resolution>
-   </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="IFormatProviderAlternateString">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify {4}.</Resolution>
-   </Rule>
-   <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
-    <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
-   </Rule>
-   <Rule TypeName="UseOrdinalStringComparison" Category="Microsoft.Globalization" CheckId="CA1309">
-    <Resolution Name="StringComparer">{0} passes '{1}' as the 'StringComparer' parameter to {2}. To perform a non-linguistic comparison, specify 'StringComparer.Ordinal' or 'StringComparer.OrdinalIgnoreCase' instead.</Resolution>
-   </Rule>
-   <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
-    <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
-    <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
-    <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
    </Rule>
    <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
     <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>

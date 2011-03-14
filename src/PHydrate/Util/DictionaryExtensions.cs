@@ -43,7 +43,7 @@ namespace PHydrate.Util
         public static bool ContainsKeyNoCase< T >( this IDictionary< string, T > dictionary, string key,
                                                    out string actualName )
         {
-            foreach ( string k in dictionary.Keys.Where( k => k.ToLowerInvariant() == key.ToLowerInvariant() ) )
+            foreach ( string k in dictionary.Keys.Where( k => k.ToUpperInvariant() == key.ToUpperInvariant() ) )
             {
                 actualName = k;
                 return true;
