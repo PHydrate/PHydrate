@@ -32,15 +32,15 @@ namespace PHydrate.Util
     public static class DataReaderExtensions
     {
         /// <summary>
-        /// Return an IDictionary of the current record of the IDataReader
+        /// Return an IDictionary of the current IDataRecord
         /// </summary>
-        /// <param name="dataReader">The data reader.</param>
+        /// <param name="dataRecord">The data reader.</param>
         /// <returns>The record translated as an IDictionary</returns>
-        public static IDictionary< string, object > ToDictionary( this IDataReader dataReader )
+        public static IDictionary< string, object > ToDictionary( this IDataRecord dataRecord )
         {
-            var dictionary = new Dictionary< string, object >( StringComparer.InvariantCultureIgnoreCase );
-            for ( int i = 0; i < dataReader.FieldCount; i++ )
-                dictionary.Add( dataReader.GetName( i ), dataReader.GetValue( i ) );
+            var dictionary = new Dictionary< string, object >( StringComparer.OrdinalIgnoreCase );
+            for ( int i = 0; i < dataRecord.FieldCount; i++ )
+                dictionary.Add( dataRecord.GetName( i ), dataRecord.GetValue( i ) );
 
             return dictionary;
         }

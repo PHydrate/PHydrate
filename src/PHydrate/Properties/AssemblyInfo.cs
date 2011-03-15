@@ -20,6 +20,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -58,10 +59,12 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.3.0.*")]
+[ assembly: AssemblyVersion( "0.3.0.*" ) ]
 //[ assembly: AssemblyFileVersion( "0.1.0.0" ) ]
 
 // Allow the Specifications to see the internals
 
 [ assembly: InternalsVisibleTo( "PHydrate.Specs" ) ]
-[assembly: AssemblyFileVersionAttribute("0.3.0.35")]
+[ assembly: AssemblyFileVersionAttribute( "0.3.0.35" ) ]
+
+[ assembly: CLSCompliant( true ) ]

@@ -32,6 +32,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyOriginatorKeyFile>PHydrate.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +55,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
@@ -157,9 +158,6 @@
     <Compile Include="Util\DbCommandExtensions\DbCommandExtensionsSpecificationBase.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_explicit_direction.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_no_direction.cs" />
-    <Compile Include="Util\DictionaryExtensions\DictionaryExtensionsSpecificationBase.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_key_without_case.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_non_existant_key_without_case.cs" />
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_a_constant_expression.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_or.cs" />
@@ -220,6 +218,9 @@
       <Project>{5427851E-6732-435D-A982-13DC7DA2489F}</Project>
       <Name>PHydrate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PHydrate.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

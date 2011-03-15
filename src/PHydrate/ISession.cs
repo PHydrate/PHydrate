@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace PHydrate
@@ -32,7 +32,7 @@ namespace PHydrate
     /// <remarks>
     /// Sessions are quick to construct, and as such can be used and disposed of often
     /// </remarks>
-    public interface ISession : IDisposable
+    public interface ISession
     {
         /// <summary>
         ///   Gets the transaction.
@@ -46,6 +46,7 @@ namespace PHydrate
         /// <typeparam name = "T">The type of object to return.</typeparam>
         /// <param name = "query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
             where T : class;
 

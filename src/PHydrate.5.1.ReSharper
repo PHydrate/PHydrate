@@ -157,6 +157,7 @@ Copyright 2010-2011, Stephen Michael Czetty]]></FileHeader>
         </ElementKinds>
       </UserRule>
       <Abbreviation Text="SQ" />
+      <Abbreviation Text="DB" />
     </Naming2>
   </CodeStyleSettings>
   <SharedSolutionTemplateManager>

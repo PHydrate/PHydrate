@@ -15,13 +15,15 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using PHydrate.Attributes;
 using PHydrate.Util;
 
 namespace PHydrate.Core
@@ -101,6 +103,7 @@ namespace PHydrate.Core
                     command.AddParameter( parameter );
         }
 
+        [ NotNull ]
         private IDbConnection GetDbConnection()
         {
             IDbConnection dbConnection = GetDatabaseConnection();
@@ -115,6 +118,7 @@ namespace PHydrate.Core
         /// Gets the connection.
         /// </summary>
         /// <returns>The driver-specific connection object</returns>
+        [ SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate" ) ]
         protected abstract IDbConnection GetDatabaseConnection();
     }
 }

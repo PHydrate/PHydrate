@@ -30,7 +30,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
     {
         private Establish Context = () => _randomString = A.Random.String;
 
-        private Because Of = () => _defaultString = _randomString.DbNullToDefault< string >();
+        private Because Of = () => _defaultString = _randomString.DBNullToDefault< string >();
 
         private It Should_not_change_the_return_value
             = () => _defaultString.ShouldEqual( _randomString );

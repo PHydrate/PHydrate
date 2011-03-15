@@ -28,7 +28,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
     public sealed class When_converting_dbnull_to_default_class
     {
         private Because Of =
-            () => _defaultObject = PHydrate.Util.GenericExtensions.DbNullToDefault< object >( DBNull.Value );
+            () => _defaultObject = PHydrate.Util.GenericExtensions.DBNullToDefault< object >( DBNull.Value );
 
         private It Should_return_null
             = () => _defaultObject.ShouldBeNull();
