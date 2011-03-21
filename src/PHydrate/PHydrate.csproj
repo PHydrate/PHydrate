@@ -29,7 +29,8 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>PHydrate.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,6 +96,7 @@
     <Compile Include="Util\ExpressionExtensions.cs" />
     <Compile Include="Util\DataReaderExtensions.cs" />
     <Compile Include="Util\GenericExtensions.cs" />
+    <Compile Include="Util\EnumerableExtensions.cs" />
     <Compile Include="Util\MemberInfoExtensions.cs" />
     <Compile Include="Util\IMemberInfo.cs" />
     <Compile Include="Util\MemberInfoWrapper\FieldInfoWrapper.cs" />
@@ -119,9 +121,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PHydrate.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

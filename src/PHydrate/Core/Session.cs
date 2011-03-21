@@ -258,19 +258,31 @@ namespace PHydrate.Core
                     Type typeToCastTo = obj.GetType();
                     if ( internalRecordset.Type.IsAssignableFrom( typeToCastTo ) ) // Simple type
                         SetSimpleTypeInAggregateRoot( internalRecordset, obj, aggregateRoot );
+                    else if (
+                        internalRecordset.Type.IsAssignableFrom(
+                            typeof(IEnumerable< >).MakeGenericType( typeToCastTo ) ) ) // IEnumerable, IList
                     {
+                        T found = GetAggregateRootFromSecondaryObject( internalRecordset, obj, aggregateRoot );
+                        if ( found == null )
                             continue;
-                        // TODO: IEnumerable, IList
-                        //if (internalRecordset.Type.IsAssignableFrom(typeof(IEnumerator<>).MakeGenericType(obj.GetType())))
-                        //{
-                        //    int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
 
-                        //    if ( !aggregateRoot.ContainsKey( lookupHash ) )
-                        //        continue;
-                        //}
+                        var list = internalRecordset.GetEnumerableOrList( enumerable, typeToCastTo );
+                        internalRecordset.SetValue( found, list );
                     }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static T GetAggregateRootFromSecondaryObject( IMemberInfo internalRecordset, object obj,
+                                                                  IDictionary< int, T > aggregateRoot )
+            {
+                string[] primaryKeyMembers =
+                    internalRecordset.Type.GetMembersWithAttribute< PrimaryKeyAttribute >().Select(
+                        x => x.Wrapped.Name ).ToArray();
+
+                int lookupHash = internalRecordset.GetLookupHash< T >( obj, primaryKeyMembers );
+
+                return aggregateRoot.ContainsKey( lookupHash ) ? aggregateRoot[ lookupHash ] : null;
             }
 
             private static void SetSimpleTypeInAggregateRoot( IMemberInfo internalRecordset, object obj,

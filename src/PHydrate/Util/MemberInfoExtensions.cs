@@ -49,5 +49,19 @@ namespace PHydrate.Util
                 internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
                     x => x.GetValue( obj ) ) );
         }
+
+        /// <summary>
+        /// Gets a strongly-typed IEnumerable or IList
+        /// </summary>
+        /// <param name="internalRecordset">The internal recordset.</param>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <param name="typeToCastTo">The type to cast to.</param>
+        /// <returns></returns>
+        public static object GetEnumerableOrList(this IMemberInfo internalRecordset, IEnumerable enumerable, Type typeToCastTo)
+        {
+            return internalRecordset.Type.IsAssignableFrom( typeof(IList< >).MakeGenericType( typeToCastTo ) )
+                       ? enumerable.ToList( typeToCastTo )
+                       : enumerable.Cast( typeToCastTo );
+        }
     }
 }
