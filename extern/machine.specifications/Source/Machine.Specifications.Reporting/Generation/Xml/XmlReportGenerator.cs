@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,16 @@ using System.Xml;
 
 using Machine.Specifications.Runner;
 
+=======
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
+
+using Machine.Specifications.Runner;
+
+>>>>>>> feature/externs-subtree
 namespace Machine.Specifications.Reporting.Generation.Xml
 {
   public class XmlReportGenerator

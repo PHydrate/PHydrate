@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,3 +13,19 @@ namespace Machine.Specifications.ConsoleRunner
     Failure = 1
   }
 }
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Machine.Specifications.ConsoleRunner
+{
+  public enum ExitCode
+  {
+    Success = 0,
+    Error = -1,
+    Failure = 1
+  }
+}
+>>>>>>> feature/externs-subtree

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System.Collections.Generic;
 
 namespace Machine.Specifications.Reporting.Model
@@ -7,4 +8,15 @@ namespace Machine.Specifications.Reporting.Model
     void Accept(ISpecificationVisitor visitor);
     IEnumerable<ISpecificationNode> Children { get; }
   }
+=======
+﻿using System.Collections.Generic;
+
+namespace Machine.Specifications.Reporting.Model
+{
+  public interface ISpecificationNode
+  {
+    void Accept(ISpecificationVisitor visitor);
+    IEnumerable<ISpecificationNode> Children { get; }
+  }
+>>>>>>> feature/externs-subtree
 }

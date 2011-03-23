@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 <TestRunner>
        <FriendlyName>Machine.Specifications {0}.{1}.{2}</FriendlyName>
        <AssemblyPath>Machine.Specifications.TDNetRunner.dll</AssemblyPath>
        <TypeName>Machine.Specifications.TDNetRunner.SpecificationRunner</TypeName>
 </TestRunner>
+=======
+<TestRunner>
+       <FriendlyName>Machine.Specifications {0}.{1}.{2}</FriendlyName>
+       <AssemblyPath>Machine.Specifications.TDNetRunner.dll</AssemblyPath>
+       <TypeName>Machine.Specifications.TDNetRunner.SpecificationRunner</TypeName>
+</TestRunner>
+>>>>>>> feature/externs-subtree
