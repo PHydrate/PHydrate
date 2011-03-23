@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<project name="UMMO" default="buildLibrary" basedir=".">
+	<description>Builds the UMMO libraries</description>
+
+	<loadtasks assembly="tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
+
+	<!-- Property definitions -->
+	<property name="debug" value="false" overwrite="false" />
+	<property name="build.configuration" value="release" overwrite="false" />
+	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
+	<property name="outputdir" value="Build" overwrite="false" />
+
+	<assemblyfileset id="test.assemblies" />
+
+	<target name="clean" description="Remove all generated files">
+		<delete dir="Build" />
+	</target>
+	
+	<target name="makeOutputFolder" description="Create the output folder">
+		<if test="${not directory::exists(outputdir)}">
+			<echo message="Creating Build directory..." />
+			<mkdir dir="Build" />
+		</if>
+	</target>
+
+	<target name="buildLibrary" depends="makeOutputFolder" description="Build UMMO">
+		<echo message="Building UMMO.TestingUtils.dll..." />
+		<csc doc="Build/UMMO.TestingUtils.xml" optimize="${build.optimize}" output="${outputdir}/UMMO.TestingUtils.dll" target="library">
+			<sources>
+				<include name="src/UMMO.TestingUtils/**/*.cs" />
+			</sources>
+			<nowarn>
+				<warning number="1607" />
+			</nowarn>
+		</csc>
+		
+		<echo message="Building UMMO.Extensions.dll..." />
+		<copy file="lib/log4net/log4net.dll" todir="${outputdir}" />
+		<csc doc="Build/UMMO.Extensions.xml" optimize="${build.optimize}" output="${outputdir}/UMMO.Extensions.dll" target="library">
+			<sources>
+				<include name="src/UMMO.Extensions/**/*.cs" />
+			</sources>
+			<references>
+				<lib>
+					<include name="${outputdir}" />
+				</lib>
+				<include name="log4net.dll" />
+			</references>
+			<nowarn>
+				<warning number="1607" />
+			</nowarn>
+		</csc>
+	</target>
+
+	<target name="buildTests" depends="buildLibrary" description="Build the test assemblies">
+		<echo message="Building UMMO.TestingUtils.Specs.dll..." />
+		<copy verbose="true" file="lib/Machine.Specifications/Machine.Specifications.dll" todir="${outputdir}" />
+		<copy file="lib/Rhino-Mocks/Rhino.Mocks.dll" todir="${outputdir}" />
+
+		<csc output="${outputdir}/UMMO.TestingUtils.Specs.dll" target="library">
+			<sources>
+				<include name="src/UMMO.TestingUtils.Specs/**/*.cs" />
+			</sources>
+			<references>
+				<lib>
+					<include name="${outputdir}" />
+				</lib>
+				<include name="UMMO.TestingUtils.dll" />
+				<include name="Machine.Specifications.dll" />
+				<include name="Rhino.Mocks.dll" />
+			</references>
+			<nowarn>
+				<warning number="1607" />
+				<warning number="0169" />	<!-- Variable is never used -->
+			</nowarn>
+		</csc>
+
+		<echo message="Building UMMO.Extensions.Specs.dll..." />
+		
+		<csc output="${outputdir}/UMMO.Extensions.Specs.dll" target="library">
+			<sources>
+				<include name="src/UMMO.Extensions.Specs/**/*.cs" />
+			</sources>
+			<references>
+				<lib>
+					<include name="${outputdir}" />
+				</lib>
+				<include name="UMMO.Extensions.dll" />
+				<include name="UMMO.TestingUtils.dll" />
+				<include name="Machine.Specifications.dll" />
+				<include name="Rhino.Mocks.dll" />
+				<include name="log4net.dll" />
+			</references>
+			<nowarn>
+				<warning number="1607" />
+				<warning number="0169" />	<!-- Variable is never used -->
+			</nowarn>
+		</csc>
+		
+		<assemblyfileset id="test.assemblies">
+			<include name="${outputdir}/**/*.Specs.dll" />
+		</assemblyfileset>
+	</target>
+	
+	<target name="test" depends="buildTests" description="Execute unit tests">
+		<property name="test.folder" value="${path::combine(outputdir, 'results')}" overwrite="true" />
+		<if test="${not directory::exists(test.folder)}">
+			<echo message="Creating test results directory..." />
+			<mkdir dir="${test.folder}" />
+		</if>
+		<!-- TODO: Get the mspec task from nant-extensions and use that. -->
+		<exec program="lib/Machine.Specifications/mspec.exe">
+			<arg value="--html"/><arg value="${test.folder}" />
+			<arg line="${fileset::to-string('test.assemblies', ' ')}"/>
+		</exec>
+	</target>
+
+	<target name="distro" depends="buildLibrary">
+		<echo message="Creating zip file..." />
+		<zip zipfile="${outputdir}/UMMO-bin.zip">
+			<fileset basedir="${outputdir}">
+				<include name="*.xml" />
+				<include name="*.dll" />
+				<exclude name="*.Specs.dll" />
+			</fileset>
+		</zip>
+	</target>
+</project>
