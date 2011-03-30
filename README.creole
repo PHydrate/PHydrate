@@ -24,3 +24,7 @@ Example code can be found in the PHydrate.Tests.Integration project.
 I will be adding to this as I add functionality and/or find use cases
 that I didn't think of.
 
+=== Building from source
+* You will need PostSharp 2.0 to build this.  You can download it from
+http://www.sharpcrafters.com/postsharp/download
+
