@@ -40,34 +40,40 @@ namespace PHydrate.Core
 
                 foreach (IMemberInfo internalRecordset in internalRecordsets)
                 {
-                    if (!dataReader.NextResult())
-                        throw new PHydrateException("Missing expected recordset from stored procedure");
+                    if ( !dataReader.NextResult() )
+                        throw new PHydrateException( "Missing expected recordset from stored procedure" );
+
+                    Type typeToCastTo = internalRecordset.Type;
+                    if ( typeof(IEnumerable).IsAssignableFrom( internalRecordset.Type ) )
+                        typeToCastTo = internalRecordset.Type.IsGenericType
+                                           ? internalRecordset.Type.GetGenericArguments()[ 0 ]
+                                           : typeof(object);
 
                     IEnumerable enumerable =
-                        internalRecordset.Type.ExecuteGenericMethod<DataHydrator<T>, IEnumerable>(
-                            x => x.HydrateFromDataReader(dataReader),
+                        typeToCastTo.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
+                            x => x.HydrateFromDataReader( dataReader ),
                             _defaultObjectHydrator,
                             _hydratedObjects
                             );
 
-                    object obj = enumerable.Cast<object>().FirstOrDefault();
-                    if (obj == null)
-                        continue;
-
-                    Type typeToCastTo = obj.GetType();
-                    if (internalRecordset.Type.IsAssignableFrom(typeToCastTo)) // Simple type
-                        SetSimpleTypeInAggregateRoot(internalRecordset, obj, aggregateRoot);
-                    else if (
-                        internalRecordset.Type.IsAssignableFrom(
-                            typeof(IEnumerable<>).MakeGenericType(typeToCastTo))) // IEnumerable, IList
+                    if ( typeof(IEnumerable< >).MakeGenericType( typeToCastTo ).IsAssignableFrom( internalRecordset.Type ) )
+                        // IEnumerable, IList
                     {
-                        T found = GetAggregateRootFromSecondaryObject(internalRecordset, obj, aggregateRoot);
-                        if (found == null)
-                            continue;
+                        var list = internalRecordset.GetEnumerableOrList( enumerable, typeToCastTo );
 
-                        var list = internalRecordset.GetEnumerableOrList(enumerable, typeToCastTo);
-                        internalRecordset.SetValue(found, list);
+                        foreach ( object obj in enumerable )
+                        {
+                            T found = GetAggregateRootFromSecondaryObject( internalRecordset, obj, aggregateRoot );
+                            if ( found == null )
+                                continue;
+
+                            internalRecordset.SetValue( found, list );
+                        }
                     }
+                    else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
+                        SetSimpleTypeInAggregateRoot( internalRecordset, enumerable.Cast< object >().FirstOrDefault(),
+                                                      aggregateRoot );
+
                 }
                 return aggregateRoot.Values;
             }
