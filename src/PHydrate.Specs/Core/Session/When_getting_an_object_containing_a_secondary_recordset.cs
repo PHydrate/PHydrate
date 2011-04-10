@@ -85,9 +85,9 @@ namespace PHydrate.Specs.Core.Session
                                         DataReaderMock.AddRecordSet( "AggregateKey", "Key" );
                                         DataReaderMock.AddRow( 1, 1 );
                                         DataReaderMock.AddRow( 1, 2 );
-                                        DataReaderMock.AddRow( 2, 1 );
-                                        DataReaderMock.AddRow( 2, 2 );
-                                        DataReaderMock.AddRow( 3, 1 );
+                                        DataReaderMock.AddRow( 2, 3 );
+                                        DataReaderMock.AddRow( 2, 4 );
+                                        DataReaderMock.AddRow( 3, 5 );
                                         DataReaderMock.Playback();
 
                                         DatabaseService.Expect(

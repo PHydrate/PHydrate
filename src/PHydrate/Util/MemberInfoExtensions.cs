@@ -36,17 +36,16 @@ namespace PHydrate.Util
         ///   Gets the lookup hash of a type, based on given values for the members
         /// </summary>
         /// <typeparam name = "T">They type to hash</typeparam>
-        /// <param name = "internalRecordset">The internal recordset.</param>
         /// <param name = "obj">The obj.</param>
         /// <param name = "primaryKeyMembers">The primary key members.</param>
         /// <returns></returns>
         [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
-        public static int GetLookupHash< T >( this IMemberInfo internalRecordset, object obj,
+        public static int GetLookupHash< T >( this object obj,
                                               params string[] primaryKeyMembers ) where T : class
         {
             return typeof(T).GetObjectsHashCodeByFieldValues(
-                internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
+               obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
                     x => x.GetValue( obj ) ) );
         }
 
@@ -59,9 +58,10 @@ namespace PHydrate.Util
         /// <returns></returns>
         public static object GetEnumerableOrList(this IMemberInfo internalRecordset, IEnumerable enumerable, Type typeToCastTo)
         {
-            return internalRecordset.Type.IsAssignableFrom( typeof(IList< >).MakeGenericType( typeToCastTo ) )
+            return typeof(IList<>).MakeGenericType(typeToCastTo).IsAssignableFrom(internalRecordset.Type)
                        ? enumerable.ToList( typeToCastTo )
                        : enumerable.Cast( typeToCastTo );
+            //return enumerable.ToList( typeToCastTo );
         }
     }
 }

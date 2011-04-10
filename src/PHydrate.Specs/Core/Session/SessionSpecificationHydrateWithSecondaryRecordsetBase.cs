@@ -33,6 +33,8 @@ namespace PHydrate.Specs.Core.Session
         {
             [PrimaryKey]
             public int Key { get; set; }
+
+            public int AggregateKey { get; set; }
         }
 
         [HydrateUsing("TestStoredProcedure")]

@@ -43,11 +43,7 @@ namespace PHydrate.Core
                     if ( !dataReader.NextResult() )
                         throw new PHydrateException( "Missing expected recordset from stored procedure" );
 
-                    Type typeToCastTo = internalRecordset.Type;
-                    if ( typeof(IEnumerable).IsAssignableFrom( internalRecordset.Type ) )
-                        typeToCastTo = internalRecordset.Type.IsGenericType
-                                           ? internalRecordset.Type.GetGenericArguments()[ 0 ]
-                                           : typeof(object);
+                    Type typeToCastTo = GetTypeToCastTo( internalRecordset );
 
                     IEnumerable enumerable =
                         typeToCastTo.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
@@ -59,7 +55,7 @@ namespace PHydrate.Core
                     if ( typeof(IEnumerable< >).MakeGenericType( typeToCastTo ).IsAssignableFrom( internalRecordset.Type ) )
                         // IEnumerable, IList
                     {
-                        var list = internalRecordset.GetEnumerableOrList( enumerable, typeToCastTo );
+                        //var list = internalRecordset.GetEnumerableOrList( enumerable, typeToCastTo );
 
                         foreach ( object obj in enumerable )
                         {
@@ -67,7 +63,15 @@ namespace PHydrate.Core
                             if ( found == null )
                                 continue;
 
-                            internalRecordset.SetValue( found, list );
+                            var list = internalRecordset.GetValue( found ) as IList;
+                            if (list == null)
+                            {
+                                list = typeof(List< >).MakeGenericType( typeToCastTo ).
+                                    ConstructUsingDefaultConstructor<IList>();
+                                internalRecordset.SetValue( found,
+                                                            list );
+                            }
+                            list.Add( obj );
                         }
                     }
                     else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
@@ -78,14 +82,23 @@ namespace PHydrate.Core
                 return aggregateRoot.Values;
             }
 
+            private static Type GetTypeToCastTo( IMemberInfo internalRecordset ) {
+                Type typeToCastTo = internalRecordset.Type;
+                if ( typeof(IEnumerable).IsAssignableFrom( internalRecordset.Type ) )
+                    typeToCastTo = internalRecordset.Type.IsGenericType
+                                       ? internalRecordset.Type.GetGenericArguments()[ 0 ]
+                                       : typeof(object);
+                return typeToCastTo;
+            }
+
             private static T GetAggregateRootFromSecondaryObject(IMemberInfo internalRecordset, object obj,
                                                                   IDictionary<int, T> aggregateRoot)
             {
                 string[] primaryKeyMembers =
-                    internalRecordset.Type.GetMembersWithAttribute<PrimaryKeyAttribute>().Select(
-                        x => x.Wrapped.Name).ToArray();
+                    typeof(T).GetMembersWithAttribute< PrimaryKeyAttribute >().Select(
+                        x => x.Wrapped.Name ).ToArray();
 
-                int lookupHash = internalRecordset.GetLookupHash<T>(obj, primaryKeyMembers);
+                int lookupHash = obj.GetLookupHash< T >( primaryKeyMembers );
 
                 return aggregateRoot.ContainsKey(lookupHash) ? aggregateRoot[lookupHash] : null;
             }
