@@ -2,32 +2,26 @@
 <project name="PHydrate" default="buildLibrary" basedir=".">
 	<description>Builds the PHydrate libraries</description>
 
-	<loadtasks assembly="tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
 
 	<!-- Property definitions -->
+	<property name="build.cwd" value="${directory::get-current-directory()}" overwrite="true" />
 	<property name="build.debug" value="false" overwrite="false" />
-	<property name="build.configuration" value="release" overwrite="false" />
+	<property name="build.configuration" value="${if (build.debug == 'true', 'debug', 'release')}" overwrite="true" />
+	<property name="build.outputdir" value="${path::combine('Build', build.configuration)}" overwrite="false" />
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
-	<property name="bin.dir" value="Build/${build.configuration}" overwrite="false" />
-	<property name="doc.dir" value="doc" overwrite="false" />
+	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
+	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="false" />
+
+	<loadtasks>
+		<fileset>
+			<include name="${build.cwd}/tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
+		</fileset>
+	</loadtasks>
 
 	<assemblyfileset id="test.assemblies" />
 
-	<assemblyfileset id="test.dependencies">
-		<lib>
-			<include name="lib/*" />
-			<include name="lib/SQLite/bin" />
-			<include name="${bin.dir}" />
-		</lib>
-		<include name="UMMO.TestingUtils.dll" />
-		<include name="Machine.Specifications.dll" />
-		<include name="Rhino.Mocks.dll" />
-		<include name="System.Data.SQLite.dll" />
-		<include name="PHydrate.dll" />
-	</assemblyfileset>
-
 	<target name="clean" description="Remove all generated files">
-		<delete dir="Build/${build.configuration}" />
+		<delete dir="${build.outputdir}" />
 	</target>
 	
 	<target name="makeOutputFolder" description="Create the output folder">
@@ -39,35 +33,26 @@
 
 	<target name="buildLibrary" depends="makeOutputFolder" description="Build UMMO">
 		<echo message="Building PHydrate.dll..." />
-		<csc doc="${bin.dir}/PHydrate.xml" optimize="${build.optimize}" output="${bin.dir}/PHydrate.dll" target="library">
-			<sources>
-				<include name="src/PHydrate/**/*.cs" />
-			</sources>
-		</csc>
+		<msbuild project="${build.cwd}/src/PHydrate/PHydrate.csproj">
+			<property name="Configuration" value="${build.configuration}" />
+			<property name="OutputPath" value="${bin.dir}" />
+		</msbuild>
 	</target>
 
 	<target name="buildTests" depends="buildLibrary" description="Build the test assemblies">
 		<echo message="Building PHydrate.Specs.dll..." />
 
-		<csc output="${bin.dir}/PHydrate.Specs.dll" target="library">
-			<sources>
-				<include name="src/PHydrate.Specs/**/*.cs" />
-			</sources>
-			<references refid="test.dependencies" />
-		</csc>
+		<msbuild project="${build.cwd}/src/PHydrate.Specs/PHydrate.Specs.csproj">
+			<property name="Configuration" value="${build.configuration}" />
+			<property name="OutputPath" value="${bin.dir}" />
+		</msbuild>
 
 		<echo message="Building PHydrate.Tests.Integration.dll..." />
 
-		<csc output="${bin.dir}/PHydrate.Tests.Integration.dll" target="library">
-			<sources>
-				<include name="src/PHydrate.Tests.Integration/**/*.cs" />
-			</sources>
-			<references refid="test.dependencies" />
-		</csc>
-
-		<copy todir="${bin.dir}" flatten="true">
-			<fileset refid="test.dependencies" />
-		</copy>
+		<msbuild project="${build.cwd}/src/PHydrate.Tests.Integration/PHydrate.Tests.Integration.csproj">
+			<property name="OutputPath" value="${bin.dir}" />
+			<property name="Configuration" value="${build.configuration}" />
+		</msbuild>
 
 		<copy todir="${bin.dir}" flatten="true">
 			<fileset>
