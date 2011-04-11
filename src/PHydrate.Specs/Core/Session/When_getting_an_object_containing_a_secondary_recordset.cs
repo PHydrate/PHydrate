@@ -73,4 +73,51 @@ namespace PHydrate.Specs.Core.Session
         private It Should_return_correct_record
             = () => _requestedObjects[ 0 ].AggregateKey.ShouldEqual( 1 );
     }
+
+    [Subject( typeof(PHydrate.Core.Session))]
+    public sealed class When_getting_an_object_containing_a_secondary_recordset_that_is_ienumerable_of_t :
+        SessionSpecificationHydrateWithSecondaryRecordsetBase
+    {
+        private Establish Context = () => {
+                                        DataReaderMock.AddRecordSet( "AggregateKey" );
+                                        DataReaderMock.AddRow( 1 );
+                                        DataReaderMock.AddRow( 2 );
+                                        DataReaderMock.AddRecordSet( "AggregateKey", "Key" );
+                                        DataReaderMock.AddRow( 1, 1 );
+                                        DataReaderMock.AddRow( 1, 2 );
+                                        DataReaderMock.AddRow( 2, 3 );
+                                        DataReaderMock.AddRow( 2, 4 );
+                                        DataReaderMock.AddRow( 3, 5 );
+                                        DataReaderMock.Playback();
+
+                                        DatabaseService.Expect(
+                                            x => x.ExecuteStoredProcedureReader( string.Empty, null ) ).Constraints(
+                                                Is.Equal( "TestStoredProcedure" ), Is.NotNull() ).Return( DataReaderMock );
+                                    };
+
+        private Because Of =
+            () =>
+            _requestedObjects =
+            SessionUnderTest.Get< TestObjectSecondaryRecordsetIEnumerable >( x => x.AggregateKey == 1 ).ToList();
+
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
+
+        private It Should_call_stored_procedure_with_parameter_named_aggregate_key
+            = () => AssertDatabaseServiceParameter("@AggregateKey", 1, x => x.ExecuteStoredProcedureReader(string.Empty, null));
+
+        private It Should_include_correct_internal_records
+            = () => _requestedObjects[ 0 ].InnerObjects.Count().ShouldEqual( 2 );  
+
+        private It Should_include_internal_record
+            = () => _requestedObjects[0].InnerObjects.ShouldNotBeNull();
+
+        private It Should_not_be_null
+            = () => _requestedObjects.ShouldNotBeNull();
+
+        private It Should_return_correct_record
+            = () => _requestedObjects[0].AggregateKey.ShouldEqual(1);
+
+        private static IList< TestObjectSecondaryRecordsetIEnumerable > _requestedObjects;
+    }
 }
