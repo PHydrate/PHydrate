@@ -21,7 +21,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using PostSharp.Aspects;
 
 namespace PHydrate.Attributes
 {
@@ -31,7 +30,7 @@ namespace PHydrate.Attributes
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
     [ SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix" ) ]
     [ Serializable ]
-    public abstract class CrudAttributeBase : LocationInterceptionAspect
+    public abstract class CrudAttributeBase : Attribute
     {
         /// <summary>
         ///   Initializes a new instance of the <see cref = "CrudAttributeBase" /> class.
