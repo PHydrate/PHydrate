@@ -37,7 +37,7 @@ namespace PHydrate.Specs.Util.TypeExtensions
         protected class TestClassWithNoDefaultConstructor
         {
             [ CoverageExclude ]
-            public TestClassWithNoDefaultConstructor( int blank ) {}
+            public TestClassWithNoDefaultConstructor( [UsedImplicitly] int blank ) {}
         }
 
         #endregion

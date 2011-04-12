@@ -28,6 +28,7 @@ namespace PHydrate.Attributes
     ///   Annotate a class with the stored procedure used to create a new record
     /// </summary>
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
+    [ Serializable ]
     public sealed class CreateUsingAttribute : CrudAttributeBase
     {
         /// <summary>

@@ -29,6 +29,7 @@ namespace PHydrate.Attributes
     /// </summary>
     [ MeansImplicitUse( ImplicitUseKindFlags.Instantiated, ImplicitUseTargetFlags.Itself ) ]
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
+    [ Serializable ]
     public sealed class HydrateUsingAttribute : CrudAttributeBase
     {
         /// <summary>

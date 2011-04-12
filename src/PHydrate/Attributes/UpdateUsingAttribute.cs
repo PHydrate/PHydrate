@@ -28,6 +28,7 @@ namespace PHydrate.Attributes
     ///   Annotate a class with the stored procedure name used to update a record.
     /// </summary>
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
+    [ Serializable ]
     public sealed class UpdateUsingAttribute : CrudAttributeBase
     {
         /// <summary>
