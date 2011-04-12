@@ -10,7 +10,7 @@
 	<property name="build.outputdir" value="${path::combine('Build', build.configuration)}" overwrite="false" />
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
 	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
-	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="false" />
+	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="true" />
 
 	<loadtasks>
 		<fileset>
@@ -31,7 +31,7 @@
 		</if>
 	</target>
 
-	<target name="buildLibrary" depends="makeOutputFolder" description="Build UMMO">
+	<target name="buildLibrary" depends="makeOutputFolder" description="Build PHydrate">
 		<echo message="Building PHydrate.dll..." />
 		<msbuild project="${build.cwd}/src/PHydrate/PHydrate.csproj">
 			<property name="Configuration" value="${build.configuration}" />
@@ -41,19 +41,18 @@
 
 	<target name="buildTests" depends="buildLibrary" description="Build the test assemblies">
 		<echo message="Building PHydrate.Specs.dll..." />
-
 		<msbuild project="${build.cwd}/src/PHydrate.Specs/PHydrate.Specs.csproj">
 			<property name="Configuration" value="${build.configuration}" />
 			<property name="OutputPath" value="${bin.dir}" />
 		</msbuild>
 
 		<echo message="Building PHydrate.Tests.Integration.dll..." />
-
 		<msbuild project="${build.cwd}/src/PHydrate.Tests.Integration/PHydrate.Tests.Integration.csproj">
 			<property name="OutputPath" value="${bin.dir}" />
 			<property name="Configuration" value="${build.configuration}" />
 		</msbuild>
 
+		<echo message="Copying Integration Test Database..." />
 		<copy todir="${bin.dir}" flatten="true">
 			<fileset>
 				<include name="src/PHydrate.Tests.Integration/IntegrationTestDb.sqlite" />
@@ -81,7 +80,7 @@
 
 	<target name="buildDocs" depends="buildLibrary">
 		<echo message="Building .chm documentation..." />
-		<msbuild project="doc/PHydrate.shfbproj" />
+		<msbuild project="${doc.dir}/PHydrate.shfbproj" />
 	</target>
 
 	<target name="distro" depends="buildLibrary,buildDocs">
@@ -91,6 +90,7 @@
 				<include name="*.xml" />
 				<include name="*.dll" />
 				<exclude name="*.Specs.dll" />
+				<exclude name="*.Tests.*.dll" />
 			</fileset>
 			<fileset basedir="${doc.dir}/Help">
 				<include name="*.chm" />
