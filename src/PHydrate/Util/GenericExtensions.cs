@@ -126,7 +126,7 @@ namespace PHydrate.Util
                 // Throw the type of the object into the hash, to prevent collisions
                 hash = hash * 137 + type.GetHashCode();
 
-                return values.Aggregate( hash,
+                return values.Where(x => x != null).Aggregate( hash,
                                          ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
             }
         }
@@ -148,14 +148,14 @@ namespace PHydrate.Util
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <param name="obj">The obj.</param>
         /// <param name="methodCall">The method call.</param>
-        /// <param name="type">The type.</param>
+        /// <param name="types">The type.</param>
         /// <returns></returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
         [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         public static object ExecuteGenericMethod< TSource >( this TSource obj,
                                                               Expression< Func< TSource, object > > methodCall,
-                                                              Type type )
+                                                              params Type[] types )
         {
             var unaryExpression = methodCall.Body as UnaryExpression;
             MethodCallExpression method;
@@ -172,7 +172,7 @@ namespace PHydrate.Util
                                                                BindingFlags.Public |
                                                                BindingFlags.NonPublic );
 
-            MethodInfo genericMethod = methodInfo.MakeGenericMethod( type );
+            MethodInfo genericMethod = methodInfo.MakeGenericMethod( types );
 
             return genericMethod.Invoke( obj, method.Arguments.Select( x => x.GetValue() ).ToArray() );
         }

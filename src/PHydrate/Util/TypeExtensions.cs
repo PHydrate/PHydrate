@@ -25,6 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using PHydrate.Aspects;
 using PHydrate.Attributes;
 using PHydrate.Util.MemberInfoWrapper;
 
@@ -35,13 +36,6 @@ namespace PHydrate.Util
     /// </summary>
     public static class TypeExtensions
     {
-        private static readonly IDictionary< Type, object[] > AttributeCache = new Dictionary< Type, object[] >();
-
-        private static readonly IDictionary< Type, ConstructorInfo > ConstructorCache =
-            new Dictionary< Type, ConstructorInfo >();
-
-        private static readonly IDictionary< Type, MemberInfo[] > MemberCache = new Dictionary< Type, MemberInfo[] >();
-
         /// <summary>
         /// Gets a specific attribute from a type.
         /// </summary>
@@ -49,12 +43,10 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>The attribute, or null if not found.</returns>
         [ CanBeNull ]
+        [Cache]
         public static T GetAttribute< T >( this Type type ) where T : Attribute
         {
-            if ( !AttributeCache.ContainsKey( type ) )
-                AttributeCache.Add( type, type.GetCustomAttributes( true ) );
-
-            return AttributeCache[ type ].Where( x => x.GetType() == typeof(T) ).FirstOrDefault() as T;
+            return type.GetCustomAttributes(true).Where( x => x.GetType() == typeof(T) ).FirstOrDefault() as T;
         }
 
         /// <summary>
@@ -63,11 +55,10 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>The default constructor for the type, or null if it does not exist.</returns>
         [ CanBeNull ]
+        [Cache]
         public static ConstructorInfo GetDefaultConstructor( this Type type )
         {
-            if ( !ConstructorCache.ContainsKey( type ) )
-                ConstructorCache.Add( type, type.GetConstructor( Type.EmptyTypes ) );
-            return ConstructorCache[ type ];
+            return type.GetConstructor( Type.EmptyTypes );
         }
 
         /// <summary>
@@ -94,16 +85,14 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns>An enumerable of all members of the type that have the specified attribute.</returns>
         [ NotNull ]
+        [Cache]
         [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         public static IEnumerable< IMemberInfo > GetMembersWithAttribute< T >( this Type type ) where T : Attribute
         {
-            if ( !MemberCache.ContainsKey( type ) )
-                MemberCache.Add( type,
-                                 type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ) );
-
             return
-                MemberCache[ type ].Where( x => x.GetCustomAttributes( typeof(T), true ).Length > 0 ).Select(
-                    x => x.CreateWrapper() );
+                type.GetMembers( BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).Where(
+                    x => x.GetCustomAttributes( typeof(T), true ).Length > 0 ).Select(
+                        x => x.CreateWrapper() );
         }
 
         /// <summary>
@@ -205,6 +194,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns></returns>
         [ NotNull ]
+        [Cache]
         public static IEnumerable< IMemberInfo > GetSettableMembers( this Type type )
         {
             return
