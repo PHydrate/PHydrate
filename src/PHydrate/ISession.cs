@@ -47,6 +47,7 @@ namespace PHydrate
         /// <param name = "query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
             where T : class;
 
@@ -56,6 +57,7 @@ namespace PHydrate
         /// <typeparam name="T">The type of the object to return.</typeparam>
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IEnumerable< T > Get< T >( ISpecification< T > specification )
             where T : class;
 
