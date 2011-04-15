@@ -25,7 +25,68 @@
  </Targets>
  <Rules>
   <RuleFiles>
-   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AbstractTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="AvoidEmptyInterfaces" Enabled="True" />
+    <Rule Name="AvoidExcessiveParametersOnGenericTypes" Enabled="True" />
+    <Rule Name="AvoidNamespacesWithFewTypes" Enabled="True" />
+    <Rule Name="AvoidOutParameters" Enabled="True" />
+    <Rule Name="CollectionsShouldImplementGenericInterface" Enabled="True" />
+    <Rule Name="ConsiderPassingBaseTypesAsParameters" Enabled="True" />
+    <Rule Name="DeclareEventHandlersCorrectly" Enabled="True" />
+    <Rule Name="DeclareTypesInNamespaces" Enabled="True" />
+    <Rule Name="DefaultParametersShouldNotBeUsed" Enabled="True" />
+    <Rule Name="DefineAccessorsForAttributeArguments" Enabled="True" />
+    <Rule Name="DoNotCatchGeneralExceptionTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareProtectedMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareStaticMembersOnGenericTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVirtualMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVisibleInstanceFields" Enabled="True" />
+    <Rule Name="DoNotExposeGenericLists" Enabled="True" />
+    <Rule Name="DoNotHideBaseClassMethods" Enabled="True" />
+    <Rule Name="DoNotNestGenericTypesInMemberSignatures" Enabled="True" />
+    <Rule Name="DoNotOverloadOperatorEqualsOnReferenceTypes" Enabled="True" />
+    <Rule Name="DoNotPassTypesByReference" Enabled="True" />
+    <Rule Name="DoNotRaiseExceptionsInUnexpectedLocations" Enabled="True" />
+    <Rule Name="EnumeratorsShouldBeStronglyTyped" Enabled="True" />
+    <Rule Name="EnumsShouldHaveZeroValue" Enabled="True" />
+    <Rule Name="EnumStorageShouldBeInt32" Enabled="True" />
+    <Rule Name="ExceptionsShouldBePublic" Enabled="True" />
+    <Rule Name="GenericMethodsShouldProvideTypeParameter" Enabled="True" />
+    <Rule Name="ICollectionImplementationsHaveStronglyTypedMembers" Enabled="True" />
+    <Rule Name="ImplementIDisposableCorrectly" Enabled="True" />
+    <Rule Name="ImplementStandardExceptionConstructors" Enabled="True" />
+    <Rule Name="IndexersShouldNotBeMultidimensional" Enabled="True" />
+    <Rule Name="InterfaceMethodsShouldBeCallableByChildTypes" Enabled="True" />
+    <Rule Name="ListsAreStronglyTyped" Enabled="True" />
+    <Rule Name="MarkAssembliesWithAssemblyVersion" Enabled="True" />
+    <Rule Name="MarkAssembliesWithClsCompliant" Enabled="True" />
+    <Rule Name="MarkAssembliesWithComVisible" Enabled="True" />
+    <Rule Name="MarkAttributesWithAttributeUsage" Enabled="True" />
+    <Rule Name="MarkEnumsWithFlags" Enabled="True" />
+    <Rule Name="MembersShouldNotExposeCertainConcreteTypes" Enabled="True" />
+    <Rule Name="MovePInvokesToNativeMethodsClass" Enabled="True" />
+    <Rule Name="NestedTypesShouldNotBeVisible" Enabled="True" />
+    <Rule Name="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Enabled="True" />
+    <Rule Name="OverrideMethodsOnComparableTypes" Enabled="True" />
+    <Rule Name="PropertiesShouldNotBeWriteOnly" Enabled="True" />
+    <Rule Name="ProvideObsoleteAttributeMessage" Enabled="True" />
+    <Rule Name="ReplaceRepetitiveArgumentsWithParamsArray" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldBeSealed" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="StringUriOverloadsCallSystemUriOverloads" Enabled="True" />
+    <Rule Name="TypesShouldNotExtendCertainBaseTypes" Enabled="True" />
+    <Rule Name="TypesThatOwnDisposableFieldsShouldBeDisposable" Enabled="True" />
+    <Rule Name="TypesThatOwnNativeResourcesShouldBeDisposable" Enabled="True" />
+    <Rule Name="UriParametersShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriPropertiesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriReturnValuesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UseEventsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseGenericEventHandlerInstances" Enabled="True" />
+    <Rule Name="UseGenericsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseIntegralOrStringArgumentForIndexers" Enabled="True" />
+    <Rule Name="UsePropertiesWhereAppropriate" Enabled="True" />
+   </RuleFile>
    <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
@@ -39,114 +100,5 @@
   <Groups />
   <Settings />
  </Rules>
- <FxCopReport Version="10.0">
-  <Targets>
-   <Target Name="$(ProjectDir)/PHydrate/bin/Debug/PHydrate.dll">
-    <Modules>
-     <Module Name="phydrate.dll">
-      <Messages>
-       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2011-03-04 19:11:05Z">
-        <Issue Name="NoStrongName">
-         <Item>'PHydrate.dll'</Item>
-        </Issue>
-       </Message>
-      </Messages>
-      <Namespaces>
-       <Namespace Name="PHydrate">
-        <Types>
-         <Type Name="ISession">
-          <Members>
-           <Member Name="#Get`1(PHydrate.ISpecification`1&lt;!!0&gt;)">
-            <Messages>
-             <Message Id="Get" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2011-03-04 19:11:05Z">
-              <Issue Name="Member">
-               <Item>'ISession.Get&lt;T&gt;(ISpecification&lt;T&gt;)'</Item>
-               <Item>Get</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Get`1(System.Linq.Expressions.Expression`1&lt;System.Func`2&lt;!!0,System.Boolean&gt;&gt;)">
-            <Messages>
-             <Message Id="Get" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2011-03-04 19:11:05Z">
-              <Issue Name="Member">
-               <Item>'ISession.Get&lt;T&gt;(Expression&lt;Func&lt;T, bool&gt;&gt;)'</Item>
-               <Item>Get</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ISpecification`1">
-          <Messages>
-           <Message TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040" Created="2011-03-04 19:11:05Z">
-            <Issue>
-             <Item>'ISpecification&lt;T&gt;'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-        </Types>
-       </Namespace>
-       <Namespace Name="PHydrate.Core">
-        <Types>
-         <Type Name="Session">
-          <Members>
-           <Member Name="#Transaction">
-            <Accessors>
-             <Accessor Name="#get_Transaction()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2011-03-04 19:11:05Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Session.Transaction.get()'</Item>
-                 <Item>'NotImplementedException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SessionFactory">
-          <Members>
-           <Member Name="#GlobalTransaction">
-            <Accessors>
-             <Accessor Name="#get_GlobalTransaction()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2011-03-04 19:11:05Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'SessionFactory.GlobalTransaction.get()'</Item>
-                 <Item>'NotImplementedException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-        </Types>
-       </Namespace>
-      </Namespaces>
-     </Module>
-    </Modules>
-   </Target>
-  </Targets>
-  <Rules>
-   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
-    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidEmptyInterfaces" Category="Microsoft.Design" CheckId="CA1040">
-    <Resolution Name="Default">Define a custom attribute to replace {0}.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
-    <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="Member">Rename virtual/interface member {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
-   </Rule>
-  </Rules>
- </FxCopReport>
+ <FxCopReport Version="10.0" />
 </FxCopProject>

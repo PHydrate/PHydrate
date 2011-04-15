@@ -21,6 +21,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PHydrate.Core
 {
@@ -51,6 +52,7 @@ namespace PHydrate.Core
         /// <value>The global transaction.</value>
         public ITransaction GlobalTransaction
         {
+            [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
             get { throw new NotImplementedException(); }
         }
 
