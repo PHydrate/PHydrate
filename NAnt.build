@@ -11,6 +11,7 @@
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
 	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
 	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="true" />
+	<property name="package.nuget.dir" value="${path::combine(build.cwd, 'nuget')}" overwrite="false" />
 
 	<loadtasks>
 		<fileset>
@@ -21,7 +22,8 @@
 	<assemblyfileset id="test.assemblies" />
 
 	<target name="clean" description="Remove all generated files">
-		<delete dir="${build.outputdir}" />
+		<delete dir="${bin.dir}" />
+		<delete dir="${package.nuget.dir}" />
 	</target>
 	
 	<target name="makeOutputFolder" description="Create the output folder">
@@ -96,5 +98,15 @@
 				<include name="*.chm" />
 			</fileset>
 		</zip>
+	</target>
+	
+	<target name="package_nuget" depends="buildLibrary,buildDocs">
+		<if test="${directory::exists(package.nuget.dir)}">
+			<echo message="Removing old package directory..." />
+			<delete dir="${package.nuget.dir}" />
+		</if>
+		<echo message="Creating package folder..." />
+		<mkdir dir="${package.nuget.dir}" />
+		
 	</target>
 </project>
