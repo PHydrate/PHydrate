@@ -59,7 +59,7 @@ namespace PHydrate.Core
 
                         foreach ( object obj in enumerable )
                         {
-                            T found = GetAggregateRootFromSecondaryObject( internalRecordset, obj, aggregateRoot );
+                            T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
                             if ( found == null )
                                 continue;
 
@@ -91,7 +91,7 @@ namespace PHydrate.Core
                 return typeToCastTo;
             }
 
-            private static T GetAggregateRootFromSecondaryObject(IMemberInfo internalRecordset, object obj,
+            private static T GetAggregateRootFromSecondaryObject( object obj,
                                                                   IDictionary<int, T> aggregateRoot)
             {
                 string[] primaryKeyMembers =
