@@ -101,7 +101,6 @@
     <Compile Include="Util\ExpressionExtensions.cs" />
     <Compile Include="Util\DataReaderExtensions.cs" />
     <Compile Include="Util\GenericExtensions.cs" />
-    <Compile Include="Util\EnumerableExtensions.cs" />
     <Compile Include="Util\MemberInfoExtensions.cs" />
     <Compile Include="Util\IMemberInfo.cs" />
     <Compile Include="Util\MemberInfoWrapper\FieldInfoWrapper.cs" />

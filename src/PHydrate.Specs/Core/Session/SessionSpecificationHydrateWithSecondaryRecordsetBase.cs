@@ -19,7 +19,6 @@
 
 #endregion
 
-using System.Collections.Generic;
 using PHydrate.Attributes;
 
 namespace PHydrate.Specs.Core.Session
@@ -45,16 +44,6 @@ namespace PHydrate.Specs.Core.Session
 
             [Recordset(1)]
             public TestObjectInternal InnerObject { get; set; }
-        }
-
-        [HydrateUsing("TestStoredProcedure")]
-        protected class TestObjectSecondaryRecordsetIEnumerable
-        {
-            [PrimaryKey]
-            public int AggregateKey { get; set; }
-
-            [Recordset(1)]
-            public IEnumerable<TestObjectInternal> InnerObjects { get; set; }
         }
 
         #endregion

@@ -19,9 +19,6 @@
 
 #endregion
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -47,21 +44,6 @@ namespace PHydrate.Util
             return typeof(T).GetObjectsHashCodeByFieldValues(
                obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
                     x => x.GetValue( obj ) ) );
-        }
-
-        /// <summary>
-        /// Gets a strongly-typed IEnumerable or IList
-        /// </summary>
-        /// <param name="internalRecordset">The internal recordset.</param>
-        /// <param name="enumerable">The enumerable.</param>
-        /// <param name="typeToCastTo">The type to cast to.</param>
-        /// <returns></returns>
-        public static object GetEnumerableOrList(this IMemberInfo internalRecordset, IEnumerable enumerable, Type typeToCastTo)
-        {
-            return typeof(IList<>).MakeGenericType(typeToCastTo).IsAssignableFrom(internalRecordset.Type)
-                       ? enumerable.ToList( typeToCastTo )
-                       : enumerable.Cast( typeToCastTo );
-            //return enumerable.ToList( typeToCastTo );
         }
     }
 }

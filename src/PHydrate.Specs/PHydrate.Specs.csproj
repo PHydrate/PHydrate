@@ -113,6 +113,7 @@
     <Compile Include="Core\Session\SessionSpecificationDeleteSucceedsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationHydrateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationHydrateWithSecondaryRecordsetBase.cs" />
+    <Compile Include="Core\Session\SessionSpecificationHydrateWithSecondaryRecordsetEnumerableBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateFailsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateSucceedsBase.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="Core\Session\When_deleting_an_existing_object_with_no_delete_method.cs" />
     <Compile Include="Core\Session\When_deleting_a_non_existant_object.cs" />
     <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_that_is_ienumerable_of_t.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_that_is_ilist_of_t.cs" />
     <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_using_a_procedure_that_does_not_include_the_second_recordset.cs" />
     <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached.cs" />
     <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached_and_garbage_collected.cs" />
