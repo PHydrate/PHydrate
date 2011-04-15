@@ -9,6 +9,7 @@
 	<property name="build.configuration" value="${if (build.debug == 'true', 'debug', 'release')}" overwrite="true" />
 	<property name="build.outputdir" value="${path::combine('Build', build.configuration)}" overwrite="false" />
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
+	<property name="build.framework" value="v3.5" overwrite="false" />
 	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
 	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="true" />
 	<property name="package.nuget.dir" value="${path::combine(build.cwd, 'nuget')}" overwrite="false" />
@@ -22,8 +23,18 @@
 	<assemblyfileset id="test.assemblies" />
 
 	<target name="clean" description="Remove all generated files">
-		<delete dir="${bin.dir}" />
+		<call target="clean.bin" />
 		<delete dir="${package.nuget.dir}" />
+	</target>
+	
+	<target name="clean.bin">
+		<delete dir="${bin.dir}" />
+		<delete>
+			<fileset>
+				<include name="src/**/bin/**/*" />
+				<include name="src/**/obj/**/*" />
+			</fileset>
+		</delete>
 	</target>
 	
 	<target name="makeOutputFolder" description="Create the output folder">
@@ -35,9 +46,15 @@
 
 	<target name="buildLibrary" depends="makeOutputFolder" description="Build PHydrate">
 		<echo message="Building PHydrate.dll..." />
+		<property name="build.constants" value="" overwrite="true" />
+		<if test="${build.framework == 'v4.0'}">
+			<property name="build.constants" value="${build.constants}NET40;" overwrite="true" />
+		</if>
 		<msbuild project="${build.cwd}/src/PHydrate/PHydrate.csproj">
 			<property name="Configuration" value="${build.configuration}" />
 			<property name="OutputPath" value="${bin.dir}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
+			<property name="DefineConstants" value="${build.constants}" />
 		</msbuild>
 	</target>
 
@@ -46,12 +63,14 @@
 		<msbuild project="${build.cwd}/src/PHydrate.Specs/PHydrate.Specs.csproj">
 			<property name="Configuration" value="${build.configuration}" />
 			<property name="OutputPath" value="${bin.dir}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
 		</msbuild>
 
 		<echo message="Building PHydrate.Tests.Integration.dll..." />
 		<msbuild project="${build.cwd}/src/PHydrate.Tests.Integration/PHydrate.Tests.Integration.csproj">
 			<property name="OutputPath" value="${bin.dir}" />
 			<property name="Configuration" value="${build.configuration}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
 		</msbuild>
 
 		<echo message="Copying Integration Test Database..." />
@@ -100,13 +119,32 @@
 		</zip>
 	</target>
 	
-	<target name="package_nuget" depends="buildLibrary,buildDocs">
-		<if test="${directory::exists(package.nuget.dir)}">
-			<echo message="Removing old package directory..." />
-			<delete dir="${package.nuget.dir}" />
-		</if>
+	<target name="stage_nuget" depends="clean">
+		<fileset id="nuget_assemblies" basedir="${bin.dir}">
+			<include name="PHydrate.dll" />
+			<include name="PHydrate.xml" />
+		</fileset>
 		<echo message="Creating package folder..." />
 		<mkdir dir="${package.nuget.dir}" />
-		
+		<property name="package.nuget.dir.lib" value="${path::combine(package.nuget.dir, 'lib')}" overwrite="true" />
+		<property name="package.nuget.dir.net35" value="${path::combine(package.nuget.dir.lib, 'net35')}" overwrite="true" />
+		<property name="package.nuget.dir.net40" value="${path::combine(package.nuget.dir.lib, 'net40')}" overwrite="true" />
+		<mkdir dir="${package.nuget.dir.lib}" />
+		<mkdir dir="${package.nuget.dir.net35}" />
+		<echo message="Building .NET 3.5 library..." />
+		<property name="build.framework" value="v3.5" overwrite="true" />
+		<call target="buildLibrary" />
+		<!--call target="buildDocs" /-->
+		<copy todir="${package.nuget.dir.net35}">
+			<fileset refid="nuget_assemblies" />
+		</copy>
+		<echo message="Building .NET 4.0 library..." />
+		<property name="build.framework" value="v4.0" overwrite="true" />
+		<call target="clean.bin" />
+		<call target="buildLibrary" />
+		<!--call target="buildDocs" /-->
+		<copy todir="${package.nuget.dir.net40}">
+			<fileset refid="nuget_assemblies" />
+		</copy>
 	</target>
 </project>
