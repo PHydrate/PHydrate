@@ -21,14 +21,19 @@
 
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
+using PHydrate.Specs.Behaviors;
 
 namespace PHydrate.Specs.Core.FluentConfiguration
 {
-    public abstract class FluentConfigurationSpecificationBase
+    public abstract class FluentConfigurationSpecificationBase : FluentInterfaceBase
     {
-        protected static PHydrate.Core.FluentConfiguration FluentConfigurator;
+        protected static PHydrate.Core.FluentConfiguration FluentConfiguration
+        {
+            get { return (PHydrate.Core.FluentConfiguration)FluentInterface; }
+            set { FluentInterface = value; }
+        }
 
         [ UsedImplicitly ]
-        private Establish Context = () => FluentConfigurator = Fluently.Configure;
+        private Establish Context = () => FluentConfiguration = Fluently.Configure;
     }
 }

@@ -20,7 +20,7 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Core;
+using PHydrate.Specs.Behaviors;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.FluentConfiguration
@@ -29,29 +29,12 @@ namespace PHydrate.Specs.Core.FluentConfiguration
     public sealed class When_setting_prefix : FluentConfigurationSpecificationBase
     {
         private static IDatabaseService _databaseService;
-        private static PHydrate.Core.FluentConfiguration _returnedObject;
 
         private Establish Context =
             () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
 
-        private Because Of = () => _returnedObject = FluentConfigurator.ParameterPrefix( "test" );
+        private Because Of = () => ReturnedObject = FluentConfiguration.ParameterPrefix( "test" );
 
-        private It Should_return_same_object
-            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
-    }
-
-    [Subject(typeof(PHydrate.Core.FluentConfiguration))]
-    public sealed class When_setting_default_hydrator : FluentConfigurationSpecificationBase
-    {
-        private static IDefaultObjectHydrator _defaultObjectHydrator;
-        private static PHydrate.Core.FluentConfiguration _returnedObject;
-
-        private Establish Context =
-            () => _defaultObjectHydrator = MockRepository.GenerateStub< IDefaultObjectHydrator >();
-
-        private Because Of = () => _returnedObject = FluentConfigurator.WithDefaultHydrator( _defaultObjectHydrator );
-
-        private It Should_return_same_object
-            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
+        private Behaves_like< AFluentInterface > a_fluent_interface;
     }
 }

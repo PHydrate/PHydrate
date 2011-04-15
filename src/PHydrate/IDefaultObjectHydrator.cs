@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,10 +20,9 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 
-namespace PHydrate.Core
+namespace PHydrate
 {
     /// <summary>
     ///   Default hydrator implementation
@@ -36,6 +35,6 @@ namespace PHydrate.Core
         /// <typeparam name = "T">The type of object to hydrate</typeparam>
         /// <param name = "columnValues">The column values.</param>
         /// <returns>The hydrated object</returns>
-        T Hydrate< T >( IDictionary< string, Object > columnValues );
+        T Hydrate< T >( IDictionary< string, object > columnValues );
     }
 }

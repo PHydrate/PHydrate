@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 
-namespace PHydrate.Core
+namespace PHydrate
 {
     /// <summary>
     /// Interface to the database.
