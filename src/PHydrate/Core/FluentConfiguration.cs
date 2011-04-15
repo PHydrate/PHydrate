@@ -29,6 +29,7 @@ namespace PHydrate.Core
     {
         private IDatabaseService _databaseService;
         private string _prefix = "@";
+        private IDefaultObjectHydrator _defaultObjectHydrator;
 
         internal FluentConfiguration()
         {
@@ -57,12 +58,23 @@ namespace PHydrate.Core
         }
 
         /// <summary>
+        /// Withes the default hydrator.  If not specified, the built-in hydrator is used.
+        /// </summary>
+        /// <param name="defaultObjectHydrator">The default object hydrator.</param>
+        /// <returns></returns>
+        public FluentConfiguration WithDefaultHydrator(IDefaultObjectHydrator defaultObjectHydrator)
+        {
+            _defaultObjectHydrator = defaultObjectHydrator;
+            return this;
+        }
+
+        /// <summary>
         /// Builds the session factory.
         /// </summary>
         /// <returns></returns>
         public ISessionFactory BuildSessionFactory()
         {
-            return new SessionFactory( _databaseService, _prefix );
+            return new SessionFactory( _databaseService, _prefix, _defaultObjectHydrator );
         }
     }
 }

@@ -20,7 +20,6 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Core;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.FluentConfiguration
@@ -29,14 +28,13 @@ namespace PHydrate.Specs.Core.FluentConfiguration
     public sealed class When_building_factory : FluentConfigurationSpecificationBase
     {
         private static IDatabaseService _databaseService;
-        private static ISessionFactory _returnedObject;
 
         private Establish Context =
             () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
 
-        private Because Of = () => _returnedObject = FluentConfigurator.BuildSessionFactory();
+        private Because Of = () => ReturnedObject = FluentConfiguration.BuildSessionFactory();
 
-        private It Should_return_factory
-            = () => _returnedObject.ShouldNotBeNull();
+        private It Should_return_session_factory
+            = () => ReturnedObject.ShouldBeOfType< ISessionFactory >();
     }
 }

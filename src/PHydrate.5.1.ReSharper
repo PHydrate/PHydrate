@@ -148,9 +148,6 @@ Copyright 2010-2011, Stephen Michael Czetty]]></FileHeader>
           <Kind Name="Machine.Specifications_Behavior" />
         </ElementKinds>
       </UserRule>
-      <UserRule Inspect="True" Prefix="" Suffix="" Style="AaBb" StaticnessKind="Static, Instance" AccessRight="Public" Description="">
-        <ElementKinds />
-      </UserRule>
       <UserRule Inspect="True" Prefix="" Suffix="" Style="AaBb" StaticnessKind="Static, Instance" AccessRight="Private, Protected, ProtectedInternal, Internal, Public" Description="MSpec Supporting Fields">
         <ElementKinds>
           <Kind Name="Machine.Specifications_SupportingField" />

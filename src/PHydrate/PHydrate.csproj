@@ -81,12 +81,12 @@
     <Compile Include="Core\WeakReferenceObjectCache.cs" />
     <Compile Include="Fluently.cs" />
     <Compile Include="Core\DatabaseServiceBase.cs" />
-    <Compile Include="Core\IDatabaseService.cs" />
-    <Compile Include="Core\IDefaultObjectHydrator.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
     <Compile Include="Core\Session.cs" />
     <Compile Include="Core\SessionFactory.cs" />
+    <Compile Include="IDatabaseService.cs" />
     <Compile Include="IDBSpecification.cs" />
+    <Compile Include="IDefaultObjectHydrator.cs" />
     <Compile Include="IExplicitSpecification.cs" />
     <Compile Include="IObjectHydrator.cs" />
     <Compile Include="ISession.cs" />
