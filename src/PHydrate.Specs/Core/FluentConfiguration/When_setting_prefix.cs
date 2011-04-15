@@ -39,4 +39,19 @@ namespace PHydrate.Specs.Core.FluentConfiguration
         private It Should_return_same_object
             = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
     }
+
+    [Subject(typeof(PHydrate.Core.FluentConfiguration))]
+    public sealed class When_setting_default_hydrator : FluentConfigurationSpecificationBase
+    {
+        private static IDefaultObjectHydrator _defaultObjectHydrator;
+        private static PHydrate.Core.FluentConfiguration _returnedObject;
+
+        private Establish Context =
+            () => _defaultObjectHydrator = MockRepository.GenerateStub< IDefaultObjectHydrator >();
+
+        private Because Of = () => _returnedObject = FluentConfigurator.WithDefaultHydrator( _defaultObjectHydrator );
+
+        private It Should_return_same_object
+            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
+    }
 }
