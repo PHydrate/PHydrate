@@ -121,31 +121,37 @@
 	</target>
 	
 	<target name="stage_nuget" depends="clean">
-		<fileset id="nuget_assemblies" basedir="${bin.dir}">
+		<fileset id="nuget.assemblies" basedir="${bin.dir}">
 			<include name="PHydrate.dll" />
 			<include name="PHydrate.xml" />
+		</fileset>
+		<fileset id="nuget.help" basedir="${doc.dir}">
+			<include name="PHydrate.chm" />
 		</fileset>
 		<echo message="Creating package folder..." />
 		<mkdir dir="${package.nuget.dir}" />
 		<property name="package.nuget.dir.lib" value="${path::combine(package.nuget.dir, 'lib')}" overwrite="true" />
 		<property name="package.nuget.dir.net35" value="${path::combine(package.nuget.dir.lib, 'net35')}" overwrite="true" />
 		<property name="package.nuget.dir.net40" value="${path::combine(package.nuget.dir.lib, 'net40')}" overwrite="true" />
+		<property name="package.nuget.dir.content" value="${path::combine(package.nuget.dir, 'content')}" overwrite="true" />
 		<mkdir dir="${package.nuget.dir.lib}" />
 		<mkdir dir="${package.nuget.dir.net35}" />
 		<echo message="Building .NET 3.5 library..." />
 		<property name="build.framework" value="v3.5" overwrite="true" />
 		<call target="buildLibrary" />
-		<!--call target="buildDocs" /-->
 		<copy todir="${package.nuget.dir.net35}">
-			<fileset refid="nuget_assemblies" />
+			<fileset refid="nuget.assemblies" />
 		</copy>
 		<echo message="Building .NET 4.0 library..." />
 		<property name="build.framework" value="v4.0" overwrite="true" />
 		<call target="clean.bin" />
 		<call target="buildLibrary" />
-		<!--call target="buildDocs" /-->
+		<call target="buildDocs" />
 		<copy todir="${package.nuget.dir.net40}">
-			<fileset refid="nuget_assemblies" />
+			<fileset refid="nuget.assemblies" />
+		</copy>
+		<copy todir="${package.nuget.dir.content}">
+			<fileset refid="nuget.help" />
 		</copy>
 	</target>
 	
