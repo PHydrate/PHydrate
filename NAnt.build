@@ -27,7 +27,7 @@
 		<call target="clean.bin" />
 		<delete dir="${package.nuget.dir}" />
 	</target>
-	
+
 	<target name="clean.bin">
 		<delete dir="${bin.dir}" />
 		<delete>
@@ -37,7 +37,7 @@
 			</fileset>
 		</delete>
 	</target>
-	
+
 	<target name="makeOutputFolder" description="Create the output folder">
 		<if test="${not directory::exists(bin.dir)}">
 			<echo message="Creating Build directory..." />
@@ -45,7 +45,11 @@
 		</if>
 	</target>
 
-	<target name="buildLibrary" depends="makeOutputFolder" description="Build PHydrate">
+	<target name="getVersionInfo">
+		<version startdate="10/12/2010" />
+	</target>
+
+	<target name="buildLibrary" depends="makeOutputFolder,getVersionInfo" description="Build PHydrate">
 		<echo message="Building PHydrate.dll..." />
 		<property name="build.constants" value="" overwrite="true" />
 		<if test="${build.framework == 'v4.0'}">
@@ -86,7 +90,7 @@
 			<include name="${bin.dir}/*.Tests.*.dll" />
 		</assemblyfileset>
 	</target>
-	
+
 	<target name="test" depends="buildTests" description="Execute unit tests">
 		<property name="test.dir" value="${path::combine(bin.dir, 'results')}" overwrite="true" />
 		<if test="${not directory::exists(test.dir)}">
@@ -119,7 +123,7 @@
 			</fileset>
 		</zip>
 	</target>
-	
+
 	<target name="stage_nuget" depends="clean">
 		<fileset id="nuget.assemblies" basedir="${bin.dir}">
 			<include name="PHydrate.dll" />
@@ -154,12 +158,24 @@
 			<fileset refid="nuget.help" />
 		</copy>
 	</target>
-	
-	<target name="package_nuget" depends="stage_nuget">
+
+	<target name="package_nuget" depends="getVersionInfo,stage_nuget">
+		<echo message="Updating version in nuget definition..." />
+		<xmlpoke file="${build.cwd}/PHydrate.nuspec" value="${buildnumber.version}" xpath="/nu:package/nu:metadata/nu:version">
+			<namespaces>
+				<namespace prefix="nu" uri="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" />
+			</namespaces>
+		</xmlpoke>
 		<echo message="Building NuGet package..." />
 		<exec program="nuget.exe" basedir="${path::combine(tools.dir, 'nuget')}" workingdir="${build.cwd}">
 			<arg value="pack" />
 			<arg file="${build.cwd}/PHydrate.nuspec" />
 		</exec>
+		<!--exec program="git.exe" workingdir="${build.cwd}">
+			<arg value="checkout" />
+			<arg value="--" />
+			<arg value="PHydrate.nuspec" />
+			<arg value="build.number" />
+		</exec-->
 	</target>
 </project>
