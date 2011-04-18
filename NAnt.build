@@ -12,6 +12,7 @@
 	<property name="build.framework" value="v3.5" overwrite="false" />
 	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
 	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="true" />
+	<property name="tools.dir" value="${path::combine(build.cwd, 'tools')}" overwrite="true" />
 	<property name="package.nuget.dir" value="${path::combine(build.cwd, 'nuget')}" overwrite="false" />
 
 	<loadtasks>
@@ -146,5 +147,13 @@
 		<copy todir="${package.nuget.dir.net40}">
 			<fileset refid="nuget_assemblies" />
 		</copy>
+	</target>
+	
+	<target name="package_nuget" depends="stage_nuget">
+		<echo message="Building NuGet package..." />
+		<exec program="nuget.exe" basedir="${path::combine(tools.dir, 'nuget')}" workingdir="${build.cwd}">
+			<arg value="pack" />
+			<arg file="${build.cwd}/PHydrate.nuspec" />
+		</exec>
 	</target>
 </project>
