@@ -15,6 +15,13 @@
 	<property name="tools.dir" value="${path::combine(build.cwd, 'tools')}" overwrite="true" />
 	<property name="package.nuget.dir" value="${path::combine(build.cwd, 'nuget')}" overwrite="false" />
 
+	<property name="assembly.title" value="PHydrate" overwrite="true" />
+	<property name="assembly.product" value="PHydrate" overwrite="true" />
+	<property name="assembly.copyright" value="Copyright © Stephen Czetty 2010-2011" />
+	<property name="assembly.comvisible" value="false" />
+	<property name="assembly.PHydrate.internalsvisibleto" value="PHydrate.Specs" />
+	<property name="assembly.clscompliant" value="true" />
+
 	<loadtasks>
 		<fileset>
 			<include name="${build.cwd}/tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
@@ -22,13 +29,6 @@
 	</loadtasks>
 
 	<assemblyfileset id="test.assemblies" />
-	
-	<namespaceimports id="assemblyinfo.imports">
-		<import namespace="System" />
-		<import namespace="System.Reflection" />
-		<import namespace="System.Runtime.CompilerServices" />
-		<import namespace="System.Runtime.InteropServices" />
-	</namespaceimports>
 
 	<target name="clean" description="Remove all generated files">
 		<call target="clean.bin" />
@@ -57,17 +57,14 @@
 	</target>
 	
 	<target name="generateAssemblyInfos" depends="getVersionInfo">
-		<asminfo language="CSharp" output="${build.cwd}/src/PHydrate/Properties/AssemblyInfo.cs">
-			<imports refid="assemblyinfo.imports" />
+		<asminfo language="CSharp" output="${build.cwd}/src/Version.cs">
+			<imports>
+				<import namespace="System.Reflection" />
+			</imports>
 			<attributes>
-				<attribute type="AssemblyTitleAttribute" value="PHydrate" />
-				<attribute type="AssemblyProductAttribute" value="PHydrate" />
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright © Stephen Czetty 2010-2011" />
-				<attribute type="ComVisibleAttribute" value="false" />
-				<attribute type="InternalsVisibleToAttribute" value="PHydrate.Specs" />
 				<attribute type="AssemblyVersionAttribute" value="${buildnumber.version}" />
 				<attribute type="AssemblyFileVersionAttribute" value="${buildnumber.version}" />
-				<attribute type="CLSCompliantAttribute" value="true" />
+				<attribute type="AssemblyCopyrightAttribute" value="${assembly.copyright}" />
 			</attributes>
 		</asminfo>
 	</target>
@@ -132,7 +129,7 @@
 		<msbuild project="${doc.dir}/PHydrate.shfbproj" />
 	</target>
 
-	<target name="distro" depends="buildLibrary,buildDocs">
+	<target name="distro" depends="buildLibrary,buildDocs,test">
 		<echo message="Creating zip file..." />
 		<zip zipfile="${bin.dir}/PHydrate-${build.configuration}.zip">
 			<fileset basedir="${bin.dir}">
@@ -147,7 +144,7 @@
 		</zip>
 	</target>
 
-	<target name="stage_nuget" depends="clean">
+	<target name="stage_nuget" depends="clean,test">
 		<fileset id="nuget.assemblies" basedir="${bin.dir}">
 			<include name="PHydrate.dll" />
 			<include name="PHydrate.xml" />
@@ -164,6 +161,7 @@
 		<mkdir dir="${package.nuget.dir.lib}" />
 		<mkdir dir="${package.nuget.dir.net35}" />
 		<echo message="Building .NET 3.5 library..." />
+		<call target="clean.bin" />
 		<property name="build.framework" value="v3.5" overwrite="true" />
 		<call target="buildLibrary" />
 		<copy todir="${package.nuget.dir.net35}">
