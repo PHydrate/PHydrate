@@ -27,9 +27,8 @@
     <SdkLinkTarget>Top</SdkLinkTarget>
     <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\src\PHydrate\bin\Debug\PHydrate.dll" xmlns="" />
-      <DocumentationSource sourceFile="..\src\PHydrate\bin\Debug\PHydrate.XML" xmlns="" />
-    </DocumentationSources>
+      <DocumentationSource sourceFile="..\Build\release\PHydrate.dll" />
+<DocumentationSource sourceFile="..\Build\release\PHydrate.XML" /></DocumentationSources>
     <Preliminary>True</Preliminary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
     <ApiFilter>
@@ -110,6 +109,7 @@ See the Fluently class for the entry point for getting an ISessionFactory object
     <None Include="Help\Reference.aml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Help\UsingSpecifications\" />
     <Folder Include="Help\InnerRecordsets\" />
     <Folder Include="Help\About\" />
     <Folder Include="Help\GettingStarted\" />

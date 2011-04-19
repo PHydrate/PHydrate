@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="Attributes\CreateUsing\When_instantiating_create_using_attribute.cs" />
     <Compile Include="Attributes\CrudAttributeSpecificationBase.cs" />
     <Compile Include="Attributes\DeleteUsing\When_instantiating_delete_using_attribute.cs" />
