@@ -20,7 +20,7 @@
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Core;
+using PHydrate.Specs.Behaviors;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.FluentConfiguration
@@ -29,14 +29,12 @@ namespace PHydrate.Specs.Core.FluentConfiguration
     public sealed class When_setting_database : FluentConfigurationSpecificationBase
     {
         private static IDatabaseService _databaseService;
-        private static PHydrate.Core.FluentConfiguration _returnedObject;
 
         private Establish Context =
             () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
 
-        private Because Of = () => _returnedObject = FluentConfigurator.Database( _databaseService );
+        private Because Of = () => ReturnedObject = FluentConfiguration.Database( _databaseService );
 
-        private It Should_return_same_object
-            = () => _returnedObject.ShouldBeTheSameAs( FluentConfigurator );
+        private Behaves_like< AFluentInterface > a_fluent_interface;
     }
 }

@@ -35,7 +35,7 @@ namespace PHydrate.Specs.Core.SessionFactory
         private Establish Context = () => {
                                         _databaseService = MockRepository.GenerateStub< IDatabaseService >();
                                         SessionFactoryUnderTest = new PHydrate.Core.SessionFactory( _databaseService,
-                                                                                                    "@" );
+                                                                                                    "@", null );
                                     };
     }
 }

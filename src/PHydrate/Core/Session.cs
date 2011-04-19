@@ -20,9 +20,9 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
@@ -33,7 +33,7 @@ namespace PHydrate.Core
     /// <summary>
     /// Implementation of ISession
     /// </summary>
-    public class Session : ISession
+    public partial class Session : ISession
     {
         private readonly IDatabaseService _databaseService;
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
@@ -62,6 +62,7 @@ namespace PHydrate.Core
         /// <value>The transaction.</value>
         public ITransaction Transaction
         {
+            [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
             get { throw new NotImplementedException(); }
         }
 
@@ -71,6 +72,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of object to return.</typeparam>
         /// <param name="query">The parameters used to select the object.</param>
         /// <returns>The found object, or null if not found.</returns>
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         public IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
             where T : class
         {
@@ -81,6 +83,7 @@ namespace PHydrate.Core
         }
 
         /// <exception cref="PHydrateException">Unable to process object of type {0}.  Define a stored procedure with [{0}]</exception>
+        [ NotNull ]
         private static TAttribute GetCrudAttributeFromType< T, TAttribute >() where TAttribute : CrudAttributeBase
         {
             var crudAttribute = typeof(T).GetAttribute< TAttribute >();
@@ -100,7 +103,7 @@ namespace PHydrate.Core
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
-            return new DataHydrator<T>(_defaultObjectHydrator, _hydratedObjects).HydrateFromDataReader( dataReader );
+            return new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects ).HydrateFromDataReader( dataReader );
         }
 
         /// <summary>
@@ -109,6 +112,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object to return.</typeparam>
         /// <param name="specification">The specification.</param>
         /// <returns>The found object, or null.</returns>
+        [ NotNull ]
         public IEnumerable< T > Get< T >( ISpecification< T > specification )
             where T : class
         {
@@ -119,18 +123,19 @@ namespace PHydrate.Core
 
         private IEnumerable< T > GetItemsFromDbSpecification< T >( ISpecification< T > specification ) where T : class
         {
-            Expression< Func< T, bool > > criteria = specification is IDbSpecification< T >
-                                                         ? ( (IDbSpecification< T >)specification ).Criteria
-                                                         : null;
+            var dbSpecification = specification as IDBSpecification< T >;
+            Expression< Func< T, bool > > criteria = ( dbSpecification == null ) ? null : dbSpecification.Criteria;
             return Get( criteria );
         }
 
+        [ NotNull ]
         private static IEnumerable< T > FilterUsingExplicitSpecification< T >( ISpecification< T > specification,
                                                                                IEnumerable< T > foundObjects )
         {
             Func< T, bool > satisifies = x => true;
-            if ( specification is IExplicitSpecification< T > )
-                satisifies = ( (IExplicitSpecification< T >)specification ).Satisfies;
+            var explicitSpecification = specification as IExplicitSpecification< T >;
+            if ( explicitSpecification != null )
+                satisifies = explicitSpecification.Satisfies;
 
             return foundObjects.Where( obj => satisifies( obj ) );
         }
@@ -206,131 +211,6 @@ namespace PHydrate.Core
 
         #endregion
 
-        private class DataHydrator<T> where T : class
-        {
-            private readonly IDefaultObjectHydrator _defaultObjectHydrator;
-            private readonly WeakReferenceObjectCache _hydratedObjects;
-
-            public DataHydrator(IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects)
-            {
-                _defaultObjectHydrator = defaultObjectHydrator;
-                _hydratedObjects = hydratedObjects;
-            }
-
-            public IEnumerable<T> HydrateFromDataReader(IDataReader dataReader)
-            {
-                IEnumerable<IMemberInfo> internalRecordsets = typeof(T).GetMembersWithAttribute<RecordsetAttribute>();
-                return internalRecordsets.Any()
-                           ? HydrateRecordsetWithInternals(dataReader, internalRecordsets)
-                           : HydrateRecordset(dataReader);
-            }
-
-            /// <exception cref="PHydrateException">Missing expected recordset from stored procedure</exception>
-            private IEnumerable<T> HydrateRecordsetWithInternals(IDataReader dataReader, IEnumerable<IMemberInfo> internalRecordsets)
-            {
-                IDictionary< int, T > aggregateRoot =
-                    HydrateRecordset( dataReader ).ToDictionary( x => x.GetObjectsHashCodeByPrimaryKeys() );
-
-                foreach ( IMemberInfo internalRecordset in internalRecordsets )
-                {
-                    if (!dataReader.NextResult())
-                        throw new PHydrateException( "Missing expected recordset from stored procedure" ); 
-
-                    IEnumerable enumerator =
-                        internalRecordset.Type.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
-                            x => x.HydrateFromDataReader( dataReader ),
-                            _defaultObjectHydrator,
-                            _hydratedObjects
-                            );
-
-                    // TODO: This loop is likely to be unnecessary
-                    foreach ( object obj in enumerator )
-                    {
-                        if (internalRecordset.Type.IsAssignableFrom( obj.GetType()))
-                        {
-                            // Simple type
-                            int objectHash = obj.GetObjectsHashCodeByPrimaryKeys();
-
-                            // Find the member in aggregateRoot that contains this member
-                            IMemberInfo recordset = internalRecordset;
-                            foreach (
-                                T o in
-                                    aggregateRoot.Values.AsEnumerable().Where(
-                                        x => recordset.GetValue(x) != null &&  recordset.GetValue( x ).GetObjectsHashCodeByPrimaryKeys() == objectHash ) )
-                                recordset.SetValue( o, obj );
-                            continue;
-                        }
-
-                        // TODO: IEnumerable, IList
-                        //if (internalRecordset.Type.IsAssignableFrom(typeof(IEnumerator<>).MakeGenericType(obj.GetType())))
-                        //{
-                        //    int lookupHash = GetLookupHash( internalRecordset, obj, primaryKeyMembers );
-
-                        //    if ( !aggregateRoot.ContainsKey( lookupHash ) )
-                        //        continue;
-                        //}
-                    }
-                }
-                return aggregateRoot.Values;
-            }
-
-            private static int GetLookupHash(IMemberInfo internalRecordset, object obj, params string[] primaryKeyMembers)
-            {
-                return typeof(T).GetObjectsHashCodeByFieldValues(
-                    internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
-                        x => x.GetValue( obj ) ) );
-            }
-
-            private IEnumerable<T> HydrateRecordset(IDataReader dataReader)
-            {
-                Func<IDictionary<string, object>, T> hydratorFunction = GetHydratorFunction();
-
-                while (dataReader.Read())
-                {
-                    T hydratedObject = hydratorFunction(dataReader.ToDictionary());
-                    yield return GetHydratedObjectFromCache(hydratedObject);
-                }
-            }
-
-            private Func<IDictionary<string, object>, T> GetHydratorFunction()
-            {
-                IObjectHydrator<T> hydrator = GetHydrator();
-                return hydrator == null
-                           ? (Func<IDictionary<string, object>, T>)
-                             (x => _defaultObjectHydrator.Hydrate<T>(x))
-                           : (hydrator.Hydrate);
-            }
-
-            private static IObjectHydrator<T> GetHydrator()
-            {
-                var objectHydratorAttribute = typeof(T).GetAttribute<ObjectHydratorAttribute>();
-                return objectHydratorAttribute == null
-                           ? null
-                           : objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor<IObjectHydrator<T>>();
-            }
-
-            private T GetHydratedObjectFromCache(T hydratedObject)
-            {
-                if (_hydratedObjects.Contains(hydratedObject))
-                    return
-                        (_hydratedObjects[hydratedObject].Target ??
-                         (_hydratedObjects[hydratedObject].Target = hydratedObject)) as T;
-
-                _hydratedObjects.Add(hydratedObject);
-                return hydratedObject;
-            }
-        }
-
-        #region Implementation of IDisposable
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            // TODO: Make other objects used by this class disposable
-        }
-
-        #endregion
+        
     }
 }

@@ -32,6 +32,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +56,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
@@ -74,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="Attributes\CreateUsing\When_instantiating_create_using_attribute.cs" />
     <Compile Include="Attributes\CrudAttributeSpecificationBase.cs" />
     <Compile Include="Attributes\DeleteUsing\When_instantiating_delete_using_attribute.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_specifying_target.cs" />
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_specifying_kind.cs" />
     <Compile Include="Attributes\UsedImplicitly\When_instantiating_used_implicitly_attribute_with_default_constructor.cs" />
+    <Compile Include="Behaviors\AFluentInterface.cs" />
     <Compile Include="Core\DatabaseService\DatabaseServiceSpecificationBase.cs" />
     <Compile Include="Core\DatabaseService\DatabaseServiceSpecificationReaderBase.cs" />
     <Compile Include="Core\DatabaseService\DatabaseServiceSpecificationScalarBase.cs" />
@@ -101,6 +107,7 @@
     <Compile Include="Core\FluentConfiguration\FluentConfigurationSpecificationBase.cs" />
     <Compile Include="Core\FluentConfiguration\When_building_factory.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_database.cs" />
+    <Compile Include="Core\FluentConfiguration\When_setting_default_hydrator.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_prefix.cs" />
     <Compile Include="Core\SessionFactory\SessionFactorySpecificationBase.cs" />
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
@@ -111,6 +118,7 @@
     <Compile Include="Core\Session\SessionSpecificationDeleteSucceedsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationHydrateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationHydrateWithSecondaryRecordsetBase.cs" />
+    <Compile Include="Core\Session\SessionSpecificationHydrateWithSecondaryRecordsetEnumerableBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateFailsBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationUpdateSucceedsBase.cs" />
@@ -118,6 +126,8 @@
     <Compile Include="Core\Session\When_deleting_an_existing_object_with_no_delete_method.cs" />
     <Compile Include="Core\Session\When_deleting_a_non_existant_object.cs" />
     <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_that_is_ienumerable_of_t.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_that_is_ilist_of_t.cs" />
     <Compile Include="Core\Session\When_getting_an_object_containing_a_secondary_recordset_using_a_procedure_that_does_not_include_the_second_recordset.cs" />
     <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached.cs" />
     <Compile Include="Core\Session\When_getting_an_object_that_has_been_cached_and_garbage_collected.cs" />
@@ -157,9 +167,6 @@
     <Compile Include="Util\DbCommandExtensions\DbCommandExtensionsSpecificationBase.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_explicit_direction.cs" />
     <Compile Include="Util\DbCommandExtensions\When_adding_parameter_to_command_with_no_direction.cs" />
-    <Compile Include="Util\DictionaryExtensions\DictionaryExtensionsSpecificationBase.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_key_without_case.cs" />
-    <Compile Include="Util\DictionaryExtensions\When_checking_for_non_existant_key_without_case.cs" />
     <Compile Include="Util\ExpressionExtensions\ExpressionExtenionsSpecificationBase.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_a_constant_expression.cs" />
     <Compile Include="Util\ExpressionExtensions\When_getting_data_parameters_from_complex_expression_containing_or.cs" />

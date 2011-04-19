@@ -19,6 +19,7 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace PHydrate.Util
@@ -29,18 +30,19 @@ namespace PHydrate.Util
     public static class MemberInfoExtensions
     {
         /// <summary>
-        ///   Gets the lookup hash.
+        ///   Gets the lookup hash of a type, based on given values for the members
         /// </summary>
-        /// <typeparam name = "T"></typeparam>
-        /// <param name = "internalRecordset">The internal recordset.</param>
+        /// <typeparam name = "T">They type to hash</typeparam>
         /// <param name = "obj">The obj.</param>
         /// <param name = "primaryKeyMembers">The primary key members.</param>
         /// <returns></returns>
-        public static int GetLookupHash< T >( this IMemberInfo internalRecordset, object obj,
-                                             params string[] primaryKeyMembers ) where T : class
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
+        public static int GetLookupHash< T >( this object obj,
+                                              params string[] primaryKeyMembers ) where T : class
         {
             return typeof(T).GetObjectsHashCodeByFieldValues(
-                internalRecordset.Type.GetMembersByName( primaryKeyMembers ).Select(
+               obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
                     x => x.GetValue( obj ) ) );
         }
     }

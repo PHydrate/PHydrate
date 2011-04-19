@@ -10,3 +10,5 @@ _ReSharper*
 lib/machine.specifications/Tests
 Build/
 ~*
+nuget/
+*.nupkg

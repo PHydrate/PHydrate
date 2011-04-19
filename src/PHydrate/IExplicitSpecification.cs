@@ -27,7 +27,7 @@ namespace PHydrate
     /// </summary>
     /// <remarks>
     /// When this interface is used, the filtering happens after the database has returned
-    /// results.  If possible, you should use <see cref="IDbSpecification{T}"/> instead.
+    /// results.  If possible, you should use <see cref="IDBSpecification{T}"/> instead.
     /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
     public interface IExplicitSpecification< /*in*/ T > : ISpecification< T >

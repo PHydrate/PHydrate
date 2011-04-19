@@ -20,6 +20,8 @@
 
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace PHydrate
 {
     /// <summary>
@@ -30,5 +32,7 @@ namespace PHydrate
     /// to group other interfaces.
     /// </remarks>
     /// <typeparam name="T">Type this is a specification for</typeparam>
+    // TODO: This should not be empty forever, remove warning below when things have been added.
+    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces")]
     public interface ISpecification< T > {}
 }

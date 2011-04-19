@@ -24,7 +24,6 @@ using System.Linq;
 using System.Reflection;
 using PHydrate.Attributes;
 using PHydrate.Util;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Core
 {
@@ -69,7 +68,7 @@ namespace PHydrate.Core
                     if ( !columnValues.ContainsKey( primaryKey.Wrapped.Name ) )
                         throw new PHydrateException( "Unable to populate Primary Key values for {0}", mi.Wrapped.Name );
 
-                    primaryKey.SetValue( innerObject, columnValues[ primaryKey.Wrapped.Name ].DbNullToDefault<object>() );
+                    primaryKey.SetValue( innerObject, columnValues[ primaryKey.Wrapped.Name ].DBNullToDefault<object>() );
                 }
                 mi.SetValue( objToHydrate, innerObject );
             }
@@ -78,7 +77,7 @@ namespace PHydrate.Core
         private static void PopulateObjectProperties< T >( T objToHydrate, IDictionary< string, object > columnValues, IEnumerable< IMemberInfo > propertySetters )
         {
             foreach ( IMemberInfo  pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Wrapped.Name ) ) )
-                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DbNullToDefault<object>() );
+                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DBNullToDefault<object>() );
         }
 
         #endregion
@@ -101,15 +100,8 @@ namespace PHydrate.Core
             ConstructorInfo[] otherConstructors = typeof(T).GetConstructors();
             foreach ( ConstructorInfo ci in otherConstructors )
             {
-                var arguments = new List< object >();
                 ParameterInfo[] parameters = ci.GetParameters();
-                foreach ( ParameterInfo pi in parameters )
-                {
-                    string actualName;
-                    if ( !columnValues.ContainsKeyNoCase( pi.Name, out actualName ) )
-                        break;
-                    arguments.Add( columnValues[ actualName ] );
-                }
+                var arguments = parameters.TakeWhile( pi => columnValues.ContainsKey( pi.Name ) ).Select( pi => columnValues[ pi.Name ] ).ToList();
                 if ( arguments.Count == parameters.Length )
                     return (T)ci.Invoke( arguments.ToArray() );
             }

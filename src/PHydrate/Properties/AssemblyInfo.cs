@@ -20,6 +20,7 @@
 
 #endregion
 
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -33,7 +34,6 @@ using System.Runtime.InteropServices;
 [ assembly: AssemblyConfiguration( "" ) ]
 [ assembly: AssemblyCompany( "" ) ]
 [ assembly: AssemblyProduct( "PHydrate" ) ]
-[ assembly: AssemblyCopyright( "Copyright © StephenCzetty 2010" ) ]
 [ assembly: AssemblyTrademark( "" ) ]
 [ assembly: AssemblyCulture( "" ) ]
 
@@ -47,21 +47,8 @@ using System.Runtime.InteropServices;
 
 [ assembly: Guid( "6e137e41-d7e9-453b-b01c-b5b1f8ebc7a1" ) ]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-
-[assembly: AssemblyVersion("0.3.0.*")]
-//[ assembly: AssemblyFileVersion( "0.1.0.0" ) ]
-
 // Allow the Specifications to see the internals
 
 [ assembly: InternalsVisibleTo( "PHydrate.Specs" ) ]
-[assembly: AssemblyFileVersionAttribute("0.3.0.35")]
+
+[ assembly: CLSCompliant( true ) ]

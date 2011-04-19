@@ -31,14 +31,14 @@ namespace PHydrate.Util
     public static class ConstructorInfoExtensions
     {
         /// <summary>
-        ///   Returns true if the constructor's parameters matches the parameters passed in.
+        ///   Returns true if the method's parameters matches the parameters passed in.
         /// </summary>
-        /// <param name = "ci">The ci.</param>
+        /// <param name = "method">The method.</param>
         /// <param name = "constructorParameters">The constructor parameters.</param>
         /// <returns></returns>
-        public static bool MatchesParameters( this ConstructorInfo ci, IList< object > constructorParameters )
+        public static bool MatchesParameters( this MethodBase method, IList< object > constructorParameters )
         {
-            ParameterInfo[] parameterInfos = ci.GetParameters();
+            ParameterInfo[] parameterInfos = method.GetParameters();
             if ( parameterInfos.Length != constructorParameters.Count )
                 return false;
             return

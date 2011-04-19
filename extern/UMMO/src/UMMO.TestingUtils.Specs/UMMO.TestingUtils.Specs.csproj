@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{148F8478-874C-4C42-A96E-EB8A64E566CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UMMO.TestingUtils.Specs</RootNamespace>
+    <AssemblyName>UMMO.TestingUtils.Specs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Machine.Specifications\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino-Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataReaderMock\ADataReaderContainingA.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecsBase.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecsUsingObsoleteConstructor.cs" />
+    <Compile Include="DataReaderMock\DataReaderMockSpecsWithRecordSetDefined.cs" />
+    <Compile Include="DataReaderMock\When_calling_get_functions_with_numeric_datatype.cs" />
+    <Compile Include="DataReaderMock\When_calling_get_functions_with_string_datatype.cs" />
+    <Compile Include="DataReaderMock\When_closing_datareader.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_bool_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_byte_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_char_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_datetime_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_decimal_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_double_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_float_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_guid_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_int_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_long_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_short_type.cs" />
+    <Compile Include="DataReaderMock\When_column_is_of_string_type.cs" />
+    <Compile Include="DataReaderMock\When_disposing_datareader.cs" />
+    <Compile Include="DataReaderMock\When_in_playback_mode.cs" />
+    <Compile Include="DataReaderMock\When_loading_a_datatable.cs" />
+    <Compile Include="DataReaderMock\When_not_in_playback_mode.cs" />
+    <Compile Include="DataReaderMock\When_no_recordset_has_been_defined.cs" />
+    <Compile Include="DataReaderMock\When_querying_datareader_metadata.cs" />
+    <Compile Include="DataReaderMock\When_using_A_DataReader.cs" />
+    <Compile Include="DataReaderMock\When_using_obsolete_constructor.cs" />
+    <Compile Include="DataReaderMock\When_using_obsolete_constructor_with_multiple_recordsets.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_bytes.cs" />
+    <Compile Include="RandomDataGenerator\RandomDataGeneratorTestBase.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_decimal_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_equal_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_greater_than_negative_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal_less_than_positive_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double_less_than_positive_number.cs" />
+    <Compile Include="RandomDataGenerator\RandomInteger\When_getting_random_integer_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\ExtendedRandom\When_getting_next_long_between_min_and_max_where_min_is_greater_than_max.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_equal_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_between_two_values_in_incorrect_order.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_greater_than_zero.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long_less_than_zero.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\RandomStringSpecsBase.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\When_getting_random_verb.cs" />
+    <Compile Include="RandomDataGenerator\When_deriving_from_random_numeric_type_with_an_unsupported_type.cs" />
+    <Compile Include="RandomDataGenerator\RandomDecimal\When_getting_random_decimal.cs" />
+    <Compile Include="RandomDataGenerator\RandomDouble\When_getting_random_double.cs" />
+    <Compile Include="RandomDataGenerator\RandomInteger\When_getting_random_integer.cs" />
+    <Compile Include="RandomDataGenerator\RandomLong\When_getting_random_long.cs" />
+    <Compile Include="RandomDataGenerator\RandomString\When_getting_random_string.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UMMO.TestingUtils\UMMO.TestingUtils.csproj">
+      <Project>{2455C7A7-7A94-446B-9A0E-456A3C5C8DD6}</Project>
+      <Name>UMMO.TestingUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

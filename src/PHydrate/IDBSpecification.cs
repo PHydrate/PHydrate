@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace PHydrate
@@ -33,11 +33,12 @@ namespace PHydrate
     /// You should only use object members that are supported by the underlying stored procedure.
     /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IDbSpecification< T > : ISpecification< T >
+    public interface IDBSpecification< T > : ISpecification< T >
     {
         /// <summary>
         /// Gets an <see cref="Expression"/> that will be parsed to send parameters to the stored procedure.
         /// </summary>
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         Expression< Func< T, bool > > Criteria { get; }
     }
 }

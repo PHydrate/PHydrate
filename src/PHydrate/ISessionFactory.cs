@@ -15,10 +15,11 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace PHydrate
 {
@@ -40,6 +41,7 @@ namespace PHydrate
         ///   Gets the session.
         /// </summary>
         /// <returns>An implementation of ISession associated with this factory.</returns>
+        [ SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate" ) ]
         ISession GetSession();
     }
 }

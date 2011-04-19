@@ -1,35 +1,50 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <project name="PHydrate" default="buildLibrary" basedir=".">
 	<description>Builds the PHydrate libraries</description>
 
-	<loadtasks assembly="tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
 
 	<!-- Property definitions -->
+	<property name="build.cwd" value="${directory::get-current-directory()}" overwrite="true" />
 	<property name="build.debug" value="false" overwrite="false" />
-	<property name="build.configuration" value="release" overwrite="false" />
+	<property name="build.configuration" value="${if (build.debug == 'true', 'debug', 'release')}" overwrite="true" />
+	<property name="build.outputdir" value="${path::combine('Build', build.configuration)}" overwrite="false" />
 	<property name="build.optimize" value="${if (build.configuration == 'release', 'true', 'false')}" overwrite="false" />
-	<property name="bin.dir" value="Build/${build.configuration}" overwrite="false" />
-	<property name="doc.dir" value="doc" overwrite="false" />
+	<property name="build.framework" value="v3.5" overwrite="false" />
+	<property name="bin.dir" value="${path::combine(build.cwd, build.outputdir)}" overwrite="true" />
+	<property name="doc.dir" value="${path::combine(build.cwd, 'doc')}" overwrite="true" />
+	<property name="tools.dir" value="${path::combine(build.cwd, 'tools')}" overwrite="true" />
+	<property name="package.nuget.dir" value="${path::combine(build.cwd, 'nuget')}" overwrite="false" />
+
+	<property name="assembly.title" value="PHydrate" overwrite="true" />
+	<property name="assembly.product" value="PHydrate" overwrite="true" />
+	<property name="assembly.copyright" value="Copyright © Stephen Czetty 2010-2011" />
+	<property name="assembly.comvisible" value="false" />
+	<property name="assembly.PHydrate.internalsvisibleto" value="PHydrate.Specs" />
+	<property name="assembly.clscompliant" value="true" />
+
+	<loadtasks>
+		<fileset>
+			<include name="${build.cwd}/tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
+		</fileset>
+	</loadtasks>
 
 	<assemblyfileset id="test.assemblies" />
 
-	<assemblyfileset id="test.dependencies">
-		<lib>
-			<include name="lib/*" />
-			<include name="lib/SQLite/bin" />
-			<include name="${bin.dir}" />
-		</lib>
-		<include name="UMMO.TestingUtils.dll" />
-		<include name="Machine.Specifications.dll" />
-		<include name="Rhino.Mocks.dll" />
-		<include name="System.Data.SQLite.dll" />
-		<include name="PHydrate.dll" />
-	</assemblyfileset>
-
 	<target name="clean" description="Remove all generated files">
-		<delete dir="Build/${build.configuration}" />
+		<call target="clean.bin" />
+		<delete dir="${package.nuget.dir}" />
 	</target>
-	
+
+	<target name="clean.bin">
+		<delete dir="${bin.dir}" />
+		<delete>
+			<fileset>
+				<include name="src/**/bin/**/*" />
+				<include name="src/**/obj/**/*" />
+			</fileset>
+		</delete>
+	</target>
+
 	<target name="makeOutputFolder" description="Create the output folder">
 		<if test="${not directory::exists(bin.dir)}">
 			<echo message="Creating Build directory..." />
@@ -37,38 +52,53 @@
 		</if>
 	</target>
 
-	<target name="buildLibrary" depends="makeOutputFolder" description="Build UMMO">
+	<target name="getVersionInfo">
+		<version startdate="10/12/2010" />
+	</target>
+	
+	<target name="generateAssemblyInfos" depends="getVersionInfo">
+		<asminfo language="CSharp" output="${build.cwd}/src/Version.cs">
+			<imports>
+				<import namespace="System.Reflection" />
+			</imports>
+			<attributes>
+				<attribute type="AssemblyVersionAttribute" value="${buildnumber.version}" />
+				<attribute type="AssemblyFileVersionAttribute" value="${buildnumber.version}" />
+				<attribute type="AssemblyCopyrightAttribute" value="${assembly.copyright}" />
+			</attributes>
+		</asminfo>
+	</target>
+	
+	<target name="buildLibrary" depends="makeOutputFolder,generateAssemblyInfos" description="Build PHydrate">
 		<echo message="Building PHydrate.dll..." />
-		<csc doc="${bin.dir}/PHydrate.xml" optimize="${build.optimize}" output="${bin.dir}/PHydrate.dll" target="library">
-			<sources>
-				<include name="src/PHydrate/**/*.cs" />
-			</sources>
-		</csc>
+		<property name="build.constants" value="" overwrite="true" />
+		<if test="${build.framework == 'v4.0'}">
+			<property name="build.constants" value="${build.constants}NET40;" overwrite="true" />
+		</if>
+		<msbuild project="${build.cwd}/src/PHydrate/PHydrate.csproj">
+			<property name="Configuration" value="${build.configuration}" />
+			<property name="OutputPath" value="${bin.dir}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
+			<property name="DefineConstants" value="${build.constants}" />
+		</msbuild>
 	</target>
 
 	<target name="buildTests" depends="buildLibrary" description="Build the test assemblies">
 		<echo message="Building PHydrate.Specs.dll..." />
-
-		<csc output="${bin.dir}/PHydrate.Specs.dll" target="library">
-			<sources>
-				<include name="src/PHydrate.Specs/**/*.cs" />
-			</sources>
-			<references refid="test.dependencies" />
-		</csc>
+		<msbuild project="${build.cwd}/src/PHydrate.Specs/PHydrate.Specs.csproj">
+			<property name="Configuration" value="${build.configuration}" />
+			<property name="OutputPath" value="${bin.dir}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
+		</msbuild>
 
 		<echo message="Building PHydrate.Tests.Integration.dll..." />
+		<msbuild project="${build.cwd}/src/PHydrate.Tests.Integration/PHydrate.Tests.Integration.csproj">
+			<property name="OutputPath" value="${bin.dir}" />
+			<property name="Configuration" value="${build.configuration}" />
+			<property name="TargetFrameworkVersion" value="${build.framework}" />
+		</msbuild>
 
-		<csc output="${bin.dir}/PHydrate.Tests.Integration.dll" target="library">
-			<sources>
-				<include name="src/PHydrate.Tests.Integration/**/*.cs" />
-			</sources>
-			<references refid="test.dependencies" />
-		</csc>
-
-		<copy todir="${bin.dir}" flatten="true">
-			<fileset refid="test.dependencies" />
-		</copy>
-
+		<echo message="Copying Integration Test Database..." />
 		<copy todir="${bin.dir}" flatten="true">
 			<fileset>
 				<include name="src/PHydrate.Tests.Integration/IntegrationTestDb.sqlite" />
@@ -80,7 +110,7 @@
 			<include name="${bin.dir}/*.Tests.*.dll" />
 		</assemblyfileset>
 	</target>
-	
+
 	<target name="test" depends="buildTests" description="Execute unit tests">
 		<property name="test.dir" value="${path::combine(bin.dir, 'results')}" overwrite="true" />
 		<if test="${not directory::exists(test.dir)}">
@@ -96,20 +126,77 @@
 
 	<target name="buildDocs" depends="buildLibrary">
 		<echo message="Building .chm documentation..." />
-		<msbuild project="doc/PHydrate.shfbproj" />
+		<msbuild project="${doc.dir}/PHydrate.shfbproj" />
 	</target>
 
-	<target name="distro" depends="buildLibrary,buildDocs">
+	<target name="distro" depends="buildLibrary,buildDocs,test">
 		<echo message="Creating zip file..." />
 		<zip zipfile="${bin.dir}/PHydrate-${build.configuration}.zip">
 			<fileset basedir="${bin.dir}">
 				<include name="*.xml" />
 				<include name="*.dll" />
 				<exclude name="*.Specs.dll" />
+				<exclude name="*.Tests.*.dll" />
 			</fileset>
 			<fileset basedir="${doc.dir}/Help">
 				<include name="*.chm" />
 			</fileset>
 		</zip>
+	</target>
+
+	<target name="stage_nuget" depends="clean,test">
+		<fileset id="nuget.assemblies" basedir="${bin.dir}">
+			<include name="PHydrate.dll" />
+			<include name="PHydrate.xml" />
+		</fileset>
+		<fileset id="nuget.help" basedir="${doc.dir}">
+			<include name="PHydrate.chm" />
+		</fileset>
+		<echo message="Creating package folder..." />
+		<mkdir dir="${package.nuget.dir}" />
+		<property name="package.nuget.dir.lib" value="${path::combine(package.nuget.dir, 'lib')}" overwrite="true" />
+		<property name="package.nuget.dir.net35" value="${path::combine(package.nuget.dir.lib, 'net35')}" overwrite="true" />
+		<property name="package.nuget.dir.net40" value="${path::combine(package.nuget.dir.lib, 'net40')}" overwrite="true" />
+		<property name="package.nuget.dir.content" value="${path::combine(package.nuget.dir, 'content')}" overwrite="true" />
+		<mkdir dir="${package.nuget.dir.lib}" />
+		<mkdir dir="${package.nuget.dir.net35}" />
+		<echo message="Building .NET 3.5 library..." />
+		<call target="clean.bin" />
+		<property name="build.framework" value="v3.5" overwrite="true" />
+		<call target="buildLibrary" />
+		<copy todir="${package.nuget.dir.net35}">
+			<fileset refid="nuget.assemblies" />
+		</copy>
+		<echo message="Building .NET 4.0 library..." />
+		<property name="build.framework" value="v4.0" overwrite="true" />
+		<call target="clean.bin" />
+		<call target="buildLibrary" />
+		<call target="buildDocs" />
+		<copy todir="${package.nuget.dir.net40}">
+			<fileset refid="nuget.assemblies" />
+		</copy>
+		<copy todir="${package.nuget.dir.content}">
+			<fileset refid="nuget.help" />
+		</copy>
+	</target>
+
+	<target name="package_nuget" depends="getVersionInfo,stage_nuget">
+		<echo message="Updating version in nuget definition..." />
+		<xmlpoke file="${build.cwd}/PHydrate.nuspec" value="${buildnumber.version}" xpath="/nu:package/nu:metadata/nu:version">
+			<namespaces>
+				<namespace prefix="nu" uri="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" />
+			</namespaces>
+		</xmlpoke>
+		<echo message="Building NuGet package..." />
+		<exec program="nuget.exe" basedir="${path::combine(tools.dir, 'nuget')}" workingdir="${build.cwd}">
+			<arg value="pack" />
+			<arg file="${build.cwd}/PHydrate.nuspec" />
+		</exec>
+		<!--exec program="git.exe" workingdir="${build.cwd}">
+			<arg value="checkout" />
+			<arg value="-/-" />
+			<arg value="PHydrate.nuspec" />
+			<arg value="build.number" />
+		</exec-->
 	</target>
 </project>

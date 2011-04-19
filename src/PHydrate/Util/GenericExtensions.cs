@@ -15,17 +15,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -34,7 +34,8 @@ namespace PHydrate.Util
     /// </summary>
     public static class GenericExtensions
     {
-        private static readonly IDictionary< Type, PropertyInfo[] > PropertyInfoCache = new Dictionary< Type, PropertyInfo[] >();
+        private static readonly IDictionary< Type, PropertyInfo[] > PropertyInfoCache =
+            new Dictionary< Type, PropertyInfo[] >();
 
         /// <summary>
         /// Gets the data parameters from an instance.
@@ -43,12 +44,13 @@ namespace PHydrate.Util
         /// <param name="parameterPrefix">The parameter prefix.</param>
         /// <returns></returns>
         [ NotNull ]
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         public static IEnumerable< KeyValuePair< string, object > > GetDataParameters< T >( this T instance,
                                                                                             string parameterPrefix )
         {
-            if (!PropertyInfoCache.ContainsKey(typeof(T)))
+            if ( !PropertyInfoCache.ContainsKey( typeof(T) ) )
                 PropertyInfoCache.Add( typeof(T),
-                                        typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public ) );
+                                       typeof(T).GetProperties( BindingFlags.Instance | BindingFlags.Public ) );
 
             PropertyInfo[] properties = PropertyInfoCache[ typeof(T) ];
 
@@ -64,6 +66,7 @@ namespace PHydrate.Util
         /// <param name="obj">The obj.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="PHydrateException">Thrown if the member is not settable.</exception>
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         public static void SetPropertyValueWithAttribute< TInstance, TAttributeType >( this TInstance obj, object value )
             where TAttributeType : Attribute
         {
@@ -83,7 +86,9 @@ namespace PHydrate.Util
         /// <param name="obj">The object to work on.</param>
         /// <returns></returns>
         [ NotNull ]
-        public static IEnumerable< object > GetPropertyValuesWithAttribute<TAttributeType>(this object obj)
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
+        public static IEnumerable< object > GetPropertyValuesWithAttribute< TAttributeType >( this object obj )
             where TAttributeType : Attribute
         {
             return
@@ -97,10 +102,10 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public static int GetObjectsHashCodeByPrimaryKeys(this object item)
+        public static int GetObjectsHashCodeByPrimaryKeys( this object item )
         {
             IEnumerable< object > primaryKeyFields = item.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >();
-            if (primaryKeyFields.Count() == 0)
+            if ( primaryKeyFields.Count() == 0 )
                 primaryKeyFields = new List< object > { item };
 
             return item.GetType().GetObjectsHashCodeByFieldValues( primaryKeyFields );
@@ -112,7 +117,7 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <param name="values">The values.</param>
         /// <returns></returns>
-        public static int GetObjectsHashCodeByFieldValues(this Type type, IEnumerable<object> values)
+        public static int GetObjectsHashCodeByFieldValues( this Type type, IEnumerable< object > values )
         {
             unchecked
             {
@@ -121,7 +126,8 @@ namespace PHydrate.Util
                 // Throw the type of the object into the hash, to prevent collisions
                 hash = hash * 137 + type.GetHashCode();
 
-                return values.Aggregate( hash, ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
+                return values.Aggregate( hash,
+                                         ( current, primaryKeyField ) => current * 137 + primaryKeyField.GetHashCode() );
             }
         }
 
@@ -130,9 +136,10 @@ namespace PHydrate.Util
         /// </summary>
         /// <param name="obj">The obj.</param>
         /// <returns></returns>
-        public static T DbNullToDefault<T>(this object obj)
+        [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
+        public static T DBNullToDefault< T >( this object obj )
         {
-            return obj is DBNull ? default(T) : (T)obj;
+            return obj is DBNull ? default( T ) : (T)obj;
         }
 
         /// <summary>
@@ -144,26 +151,30 @@ namespace PHydrate.Util
         /// <param name="type">The type.</param>
         /// <returns></returns>
         /// <exception cref="PHydrateInternalException">Lambda does not contain a method call.</exception>
-        public static object ExecuteGenericMethod<TSource>(this TSource obj, Expression<Func<TSource, object>> methodCall, Type type)
+        [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
+        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
+        public static object ExecuteGenericMethod< TSource >( this TSource obj,
+                                                              Expression< Func< TSource, object > > methodCall,
+                                                              Type type )
         {
             var unaryExpression = methodCall.Body as UnaryExpression;
             MethodCallExpression method;
-            if (unaryExpression != null && unaryExpression.NodeType == ExpressionType.Convert)
+            if ( unaryExpression != null && unaryExpression.NodeType == ExpressionType.Convert )
                 method = unaryExpression.Operand as MethodCallExpression;
             else
                 method = methodCall.Body as MethodCallExpression;
 
-            if (method == null)
-                throw new PHydrateInternalException("Lambda does not contain a method call.");
+            if ( method == null )
+                throw new PHydrateInternalException( "Lambda does not contain a method call." );
 
-            MethodInfo methodInfo = typeof (TSource).GetMethod(method.Method.Name,
+            MethodInfo methodInfo = typeof(TSource).GetMethod( method.Method.Name,
                                                                BindingFlags.Instance | BindingFlags.Static |
                                                                BindingFlags.Public |
-                                                               BindingFlags.NonPublic);
+                                                               BindingFlags.NonPublic );
 
-            MethodInfo genericMethod = methodInfo.MakeGenericMethod(type);
+            MethodInfo genericMethod = methodInfo.MakeGenericMethod( type );
 
-            return genericMethod.Invoke(obj, method.Arguments.Select(x => x.GetValue()).ToArray());
+            return genericMethod.Invoke( obj, method.Arguments.Select( x => x.GetValue() ).ToArray() );
         }
     }
 }

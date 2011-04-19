@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="ClassWithHydrator\When_getting_class_using_a_hydrator.cs" />
     <Compile Include="ClassWithHydrator\When_getting_class_using_a_hydrator_and_db_specification.cs" />
     <Compile Include="ClassWithHydrator\When_getting_class_using_a_hydrator_and_db_specification_and_explicit_specification.cs" />

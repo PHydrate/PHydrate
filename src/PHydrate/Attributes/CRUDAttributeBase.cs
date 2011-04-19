@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PHydrate.Attributes
 {
@@ -28,6 +28,7 @@ namespace PHydrate.Attributes
     ///   Base class for all CRUD attributes
     /// </summary>
     [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
+    [ SuppressMessage( "Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix" ) ]
     public abstract class CrudAttributeBase : Attribute
     {
         /// <summary>

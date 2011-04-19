@@ -21,6 +21,7 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PHydrate.Core
 {
@@ -31,16 +32,19 @@ namespace PHydrate.Core
     {
         private readonly IDatabaseService _databaseService;
         private readonly string _parameterPrefix;
+        private readonly IDefaultObjectHydrator _defaultObjectHydrator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionFactory"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
         /// <param name="parameterPrefix">The prefix to place in front of parameter names.</param>
-        internal SessionFactory(IDatabaseService databaseService, string parameterPrefix)
+        /// <param name="defaultObjectHydrator">The default object hydrator to use, or null to use the built-in version</param>
+        internal SessionFactory(IDatabaseService databaseService, string parameterPrefix, IDefaultObjectHydrator defaultObjectHydrator)
         {
             _databaseService = databaseService;
             _parameterPrefix = parameterPrefix;
+            _defaultObjectHydrator = defaultObjectHydrator ?? new DefaultObjectHydrator();
         }
 
         #region Implementation of ISessionFactory
@@ -51,6 +55,7 @@ namespace PHydrate.Core
         /// <value>The global transaction.</value>
         public ITransaction GlobalTransaction
         {
+            [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
             get { throw new NotImplementedException(); }
         }
 
@@ -62,7 +67,7 @@ namespace PHydrate.Core
         /// </returns>
         public ISession GetSession()
         {
-            return new Session( _databaseService, new DefaultObjectHydrator(), _parameterPrefix );
+            return new Session( _databaseService, _defaultObjectHydrator, _parameterPrefix );
         }
 
         #endregion

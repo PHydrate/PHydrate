@@ -1,0 +1,11 @@
+bin/
+obj/
+*.suo
+_ReSharper*
+*.user
+*.pdb
+*.InstallLog
+*.InstallState
+*.tdnet
+lib/Machine.Specifications/Tests/
+Build/

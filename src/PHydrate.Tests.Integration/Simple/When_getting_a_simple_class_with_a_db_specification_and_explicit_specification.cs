@@ -44,7 +44,7 @@ namespace PHydrate.Tests.Integration.Simple
         #region Test Specification Class
 
         private class TestSimpleDbSpecification : IExplicitSpecification< TestDomain.Simple >,
-                                                  IDbSpecification< TestDomain.Simple >
+                                                  IDBSpecification< TestDomain.Simple >
         {
             #region Implementation of IExplicitSpecification<ClassWithHydrator>
 
@@ -55,7 +55,7 @@ namespace PHydrate.Tests.Integration.Simple
 
             #endregion
 
-            #region Implementation of IDbSpecification<ClassWithHydrator>
+            #region Implementation of IDBSpecification<ClassWithHydrator>
 
             public Expression< Func< TestDomain.Simple, bool > > Criteria
             {

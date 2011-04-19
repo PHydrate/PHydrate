@@ -46,9 +46,9 @@ namespace PHydrate.Specs.Core.Session
 
         #region Test Specification Class
 
-        private class TestSpecification : IDbSpecification< TestObject >
+        private class TestSpecification : IDBSpecification< TestObject >
         {
-            #region Implementation of IDbSpecification<TestObject>
+            #region Implementation of IDBSpecification<TestObject>
 
             public Expression< Func< TestObject, bool > > Criteria
             {
