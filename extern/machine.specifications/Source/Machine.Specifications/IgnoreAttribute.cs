@@ -1,27 +1,24 @@
-<<<<<<< HEAD
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Machine.Specifications
 {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
   public class IgnoreAttribute : Attribute
   {
-  }
-}
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+    [Obsolete("Please specify the reason for ignoring the specification")]
+    public IgnoreAttribute()
+    {
+    }
 
-namespace Machine.Specifications
-{
-  [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-  public class IgnoreAttribute : Attribute
-  {
+    public IgnoreAttribute(string reason)
+    {
+      Reason = reason;
+    }
+
+    public string Reason
+    {
+      get;
+      private set;
+    }
   }
 }
->>>>>>> feature/externs-subtree

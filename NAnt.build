@@ -25,6 +25,7 @@
 	<loadtasks>
 		<fileset>
 			<include name="${build.cwd}/tools/nantcontrib/bin/NAnt.Contrib.Tasks.dll" />
+			<include name="${build.cwd}/lib/machine.specifications/Machine.Specifications.NAntTask.dll" />
 		</fileset>
 	</loadtasks>
 
@@ -118,10 +119,13 @@
 			<mkdir dir="${test.dir}" />
 		</if>
 		<!-- TODO: Get the mspec task from nant-extensions and use that. -->
-		<exec program="lib/Machine.Specifications/mspec.exe">
-			<arg value="--html"/><arg value="${test.dir}" />
+		<!--exec program="lib/Machine.Specifications/mspec.exe">
+			<arg value="- -html"/><arg value="${test.dir}" />
 			<arg line="${fileset::to-string('test.assemblies', ' ')}"/>
-		</exec>
+		</exec-->
+		<mspec htmlPath="${test.dir}" workingDirectory="${bin.dir}">
+			<fileset refid="test.assemblies" />
+		</mspec>
 	</target>
 
 	<target name="buildDocs" depends="buildLibrary">

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,33 +10,13 @@ namespace Machine.Specifications.Runner
   {
     public string Name { get; set; }
     public string ContainingType { get; set; }
+    public string FieldName { get; set; }
 
-    public SpecificationInfo(string name, string containingType)
+    public SpecificationInfo(string name, string containingType, string fieldName)
     {
       Name = name;
       ContainingType = containingType;
+      FieldName = fieldName;
     }
   }
 }
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Machine.Specifications.Runner
-{
-  [Serializable]
-  public class SpecificationInfo
-  {
-    public string Name { get; set; }
-    public string ContainingType { get; set; }
-
-    public SpecificationInfo(string name, string containingType)
-    {
-      Name = name;
-      ContainingType = containingType;
-    }
-  }
-}
->>>>>>> feature/externs-subtree

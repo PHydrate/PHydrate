@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,77 +15,37 @@ namespace Machine.Specifications.Utility
       }
     }
 
-    public static void InvokeIfNotNull(this Because because)
+    internal static void InvokeAll(this IEnumerable<Establish> contextActions)
     {
-      if (because != null)
-        because.Invoke();
+      contextActions.AllNonNull().Select<Establish, Action>(x => x.Invoke).InvokeAll();
     }
 
-    public static void InvokeAll(this IEnumerable<Establish> contextActions)
+    static IEnumerable<T> AllNonNull<T>(this IEnumerable<T> elements) where T : class
     {
-      foreach (Establish contextAction in contextActions)
+      return elements.Where(x => x != null);
+    }
+
+    static void InvokeAll(this IEnumerable<Action> actions)
+    {
+      foreach (Action action in actions)
       {
-        contextAction();
+        action();
       }
     }
 
-    public static void InvokeAll(this IEnumerable<Cleanup> contextActions)
+    internal static void InvokeAll(this IEnumerable<Because> becauseActions)
     {
-      foreach (Cleanup contextAction in contextActions)
-      {
-        contextAction();
-      }
+      becauseActions.AllNonNull().Select<Because, Action>(x => x.Invoke).InvokeAll();
     }
 
-    public static bool HasAttribute<TAttribute>(this ICustomAttributeProvider attributeProvider)
+    internal static void InvokeAll(this IEnumerable<Cleanup> contextActions)
+    {
+      contextActions.AllNonNull().Select<Cleanup, Action>(x => x.Invoke).InvokeAll();
+    }
+
+    internal static bool HasAttribute<TAttribute>(this ICustomAttributeProvider attributeProvider)
     {
       return attributeProvider.GetCustomAttributes(typeof(TAttribute), true).Any();
     }
   }
-=======
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
-namespace Machine.Specifications.Utility
-{
-  public static class RandomExtensionMethods
-  {
-    public static void Each<T>(this IEnumerable<T> enumerable, Action<T> action)
-    {
-      foreach (var t in enumerable)
-      {
-        action(t);
-      }
-    }
-
-    public static void InvokeIfNotNull(this Because because)
-    {
-      if (because != null)
-        because.Invoke();
-    }
-
-    public static void InvokeAll(this IEnumerable<Establish> contextActions)
-    {
-      foreach (Establish contextAction in contextActions)
-      {
-        contextAction();
-      }
-    }
-
-    public static void InvokeAll(this IEnumerable<Cleanup> contextActions)
-    {
-      foreach (Cleanup contextAction in contextActions)
-      {
-        contextAction();
-      }
-    }
-
-    public static bool HasAttribute<TAttribute>(this ICustomAttributeProvider attributeProvider)
-    {
-      return attributeProvider.GetCustomAttributes(typeof(TAttribute), true).Any();
-    }
-  }
->>>>>>> feature/externs-subtree
 }

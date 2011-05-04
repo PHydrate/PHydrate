@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,27 +19,4 @@ namespace Machine.Specifications.Model
       _specificationResults = specificationResults;
     }
   }
-=======
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Machine.Specifications.Model
-{
-  public class ContextVerificationResult
-  {
-    readonly IEnumerable<SpecificationVerificationResult> _specificationResults;
-
-    public IEnumerable<SpecificationVerificationResult> SpecificationResults
-    {
-      get { return _specificationResults; }
-    }
-
-    public ContextVerificationResult(IEnumerable<SpecificationVerificationResult> specificationResults)
-    {
-      _specificationResults = specificationResults;
-    }
-  }
->>>>>>> feature/externs-subtree
 }

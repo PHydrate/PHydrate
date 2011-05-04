@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using CommandLine;
-using CommandLine.Text;
+
 using Machine.Specifications.ConsoleRunner.Properties;
 using Machine.Specifications.Runner;
 
@@ -11,17 +12,22 @@ namespace Machine.Specifications.ConsoleRunner
 {
   public class Options
   {
-    [Option("xml", "xml", HelpText = "Outputs XML")]
+    [Option("xml", "xml", HelpText = "Outputs the XML report to the file referenced by the path")]
     public string XmlPath = string.Empty;
 
     [Option(null,
       "html",
-      HelpText = "Ouputs HTML (one-per-assembly) at the specified path.")] 
+      HelpText = "Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file)")]
     public string HtmlPath = string.Empty;
+    
+    [Option("f",
+      "filter",
+      HelpText = "Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags")] 
+    public string FilterFile = string.Empty;
 
     [Option("s",
       "silent",
-      HelpText = "Suppresses all console output.")]
+      HelpText = "Suppress console output")]
     public bool Silent = false;
 
     [Option("t",
@@ -30,13 +36,13 @@ namespace Machine.Specifications.ConsoleRunner
     public bool ShowTimeInformation = false;
 
     [Option(null, 
-      "teamcity", 
-      HelpText = "Replaces the standard build reporting with TeamCity test reporting.")]
+      "teamcity",
+      HelpText = "Reporting for TeamCity CI integration")]
     public bool TeamCityIntegration = false;
 
     [OptionList("i",
       "include",
-      HelpText = "Executes all specifications in contexts with these comma delimited tags. Ex. -i \"foo,bar,foo_bar\"",
+      HelpText = "Execute all specifications in contexts with these comma delimited tags. Ex. -i \"foo,bar,foo_bar\"",
       Separator = ',')] 
     public IList<string> IncludeTags = null;
 
@@ -54,20 +60,26 @@ namespace Machine.Specifications.ConsoleRunner
     {
       StringBuilder sb = new StringBuilder();
       sb.AppendLine("Machine.Specifications");
-      sb.AppendLine("Copyright (C) 2007, 2008, 2009");
+      sb.AppendLine("Copyright (C) 2007 - 2011");
       sb.AppendLine("");
-      sb.AppendLine(Resources.UsageStatement);
+      sb.AppendLine(Usage());
       sb.AppendLine("Options:");
-      sb.AppendLine("  -i, --include     Executes all specifications in contexts with these comma delimited tags. Ex. -i \"foo,bar,foo_bar\"");
+      sb.AppendLine("  -i, --include     Execute all specifications in contexts with these comma delimited tags. Ex. -i \"foo,bar,foo_bar\"");
       sb.AppendLine("  -x, --exclude     Exclude specifications in contexts with these comma delimited tags. Ex. -x \"foo,bar,foo_bar\"");
       sb.AppendLine("  -t, --timeinfo    Shows time-related information in HTML output");
       sb.AppendLine("  -s, --silent      Suppress console output");
-      sb.AppendLine("  --teamcity        Reporting for TeamCity CI integration.");
-      sb.AppendLine("  --html <PATH>     Outputs an HTML file(s) to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file)");
-      sb.AppendLine("  --xml <PATH>      Outputs an XML file(s) to path");
+      sb.AppendLine("  --teamcity        Reporting for TeamCity CI integration");
+      sb.AppendLine("  --html <PATH>     Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file)");
+      sb.AppendLine("  --xml <PATH>      Outputs the XML report to the file referenced by the path");
       sb.AppendLine("  -h, --help        Shows this help message");
 
       return sb.ToString();
+    }
+
+    public static string Usage()
+    {
+      var runnerExe = Assembly.GetEntryAssembly();
+      return String.Format(Resources.UsageStatement, Path.GetFileName(runnerExe != null ? runnerExe.Location : "mspec.exe"));
     }
 
     public virtual bool ParseArguments(string[] args)
@@ -77,8 +89,13 @@ namespace Machine.Specifications.ConsoleRunner
 
     public virtual RunOptions GetRunOptions()
     {
-      return new RunOptions(IncludeTags ?? new string[0], ExcludeTags ?? new string[0]);
-    }
+      var filters = new string[0];
+      if (!String.IsNullOrEmpty(FilterFile))
+      {
+        filters = File.ReadAllLines(FilterFile, Encoding.UTF8);
+      }
 
+      return new RunOptions(IncludeTags ?? new string[0], ExcludeTags ?? new string[0], filters);
+    }
   }
 }

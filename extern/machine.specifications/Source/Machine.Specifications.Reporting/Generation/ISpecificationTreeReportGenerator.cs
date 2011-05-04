@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using Machine.Specifications.Reporting.Model;
 
 namespace Machine.Specifications.Reporting.Generation
@@ -7,14 +6,4 @@ namespace Machine.Specifications.Reporting.Generation
   {
     void GenerateReport(Run run);
   }
-=======
-﻿using Machine.Specifications.Reporting.Model;
-
-namespace Machine.Specifications.Reporting.Generation
-{
-  public interface ISpecificationTreeReportGenerator
-  {
-    void GenerateReport(Run run);
-  }
->>>>>>> feature/externs-subtree
 }

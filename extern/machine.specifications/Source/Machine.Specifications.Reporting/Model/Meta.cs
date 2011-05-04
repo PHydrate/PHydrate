@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System;
 
 namespace Machine.Specifications.Reporting.Model
@@ -29,36 +28,4 @@ namespace Machine.Specifications.Reporting.Model
       set;
     }
   }
-=======
-using System;
-
-namespace Machine.Specifications.Reporting.Model
-{
-  public class Meta
-  {
-    public DateTime GeneratedAt
-    {
-      get;
-      set;
-    }
-
-    public bool ShouldGenerateTimeInfo
-    {
-      get;
-      set;
-    }
-
-    public bool ShouldGenerateIndexLink
-    {
-      get;
-      set;
-    }
-
-    public string IndexLink
-    {
-      get;
-      set;
-    }
-  }
->>>>>>> feature/externs-subtree
 }
