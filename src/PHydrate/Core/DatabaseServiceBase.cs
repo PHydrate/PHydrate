@@ -19,10 +19,10 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using PHydrate.Aspects;
 using PHydrate.Attributes;
 using PHydrate.Util;
 
@@ -31,6 +31,7 @@ namespace PHydrate.Core
     /// <summary>
     /// Base implementation of IDatabaseService
     /// </summary>
+    [Logged]
     public abstract class DatabaseServiceBase : IDatabaseService
     {
         #region Implementation of IDatabaseService
