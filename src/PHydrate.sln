@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate.Specs", "PHydrate.Specs\PHydrate.Specs.csproj", "{E48A20EE-AEE0-469B-847E-D0812262D63D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PHydrate.Tests.Integration", "PHydrate.Tests.Integration\PHydrate.Tests.Integration.csproj", "{4C12D3E9-B639-4B8A-87C4-47A0C49BE27D}"
