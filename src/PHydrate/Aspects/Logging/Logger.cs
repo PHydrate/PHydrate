@@ -26,13 +26,43 @@ using log4net.Core;
 namespace PHydrate.Aspects.Logging
 {
     /// <summary>
+    /// Base class for generic Logger<> class.  Contains indention code common to all classes.
+    /// </summary>
+    public class Logger  {
+        protected static readonly Level LoggingLevel;
+
+        protected static int IndentLevel;
+        private const int IndentSize = 4;
+
+        static Logger()
+        {
+            LoggingLevel = Level.Debug;
+        }
+
+        protected static void Indent()
+        {
+            IndentLevel++;
+        }
+
+        protected static void Dedent()
+        {
+            if (--IndentLevel < 0)
+                IndentLevel = 0;
+        }
+
+        protected static string IndentionString()
+        {
+            return new string( ' ', IndentLevel * IndentSize );
+        }
+    }
+
+    /// <summary>
     /// Class created by amendments for logging
     /// </summary>
     /// <typeparam name="T">The class being logged</typeparam>
-    public static class Logger< T >
+    public class Logger< T > : Logger
     {
         private static readonly ILog Log;
-        private static readonly Level LoggingLevel = Level.Debug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logger&lt;T&gt;"/> class, using the default log level of Debug.
@@ -40,7 +70,6 @@ namespace PHydrate.Aspects.Logging
         static Logger()
         {
             Log = LogManager.GetLogger( typeof(T) );
-            LoggingLevel = Level.Debug;
         }
 
         /// <summary>
@@ -52,6 +81,8 @@ namespace PHydrate.Aspects.Logging
         public static void BeginMethod( T instance, string methodName, object[] parameters )
         {
             DoLog( "Entering method: " + methodName );
+            Indent();
+
             if ( parameters.Length == 0 )
                 return;
 
@@ -66,7 +97,7 @@ namespace PHydrate.Aspects.Logging
 
         private static void DoLog( string stringToLog )
         {
-            Log.Logger.Log( typeof(T), LoggingLevel, stringToLog, null );
+            Log.Logger.Log( typeof(T), LoggingLevel,  IndentionString() +  stringToLog, null );
         }
 
         /// <summary>
@@ -77,6 +108,7 @@ namespace PHydrate.Aspects.Logging
         /// <param name="parameters">Parameters passed to the method call</param>
         public static void EndMethod( T instance, string methodName, object[] parameters )
         {
+            Dedent();
             DoLog( "Leaving method: " + methodName );
         }
     }
