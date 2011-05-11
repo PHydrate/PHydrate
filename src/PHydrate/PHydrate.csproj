@@ -74,8 +74,8 @@
     <Compile Include="..\Version.cs">
       <Link>Version.cs</Link>
     </Compile>
+    <Compile Include="Aspects\DoNotLogAttribute.cs" />
     <Compile Include="Aspects\LoggedAttribute.cs" />
-    <Compile Include="Aspects\Logging\ILoggingObject.cs" />
     <Compile Include="Aspects\Logging\LogAmendment.cs" />
     <Compile Include="Aspects\Logging\Logger.cs" />
     <Compile Include="Attributes\CreateUsingAttribute.cs" />
@@ -144,7 +144,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Afterthought.Amender "$(TargetPath)"
+    <PostBuildEvent>$(SolutionDir)\packages\Afterthought.1.0.7\tools\Afterthought.Amender "$(TargetPath)"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

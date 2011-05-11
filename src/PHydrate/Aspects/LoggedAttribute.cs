@@ -7,7 +7,7 @@ namespace PHydrate.Aspects
     /// <summary>
     /// Mark a class as logged.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Assembly)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Assembly, Inherited = true)]
     [CLSCompliant(false)]
     public class LoggedAttribute : AmendmentAttribute
     {

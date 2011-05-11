@@ -1,3 +1,25 @@
+#region Copyright
+
+// This file is part of PHydrate.
+// 
+// PHydrate is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// PHydrate is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+// 
+// Copyright 2010-2011, Stephen Michael Czetty
+
+#endregion
+
+using System;
 using log4net;
 using log4net.Core;
 
@@ -7,57 +29,55 @@ namespace PHydrate.Aspects.Logging
     /// Class created by amendments for logging
     /// </summary>
     /// <typeparam name="T">The class being logged</typeparam>
-    public class Logger<T>
+    public static class Logger< T >
     {
-        private readonly ILog _log;
-        private readonly Level _loggingLevel;
+        private static readonly ILog Log;
+        private static readonly Level LoggingLevel = Level.Debug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logger&lt;T&gt;"/> class, using the default log level of Debug.
         /// </summary>
-        public Logger()
+        static Logger()
         {
-            _log = LogManager.GetLogger( typeof(T) );
-            _loggingLevel = Level.Debug;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Logger&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="loggingLevel">The logging level.</param>
-        public Logger(Level loggingLevel) : this()
-        {
-            _loggingLevel = loggingLevel;
+            Log = LogManager.GetLogger( typeof(T) );
+            LoggingLevel = Level.Debug;
         }
 
         /// <summary>
         /// Log the start of the method.
         /// </summary>
+        /// <param name="instance">The instance of the class</param>
         /// <param name="methodName">Name of the method.</param>
         /// <param name="parameters">The parameters.</param>
-        public void BeginMethod(string methodName, object[] parameters)
+        public static void BeginMethod( T instance, string methodName, object[] parameters )
         {
-            Log("Entering method: " + methodName);
+            DoLog( "Entering method: " + methodName );
             if ( parameters.Length == 0 )
                 return;
 
-            Log( "Parameters:" );
-            foreach ( object o in parameters )
-                Log( o.GetType().Name + ": " + o.ToString() );
+            int parameterCount = 0;
+            DoLog( "Parameters:" );
+            foreach (object o in parameters)
+            {
+                string parameterType = o == null ? "<null>" : o.GetType().Name;
+                DoLog( String.Format( "{0}: ({1}) {2}", parameterCount++, parameterType, o ?? "<null>" ) );
+            }
         }
 
-        private void Log( string stringToLog )
+        private static void DoLog( string stringToLog )
         {
-            _log.Logger.Log( typeof(T), _loggingLevel,  stringToLog, null );
+            Log.Logger.Log( typeof(T), LoggingLevel, stringToLog, null );
         }
 
         /// <summary>
         /// Log the end of the method.
         /// </summary>
+        /// <param name="instance">The instance of the class</param>
         /// <param name="methodName">Name of the method.</param>
-        public void EndMethod( string methodName )
+        /// <param name="parameters">Parameters passed to the method call</param>
+        public static void EndMethod( T instance, string methodName, object[] parameters )
         {
-            Log( "Leaving method: " + methodName );
+            DoLog( "Leaving method: " + methodName );
         }
     }
 }

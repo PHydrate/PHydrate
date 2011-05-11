@@ -31,7 +31,7 @@ namespace PHydrate.Core
     /// <summary>
     /// Base implementation of IDatabaseService
     /// </summary>
-    [Logged]
+    [ Logged ]
     public abstract class DatabaseServiceBase : IDatabaseService
     {
         #region Implementation of IDatabaseService
@@ -59,6 +59,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns>An IDataReader containing the results.</returns>
+        [ DoNotLog ]
         public IDataReader ExecuteStoredProcedureReader( string storedProcedureName )
         {
             return ExecuteStoredProcedureReader( storedProcedureName, null );
@@ -70,6 +71,7 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type to cast the return value to.</typeparam>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns></returns>
+        [ DoNotLog ]
         public T ExecuteStoredProcedureScalar< T >( string storedProcedureName )
         {
             return ExecuteStoredProcedureScalar< T >( storedProcedureName, null );
@@ -120,6 +122,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <returns>The driver-specific connection object</returns>
         [ SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate" ) ]
+        [ DoNotLog ]
         protected abstract IDbConnection GetDatabaseConnection();
     }
 }
