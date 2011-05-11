@@ -81,6 +81,7 @@
 			<property name="OutputPath" value="${bin.dir}" />
 			<property name="TargetFrameworkVersion" value="${build.framework}" />
 			<property name="DefineConstants" value="${build.constants}" />
+			<property name="SolutionDir" value="${build.cwd}/src" />
 		</msbuild>
 	</target>
 
