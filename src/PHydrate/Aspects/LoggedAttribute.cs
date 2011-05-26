@@ -9,7 +9,7 @@ namespace PHydrate.Aspects
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Assembly, Inherited = true)]
     [CLSCompliant(false)]
-    public class LoggedAttribute : AmendmentAttribute
+    public sealed class LoggedAttribute : AmendmentAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LoggedAttribute"/> class.

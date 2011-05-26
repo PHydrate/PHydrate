@@ -29,8 +29,9 @@ namespace PHydrate.Aspects.Logging
     /// Add logging to all methods of a class
     /// </summary>
     /// <typeparam name="T">The type of the class</typeparam>
+    // TODO: Modify Afterthought to make this testable (add interfaces around Method, Constructor, etc.)
     [ CLSCompliant( false ) ]
-    public class LogAmendment< T > : Amendment< T, T >
+    public sealed class LogAmendment< T > : Amendment< T, T >
     {
         /// <summary>
         /// Amends the specified method.
@@ -58,7 +59,7 @@ namespace PHydrate.Aspects.Logging
             constructor.After( Logger< T >.EndMethod );
         }
 
-        private static bool ShouldApplyLogging( MemberInfo member )
+        private static bool ShouldApplyLogging( ICustomAttributeProvider member )
         {
             return member.GetCustomAttributes( typeof(DoNotLogAttribute), true ).Length == 0;
         }
