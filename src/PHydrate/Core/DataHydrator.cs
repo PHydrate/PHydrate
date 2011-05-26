@@ -74,19 +74,42 @@ namespace PHydrate.Core
                             list.Add( obj );
                         }
                     }
-                    else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
-                        SetSimpleTypeInAggregateRoot( internalRecordset, enumerable.Cast< object >().FirstOrDefault(),
-                                                      aggregateRoot );
+                    else if (typeof(IDictionary<,>).MakeGenericType(typeof(int), typeToCastTo).IsAssignableFrom(internalRecordset.Type)) // Dictionary
+                    {
+                        foreach (object obj in enumerable)
+                        {
+                            T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
+                            if (found == null)
+                                continue;
+
+                            var dictionary = internalRecordset.GetValue( found ) as IDictionary;
+                            if (dictionary == null)
+                            {
+                                dictionary =
+                                    typeof(Dictionary< , >).MakeGenericType( typeof(int), typeToCastTo ).
+                                        ConstructUsingDefaultConstructor< IDictionary >();
+                                internalRecordset.SetValue( found, dictionary );
+                            }
+                            dictionary.Add(
+                                (int)( obj.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >().FirstOrDefault() ),
+                                obj );
+                        }
+                    }
+                    else if (typeToCastTo.IsAssignableFrom(internalRecordset.Type)) // Simple type
+                        SetSimpleTypeInAggregateRoot(internalRecordset, enumerable.Cast<object>().FirstOrDefault(),
+                                                      aggregateRoot);
 
                 }
                 return aggregateRoot.Values;
             }
 
-            private static Type GetTypeToCastTo( IMemberInfo internalRecordset ) {
+            private static Type GetTypeToCastTo(IMemberInfo internalRecordset)
+            {
                 Type typeToCastTo = internalRecordset.Type;
                 if ( typeof(IEnumerable).IsAssignableFrom( internalRecordset.Type ) )
                     typeToCastTo = internalRecordset.Type.IsGenericType
-                                       ? internalRecordset.Type.GetGenericArguments()[ 0 ]
+                                       ? internalRecordset.Type.GetGenericArguments()[
+                                           internalRecordset.Type.GetGenericArguments().Length - 1 ]
                                        : typeof(object);
                 return typeToCastTo;
             }

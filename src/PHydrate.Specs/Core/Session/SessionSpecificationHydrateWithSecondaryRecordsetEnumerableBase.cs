@@ -45,5 +45,15 @@ namespace PHydrate.Specs.Core.Session
             [Recordset(1)]
             public IList<TestObjectInternal> InnerObjects { get; set; }
         }
+
+        [HydrateUsing("TestStoredProcedure")]
+        protected class TestObjectSecondaryRecordsetIDictionary
+        {
+            [PrimaryKey]
+            public int AggregateKey { get; set; }
+
+            [Recordset(1)]
+            public IDictionary<int, TestObjectInternal> InnerObjects { get; set; }
+        }
     }
 }
