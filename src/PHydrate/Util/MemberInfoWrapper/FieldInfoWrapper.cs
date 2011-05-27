@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -34,7 +34,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// Initializes a new instance of the <see cref="FieldInfoWrapper"/> class.
         /// </summary>
         /// <param name="fieldInfo">The field info.</param>
-        public FieldInfoWrapper( MemberInfo fieldInfo ) : base(fieldInfo)
+        public FieldInfoWrapper( MemberInfo fieldInfo ) : base( fieldInfo )
         {
             Debug.Assert( fieldInfo is FieldInfo );
         }
@@ -46,7 +46,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// <returns></returns>
         public override object GetValue( object obj )
         {
-            return ((FieldInfo)MemberInfo).GetValue( obj );
+            return ( (FieldInfo)MemberInfo ).GetValue( obj );
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace PHydrate.Util.MemberInfoWrapper
         /// <param name="value">The value.</param>
         public override void SetValue( object obj, object value )
         {
-            ((FieldInfo)MemberInfo).SetValue(obj, value);
+            ( (FieldInfo)MemberInfo ).SetValue( obj, value );
         }
 
         public override Type Type

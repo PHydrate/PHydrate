@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -50,5 +49,4 @@ using System.Runtime.InteropServices;
 // Allow the Specifications to see the internals
 
 [ assembly: InternalsVisibleTo( "PHydrate.Specs" ) ]
-
 [ assembly: CLSCompliant( true ) ]

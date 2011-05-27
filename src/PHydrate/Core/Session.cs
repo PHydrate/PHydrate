@@ -62,7 +62,7 @@ namespace PHydrate.Core
         /// <value>The transaction.</value>
         public ITransaction Transaction
         {
-            [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+            [ SuppressMessage( "Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations" ) ]
             get { throw new NotImplementedException(); }
         }
 
@@ -210,7 +210,5 @@ namespace PHydrate.Core
         }
 
         #endregion
-
-        
     }
 }

@@ -28,7 +28,8 @@ namespace PHydrate.Aspects.Logging
     /// <summary>
     /// Base class for generic Logger<> class.  Contains indention code common to all classes.
     /// </summary>
-    public class Logger  {
+    public class Logger
+    {
         protected static readonly Level LoggingLevel;
 
         protected static int IndentLevel;
@@ -46,7 +47,7 @@ namespace PHydrate.Aspects.Logging
 
         protected static void Dedent()
         {
-            if (--IndentLevel < 0)
+            if ( --IndentLevel < 0 )
                 IndentLevel = 0;
         }
 
@@ -88,7 +89,7 @@ namespace PHydrate.Aspects.Logging
 
             int parameterCount = 0;
             DoLog( "Parameters:" );
-            foreach (object o in parameters)
+            foreach ( object o in parameters )
             {
                 string parameterType = o == null ? "<null>" : o.GetType().Name;
                 DoLog( String.Format( "{0}: ({1}) {2}", parameterCount++, parameterType, o ?? "<null>" ) );
@@ -97,7 +98,7 @@ namespace PHydrate.Aspects.Logging
 
         private static void DoLog( string stringToLog )
         {
-            Log.Logger.Log( typeof(T), LoggingLevel,  IndentionString() +  stringToLog, null );
+            Log.Logger.Log( typeof(T), LoggingLevel, IndentionString() + stringToLog, null );
         }
 
         /// <summary>

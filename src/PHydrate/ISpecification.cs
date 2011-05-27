@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -33,6 +32,6 @@ namespace PHydrate
     /// </remarks>
     /// <typeparam name="T">Type this is a specification for</typeparam>
     // TODO: This should not be empty forever, remove warning below when things have been added.
-    [SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces")]
+    [ SuppressMessage( "Microsoft.Design", "CA1040:AvoidEmptyInterfaces" ) ]
     public interface ISpecification< T > {}
 }

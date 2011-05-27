@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -40,7 +39,8 @@ namespace PHydrate.Core
         /// <param name="databaseService">The database service.</param>
         /// <param name="parameterPrefix">The prefix to place in front of parameter names.</param>
         /// <param name="defaultObjectHydrator">The default object hydrator to use, or null to use the built-in version</param>
-        internal SessionFactory(IDatabaseService databaseService, string parameterPrefix, IDefaultObjectHydrator defaultObjectHydrator)
+        internal SessionFactory( IDatabaseService databaseService, string parameterPrefix,
+                                 IDefaultObjectHydrator defaultObjectHydrator )
         {
             _databaseService = databaseService;
             _parameterPrefix = parameterPrefix;
@@ -55,7 +55,7 @@ namespace PHydrate.Core
         /// <value>The global transaction.</value>
         public ITransaction GlobalTransaction
         {
-            [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+            [ SuppressMessage( "Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations" ) ]
             get { throw new NotImplementedException(); }
         }
 

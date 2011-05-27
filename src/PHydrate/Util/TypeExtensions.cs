@@ -174,7 +174,7 @@ namespace PHydrate.Util
                     memberInfos => memberInfos[ 0 ].CreateWrapper() );
         }
 
-/*
+        /*
         /// <summary>
         /// Returns a boolean value indicating that the type inherits from or implements the base type.
         /// </summary>

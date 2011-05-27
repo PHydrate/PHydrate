@@ -64,7 +64,7 @@ namespace PHydrate.Util
         /// <param name="command">The command.</param>
         /// <param name="parameterName">Name of the parameter.</param>
         /// <param name="direction">The direction.</param>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         public static void AddParameter< T >( this IDbCommand command, string parameterName,
                                               ParameterDirection direction )
         {

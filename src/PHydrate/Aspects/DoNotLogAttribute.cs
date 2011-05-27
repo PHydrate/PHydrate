@@ -26,6 +26,6 @@ namespace PHydrate.Aspects
     /// <summary>
     /// Apply this attribute to methods in a logged class that should not be logged
     /// </summary>
-    [ AttributeUsage( AttributeTargets.Method | AttributeTargets.Constructor, Inherited = true) ]
+    [ AttributeUsage( AttributeTargets.Method | AttributeTargets.Constructor, Inherited = true ) ]
     public sealed class DoNotLogAttribute : Attribute {}
 }

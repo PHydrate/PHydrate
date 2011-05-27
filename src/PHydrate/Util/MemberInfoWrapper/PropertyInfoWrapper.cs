@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -30,7 +30,8 @@ namespace PHydrate.Util.MemberInfoWrapper
     /// </summary>
     internal class PropertyInfoWrapper : MemberInfoWrapper
     {
-        private const BindingFlags PublicNonPublicBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+        private const BindingFlags PublicNonPublicBindingFlags =
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
         public PropertyInfoWrapper( MemberInfo propertyInfo ) : base( propertyInfo )
         {

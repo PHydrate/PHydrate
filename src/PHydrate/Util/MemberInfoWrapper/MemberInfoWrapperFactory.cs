@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -37,7 +37,7 @@ namespace PHydrate.Util.MemberInfoWrapper
                 case MemberTypes.Property:
                     return new PropertyInfoWrapper( memberInfo );
                 case MemberTypes.Field:
-                    return new FieldInfoWrapper( (FieldInfo)memberInfo );
+                    return new FieldInfoWrapper( memberInfo );
                 default:
                     return new MemberInfoWrapper( memberInfo );
             }

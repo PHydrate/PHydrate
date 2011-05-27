@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -123,7 +123,7 @@ namespace PHydrate.Core
                 throw new ArgumentOutOfRangeException( "arrayIndex" );
 
             if ( array.Rank > 1 || arrayIndex >= array.Length || _internalDictionary.Count > array.Length - arrayIndex )
-                throw new ArgumentException("Array passed is not supported", "array");
+                throw new ArgumentException( "Array passed is not supported", "array" );
 
             foreach (
                 var result in _internalDictionary.Values.Select( obj => obj.Target ).Where( result => result != null ) )
@@ -166,12 +166,9 @@ namespace PHydrate.Core
             get { return false; }
         }
 
-        public WeakReference this[object obj]
+        public WeakReference this[ object obj ]
         {
-            get
-            {
-                return _internalDictionary[ obj.GetObjectsHashCodeByPrimaryKeys() ];
-            }
+            get { return _internalDictionary[ obj.GetObjectsHashCodeByPrimaryKeys() ]; }
         }
 
         #endregion

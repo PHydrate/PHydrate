@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -31,9 +30,7 @@ namespace PHydrate.Core
         private string _prefix = "@";
         private IDefaultObjectHydrator _defaultObjectHydrator;
 
-        internal FluentConfiguration()
-        {
-        }
+        internal FluentConfiguration() {}
 
         /// <summary>
         /// Specifies the database service to use.
@@ -51,7 +48,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <param name="prefix">The prefix.</param>
         /// <returns></returns>
-        public FluentConfiguration ParameterPrefix(string prefix)
+        public FluentConfiguration ParameterPrefix( string prefix )
         {
             _prefix = prefix;
             return this;
@@ -62,7 +59,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <param name="defaultObjectHydrator">The default object hydrator.</param>
         /// <returns></returns>
-        public FluentConfiguration WithDefaultHydrator(IDefaultObjectHydrator defaultObjectHydrator)
+        public FluentConfiguration WithDefaultHydrator( IDefaultObjectHydrator defaultObjectHydrator )
         {
             _defaultObjectHydrator = defaultObjectHydrator;
             return this;

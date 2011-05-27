@@ -41,7 +41,8 @@ namespace PHydrate.Util
         /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
         // TODO: Return type should be changed to IEnumerable<KeyValuePair<string, Object>>
-        [ NotNull,SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
+        [ NotNull ]
+        [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         public static IDictionary< string, Object > GetDataParameters< T >(
             this Expression< Func< T, bool > > expression, string parameterPrefix )
@@ -99,7 +100,7 @@ namespace PHydrate.Util
         // This comes from http://stackoverflow.com/questions/238413/lambda-expression-tree-parsing
         private static class InvokeGeneric
         {
-           [UsedImplicitly]
+            [ UsedImplicitly ]
             public static T GetVariableValue< T >( Expression expression )
             {
                 var accessorExpression = Expression.Lambda< Func< T > >( expression );

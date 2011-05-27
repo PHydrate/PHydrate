@@ -42,7 +42,7 @@ namespace PHydrate.Util
                                               params string[] primaryKeyMembers ) where T : class
         {
             return typeof(T).GetObjectsHashCodeByFieldValues(
-               obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
+                obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
                     x => x.GetValue( obj ) ) );
         }
     }

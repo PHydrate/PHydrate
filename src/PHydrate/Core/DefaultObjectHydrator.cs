@@ -57,27 +57,32 @@ namespace PHydrate.Core
         }
 
         /// <exception cref="PHydrateException">Unable to populate Primary Key values for {0}</exception>
-        private void PopulateInnerObjects< T >( T objToHydrate, IDictionary< string, object > columnValues, IEnumerable< IMemberInfo > propertySetters )
+        private void PopulateInnerObjects< T >( T objToHydrate, IDictionary< string, object > columnValues,
+                                                IEnumerable< IMemberInfo > propertySetters )
         {
-            foreach (IMemberInfo mi in propertySetters.Where(x=>x.Type.GetMembersWithAttribute<PrimaryKeyAttribute>().Count() > 0))
+            foreach (
+                IMemberInfo mi in
+                    propertySetters.Where( x => x.Type.GetMembersWithAttribute< PrimaryKeyAttribute >().Count() > 0 ) )
             {
                 // Add in an empty copy of the object, populate the [PrimaryKey] if possible.
                 object innerObject = this.ExecuteGenericMethod( x => GetObject< object >( columnValues ), mi.Type );
-                foreach (IMemberInfo primaryKey in mi.Type.GetMembersWithAttribute<PrimaryKeyAttribute>())
+                foreach ( IMemberInfo primaryKey in mi.Type.GetMembersWithAttribute< PrimaryKeyAttribute >() )
                 {
                     if ( !columnValues.ContainsKey( primaryKey.Wrapped.Name ) )
                         throw new PHydrateException( "Unable to populate Primary Key values for {0}", mi.Wrapped.Name );
 
-                    primaryKey.SetValue( innerObject, columnValues[ primaryKey.Wrapped.Name ].DBNullToDefault<object>() );
+                    primaryKey.SetValue( innerObject,
+                                         columnValues[ primaryKey.Wrapped.Name ].DBNullToDefault< object >() );
                 }
                 mi.SetValue( objToHydrate, innerObject );
             }
         }
 
-        private static void PopulateObjectProperties< T >( T objToHydrate, IDictionary< string, object > columnValues, IEnumerable< IMemberInfo > propertySetters )
+        private static void PopulateObjectProperties< T >( T objToHydrate, IDictionary< string, object > columnValues,
+                                                           IEnumerable< IMemberInfo > propertySetters )
         {
             foreach ( IMemberInfo  pi in propertySetters.Where( pi => columnValues.ContainsKey( pi.Wrapped.Name ) ) )
-                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DBNullToDefault<object>() );
+                pi.SetValue( objToHydrate, columnValues[ pi.Wrapped.Name ].DBNullToDefault< object >() );
         }
 
         #endregion
@@ -101,7 +106,9 @@ namespace PHydrate.Core
             foreach ( ConstructorInfo ci in otherConstructors )
             {
                 ParameterInfo[] parameters = ci.GetParameters();
-                var arguments = parameters.TakeWhile( pi => columnValues.ContainsKey( pi.Name ) ).Select( pi => columnValues[ pi.Name ] ).ToList();
+                var arguments =
+                    parameters.TakeWhile( pi => columnValues.ContainsKey( pi.Name ) ).Select(
+                        pi => columnValues[ pi.Name ] ).ToList();
                 if ( arguments.Count == parameters.Length )
                     return (T)ci.Invoke( arguments.ToArray() );
             }
