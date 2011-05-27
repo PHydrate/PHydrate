@@ -74,19 +74,48 @@ namespace PHydrate.Core
                             list.Add( obj );
                         }
                     }
-                    else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
-                        SetSimpleTypeInAggregateRoot( internalRecordset, enumerable.Cast< object >().FirstOrDefault(),
-                                                      aggregateRoot );
+                    else
+                    {
+                        // Look up the primary keys for the internal type
+                        var primaryKeys = typeToCastTo.GetMembersWithAttribute< PrimaryKeyAttribute >().ToList();
+                        if (primaryKeys.Count == 1 && typeof(IDictionary<,>).MakeGenericType(primaryKeys[0].Type, typeToCastTo).IsAssignableFrom(internalRecordset.Type)) // Dictionary
+                        {
+                            foreach (object obj in enumerable)
+                            {
+                                T found = GetAggregateRootFromSecondaryObject(obj, aggregateRoot);
+                                if (found == null)
+                                    continue;
 
+                                var dictionary = internalRecordset.GetValue(found) as IDictionary;
+                                if (dictionary == null)
+                                {
+                                    dictionary =
+                                        typeof(Dictionary<,>).MakeGenericType(primaryKeys[0].Type, typeToCastTo).
+                                            ConstructUsingDefaultConstructor<IDictionary>();
+                                    internalRecordset.SetValue(found, dictionary);
+                                }
+                                dictionary.Add(obj.GetPropertyValuesWithAttribute<PrimaryKeyAttribute>().First(), obj);
+                            }
+                        }
+                        else if (typeToCastTo.IsAssignableFrom(internalRecordset.Type)) // Simple type
+                            SetSimpleTypeInAggregateRoot(internalRecordset,
+                                                          enumerable.Cast<object>().FirstOrDefault(),
+                                                          aggregateRoot);
+                        else
+                            throw new PHydrateException(
+                                "Unable to map internal recordset.  Check the types to make sure they match!" );
+                    }
                 }
                 return aggregateRoot.Values;
             }
 
-            private static Type GetTypeToCastTo( IMemberInfo internalRecordset ) {
+            private static Type GetTypeToCastTo(IMemberInfo internalRecordset)
+            {
                 Type typeToCastTo = internalRecordset.Type;
                 if ( typeof(IEnumerable).IsAssignableFrom( internalRecordset.Type ) )
                     typeToCastTo = internalRecordset.Type.IsGenericType
-                                       ? internalRecordset.Type.GetGenericArguments()[ 0 ]
+                                       ? internalRecordset.Type.GetGenericArguments()[
+                                           internalRecordset.Type.GetGenericArguments().Length - 1 ]
                                        : typeof(object);
                 return typeToCastTo;
             }

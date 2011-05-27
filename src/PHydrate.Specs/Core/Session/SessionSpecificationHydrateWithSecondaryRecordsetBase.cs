@@ -33,6 +33,7 @@ namespace PHydrate.Specs.Core.Session
             [PrimaryKey]
             public int Key { get; set; }
 
+            [UsedImplicitly]
             public int AggregateKey { get; set; }
         }
 
@@ -43,7 +44,31 @@ namespace PHydrate.Specs.Core.Session
             public int AggregateKey { get; set; }
 
             [Recordset(1)]
+            [UsedImplicitly]
             public TestObjectInternal InnerObject { get; set; }
+        }
+
+        [UsedImplicitly]
+        protected class TestObjectInternalStringKey
+        {
+            [PrimaryKey]
+            public string Key { get; set; }
+
+            [UsedImplicitly]
+            public int AggregateKey { get; set; }
+        }
+
+        [UsedImplicitly]
+        protected class TestObjectInternalTwoKeys
+        {
+            [PrimaryKey]
+            public int Key1 { get; set; }
+
+            [PrimaryKey]
+            public int Key2 { get; set; }
+
+            [UsedImplicitly]
+            public int AggregateKey { get; set; }
         }
 
         #endregion
