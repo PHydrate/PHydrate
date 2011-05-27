@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
@@ -93,6 +94,66 @@ namespace PHydrate.Specs.Core.Session
             [ Recordset( 1 ) ]
             [ UsedImplicitly ]
             public IDictionary< string, TestObjectInternalStringKey > InnerObjects { get; set; }
+        }
+    }
+
+    [Subject(typeof(PHydrate.Core.Session))]
+    public sealed class When_getting_an_object_containing_a_secondary_recordset_that_is_idictionary_and_has_two_keys :
+        SessionSpecificationHydrateWithSecondaryRecordsetBase
+    {
+        private Establish Context = () =>
+        {
+            DataReaderMock.AddRecordSet("AggregateKey");
+            DataReaderMock.AddRow(1);
+            DataReaderMock.AddRow(2);
+            DataReaderMock.AddRecordSet("AggregateKey", "Key1", "Key2");
+            DataReaderMock.AddRow(1, 1, 1);
+            DataReaderMock.AddRow(1, 2, 2);
+            DataReaderMock.AddRow(2, 3, 3);
+            DataReaderMock.AddRow(2, 4, 4);
+            DataReaderMock.AddRow(3, 5, 5);
+            DataReaderMock.Playback();
+
+            DatabaseService.Expect(
+                x => x.ExecuteStoredProcedureReader(string.Empty, null)).Constraints(
+                    Is.Equal("TestStoredProcedure"), Is.NotNull()).Return(DataReaderMock);
+        };
+
+        private Because Of =
+            () => _exception = Catch.Exception( () =>
+                                                _requestedObjects =
+                                                SessionUnderTest.Get
+                                                    < TestObjectSecondaryRecordsetIDictionaryWithTwoKeys >(
+                                                        x => x.AggregateKey == 1 ).
+                                                    ToList() );
+
+        private It Should_call_stored_procedure
+            = () => DatabaseService.VerifyAllExpectations();
+
+        private It Should_call_stored_procedure_with_parameter_named_aggregate_key
+            =
+            () =>
+            AssertDatabaseServiceParameter("@AggregateKey", 1,
+                                            x => x.ExecuteStoredProcedureReader(string.Empty, null));
+
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
+
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
+
+        private static IList<TestObjectSecondaryRecordsetIDictionaryWithTwoKeys> _requestedObjects;
+        private static Exception _exception;
+
+        [HydrateUsing("TestStoredProcedure")]
+        private class TestObjectSecondaryRecordsetIDictionaryWithTwoKeys
+        {
+            [PrimaryKey]
+            public int AggregateKey { get; set; }
+
+            [Recordset(1)]
+            [UsedImplicitly]
+            public IDictionary<string, TestObjectInternalTwoKeys> InnerObjects { get; set; }
         }
     }
 }

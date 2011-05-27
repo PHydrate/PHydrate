@@ -58,6 +58,19 @@ namespace PHydrate.Specs.Core.Session
             public int AggregateKey { get; set; }
         }
 
+        [UsedImplicitly]
+        protected class TestObjectInternalTwoKeys
+        {
+            [PrimaryKey]
+            public int Key1 { get; set; }
+
+            [PrimaryKey]
+            public int Key2 { get; set; }
+
+            [UsedImplicitly]
+            public int AggregateKey { get; set; }
+        }
+
         #endregion
     }
 }
