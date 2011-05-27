@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
-// 
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -27,7 +26,7 @@ using Machine.Specifications;
 namespace PHydrate.Tests.Integration.Simple
 {
     [ Subject( typeof(TestDomain.Simple), "Integration" ) ]
-    [ Tags("Integration") ]
+    [ Tags( "Integration" ) ]
     public sealed class When_getting_simple_type : PHydrateIntegrationTestBase
     {
         private static IList< TestDomain.Simple > _simpleList;
