@@ -74,31 +74,34 @@ namespace PHydrate.Core
                             list.Add( obj );
                         }
                     }
-                    else if (typeof(IDictionary<,>).MakeGenericType(typeof(int), typeToCastTo).IsAssignableFrom(internalRecordset.Type)) // Dictionary
+                    else
                     {
-                        foreach (object obj in enumerable)
+                        // Look up the primary keys for the internal type
+                        var primaryKeys = typeToCastTo.GetMembersWithAttribute< PrimaryKeyAttribute >().ToList();
+                        if (primaryKeys.Count == 1 && typeof(IDictionary< , >).MakeGenericType( primaryKeys[0].Type, typeToCastTo ).IsAssignableFrom(internalRecordset.Type ) ) // Dictionary
                         {
-                            T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
-                            if (found == null)
-                                continue;
-
-                            var dictionary = internalRecordset.GetValue( found ) as IDictionary;
-                            if (dictionary == null)
+                            foreach ( object obj in enumerable )
                             {
-                                dictionary =
-                                    typeof(Dictionary< , >).MakeGenericType( typeof(int), typeToCastTo ).
-                                        ConstructUsingDefaultConstructor< IDictionary >();
-                                internalRecordset.SetValue( found, dictionary );
-                            }
-                            dictionary.Add(
-                                (int)( obj.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >().FirstOrDefault() ),
-                                obj );
-                        }
-                    }
-                    else if (typeToCastTo.IsAssignableFrom(internalRecordset.Type)) // Simple type
-                        SetSimpleTypeInAggregateRoot(internalRecordset, enumerable.Cast<object>().FirstOrDefault(),
-                                                      aggregateRoot);
+                                T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
+                                if ( found == null )
+                                    continue;
 
+                                var dictionary = internalRecordset.GetValue( found ) as IDictionary;
+                                if ( dictionary == null )
+                                {
+                                    dictionary =
+                                        typeof(Dictionary< , >).MakeGenericType( primaryKeys[0].Type, typeToCastTo ).
+                                            ConstructUsingDefaultConstructor< IDictionary >();
+                                    internalRecordset.SetValue( found, dictionary );
+                                }
+                                dictionary.Add( obj.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >().First(), obj );
+                            }
+                        }
+                        else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
+                            SetSimpleTypeInAggregateRoot( internalRecordset,
+                                                          enumerable.Cast< object >().FirstOrDefault(),
+                                                          aggregateRoot );
+                    }
                 }
                 return aggregateRoot.Values;
             }
