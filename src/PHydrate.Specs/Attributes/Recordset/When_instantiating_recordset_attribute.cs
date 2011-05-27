@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -33,7 +33,7 @@ namespace PHydrate.Specs.Attributes.Recordset
         private Because Of = () => _recordsetAttribute = new RecordsetAttribute( _recordsetNumber );
 
         private It Should_store_recordset_number_in_property
-            = () => _recordsetAttribute.RecordsetNumber.ShouldEqual( _recordsetNumber );      
+            = () => _recordsetAttribute.RecordsetNumber.ShouldEqual( _recordsetNumber );
 
         private static int _recordsetNumber;
         private static RecordsetAttribute _recordsetAttribute;

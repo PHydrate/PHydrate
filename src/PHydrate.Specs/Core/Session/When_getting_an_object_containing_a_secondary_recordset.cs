@@ -59,7 +59,10 @@ namespace PHydrate.Specs.Core.Session
             = () => DatabaseService.VerifyAllExpectations();
 
         private It Should_call_stored_procedure_with_parameter_named_aggregate_key
-            = () => AssertDatabaseServiceParameter( "@AggregateKey", 1, x => x.ExecuteStoredProcedureReader( string.Empty, null ) );
+            =
+            () =>
+            AssertDatabaseServiceParameter( "@AggregateKey", 1,
+                                            x => x.ExecuteStoredProcedureReader( string.Empty, null ) );
 
         private It Should_include_correct_internal_record
             = () => _requestedObjects[ 0 ].InnerObject.Key.ShouldEqual( 1 );

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
 using PHydrate.Attributes;
-using PHydrate.Core;
 using Rhino.Mocks;
 using UMMO.TestingUtils;
 

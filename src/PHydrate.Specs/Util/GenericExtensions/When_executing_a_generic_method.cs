@@ -26,7 +26,8 @@ using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Util.GenericExtensions
 {
-    public class ExecuteGenericMethodBase {
+    public class ExecuteGenericMethodBase
+    {
         protected static TestClassWithGenericMethod ClassWithGenericMethod;
         private Establish Context = () => ClassWithGenericMethod = new TestClassWithGenericMethod();
 
@@ -37,7 +38,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
                 return default( T );
             }
 
-            public T TestMethodWithArguments<T>(T arg)
+            public T TestMethodWithArguments< T >( T arg )
             {
                 return arg;
             }
@@ -60,7 +61,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
         private static object _resultOfCall;
     }
 
-    [Subject(typeof(PHydrate.Util.GenericExtensions))]
+    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
     public sealed class When_calling_execute_generic_method_but_supplying_no_method_call : ExecuteGenericMethodBase
     {
         private Because Of =
@@ -76,7 +77,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
         private static Exception _exception;
     }
 
-    [Subject(typeof(PHydrate.Util.GenericExtensions))]
+    [ Subject( typeof(PHydrate.Util.GenericExtensions) ) ]
     public sealed class When_executing_a_generic_method_with_arguments : ExecuteGenericMethodBase
     {
         private Establish Context = () => _randomInteger = A.Random.Integer;
@@ -90,7 +91,7 @@ namespace PHydrate.Specs.Util.GenericExtensions
             = () => _resultOfCall.ShouldBeOfType< int >();
 
         private It Should_return_random_value
-            = () => _resultOfCall.ShouldEqual( _randomInteger );  
+            = () => _resultOfCall.ShouldEqual( _randomInteger );
 
         private static int _randomInteger;
         private static object _resultOfCall;

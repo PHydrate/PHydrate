@@ -23,7 +23,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
 using PHydrate.Util;
-using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Specs.Util.TypeExtensions
 {

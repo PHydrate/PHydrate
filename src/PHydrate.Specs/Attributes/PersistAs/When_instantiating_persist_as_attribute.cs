@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -33,7 +33,7 @@ namespace PHydrate.Specs.Attributes.PersistAs
         private Because Of = () => _persistAsAttribute = new PersistAsAttribute( _columnName );
 
         private It Should_store_column_name_in_property
-            = () => _persistAsAttribute.ColumnName.ShouldEqual( _columnName );      
+            = () => _persistAsAttribute.ColumnName.ShouldEqual( _columnName );
 
         private static string _columnName;
         private static PersistAsAttribute _persistAsAttribute;

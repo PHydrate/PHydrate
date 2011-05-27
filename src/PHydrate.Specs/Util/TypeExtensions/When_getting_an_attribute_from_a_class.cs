@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -25,11 +25,11 @@ using PHydrate.Util;
 
 namespace PHydrate.Specs.Util.TypeExtensions
 {
-    [Subject(typeof(PHydrate.Util.TypeExtensions))]
+    [ Subject( typeof(PHydrate.Util.TypeExtensions) ) ]
     public sealed class When_getting_an_attribute_from_a_class : TypeExtensionsSpecificationBase
     {
         private static CreateUsingAttribute _attribute;
-        private Because Of = () => _attribute = typeof(TestClass).GetAttribute<CreateUsingAttribute>();
+        private Because Of = () => _attribute = typeof(TestClass).GetAttribute< CreateUsingAttribute >();
 
         private It Should_return_requested_attribute
             = () => _attribute.ShouldNotBeNull();

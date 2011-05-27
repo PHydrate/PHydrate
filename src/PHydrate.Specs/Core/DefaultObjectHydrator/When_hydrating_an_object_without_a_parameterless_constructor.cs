@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -24,7 +24,8 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
 {
     [ Subject( typeof(PHydrate.Core.DefaultObjectHydrator) ) ]
-    public sealed class When_hydrating_an_object_without_a_parameterless_constructor : DefaultObjectHydratorSpecificationBase
+    public sealed class When_hydrating_an_object_without_a_parameterless_constructor :
+        DefaultObjectHydratorSpecificationBase
     {
         private Because Of =
             () =>

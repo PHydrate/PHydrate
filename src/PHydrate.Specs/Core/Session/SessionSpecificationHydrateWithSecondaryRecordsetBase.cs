@@ -27,47 +27,47 @@ namespace PHydrate.Specs.Core.Session
     {
         #region Test Classes
 
-        [UsedImplicitly]
+        [ UsedImplicitly ]
         protected class TestObjectInternal
         {
-            [PrimaryKey]
+            [ PrimaryKey ]
             public int Key { get; set; }
 
-            [UsedImplicitly]
+            [ UsedImplicitly ]
             public int AggregateKey { get; set; }
         }
 
-        [HydrateUsing("TestStoredProcedure")]
+        [ HydrateUsing( "TestStoredProcedure" ) ]
         protected class TestObjectSecondaryRecordset
         {
-            [PrimaryKey]
+            [ PrimaryKey ]
             public int AggregateKey { get; set; }
 
-            [Recordset(1)]
-            [UsedImplicitly]
+            [ Recordset( 1 ) ]
+            [ UsedImplicitly ]
             public TestObjectInternal InnerObject { get; set; }
         }
 
-        [UsedImplicitly]
+        [ UsedImplicitly ]
         protected class TestObjectInternalStringKey
         {
-            [PrimaryKey]
+            [ PrimaryKey ]
             public string Key { get; set; }
 
-            [UsedImplicitly]
+            [ UsedImplicitly ]
             public int AggregateKey { get; set; }
         }
 
-        [UsedImplicitly]
+        [ UsedImplicitly ]
         protected class TestObjectInternalTwoKeys
         {
-            [PrimaryKey]
+            [ PrimaryKey ]
             public int Key1 { get; set; }
 
-            [PrimaryKey]
+            [ PrimaryKey ]
             public int Key2 { get; set; }
 
-            [UsedImplicitly]
+            [ UsedImplicitly ]
             public int AggregateKey { get; set; }
         }
 

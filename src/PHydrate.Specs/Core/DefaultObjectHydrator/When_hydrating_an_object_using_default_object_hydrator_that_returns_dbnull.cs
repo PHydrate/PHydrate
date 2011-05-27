@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
-using PHydrate.Core;
 using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
@@ -38,7 +37,8 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
 
         private class TestHydrationTarget
         {
-            public string StringProperty { get; [UsedImplicitly] protected set; }
+            public string StringProperty { get; [ UsedImplicitly ]
+            protected set; }
         }
 
         #endregion

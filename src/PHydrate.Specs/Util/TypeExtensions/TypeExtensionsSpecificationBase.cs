@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -42,15 +42,15 @@ namespace PHydrate.Specs.Util.TypeExtensions
 
         #endregion
 
-        [UsedImplicitly]
-        protected class TestClassWithMethod<T>
+        [ UsedImplicitly ]
+        protected class TestClassWithMethod< T >
         {
             public int TestMethodNoArgs()
             {
                 return 1;
             }
 
-            public T TestMethodWithArgs(T longValue)
+            public T TestMethodWithArgs( T longValue )
             {
                 return longValue;
             }

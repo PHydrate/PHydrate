@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using Machine.Specifications;
 using Machine.Specifications.Annotations;
-using PHydrate.Core;
 using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.DefaultObjectHydrator
@@ -54,18 +53,19 @@ namespace PHydrate.Specs.Core.DefaultObjectHydrator
                                         RandomInteger = A.Random.Integer.Value;
                                         RandomString = A.Random.String.Resembling.A.Noun;
 
-                                        ColumnValues = new Dictionary< string, object >(StringComparer.OrdinalIgnoreCase) {
-                                                                                            {
-                                                                                                "IntegerProperty"
-                                                                                                ,
-                                                                                                RandomInteger
-                                                                                                },
-                                                                                            {
-                                                                                                "StringProperty"
-                                                                                                ,
-                                                                                                RandomString
-                                                                                                }
-                                                                                        };
+                                        ColumnValues =
+                                            new Dictionary< string, object >( StringComparer.OrdinalIgnoreCase ) {
+                                                                                                                     {
+                                                                                                                         "IntegerProperty"
+                                                                                                                         ,
+                                                                                                                         RandomInteger
+                                                                                                                         },
+                                                                                                                     {
+                                                                                                                         "StringProperty"
+                                                                                                                         ,
+                                                                                                                         RandomString
+                                                                                                                         }
+                                                                                                                 };
                                     };
     }
 }

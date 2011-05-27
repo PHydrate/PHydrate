@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
-// Copyright 2010, Stephen Michael Czetty
+// Copyright 2010-2011, Stephen Michael Czetty
 
 #endregion
 
@@ -25,7 +25,8 @@ using Machine.Specifications;
 namespace PHydrate.Specs.Core.WeakReferenceObjectCache
 {
     [ Subject( typeof(PHydrate.Core.WeakReferenceObjectCache) ) ]
-    public sealed class When_copying_cache_to_array_with_not_enough_room_in_array : WeakReferenceObjectCacheSpecificationBase
+    public sealed class When_copying_cache_to_array_with_not_enough_room_in_array :
+        WeakReferenceObjectCacheSpecificationBase
     {
         private static object[] _testArray = new object[1];
         private static Exception _exception;
