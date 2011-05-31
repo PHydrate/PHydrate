@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Machine.Specifications;
+using PHydrate.Specifications;
 
 namespace PHydrate.Tests.Integration.Simple
 {
@@ -42,26 +43,21 @@ namespace PHydrate.Tests.Integration.Simple
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : IExplicitSpecification< TestDomain.Simple >,
-                                                  IDBSpecification< TestDomain.Simple >
+        private class TestSimpleDbSpecification : DbSpecification< TestDomain.Simple >
         {
-            #region Implementation of IExplicitSpecification<ClassWithHydrator>
+            #region Implementation of DBSpecification<ClassWithHydrator>
 
-            public bool Satisfies( TestDomain.Simple obj )
-            {
-                return obj.SimpleId == 0;
-            }
-
-            #endregion
-
-            #region Implementation of IDBSpecification<ClassWithHydrator>
-
-            public Expression< Func< TestDomain.Simple, bool > > Criteria
+            public override Expression< Func< TestDomain.Simple, bool > > Criteria
             {
                 get { return x => x.SimpleId == 1; }
             }
 
             #endregion
+
+            public override bool IsSatisfiedBy( TestDomain.Simple obj )
+            {
+                return obj.SimpleId == 0;
+            }
         }
 
         #endregion

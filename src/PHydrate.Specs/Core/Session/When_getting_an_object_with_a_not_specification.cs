@@ -19,9 +19,7 @@
 
 #endregion
 
-using System;
 using System.Linq;
-using System.Linq.Expressions;
 using Machine.Specifications;
 using PHydrate.Specifications;
 using Rhino.Mocks;
@@ -29,45 +27,22 @@ using Rhino.Mocks;
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_getting_an_object_with_a_specification_that_implements_db_and_explicit :
-        SessionSpecificationHydrateBase
+    public sealed class When_getting_an_object_with_a_not_specification : ChainedSpecificationBase
     {
-        private Because Of = () => RequestedObjects = SessionUnderTest.Get( new TestSpecification() ).ToList();
+        private Because Of =
+            () =>
+            RequestedObjects = SessionUnderTest.Get( new TestSpecification1().Not() ).ToList();
 
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
 
-        private It Should_call_stored_procedure_with_parameter_named_key
-            = () => AssertDatabaseServiceParameter( "@Key", 1, x => x.ExecuteStoredProcedureReader( "", null ) );
-
         private It Should_not_be_null
             = () => RequestedObjects.ShouldNotBeNull();
-
-        private It Should_return_correct_record
-            = () => RequestedObjects[ 0 ].Key.ShouldEqual( 2 );
 
         private It Should_return_one_record
             = () => RequestedObjects.Count.ShouldEqual( 1 );
 
-        #region Test Specification Class
-
-        private class TestSpecification : DbSpecification< TestObject >
-        {
-            #region Implementation of DBSpecification<TestObject>
-
-            public override Expression< Func< TestObject, bool > > Criteria
-            {
-                get { return x => x.Key == 1; }
-            }
-
-            #endregion
-
-            public override bool IsSatisfiedBy( TestObject obj )
-            {
-                return obj.Key == 2;
-            }
-        }
-
-        #endregion
+        private It Should_not_return_record_matching_specification
+            = () => RequestedObjects[ 0 ].Key.ShouldNotEqual( 1 );
     }
 }

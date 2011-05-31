@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Machine.Specifications;
+using PHydrate.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
@@ -46,11 +47,11 @@ namespace PHydrate.Specs.Core.Session
 
         #region Test Specification Class
 
-        private class TestSpecification : IDBSpecification< TestObject >
+        private class TestSpecification : DbSpecification< TestObject >
         {
-            #region Implementation of IDBSpecification<TestObject>
+            #region Implementation of DBSpecification<TestObject>
 
-            public Expression< Func< TestObject, bool > > Criteria
+            public override Expression< Func< TestObject, bool > > Criteria
             {
                 get { return x => x.Key == 1; }
             }

@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,19 +19,20 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
-
-namespace PHydrate
+namespace PHydrate.Specifications
 {
-    /// <summary>
-    /// Base interface for specification types
-    /// </summary>
-    /// <remarks>
-    /// Nothing is implemented by this interface, it is simply necessary
-    /// to group other interfaces.
-    /// </remarks>
-    /// <typeparam name="T">Type this is a specification for</typeparam>
-    // TODO: This should not be empty forever, remove warning below when things have been added.
-    [ SuppressMessage( "Microsoft.Design", "CA1040:AvoidEmptyInterfaces" ) ]
-    public interface ISpecification< T > {}
+    internal class NotSpecification< T > : ISpecification< T >
+    {
+        private readonly ISpecification< T > _wrappedSpec;
+
+        internal NotSpecification( ISpecification< T > s )
+        {
+            _wrappedSpec = s;
+        }
+
+        public bool IsSatisfiedBy( T entity )
+        {
+            return !_wrappedSpec.IsSatisfiedBy( entity );
+        }
+    }
 }

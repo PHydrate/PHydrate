@@ -111,6 +111,7 @@
     <Compile Include="Core\FluentConfiguration\When_setting_prefix.cs" />
     <Compile Include="Core\SessionFactory\SessionFactorySpecificationBase.cs" />
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
+    <Compile Include="Core\Session\ChainedSpecificationBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationCreateBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationDeleteBase.cs" />
@@ -137,7 +138,10 @@
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_hydrator_that_has_no_default_constructor.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_an_explicit_specification.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_with_a_chained_and_specification.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_with_a_chained_or_specification.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_a_db_specification.cs" />
+    <Compile Include="Core\Session\When_getting_an_object_with_a_not_specification.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_a_specification_that_implements_db_and_explicit.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_expression_containing_boolean_and.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_simple_expression.cs" />
