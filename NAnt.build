@@ -165,8 +165,10 @@
 		<property name="package.nuget.dir.net35" value="${path::combine(package.nuget.dir.lib, 'net35')}" overwrite="true" />
 		<property name="package.nuget.dir.net40" value="${path::combine(package.nuget.dir.lib, 'net40')}" overwrite="true" />
 		<property name="package.nuget.dir.content" value="${path::combine(package.nuget.dir, 'content')}" overwrite="true" />
-		<mkdir dir="${package.nuget.dir.lib}" />
 		<mkdir dir="${package.nuget.dir.net35}" />
+		<mkdir dir="${package.nuget.dir.net40}" />
+		<mkdir dir="${package.nuget.dir.content}" />
+		<property name="bin.dir" value="${path::combine(build.cwd, 'nuget_temp')}" overwrite="true" />
 		<echo message="Building .NET 3.5 library..." />
 		<call target="clean.bin" />
 		<property name="build.framework" value="v3.5" overwrite="true" />
@@ -185,6 +187,7 @@
 		<copy todir="${package.nuget.dir.content}">
 			<fileset refid="nuget.help" />
 		</copy>
+		<delete dir="${bin.dir}" />
 	</target>
 
 	<target name="package_nuget" depends="getVersionInfo,stage_nuget">
