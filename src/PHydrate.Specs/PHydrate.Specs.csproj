@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PHydrate.Specs</RootNamespace>
     <AssemblyName>PHydrate.Specs</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -111,6 +111,7 @@
     <Compile Include="Core\FluentConfiguration\When_setting_prefix.cs" />
     <Compile Include="Core\SessionFactory\SessionFactorySpecificationBase.cs" />
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
+    <Compile Include="Core\Session\ChainedDbSpecificationBase.cs" />
     <Compile Include="Core\Session\ChainedSpecificationBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationBase.cs" />
     <Compile Include="Core\Session\SessionSpecificationCreateBase.cs" />

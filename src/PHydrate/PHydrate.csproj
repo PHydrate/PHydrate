@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PHydrate</RootNamespace>
     <AssemblyName>PHydrate</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -107,8 +107,10 @@
     <Compile Include="PHydrateInternalException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\AndSpecification.cs" />
+    <Compile Include="Specifications\CombinedDbSpecification.cs" />
     <Compile Include="Specifications\DBSpecification.cs" />
     <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\NotDbSpecification.cs" />
     <Compile Include="Specifications\NotSpecification.cs" />
     <Compile Include="Specifications\OrSpecification.cs" />
     <Compile Include="Specifications\SpecificationExtensions.cs" />

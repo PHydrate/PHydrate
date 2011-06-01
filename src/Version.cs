@@ -10,7 +10,7 @@ using System.Reflection;
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: AssemblyVersionAttribute("0.6.801.4115")]
-[assembly: AssemblyFileVersionAttribute("0.6.801.4115")]
+[assembly: AssemblyVersionAttribute("0.6.801.6141")]
+[assembly: AssemblyFileVersionAttribute("0.6.801.6141")]
 [assembly: AssemblyCopyrightAttribute("Copyright © Stephen Czetty 2010-2011")]
 

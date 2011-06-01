@@ -33,15 +33,15 @@ namespace PHydrate.Specifications
     /// You should only use object members that are supported by the underlying stored procedure.
     /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public abstract class DbSpecification<  T > : ISpecification<T>
+    public abstract class DbSpecification<T> : ISpecification<T>
     {
-        private Func< T, bool > _compliedSpec;
+        private Func<T, bool> _compliedSpec;
 
         /// <summary>
         /// Gets an <see cref="Expression"/> that will be parsed to send parameters to the stored procedure.
         /// </summary>
-        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
-       public abstract  Expression< Func< T, bool > > Criteria { get; }
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+        public abstract Expression<Func<T, bool>> Criteria { get; }
 
         /// <summary>
         /// Returns true if the entity passes the specification
@@ -50,11 +50,40 @@ namespace PHydrate.Specifications
         /// <returns>
         ///   <c>true</c> if the entity passes the specification; otherwise, <c>false</c>.
         /// </returns>
-        public virtual bool IsSatisfiedBy( T entity )
+        public virtual bool IsSatisfiedBy(T entity)
         {
             if (_compliedSpec == null)
                 _compliedSpec = Criteria.Compile();
-            return _compliedSpec( entity );
+            return _compliedSpec(entity);
+        }
+
+        /// <summary>
+        /// Returns a new DBSpecification that combines two specifications.
+        /// </summary>
+        /// <param name="otherSpecification">The other specification.</param>
+        /// <returns></returns>
+        public DbSpecification<T> And(DbSpecification<T> otherSpecification)
+        {
+            return new CombinedDbSpecification<T>(this, otherSpecification, ExpressionType.AndAlso);
+        }
+
+        /// <summary>
+        /// Returns a new DBSpecification that combines two specifications.
+        /// </summary>
+        /// <param name="otherSpecification">The other specification.</param>
+        /// <returns></returns>
+        public DbSpecification<T> Or(DbSpecification<T> otherSpecification)
+        {
+            return new CombinedDbSpecification<T>(this, otherSpecification, ExpressionType.OrElse);
+        }
+
+        /// <summary>
+        /// Inverts the value of the DbSpecification
+        /// </summary>
+        /// <returns></returns>
+        public DbSpecification<T> Not()
+        {
+            return new NotDbSpecification<T>(this);
         }
     }
 }
