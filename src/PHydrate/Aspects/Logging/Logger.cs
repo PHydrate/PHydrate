@@ -76,6 +76,7 @@ namespace PHydrate.Aspects.Logging
     [ UsedImplicitly ]
     public sealed class Logger< T > : Logger
     {
+        [CoverageExclude]
         private Logger() {}
 
         private static readonly ILog Log = LogManager.GetLogger( typeof(T) );

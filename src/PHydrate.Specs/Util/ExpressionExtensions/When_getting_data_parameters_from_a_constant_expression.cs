@@ -29,13 +29,13 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
     [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
     public sealed class When_getting_data_parameters_from_a_constant_expression : ExpressionExtenionsSpecificationBase
     {
-        private static IDictionary< string, object > _dictionary;
+        private static IEnumerable<KeyValuePair< string, object >> _dictionary;
         private Establish Context = () => ExpressionToTest = ( TestClass x ) => true;
 
         private Because Of =
-            () => _dictionary = ExpressionToTest.GetDataParameters( "@" ).ToDictionary( x => x.Key, x => x.Value );
+            () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
 
         private It Should_return_no_items
-            = () => _dictionary.Count.ShouldEqual( 0 );
+            = () => _dictionary.Count().ShouldEqual( 0 );
     }
 }
