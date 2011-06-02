@@ -27,7 +27,7 @@ namespace PHydrate.Specs.Core.Session
 {
     public class ChainedDbSpecificationBase : SessionSpecificationHydrateBase
     {
-        protected class TestSpecification1 : DbSpecification< TestObject >
+        protected class TestSpecification1 : DBSpecification< TestObject >
         {
             public override Expression< Func< TestObject, bool > > Criteria
             {
@@ -35,7 +35,7 @@ namespace PHydrate.Specs.Core.Session
             }
         }
 
-        protected class TestSpecification2 : DbSpecification< TestObject >
+        protected class TestSpecification2 : DBSpecification< TestObject >
         {
             public override Expression< Func< TestObject, bool > > Criteria
             {

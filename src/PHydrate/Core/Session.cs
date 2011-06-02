@@ -124,7 +124,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > GetItemsFromDbSpecification< T >( ISpecification< T > specification ) where T : class
         {
-            var dbSpecification = specification as DbSpecification< T >;
+            var dbSpecification = specification as DBSpecification< T >;
             Expression< Func< T, bool > > criteria = ( dbSpecification == null ) ? null : dbSpecification.Criteria;
             return Get( criteria );
         }

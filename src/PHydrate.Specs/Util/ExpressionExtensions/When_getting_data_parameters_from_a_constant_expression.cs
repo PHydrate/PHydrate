@@ -20,6 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using Machine.Specifications;
 using PHydrate.Util;
 
@@ -31,7 +32,8 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
         private static IDictionary< string, object > _dictionary;
         private Establish Context = () => ExpressionToTest = ( TestClass x ) => true;
 
-        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
+        private Because Of =
+            () => _dictionary = ExpressionToTest.GetDataParameters( "@" ).ToDictionary( x => x.Key, x => x.Value );
 
         private It Should_return_no_items
             = () => _dictionary.Count.ShouldEqual( 0 );

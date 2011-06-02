@@ -33,7 +33,7 @@ namespace PHydrate.Specifications
     /// You should only use object members that are supported by the underlying stored procedure.
     /// </remarks>
     /// <typeparam name="T">The type this specification accepts</typeparam>
-    public abstract class DbSpecification<T> : ISpecification<T>
+    public abstract class DBSpecification<T> : ISpecification<T>
     {
         private Func<T, bool> _compliedSpec;
 
@@ -62,7 +62,7 @@ namespace PHydrate.Specifications
         /// </summary>
         /// <param name="otherSpecification">The other specification.</param>
         /// <returns></returns>
-        public DbSpecification<T> And(DbSpecification<T> otherSpecification)
+        public DBSpecification<T> And(DBSpecification<T> otherSpecification)
         {
             return new CombinedDbSpecification<T>(this, otherSpecification, ExpressionType.AndAlso);
         }
@@ -72,16 +72,16 @@ namespace PHydrate.Specifications
         /// </summary>
         /// <param name="otherSpecification">The other specification.</param>
         /// <returns></returns>
-        public DbSpecification<T> Or(DbSpecification<T> otherSpecification)
+        public DBSpecification<T> Or(DBSpecification<T> otherSpecification)
         {
             return new CombinedDbSpecification<T>(this, otherSpecification, ExpressionType.OrElse);
         }
 
         /// <summary>
-        /// Inverts the value of the DbSpecification
+        /// Inverts the value of the DBSpecification
         /// </summary>
         /// <returns></returns>
-        public DbSpecification<T> Not()
+        public DBSpecification<T> Not()
         {
             return new NotDbSpecification<T>(this);
         }

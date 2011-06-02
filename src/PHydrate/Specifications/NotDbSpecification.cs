@@ -28,7 +28,7 @@ namespace PHydrate.Specifications
     {
         private readonly Expression< Func< T, bool > > _criteria;
 
-        public NotDbSpecification( DbSpecification< T > dbSpecification )
+        public NotDbSpecification( DBSpecification< T > dbSpecification )
         {
             _criteria = dbSpecification.Invert();
         }

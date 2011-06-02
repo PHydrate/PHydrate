@@ -24,13 +24,13 @@ using System.Linq.Expressions;
 
 namespace PHydrate.Specifications
 {
-    internal abstract class DbSpecificationCombinationBase< T > : DbSpecification< T > {}
+    internal abstract class DbSpecificationCombinationBase< T > : DBSpecification< T > {}
 
     internal class CombinedDbSpecification< T > : DbSpecificationCombinationBase< T >
     {
         private readonly Expression< Func< T, bool > > _criteria;
 
-        public CombinedDbSpecification( DbSpecification< T > spec1, DbSpecification< T > spec2,
+        public CombinedDbSpecification( DBSpecification< T > spec1, DBSpecification< T > spec2,
                                         ExpressionType expressionType )
         {
             _criteria = spec1.CombineWith( spec2, expressionType );

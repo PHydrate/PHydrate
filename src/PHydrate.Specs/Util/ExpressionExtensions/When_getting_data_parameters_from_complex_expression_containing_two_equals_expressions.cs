@@ -20,6 +20,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using Machine.Specifications;
 using PHydrate.Util;
 
@@ -34,7 +35,8 @@ namespace PHydrate.Specs.Util.ExpressionExtensions
         private Establish Context =
             () => ExpressionToTest = ( TestClass x ) => x.TestKey1 == RandomInteger1 && x.TestKey2 == RandomInteger2;
 
-        private Because Of = () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
+        private Because Of =
+            () => _dictionary = ExpressionToTest.GetDataParameters( "@" ).ToDictionary( x => x.Key, x => x.Value );
 
         private It Should_contain_correct_value_in_testkey1
             = () => _dictionary[ "@TestKey1" ].ShouldEqual( RandomInteger1 );

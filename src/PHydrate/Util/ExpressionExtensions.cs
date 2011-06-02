@@ -44,11 +44,10 @@ namespace PHydrate.Util
         /// <param name="expression">The expression.</param>
         /// <param name="parameterPrefix">The prefix to add to each parameter name</param>
         /// <returns>A list of data parameters parsed from the expression</returns>
-        // TODO: Return type should be changed to IEnumerable<KeyValuePair<string, Object>>
         [ NotNull ]
-        [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
+        [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ] // TODO: Session tests break if Expression<Func<T,bool>> is treated as a LamdbaExpression here.
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
-        public static IDictionary< string, object > GetDataParameters< T >(
+        public static IEnumerable<KeyValuePair<string, object>> GetDataParameters< T >(
             this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
             var dataParameters = new Dictionary< string, object >();
@@ -121,6 +120,7 @@ namespace PHydrate.Util
         /// <typeparam name="T"></typeparam>
         /// <param name="expression">The expression.</param>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
         public static Expression< Func< T, bool > > RebuildLambdaExpression< T >(this Expression expression)
         {
             var parameters =
