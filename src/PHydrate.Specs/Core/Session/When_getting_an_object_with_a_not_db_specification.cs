@@ -21,17 +21,16 @@
 
 using System.Linq;
 using Machine.Specifications;
-using PHydrate.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_getting_an_object_with_a_chained_or_specification : ChainedSpecificationBase
+    public sealed class When_getting_an_object_with_a_not_db_specification : ChainedDbSpecificationBase
     {
         private Because Of =
             () =>
-            RequestedObjects = SessionUnderTest.Get( new TestSpecification1().Or( new TestSpecification2() ) ).ToList();
+            RequestedObjects = SessionUnderTest.Get( new TestSpecification1().Not() ).ToList();
 
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
@@ -39,10 +38,10 @@ namespace PHydrate.Specs.Core.Session
         private It Should_not_be_null
             = () => RequestedObjects.ShouldNotBeNull();
 
-        private It Should_return_correct_records
-            = () => RequestedObjects.ShouldEachConformTo( x => x.Key == 1 || x.Key == 2 );
+        private It Should_return_one_record
+            = () => RequestedObjects.Count.ShouldEqual( 1 );
 
-        private It Should_return_two_records
-            = () => RequestedObjects.Count.ShouldEqual( 2 );
+        private It Should_not_return_record_matching_specification
+            = () => RequestedObjects[ 0 ].Key.ShouldNotEqual( 1 );
     }
 }

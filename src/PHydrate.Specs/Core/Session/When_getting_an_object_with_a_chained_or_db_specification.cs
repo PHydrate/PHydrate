@@ -19,30 +19,41 @@
 
 #endregion
 
+using System;
 using System.Linq;
 using Machine.Specifications;
-using PHydrate.Specifications;
 using Rhino.Mocks;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_getting_an_object_with_a_chained_or_specification : ChainedSpecificationBase
+    public sealed class When_getting_an_object_with_a_chained_or_db_specification : ChainedDbSpecificationBase
     {
         private Because Of =
-            () =>
-            RequestedObjects = SessionUnderTest.Get( new TestSpecification1().Or( new TestSpecification2() ) ).ToList();
+            () => _exception = Catch.Exception( () =>
+                                                RequestedObjects =
+                                                SessionUnderTest.Get(
+                                                    new TestSpecification1().Or( new TestSpecification2() ) ).ToList() );
 
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
+
+        [ Ignore( "Or in DbSpecifications not supported yet" ) ]
         private It Should_call_stored_procedure
             = () => DatabaseService.VerifyAllExpectations();
 
+        [ Ignore( "Or in DbSpecifications not supported yet" ) ]
         private It Should_not_be_null
             = () => RequestedObjects.ShouldNotBeNull();
 
+        [ Ignore( "Or in DbSpecifications not supported yet" ) ]
         private It Should_return_correct_records
             = () => RequestedObjects.ShouldEachConformTo( x => x.Key == 1 || x.Key == 2 );
 
+        [ Ignore( "Or in DbSpecifications not supported yet" ) ]
         private It Should_return_two_records
             = () => RequestedObjects.Count.ShouldEqual( 2 );
+
+        private static Exception _exception;
     }
 }

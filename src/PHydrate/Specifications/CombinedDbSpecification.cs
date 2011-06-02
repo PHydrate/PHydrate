@@ -31,14 +31,20 @@ using System.Reflection;
 namespace PHydrate.Specifications
 {
     internal abstract class DbSpecificationCombinationBase< T > : DbSpecification< T > {
-        protected readonly IDictionary< string, ParameterExpression > Parameters 
+
+        protected static Expression RebuildExpression(Expression expression, out IDictionary<string, ParameterExpression> parameters)
+        {
+            parameters
 #if NET40
-            = new ConcurrentDictionary< string, ParameterExpression >();
+                = new ConcurrentDictionary< string, ParameterExpression >();
 #else
-            = new Dictionary<string, ParameterExpression>();
+                = new Dictionary<string, ParameterExpression>();
 #endif
 
-        protected Expression RebuildExpression( Expression expression )
+            return RebuildExpression( expression, parameters );
+        }
+
+        private static Expression RebuildExpression( Expression expression, IDictionary<string, ParameterExpression> parameters )
         {  
             switch (expression.GetType().Name)
             {
@@ -46,15 +52,15 @@ namespace PHydrate.Specifications
                 case "BinaryExpression":
                     var binaryExpression = ( (BinaryExpression)expression );
                     return Expression.MakeBinary( binaryExpression.NodeType,
-                                                  RebuildExpression( binaryExpression.Left ),
-                                                  RebuildExpression( binaryExpression.Right ) );
+                                                  RebuildExpression( binaryExpression.Left, parameters ),
+                                                  RebuildExpression( binaryExpression.Right, parameters ) );
 
 
                 case "ConditionalExpression":
                     var conditionalExpression = ( (ConditionalExpression)expression );
                     return Expression.Condition( conditionalExpression.Test,
-                                                 RebuildExpression( conditionalExpression.IfTrue ),
-                                                 RebuildExpression( conditionalExpression.IfFalse ) );
+                                                 RebuildExpression(conditionalExpression.IfTrue, parameters),
+                                                 RebuildExpression(conditionalExpression.IfFalse, parameters));
 
 
                 case "ConstantExpression":
@@ -68,10 +74,10 @@ namespace PHydrate.Specifications
                     var memberExpression = ( (MemberExpression)expression );
                     var mi = memberExpression.Member as PropertyInfo;
                     if (mi != null)
-                        return Expression.Property( RebuildExpression( memberExpression.Expression ), mi );
+                        return Expression.Property(RebuildExpression(memberExpression.Expression, parameters), mi);
                     var fi = memberExpression.Member as FieldInfo;
                     if (fi != null)
-                        return Expression.Field( RebuildExpression( memberExpression.Expression ), fi );
+                        return Expression.Field(RebuildExpression(memberExpression.Expression, parameters), fi);
                     throw new PHydrateInternalException(
                         "Error parsing expression.  Found MemberExpression who's member is neither a property nor a field!" );
 
@@ -80,45 +86,45 @@ namespace PHydrate.Specifications
                     var memberInitExpression = ( (MemberInitExpression)expression );
                     return
                         Expression.MemberInit(
-                            (NewExpression)RebuildExpression( memberInitExpression.NewExpression ),
+                            (NewExpression)RebuildExpression(memberInitExpression.NewExpression, parameters),
                             memberInitExpression.Bindings );
 
 
                 case "MethodCallExpression":
                     var methodCallExpression = ( (MethodCallExpression)expression );
-                    return Expression.Call( RebuildExpression( methodCallExpression.Object ),
+                    return Expression.Call( RebuildExpression( methodCallExpression.Object, parameters ),
                                             methodCallExpression.Method,
-                                            methodCallExpression.Arguments.Select( RebuildExpression ) );
+                                            methodCallExpression.Arguments.Select( x => RebuildExpression(x, parameters) ) );
 
                 case "NewArrayExpression":
                     var newArrayExpression = ( (NewArrayExpression)expression );
                     return newArrayExpression.NodeType == ExpressionType.NewArrayBounds
                                ? Expression.NewArrayBounds( newArrayExpression.Type,
-                                                            newArrayExpression.Expressions.Select( RebuildExpression ) )
+                                                            newArrayExpression.Expressions.Select( x => RebuildExpression(x, parameters) ) )
                                : Expression.NewArrayInit( newArrayExpression.Type,
-                                                          newArrayExpression.Expressions.Select( RebuildExpression ) );
+                                                          newArrayExpression.Expressions.Select( x => RebuildExpression(x, parameters) ) );
 
                 case "NewExpression":
                     var newExpression = ( (NewExpression)expression );
                     return Expression.New( newExpression.Constructor,
-                                           newExpression.Arguments.Select( RebuildExpression ) );      
+                                           newExpression.Arguments.Select(x => RebuildExpression(x, parameters) ) );      
 
 
                 case "ParameterExpression":
                 case "TypedParameterExpression":
                     // This is the whole reason for all this...
                     var parameterExpression = ( (ParameterExpression)expression );
-                    if (!Parameters.ContainsKey(parameterExpression.Name))
-                        Parameters[ parameterExpression.Name ] = Expression.Parameter( parameterExpression.Type,
+                    if (!parameters.ContainsKey(parameterExpression.Name))
+                        parameters[ parameterExpression.Name ] = Expression.Parameter( parameterExpression.Type,
                                                                                        parameterExpression.Name );
-                    return Parameters[ parameterExpression.Name ];
+                    return parameters[ parameterExpression.Name ];
                         
 
                     //case "TypeBinaryExpression":
                 case "UnaryExpression":
                     var unaryExpression = ( (UnaryExpression)expression );
                     return Expression.MakeUnary( unaryExpression.NodeType,
-                                                 RebuildExpression( unaryExpression.Operand ),
+                                                 RebuildExpression( unaryExpression.Operand, parameters ),
                                                  unaryExpression.Type, unaryExpression.Method );  
                     
 
@@ -144,11 +150,12 @@ namespace PHydrate.Specifications
             get { return _criteria; }
         }
 
-        protected Expression< Func< T, bool > > CombineExpressions( ExpressionType expressionType, DbSpecification<T> spec1, DbSpecification<T> spec2 )
+        private static Expression< Func< T, bool > > CombineExpressions( ExpressionType expressionType, DbSpecification<T> spec1, DbSpecification<T> spec2 )
         {
             var combinedExpression = Expression.MakeBinary( expressionType, spec1.Criteria.Body, spec2.Criteria.Body  );
-            Parameters.Clear();
-            return Expression.Lambda< Func< T, bool > >( RebuildExpression(combinedExpression ), Parameters.Values );
+
+            IDictionary< string, ParameterExpression > parameters;
+            return Expression.Lambda< Func< T, bool > >( RebuildExpression(combinedExpression, out parameters ), parameters.Values );
         }
     }
 }

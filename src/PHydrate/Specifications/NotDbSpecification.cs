@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace PHydrate.Specifications
@@ -37,8 +38,9 @@ namespace PHydrate.Specifications
         {
             var invertedExpression = Expression.MakeUnary( ExpressionType.Not, dbSpecification.Criteria.Body,
                                                            typeof(bool) );
-            Parameters.Clear(); // TODO: This is ugly
-            return Expression.Lambda< Func< T, bool > >( RebuildExpression( invertedExpression ), Parameters.Values );
+
+            IDictionary< string, ParameterExpression > parameters;
+            return Expression.Lambda< Func< T, bool > >( RebuildExpression( invertedExpression, out parameters ), parameters.Values );
         }
 
         public override Expression< Func< T, bool > > Criteria
