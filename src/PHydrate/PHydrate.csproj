@@ -109,6 +109,7 @@
     <Compile Include="Specifications\AndSpecification.cs" />
     <Compile Include="Specifications\CombinedDbSpecification.cs" />
     <Compile Include="Specifications\DBSpecification.cs" />
+    <Compile Include="Specifications\InternalSpecificationExtensions.cs" />
     <Compile Include="Specifications\ISpecification.cs" />
     <Compile Include="Specifications\NotDbSpecification.cs" />
     <Compile Include="Specifications\NotSpecification.cs" />

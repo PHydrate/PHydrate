@@ -20,7 +20,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace PHydrate.Specifications
@@ -31,16 +30,7 @@ namespace PHydrate.Specifications
 
         public NotDbSpecification( DbSpecification< T > dbSpecification )
         {
-            _criteria = InvertExpression( dbSpecification );
-        }
-
-        private Expression< Func< T, bool > > InvertExpression( DbSpecification< T > dbSpecification )
-        {
-            var invertedExpression = Expression.MakeUnary( ExpressionType.Not, dbSpecification.Criteria.Body,
-                                                           typeof(bool) );
-
-            IDictionary< string, ParameterExpression > parameters;
-            return Expression.Lambda< Func< T, bool > >( RebuildExpression( invertedExpression, out parameters ), parameters.Values );
+            _criteria = dbSpecification.Invert();
         }
 
         public override Expression< Func< T, bool > > Criteria
