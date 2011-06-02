@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Machine.Specifications;
+using PHydrate.Specifications;
 
 namespace PHydrate.Tests.Integration.Simple
 {
@@ -50,11 +51,11 @@ namespace PHydrate.Tests.Integration.Simple
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : IDBSpecification< TestDomain.Simple >
+        private class TestSimpleDbSpecification : DbSpecification< TestDomain.Simple >
         {
             #region Implementation of IDbSpecification<Simple>
 
-            public Expression< Func< TestDomain.Simple, bool > > Criteria
+            public override Expression< Func< TestDomain.Simple, bool > > Criteria
             {
                 get { return x => x.SimpleId == 1; }
             }

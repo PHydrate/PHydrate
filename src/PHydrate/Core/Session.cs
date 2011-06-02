@@ -26,6 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using PHydrate.Attributes;
+using PHydrate.Specifications;
 using PHydrate.Util;
 
 namespace PHydrate.Core
@@ -123,7 +124,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > GetItemsFromDbSpecification< T >( ISpecification< T > specification ) where T : class
         {
-            var dbSpecification = specification as IDBSpecification< T >;
+            var dbSpecification = specification as DbSpecification< T >;
             Expression< Func< T, bool > > criteria = ( dbSpecification == null ) ? null : dbSpecification.Criteria;
             return Get( criteria );
         }
@@ -132,12 +133,7 @@ namespace PHydrate.Core
         private static IEnumerable< T > FilterUsingExplicitSpecification< T >( ISpecification< T > specification,
                                                                                IEnumerable< T > foundObjects )
         {
-            Func< T, bool > satisifies = x => true;
-            var explicitSpecification = specification as IExplicitSpecification< T >;
-            if ( explicitSpecification != null )
-                satisifies = explicitSpecification.Satisfies;
-
-            return foundObjects.Where( obj => satisifies( obj ) );
+            return foundObjects.Where( specification.IsSatisfiedBy );
         }
 
         /// <summary>

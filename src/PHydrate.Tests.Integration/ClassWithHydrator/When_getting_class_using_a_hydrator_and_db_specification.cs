@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Machine.Specifications;
+using PHydrate.Specifications;
 
 namespace PHydrate.Tests.Integration.ClassWithHydrator
 {
@@ -50,11 +51,11 @@ namespace PHydrate.Tests.Integration.ClassWithHydrator
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : IDBSpecification< TestDomain.ClassWithHydrator >
+        private class TestSimpleDbSpecification : DbSpecification< TestDomain.ClassWithHydrator >
         {
-            #region Implementation of IDBSpecification<Simple>
+            #region Implementation of DBSpecification<Simple>
 
-            public Expression< Func< TestDomain.ClassWithHydrator, bool > > Criteria
+            public override Expression< Func< TestDomain.ClassWithHydrator, bool > > Criteria
             {
                 get { return x => x.ClassWithHydratorId == 1; }
             }

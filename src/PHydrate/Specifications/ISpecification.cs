@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,26 +19,30 @@
 
 #endregion
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
-
-namespace PHydrate
+namespace PHydrate.Specifications
 {
     /// <summary>
-    /// A specification interface for providing a boolean <see cref="Expression"/> to be used to filter results from the database
+    /// Base interface for specification types
     /// </summary>
     /// <remarks>
-    /// The parsed expression will be used to pass parameters to the stored procedure.
-    /// You should only use object members that are supported by the underlying stored procedure.
+    /// Nothing is implemented by this interface, it is simply necessary
+    /// to group other interfaces.
     /// </remarks>
-    /// <typeparam name="T">The type this specification accepts</typeparam>
-    public interface IDBSpecification< T > : ISpecification< T >
+    /// <typeparam name="T">Type this is a specification for</typeparam>
+    public interface ISpecification
+#if NET40
+        < in T >
+#else
+        < T >
+#endif
     {
         /// <summary>
-        /// Gets an <see cref="Expression"/> that will be parsed to send parameters to the stored procedure.
+        /// Returns true if the entity passes the specification
         /// </summary>
-        [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
-        Expression< Func< T, bool > > Criteria { get; }
+        /// <param name="entity">The entity.</param>
+        /// <returns>
+        ///   <c>true</c> if the entity passes the specification; otherwise, <c>false</c>.
+        /// </returns>
+        bool IsSatisfiedBy( T entity );
     }
 }

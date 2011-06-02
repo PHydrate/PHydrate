@@ -1,4 +1,4 @@
-#region Copyright
+﻿#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -19,19 +19,28 @@
 
 #endregion
 
-using System.Diagnostics.CodeAnalysis;
+using System;
+using System.Linq.Expressions;
+using PHydrate.Specifications;
 
-namespace PHydrate
+namespace PHydrate.Specs.Core.Session
 {
-    /// <summary>
-    /// Base interface for specification types
-    /// </summary>
-    /// <remarks>
-    /// Nothing is implemented by this interface, it is simply necessary
-    /// to group other interfaces.
-    /// </remarks>
-    /// <typeparam name="T">Type this is a specification for</typeparam>
-    // TODO: This should not be empty forever, remove warning below when things have been added.
-    [ SuppressMessage( "Microsoft.Design", "CA1040:AvoidEmptyInterfaces" ) ]
-    public interface ISpecification< T > {}
+    public class ChainedDbSpecificationBase : SessionSpecificationHydrateBase
+    {
+        protected class TestSpecification1 : DbSpecification< TestObject >
+        {
+            public override Expression< Func< TestObject, bool > > Criteria
+            {
+                get { return x => x.Key == 1; }
+            }
+        }
+
+        protected class TestSpecification2 : DbSpecification< TestObject >
+        {
+            public override Expression< Func< TestObject, bool > > Criteria
+            {
+                get { return x => x.Key == 2; }
+            }
+        }
+    }
 }

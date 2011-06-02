@@ -22,17 +22,21 @@
 using System;
 using log4net;
 using log4net.Core;
+using PHydrate.Attributes;
 
 namespace PHydrate.Aspects.Logging
 {
     /// <summary>
-    /// Base class for generic Logger<> class.  Contains indention code common to all classes.
+    /// Base class for generic Logger{T} class.  Contains indention code common to all classes.
     /// </summary>
     public class Logger
     {
+        /// <summary>
+        /// Level to log at.  Default is Debug.
+        /// </summary>
         protected static readonly Level LoggingLevel;
 
-        protected static int IndentLevel;
+        private static int _indentLevel;
         private const int IndentSize = 4;
 
         static Logger()
@@ -40,20 +44,30 @@ namespace PHydrate.Aspects.Logging
             LoggingLevel = Level.Debug;
         }
 
+        /// <summary>
+        /// Indents this instance.
+        /// </summary>
         protected static void Indent()
         {
-            IndentLevel++;
+            _indentLevel++;
         }
 
+        /// <summary>
+        /// Dedents this instance.
+        /// </summary>
         protected static void Dedent()
         {
-            if ( --IndentLevel < 0 )
-                IndentLevel = 0;
+            if ( --_indentLevel < 0 )
+                _indentLevel = 0;
         }
 
+        /// <summary>
+        /// Gets a string of spaces for indention purposes
+        /// </summary>
+        /// <returns></returns>
         protected static string IndentionString()
         {
-            return new string( ' ', IndentLevel * IndentSize );
+            return new string( ' ', _indentLevel * IndentSize );
         }
     }
 
@@ -61,6 +75,7 @@ namespace PHydrate.Aspects.Logging
     /// Class created by amendments for logging
     /// </summary>
     /// <typeparam name="T">The class being logged</typeparam>
+    [ UsedImplicitly ]
     public class Logger< T > : Logger
     {
         private static readonly ILog Log;

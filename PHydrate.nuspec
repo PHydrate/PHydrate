@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-	<metadata>
-		<id>PHydrate</id>
-		<version></version>
-		<title>PHydrate, an ORM tool for .NET 3.5/4.0</title>
-		<authors>Stephen M. Czetty</authors>
-		<description>TODO</description>
-		<summary>TODO</summary>
-		<language>C</language>
-		<projectUrl>http://github.com/PHydrate/PHydrate</projectUrl>
-		<licenseUrl>http://www.gnu.org/licenses/lgpl-3.0-standalone.html</licenseUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<tags>orm nhibernate object relational mapper</tags>
-	</metadata>
+  <metadata>
+    <id>PHydrate</id>
+    <version>0.6.801.4115</version>
+    <title>PHydrate, an ORM tool for .NET 3.5/4.0</title>
+    <authors>Stephen M. Czetty</authors>
+    <description>TODO</description>
+    <summary>TODO</summary>
+    <language>C</language>
+    <projectUrl>http://github.com/PHydrate/PHydrate</projectUrl>
+    <licenseUrl>http://www.gnu.org/licenses/lgpl-3.0-standalone.html</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>orm nhibernate object relational mapper</tags>
+  </metadata>
 </package>

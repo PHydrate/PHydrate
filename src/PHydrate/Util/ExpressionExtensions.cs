@@ -20,8 +20,12 @@
 #endregion
 
 using System;
+#if NET40
+using System.Collections.Concurrent;
+#endif
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
@@ -44,10 +48,10 @@ namespace PHydrate.Util
         [ NotNull ]
         [ SuppressMessage( "Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters" ) ]
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
-        public static IDictionary< string, Object > GetDataParameters< T >(
+        public static IDictionary< string, object > GetDataParameters< T >(
             this Expression< Func< T, bool > > expression, string parameterPrefix )
         {
-            var dataParameters = new Dictionary< string, Object >();
+            var dataParameters = new Dictionary< string, object >();
 
             // Go through the expression using tail recursion
             if ( expression != null )
@@ -110,5 +114,113 @@ namespace PHydrate.Util
         }
 
         #endregion
+
+        /// <summary>
+        /// Builds the lambda expression.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
+        public static Expression< Func< T, bool > > RebuildLambdaExpression< T >(this Expression expression)
+        {
+            var parameters =
+#if NET40
+                new ConcurrentDictionary< string, ParameterExpression >();
+#else
+                new Dictionary<string, ParameterExpression>();
+#endif
+
+            return Expression.Lambda< Func< T, bool > >( RebuildExpression( expression, parameters ), parameters.Values );
+        }
+
+        private static Expression RebuildExpression( Expression expression, IDictionary< string, ParameterExpression > parameters )
+        {  
+            switch (expression.GetType().Name)
+            {
+                case "LogicalBinaryExpression":
+                case "BinaryExpression":
+                    var binaryExpression = ( (BinaryExpression)expression );
+                    return Expression.MakeBinary( binaryExpression.NodeType,
+                                                  RebuildExpression( binaryExpression.Left, parameters ),
+                                                  RebuildExpression( binaryExpression.Right, parameters ) );
+
+
+                case "ConditionalExpression":
+                    var conditionalExpression = ( (ConditionalExpression)expression );
+                    return Expression.Condition( conditionalExpression.Test,
+                                                 RebuildExpression(conditionalExpression.IfTrue, parameters),
+                                                 RebuildExpression(conditionalExpression.IfFalse, parameters));
+
+
+                case "ConstantExpression":
+                    var constantExpression = ( (ConstantExpression)expression );
+                    return Expression.Constant( constantExpression.Value, constantExpression.Type );
+
+
+                case "MemberExpression":
+                case "PropertyExpression":
+                case "FieldExpression":
+                    var memberExpression = ( (MemberExpression)expression );
+                    var mi = memberExpression.Member as PropertyInfo;
+                    if (mi != null)
+                        return Expression.Property(RebuildExpression(memberExpression.Expression, parameters), mi);
+                    var fi = memberExpression.Member as FieldInfo;
+                    if (fi != null)
+                        return Expression.Field(RebuildExpression(memberExpression.Expression, parameters), fi);
+                    throw new PHydrateInternalException(
+                        "Error parsing expression.  Found MemberExpression who's member is neither a property nor a field!" );
+
+
+                case "MemberInitExpression":
+                    var memberInitExpression = ( (MemberInitExpression)expression );
+                    return
+                        Expression.MemberInit(
+                            (NewExpression)RebuildExpression(memberInitExpression.NewExpression, parameters),
+                            memberInitExpression.Bindings );
+
+
+                case "MethodCallExpression":
+                    var methodCallExpression = ( (MethodCallExpression)expression );
+                    return Expression.Call( RebuildExpression( methodCallExpression.Object, parameters ),
+                                            methodCallExpression.Method,
+                                            methodCallExpression.Arguments.Select( x => RebuildExpression(x, parameters) ) );
+
+                case "NewArrayExpression":
+                    var newArrayExpression = ( (NewArrayExpression)expression );
+                    return newArrayExpression.NodeType == ExpressionType.NewArrayBounds
+                               ? Expression.NewArrayBounds( newArrayExpression.Type,
+                                                            newArrayExpression.Expressions.Select( x => RebuildExpression(x, parameters) ) )
+                               : Expression.NewArrayInit( newArrayExpression.Type,
+                                                          newArrayExpression.Expressions.Select( x => RebuildExpression(x, parameters) ) );
+
+                case "NewExpression":
+                    var newExpression = ( (NewExpression)expression );
+                    return Expression.New( newExpression.Constructor,
+                                           newExpression.Arguments.Select(x => RebuildExpression(x, parameters) ) );      
+
+
+                case "ParameterExpression":
+                case "TypedParameterExpression":
+                    // This is the whole reason for all this...
+                    var parameterExpression = ( (ParameterExpression)expression );
+                    if (!parameters.ContainsKey(parameterExpression.Name))
+                        parameters[ parameterExpression.Name ] = Expression.Parameter( parameterExpression.Type,
+                                                                                       parameterExpression.Name );
+                    return parameters[ parameterExpression.Name ];
+                        
+
+                    //case "TypeBinaryExpression":
+                case "UnaryExpression":
+                    var unaryExpression = ( (UnaryExpression)expression );
+                    return Expression.MakeUnary( unaryExpression.NodeType,
+                                                 RebuildExpression( unaryExpression.Operand, parameters ),
+                                                 unaryExpression.Type, unaryExpression.Method );  
+                    
+
+                default:
+                    throw new PHydrateInternalException( "Unexpected expression type encountered: {0}",
+                                                         expression.GetType().Name );
+            }
+        }
     }
 }
