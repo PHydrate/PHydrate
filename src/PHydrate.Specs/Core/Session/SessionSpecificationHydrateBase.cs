@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using Machine.Specifications;
 using PHydrate.Attributes;
@@ -37,12 +38,26 @@ namespace PHydrate.Specs.Core.Session
 
         [ HydrateUsing( "TestStoredProcedure" ) ]
         [ ObjectHydrator( typeof(TestObjectHydrator) ) ]
-        protected class TestObjectExplicitHydrator
+        protected class TestObjectExplicitHydrator : ITestObjectExplicitHydrator
         {
             public int Key { get; set; }
         }
 
         #endregion
+
+        [HydrateUsing("TestStoredProcedure")]
+        [ObjectHydrator(typeof(TestInterfaceHydrator))]
+        protected interface ITestObjectExplicitHydrator
+        {
+            int Key { get; }
+        }
+
+        private class TestInterfaceHydrator : IObjectHydrator<ITestObjectExplicitHydrator> {
+            public ITestObjectExplicitHydrator Hydrate( IDictionary< string, object > columnValues )
+            {
+                return new TestObjectExplicitHydrator { Key = (int)columnValues[ "Key" ] };
+            }
+        }
 
         #region Nested type: TestObjectExplicitHydratorNoDefaultConstructor
 
@@ -50,7 +65,7 @@ namespace PHydrate.Specs.Core.Session
         [ ObjectHydrator( typeof(TestObjectHydratorNoDefaultConstructor) ) ]
         protected class TestObjectExplicitHydratorNoDefaultConstructor
         {
-            public int Key { get; set; }
+            public int Key { get; [UsedImplicitly]set; }
         }
 
         #endregion
