@@ -43,7 +43,7 @@ namespace PHydrate.Tests.Integration.ClassWithHydrator
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : DbSpecification< TestDomain.ClassWithHydrator >
+        private class TestSimpleDbSpecification : DBSpecification< TestDomain.ClassWithHydrator >
         {
             #region Implementation of DBSpecification<ClassWithHydrator>
 

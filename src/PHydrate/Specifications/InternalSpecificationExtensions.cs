@@ -35,8 +35,8 @@ namespace PHydrate.Specifications
         /// <param name="spec2">The spec2.</param>
         /// <param name="booleanExpressionType">Type of the expression.</param>
         /// <returns></returns>
-        public static Expression< Func< T, bool > > CombineWith< T >( this DbSpecification< T > spec1,
-                                                                      DbSpecification< T > spec2,
+        public static Expression< Func< T, bool > > CombineWith< T >( this DBSpecification< T > spec1,
+                                                                      DBSpecification< T > spec2,
                                                                       ExpressionType booleanExpressionType )
         {
             var combinedExpression = Expression.MakeBinary( booleanExpressionType, spec1.Criteria.Body,
@@ -45,7 +45,7 @@ namespace PHydrate.Specifications
             return combinedExpression.RebuildLambdaExpression< T >();
         }
 
-        public static Expression< Func< T, bool > > Invert< T >( this DbSpecification< T > dbSpecification )
+        public static Expression< Func< T, bool > > Invert< T >( this DBSpecification< T > dbSpecification )
         {
             var invertedExpression = Expression.MakeUnary( ExpressionType.Not, dbSpecification.Criteria.Body,
                                                            typeof(bool) );

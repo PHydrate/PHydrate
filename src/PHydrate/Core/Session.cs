@@ -100,11 +100,25 @@ namespace PHydrate.Core
                                                                   Expression< Func< T, bool > > query )
             where T : class
         {
+            if ( typeof(T).IsInterface && GetHydrator< T >() == null )
+                throw new PHydrateException( "Cannot hydrate interface {0}.  Define a [ObjectHydrator].",
+                                             typeof(T).Name );
+
             IDataReader dataReader = _databaseService.ExecuteStoredProcedureReader( hydrationAttribute.ProcedureName,
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
             return new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects ).HydrateFromDataReader( dataReader );
+        }
+
+        [CanBeNull]
+        private static IObjectHydrator<T> GetHydrator<T>()
+        {
+            var objectHydratorAttribute = typeof(T).GetAttribute<ObjectHydratorAttribute>();
+            return objectHydratorAttribute == null
+                       ? null
+                       : objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor
+                             <IObjectHydrator<T>>();
         }
 
         /// <summary>
@@ -124,7 +138,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > GetItemsFromDbSpecification< T >( ISpecification< T > specification ) where T : class
         {
-            var dbSpecification = specification as DbSpecification< T >;
+            var dbSpecification = specification as DBSpecification< T >;
             Expression< Func< T, bool > > criteria = ( dbSpecification == null ) ? null : dbSpecification.Criteria;
             return Get( criteria );
         }

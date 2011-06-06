@@ -184,21 +184,12 @@ namespace PHydrate.Core
             [ NotNull ]
             private Func< IDictionary< string, object >, T > GetHydratorFunction()
             {
-                IObjectHydrator< T > hydrator = GetHydrator();
+                IObjectHydrator< T > hydrator = GetHydrator<T>();
+
                 return hydrator == null
                            ? (Func< IDictionary< string, object >, T >)
                              ( x => _defaultObjectHydrator.Hydrate< T >( x ) )
                            : ( hydrator.Hydrate );
-            }
-
-            [ CanBeNull ]
-            private static IObjectHydrator< T > GetHydrator()
-            {
-                var objectHydratorAttribute = typeof(T).GetAttribute< ObjectHydratorAttribute >();
-                return objectHydratorAttribute == null
-                           ? null
-                           : objectHydratorAttribute.HydratorType.ConstructUsingDefaultConstructor
-                                 < IObjectHydrator< T > >();
             }
 
             private T GetHydratedObjectFromCache( T hydratedObject )

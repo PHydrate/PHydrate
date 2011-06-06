@@ -20,25 +20,29 @@
 #endregion
 
 using System;
-using System.Linq.Expressions;
+using Machine.Specifications;
+using PHydrate.Attributes;
 
-namespace PHydrate.Specifications
+namespace PHydrate.Specs.Core.Session
 {
-    internal abstract class DbSpecificationCombinationBase< T > : DBSpecification< T > {}
-
-    internal class CombinedDbSpecification< T > : DbSpecificationCombinationBase< T >
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_getting_an_interface_without_an_object_hydrator_defined : SessionSpecificationBase
     {
-        private readonly Expression< Func< T, bool > > _criteria;
+        private Because Of =
+            () => _exception = Catch.Exception( () => SessionUnderTest.Get< ITestObject >( x => x.Key == 1 ) );
 
-        public CombinedDbSpecification( DBSpecification< T > spec1, DBSpecification< T > spec2,
-                                        ExpressionType expressionType )
-        {
-            _criteria = spec1.CombineWith( spec2, expressionType );
-        }
+        private It Should_throw_exception
+            = () => _exception.ShouldNotBeNull();
 
-        public override Expression< Func< T, bool > > Criteria
+        private It Should_throw_phydrate_exception
+            = () => _exception.ShouldBeOfType< PHydrateException >();
+
+        private static Exception _exception;
+
+        [ HydrateUsing( "TestProcedure" ) ]
+        private interface ITestObject
         {
-            get { return _criteria; }
+            int Key { get; }
         }
     }
 }

@@ -29,8 +29,9 @@ namespace PHydrate.Aspects.Logging
     /// Add logging to all methods of a class
     /// </summary>
     /// <typeparam name="T">The type of the class</typeparam>
-    // TODO: Modify Afterthought to make this testable (add interfaces around Method, Constructor, etc.)
+    // TODO: Modify Afterthought to make this testable (add interfaces around Method, Constructor, etc.) -- New fluent configuration may preclude this
     [ CLSCompliant( false ) ]
+    [CoverageExclude]
     public sealed class LogAmendment< T > : Amendment< T, T >
     {
         /// <summary>

@@ -51,7 +51,7 @@ namespace PHydrate.Tests.Integration.Simple
 
         #region Test Specification Class
 
-        private class TestSimpleDbSpecification : DbSpecification< TestDomain.Simple >
+        private class TestSimpleDbSpecification : DBSpecification< TestDomain.Simple >
         {
             #region Implementation of IDbSpecification<Simple>
 

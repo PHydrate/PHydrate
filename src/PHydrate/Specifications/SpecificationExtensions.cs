@@ -30,35 +30,35 @@ namespace PHydrate.Specifications
         /// Chain specifications with an and operation
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="s1">The first specifcation.</param>
-        /// <param name="s2">The second specification.</param>
-        /// <returns>A specification cooresponding to s1 &amp;&amp; s2</returns>
-        public static ISpecification< T > And< T >( this ISpecification< T > s1, ISpecification< T > s2 )
+        /// <param name="specification1">The first specifcation.</param>
+        /// <param name="specification2">The second specification.</param>
+        /// <returns>A specification cooresponding to specification1 &amp;&amp; specification2</returns>
+        public static ISpecification< T > And< T >( this ISpecification< T > specification1, ISpecification< T > specification2 )
         {
-            return new AndSpecification< T >( s1, s2 );
+            return new AndSpecification< T >( specification1, specification2 );
         }
 
         /// <summary>
         /// Chain specifications with an or operation
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="s1">The first specifcation.</param>
-        /// <param name="s2">The second specification.</param>
-        /// <returns>A specification cooresponding to s1 || s2</returns>
-        public static ISpecification< T > Or< T >( this ISpecification< T > s1, ISpecification< T > s2 )
+        /// <param name="specification1">The first specifcation.</param>
+        /// <param name="specification2">The second specification.</param>
+        /// <returns>A specification cooresponding to specification1 || specification2</returns>
+        public static ISpecification< T > Or< T >( this ISpecification< T > specification1, ISpecification< T > specification2 )
         {
-            return new OrSpecification< T >( s1, s2 );
+            return new OrSpecification< T >( specification1, specification2 );
         }
 
         /// <summary>
         /// Inverts the value of a specification
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="s">The specification.</param>
-        /// <returns>A specification cooresponding to !s</returns>
-        public static ISpecification< T > Not< T >( this ISpecification< T > s )
+        /// <param name="specification">The specification.</param>
+        /// <returns>A specification cooresponding to !specification</returns>
+        public static ISpecification< T > Not< T >( this ISpecification< T > specification )
         {
-            return new NotSpecification< T >( s );
+            return new NotSpecification< T >( specification );
         }
     }
 }

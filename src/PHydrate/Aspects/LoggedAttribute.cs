@@ -35,6 +35,7 @@ namespace PHydrate.Aspects
         /// <summary>
         /// Initializes a new instance of the <see cref="LoggedAttribute"/> class.
         /// </summary>
+        [CoverageExclude]
         public LoggedAttribute() : base( typeof(LogAmendment< >) ) {}
     }
 }

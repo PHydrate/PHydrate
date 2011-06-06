@@ -47,7 +47,7 @@ namespace PHydrate.Specs.Core.Session
 
         #region Test Specification Class
 
-        private class TestSpecification : DbSpecification< TestObject >
+        private class TestSpecification : DBSpecification< TestObject >
         {
             #region Implementation of DBSpecification<TestObject>
 

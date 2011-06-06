@@ -22,20 +22,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using PHydrate.Util;
 
-namespace PHydrate.Specs.Util.ExpressionExtensions
+namespace PHydrate.Specs.Core.Session
 {
-    [ Subject( typeof(PHydrate.Util.ExpressionExtensions) ) ]
-    public sealed class When_getting_data_parameters_from_a_constant_expression : ExpressionExtenionsSpecificationBase
+    [ Subject( typeof(PHydrate.Core.Session) ) ]
+    public sealed class When_getting_an_interface_with_an_object_hydrator_defined : SessionSpecificationHydrateBase
     {
-        private static IEnumerable<KeyValuePair< string, object >> _dictionary;
-        private Establish Context = () => ExpressionToTest = ( TestClass x ) => true;
-
         private Because Of =
-            () => _dictionary = ExpressionToTest.GetDataParameters( "@" );
+            () => _requestedObject = SessionUnderTest.Get< ITestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();
 
-        private It Should_return_no_items
-            = () => _dictionary.Count().ShouldEqual( 0 );
+        private It Should_not_return_null
+            = () => _requestedObject.ShouldNotBeNull();
+
+        private It Should_return_records
+            = () => _requestedObject.Count.ShouldEqual( 2 );
+
+        private It Should_contain_correct_object
+            = () => _requestedObject[ 0 ].Key.ShouldEqual( 1 );
+
+        private It Should_be_concrete_implementer_of_interface
+            = () => _requestedObject[ 0 ].ShouldBeOfType< TestObjectExplicitHydrator >();
+
+        private static IList< ITestObjectExplicitHydrator > _requestedObject;
     }
 }

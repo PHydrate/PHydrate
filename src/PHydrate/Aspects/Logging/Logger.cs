@@ -20,6 +20,8 @@
 #endregion
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using log4net;
 using log4net.Core;
 using PHydrate.Attributes;
@@ -29,20 +31,16 @@ namespace PHydrate.Aspects.Logging
     /// <summary>
     /// Base class for generic Logger{T} class.  Contains indention code common to all classes.
     /// </summary>
-    public class Logger
+    public abstract class Logger
     {
         /// <summary>
         /// Level to log at.  Default is Debug.
         /// </summary>
-        protected static readonly Level LoggingLevel;
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
+        protected static readonly Level LoggingLevel = Level.Debug;
 
         private static int _indentLevel;
         private const int IndentSize = 4;
-
-        static Logger()
-        {
-            LoggingLevel = Level.Debug;
-        }
 
         /// <summary>
         /// Indents this instance.
@@ -53,9 +51,9 @@ namespace PHydrate.Aspects.Logging
         }
 
         /// <summary>
-        /// Dedents this instance.
+        /// Unindents this instance.
         /// </summary>
-        protected static void Dedent()
+        protected static void Unindent()
         {
             if ( --_indentLevel < 0 )
                 _indentLevel = 0;
@@ -76,17 +74,12 @@ namespace PHydrate.Aspects.Logging
     /// </summary>
     /// <typeparam name="T">The class being logged</typeparam>
     [ UsedImplicitly ]
-    public class Logger< T > : Logger
+    public sealed class Logger< T > : Logger
     {
-        private static readonly ILog Log;
+        [CoverageExclude]
+        private Logger() {}
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Logger&lt;T&gt;"/> class, using the default log level of Debug.
-        /// </summary>
-        static Logger()
-        {
-            Log = LogManager.GetLogger( typeof(T) );
-        }
+        private static readonly ILog Log = LogManager.GetLogger( typeof(T) );
 
         /// <summary>
         /// Log the start of the method.
@@ -94,7 +87,8 @@ namespace PHydrate.Aspects.Logging
         /// <param name="instance">The instance of the class</param>
         /// <param name="methodName">Name of the method.</param>
         /// <param name="parameters">The parameters.</param>
-        public static void BeginMethod( T instance, string methodName, object[] parameters )
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        public static void BeginMethod(T instance, string methodName, object[] parameters)
         {
             DoLog( "Entering method: " + methodName );
             Indent();
@@ -107,7 +101,7 @@ namespace PHydrate.Aspects.Logging
             foreach ( object o in parameters )
             {
                 string parameterType = o == null ? "<null>" : o.GetType().Name;
-                DoLog( String.Format( "{0}: ({1}) {2}", parameterCount++, parameterType, o ?? "<null>" ) );
+                DoLog( String.Format( CultureInfo.CurrentCulture, "{0}: ({1}) {2}", parameterCount++, parameterType, o ?? "<null>" ) );
             }
         }
 
@@ -122,9 +116,10 @@ namespace PHydrate.Aspects.Logging
         /// <param name="instance">The instance of the class</param>
         /// <param name="methodName">Name of the method.</param>
         /// <param name="parameters">Parameters passed to the method call</param>
-        public static void EndMethod( T instance, string methodName, object[] parameters )
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        public static void EndMethod(T instance, string methodName, object[] parameters)
         {
-            Dedent();
+            Unindent();
             DoLog( "Leaving method: " + methodName );
         }
     }

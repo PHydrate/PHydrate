@@ -26,7 +26,7 @@ namespace PHydrate.Attributes
     /// <summary>
     ///   Annotate a class with the stored procedure name used to delete an instance
     /// </summary>
-    [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = true ) ]
+    [ AttributeUsage( AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false, Inherited = true ) ]
     public sealed class DeleteUsingAttribute : CrudAttributeBase
     {
         /// <summary>

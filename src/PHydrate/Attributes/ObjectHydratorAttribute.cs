@@ -29,7 +29,7 @@ namespace PHydrate.Attributes
     /// <remarks>
     /// If the type specified with this attribute does not implement <see cref="IObjectHydrator{T}"/>, then a <see cref="PHydrateException"/> will be thrown at runtime.
     /// </remarks>
-    [ AttributeUsage( AttributeTargets.Class, AllowMultiple = false, Inherited = false ) ]
+    [ AttributeUsage( AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = false, Inherited = false ) ]
     public sealed class ObjectHydratorAttribute : Attribute
     {
         /// <summary>
