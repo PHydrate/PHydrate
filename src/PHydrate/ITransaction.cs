@@ -19,12 +19,14 @@
 
 #endregion
 
+using System;
+
 namespace PHydrate
 {
     /// <summary>
     ///   Represents a database transaction.
     /// </summary>
-    public interface ITransaction
+    public interface ITransaction : IDisposable
     {
         /// <summary>
         ///   Begins this transaction.

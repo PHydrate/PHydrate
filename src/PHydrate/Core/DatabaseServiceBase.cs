@@ -96,6 +96,14 @@ namespace PHydrate.Core
             }
         }
 
+        /// <summary>
+        /// Begins a transaction.
+        /// </summary>
+        public IDbTransaction BeginTransaction()
+        {
+            return GetDbConnection().BeginTransaction();
+        }
+
         private static void SetupCommand( IDbCommand command, string storedProcedureName,
                                           IEnumerable< KeyValuePair< string, object > > dataParameters )
         {

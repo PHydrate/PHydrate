@@ -40,6 +40,7 @@ namespace PHydrate.Core
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
         private readonly WeakReferenceObjectCache _hydratedObjects = new WeakReferenceObjectCache();
         private readonly string _parameterPrefix;
+        private ITransaction _transaction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Session"/> class.
@@ -64,7 +65,7 @@ namespace PHydrate.Core
         public ITransaction Transaction
         {
             [ SuppressMessage( "Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations" ) ]
-            get { throw new NotImplementedException(); }
+            get { return _transaction ?? ( _transaction = new SessionTransaction( _databaseService ) ); }
         }
 
         /// <summary>
