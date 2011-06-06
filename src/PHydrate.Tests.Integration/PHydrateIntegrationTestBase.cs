@@ -33,6 +33,6 @@ namespace PHydrate.Tests.Integration
         private Establish Context =
             () =>
             SessionFactory =
-            Fluently.Configure.Database( new SQLiteDatabaseService() ).ParameterPrefix( ":" ).BuildSessionFactory();
+            Fluently.Configure.DatabaseProvider( new SQLiteDatabaseService() ).ParameterPrefix( ":" ).BuildSessionFactory();
     }
 }

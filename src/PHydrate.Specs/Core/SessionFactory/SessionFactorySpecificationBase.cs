@@ -28,11 +28,11 @@ namespace PHydrate.Specs.Core.SessionFactory
     public abstract class SessionFactorySpecificationBase
     {
         protected static ISessionFactory SessionFactoryUnderTest;
-        private static IDatabaseService _databaseService;
+        private static IDatabaseServiceProvider _databaseService;
 
         [ UsedImplicitly ]
         private Establish Context = () => {
-                                        _databaseService = MockRepository.GenerateStub< IDatabaseService >();
+                                        _databaseService = MockRepository.GenerateStub< IDatabaseServiceProvider >();
                                         SessionFactoryUnderTest = new PHydrate.Core.SessionFactory( _databaseService,
                                                                                                     "@", null );
                                     };

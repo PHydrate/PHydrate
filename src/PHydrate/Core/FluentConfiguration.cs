@@ -26,7 +26,7 @@ namespace PHydrate.Core
     /// </summary>
     public class FluentConfiguration
     {
-        private IDatabaseService _databaseService;
+        private IDatabaseServiceProvider _databaseServiceProvider;
         private string _prefix = "@";
         private IDefaultObjectHydrator _defaultObjectHydrator;
 
@@ -37,9 +37,9 @@ namespace PHydrate.Core
         /// </summary>
         /// <param name="databaseService">The database service.</param>
         /// <returns></returns>
-        public FluentConfiguration Database( IDatabaseService databaseService )
+        public FluentConfiguration DatabaseProvider( IDatabaseServiceProvider databaseService )
         {
-            _databaseService = databaseService;
+            _databaseServiceProvider = databaseService;
             return this;
         }
 
@@ -71,7 +71,7 @@ namespace PHydrate.Core
         /// <returns></returns>
         public ISessionFactory BuildSessionFactory()
         {
-            return new SessionFactory( _databaseService, _prefix, _defaultObjectHydrator );
+            return new SessionFactory( _databaseServiceProvider, _prefix, _defaultObjectHydrator );
         }
     }
 }

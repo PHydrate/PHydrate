@@ -39,6 +39,11 @@ namespace PHydrate
         void Commit();
 
         /// <summary>
+        /// Commits all outstanding transactions.
+        /// </summary>
+        void CommitAll();
+
+        /// <summary>
         ///   Rolls back this transaction.
         /// </summary>
         void Rollback();

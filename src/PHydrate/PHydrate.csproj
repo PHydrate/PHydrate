@@ -102,6 +102,7 @@
     <Compile Include="Core\Session.cs" />
     <Compile Include="Core\SessionFactory.cs" />
     <Compile Include="IDatabaseService.cs" />
+    <Compile Include="IDatabaseServiceProvider.cs" />
     <Compile Include="IDefaultObjectHydrator.cs" />
     <Compile Include="IObjectHydrator.cs" />
     <Compile Include="ISession.cs" />

@@ -31,16 +31,18 @@ namespace PHydrate.Core
     public class SessionTransaction : ITransaction
     {
         private readonly IDatabaseService _databaseService;
-        // TODO: Need a specialized stack that is thread-aware!
+        private readonly ISession _session;
         private readonly Stack< IDbTransaction > _transactionStack = new Stack< IDbTransaction >();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionTransaction"/> class.
         /// </summary>
         /// <param name="databaseService">The database service.</param>
-        public SessionTransaction( IDatabaseService databaseService )
+        /// <param name="session">The session.</param>
+        internal SessionTransaction( IDatabaseService databaseService, ISession session )
         {
             _databaseService = databaseService;
+            _session = session;
         }
 
         /// <summary>
@@ -64,6 +66,19 @@ namespace PHydrate.Core
         }
 
         /// <summary>
+        /// Commits all outstanding transactions.
+        /// </summary>
+        public void CommitAll()
+        {
+            IDbTransaction transaction = _transactionStack.TryPop();
+            while ( transaction != null )
+            {
+                transaction.Commit();
+                transaction = _transactionStack.TryPop();
+            }
+        }
+
+        /// <summary>
         ///   Rolls back this transaction.
         /// </summary>
         public void Rollback()
@@ -80,8 +95,11 @@ namespace PHydrate.Core
         public void Dispose()
         {
             IDbTransaction transaction = _transactionStack.TryPop();
-            while ( transaction != null )
+            while (transaction != null)
+            {
                 transaction.Rollback();
+                transaction = _transactionStack.TryPop();
+            }
         }
     }
 }
