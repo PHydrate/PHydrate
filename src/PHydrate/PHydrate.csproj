@@ -93,6 +93,7 @@
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\DataHydrator.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
+    <Compile Include="Core\SessionTransaction.cs" />
     <Compile Include="Core\SqlServerDatabaseService.cs" />
     <Compile Include="Core\WeakReferenceObjectCache.cs" />
     <Compile Include="Fluently.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapper.cs" />
     <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapperFactory.cs" />
     <Compile Include="Util\MemberInfoWrapper\PropertyInfoWrapper.cs" />
+    <Compile Include="Util\StackExtensions.cs" />
     <Compile Include="Util\TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
