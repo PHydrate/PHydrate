@@ -19,30 +19,30 @@
 
 #endregion
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Machine.Specifications;
-using PHydrate.Attributes;
 
 namespace PHydrate.Specs.Core.Session
 {
     [ Subject( typeof(PHydrate.Core.Session) ) ]
-    public sealed class When_getting_an_interface_without_an_object_hydrator_defined : SessionSpecificationBase
+    public sealed class When_getting_an_interface_with_an_object_hydrator_defined : SessionSpecificationHydrateBase
     {
         private Because Of =
-            () => _exception = Catch.Exception( () => SessionUnderTest.Get< ITestObject >( x => x.Key == 1 ) );
+            () => _requestedObject = SessionUnderTest.Get< ITestObjectExplicitHydrator >( x => x.Key == 1 ).ToList();
 
-        private It Should_throw_exception
-            = () => _exception.ShouldNotBeNull();
+        private It Should_not_return_null
+            = () => _requestedObject.ShouldNotBeNull();
 
-        private It Should_throw_phydrate_exception
-            = () => _exception.ShouldBeOfType< PHydrateException >();
+        private It Should_return_records
+            = () => _requestedObject.Count.ShouldEqual( 2 );
 
-        private static Exception _exception;
+        private It Should_contain_correct_object
+            = () => _requestedObject[ 0 ].Key.ShouldEqual( 1 );
 
-        [ HydrateUsing( "TestProcedure" ) ]
-        private interface ITestObject
-        {
-            int Key { get; }
-        }
+        private It Should_be_concrete_implementer_of_interface
+            = () => _requestedObject[ 0 ].ShouldBeOfType< TestObjectExplicitHydrator >();
+
+        private static IList< ITestObjectExplicitHydrator > _requestedObject;
     }
 }
