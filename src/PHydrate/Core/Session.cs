@@ -64,7 +64,6 @@ namespace PHydrate.Core
         /// <value>The transaction.</value>
         public ITransaction Transaction
         {
-            [ SuppressMessage( "Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations" ) ]
             get { return _transaction ?? ( _transaction = new SessionTransaction( _databaseService, this ) ); }
         }
 
