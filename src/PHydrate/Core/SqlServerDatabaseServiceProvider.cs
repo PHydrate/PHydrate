@@ -19,34 +19,35 @@
 
 #endregion
 
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace PHydrate.Core
 {
     /// <summary>
-    /// MS Sql Server implementation of IDatabaseService
+    /// MS Sql Server implementation of IDatabaseServiceProvider
     /// </summary>
-    public sealed class SqlServerDatabaseService : DatabaseServiceBase
+    public sealed class SqlServerDatabaseServiceProvider : IDatabaseServiceProvider
     {
         private readonly string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlServerDatabaseService"/> class.
+        /// Initializes a new instance of the <see cref="SqlServerDatabaseServiceProvider"/> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        public SqlServerDatabaseService( string connectionString )
+        public SqlServerDatabaseServiceProvider( string connectionString )
         {
             _connectionString = connectionString;
         }
 
         /// <summary>
-        /// Gets the connection.
+        /// Get an instance of the database service.
         /// </summary>
-        /// <returns>The driver-specific connection object</returns>
-        protected override IDbConnection GetDatabaseConnection()
+        /// <returns></returns>
+        public IDatabaseService DatabaseService()
         {
-            return new SqlConnection( _connectionString );
+            return new DatabaseService( new SqlConnection( _connectionString ) );
         }
     }
 }

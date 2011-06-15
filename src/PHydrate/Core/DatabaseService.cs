@@ -29,11 +29,27 @@ using PHydrate.Util;
 namespace PHydrate.Core
 {
     /// <summary>
-    /// Base implementation of IDatabaseService
+    /// Default implementation of IDatabaseService
     /// </summary>
     [ Logged ]
-    public abstract class DatabaseServiceBase : IDatabaseService
+    public class DatabaseService : IDatabaseService
     {
+        private readonly IDbConnection _dbConnection;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseService"/> class.
+        /// </summary>
+        /// <param name="dbConnection">The db connection.</param>
+        public DatabaseService(IDbConnection dbConnection)
+        {
+            _dbConnection = dbConnection;
+        }
+
+        protected DatabaseService()
+        {
+            _dbConnection = null;
+        }
+
         #region Implementation of IDatabaseService
 
         /// <summary>
@@ -117,7 +133,7 @@ namespace PHydrate.Core
         [ NotNull ]
         private IDbConnection GetDbConnection()
         {
-            IDbConnection dbConnection = GetDatabaseConnection();
+            IDbConnection dbConnection = GetDatabaseConnection() ?? _dbConnection;
             if ( dbConnection.State != ConnectionState.Open )
                 dbConnection.Open();
             return dbConnection;
@@ -131,6 +147,9 @@ namespace PHydrate.Core
         /// <returns>The driver-specific connection object</returns>
         [ SuppressMessage( "Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate" ) ]
         [ DoNotLog ]
-        protected abstract IDbConnection GetDatabaseConnection();
+        protected virtual IDbConnection GetDatabaseConnection()
+        {
+            return null;
+        }
     }
 }

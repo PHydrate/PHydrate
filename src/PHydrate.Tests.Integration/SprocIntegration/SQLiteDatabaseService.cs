@@ -27,7 +27,7 @@ using PHydrate.Core;
 
 namespace PHydrate.Tests.Integration.SprocIntegration
 {
-    internal sealed class SQLiteDatabaseService : DatabaseServiceBase, IDatabaseServiceProvider
+    internal sealed class SQLiteDatabaseService : DatabaseService, IDatabaseServiceProvider
     {
         private readonly IDbConnection _databaseConnection;
 
@@ -38,7 +38,7 @@ namespace PHydrate.Tests.Integration.SprocIntegration
                                                                                      "IntegrationTestDb.sqlite" ) ) );
         }
 
-        #region Overrides of DatabaseServiceBase
+        #region Overrides of DatabaseService
 
         protected override IDbConnection GetDatabaseConnection()
         {

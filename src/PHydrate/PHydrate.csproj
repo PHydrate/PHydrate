@@ -94,10 +94,10 @@
     <Compile Include="Core\DataHydrator.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
     <Compile Include="Core\SessionTransaction.cs" />
-    <Compile Include="Core\SqlServerDatabaseService.cs" />
+    <Compile Include="Core\SqlServerDatabaseServiceProvider.cs" />
     <Compile Include="Core\WeakReferenceObjectCache.cs" />
     <Compile Include="Fluently.cs" />
-    <Compile Include="Core\DatabaseServiceBase.cs" />
+    <Compile Include="Core\DatabaseService.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
     <Compile Include="Core\Session.cs" />
     <Compile Include="Core\SessionFactory.cs" />

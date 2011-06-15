@@ -33,7 +33,7 @@ namespace PHydrate.Specs.Core.DatabaseService
         private static IDbConnection _dbConnection;
         protected static IDbCommand DbCommand;
         protected static string ProcedureName;
-        protected static DatabaseServiceBase ServiceUnderTest;
+        protected static PHydrate.Core.DatabaseService ServiceUnderTest;
 
         [ UsedImplicitly ]
         private Establish Context = () => {
@@ -55,7 +55,7 @@ namespace PHydrate.Specs.Core.DatabaseService
 
         #region Nested type: TestDatabaseService
 
-        private class TestDatabaseService : DatabaseServiceBase
+        private class TestDatabaseService : PHydrate.Core.DatabaseService
         {
             private readonly IDbConnection _connection;
 
@@ -64,7 +64,7 @@ namespace PHydrate.Specs.Core.DatabaseService
                 _connection = dbConnection;
             }
 
-            #region Overrides of DatabaseServiceBase
+            #region Overrides of DatabaseService
 
             protected override IDbConnection GetDatabaseConnection()
             {

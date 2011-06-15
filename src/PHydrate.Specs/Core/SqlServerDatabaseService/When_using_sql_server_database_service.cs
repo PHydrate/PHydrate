@@ -25,20 +25,20 @@ using Machine.Specifications;
 
 namespace PHydrate.Specs.Core.SqlServerDatabaseService
 {
-    [ Subject( typeof(PHydrate.Core.SqlServerDatabaseService) ) ]
+    [ Subject( typeof(PHydrate.Core.SqlServerDatabaseServiceProvider) ) ]
     public sealed class When_using_sql_server_database_service
     {
-        private static PHydrate.Core.SqlServerDatabaseService _databaseService;
+        private static PHydrate.Core.SqlServerDatabaseServiceProvider _databaseServiceProvider;
         private static Exception _exception;
 
         private Establish Context =
             () =>
-            _databaseService =
-            new PHydrate.Core.SqlServerDatabaseService(
+            _databaseServiceProvider =
+            new PHydrate.Core.SqlServerDatabaseServiceProvider(
                 "Data Source=localhost;Initial Catalog=databasethatdoesntexist;Connection Timeout=1" );
 
         private Because Of =
-            () => _exception = Catch.Exception( () => _databaseService.ExecuteStoredProcedureReader( "" ) );
+            () => _exception = Catch.Exception( () => _databaseServiceProvider.DatabaseService().ExecuteStoredProcedureReader( "" ) );
 
         private It Should_throw_exception_of_type_sql_exception
             = () => _exception.ShouldBeOfType< SqlException >();
