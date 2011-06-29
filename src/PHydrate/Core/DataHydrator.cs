@@ -132,7 +132,7 @@ namespace PHydrate.Core
                 }
             }
 
-            private void HydrateInnerRecordsetEnumerable( IMemberInfo internalRecordset, Type typeToCastTo, IEnumerable enumerable, IDictionary< int, T > aggregateRoot )
+            private static void HydrateInnerRecordsetEnumerable( IMemberInfo internalRecordset, Type typeToCastTo, IEnumerable enumerable, IDictionary< int, T > aggregateRoot )
             {
                 foreach ( object obj in enumerable )
                 {
