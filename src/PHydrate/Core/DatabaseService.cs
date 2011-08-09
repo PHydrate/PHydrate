@@ -45,6 +45,9 @@ namespace PHydrate.Core
             _dbConnection = dbConnection;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseService"/> class.
+        /// </summary>
         protected DatabaseService()
         {
             _dbConnection = null;
