@@ -75,7 +75,7 @@ namespace PHydrate.Core
         /// <returns>The found object, or null if not found.</returns>
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         public IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
-            where T : class
+            //where T : class
         {
             // Get the name of the stored procedure that will hydrate this object
             HydrateUsingAttribute hydrationAttribute = GetCrudAttributeFromType< T, HydrateUsingAttribute >();
@@ -98,7 +98,7 @@ namespace PHydrate.Core
 
         private IEnumerable< T > HydrateFromStoredProcedure< T >( CrudAttributeBase hydrationAttribute,
                                                                   Expression< Func< T, bool > > query )
-            where T : class
+            //where T : class
         {
             if ( typeof(T).IsInterface && GetHydrator< T >() == null )
                 throw new PHydrateException( "Cannot hydrate interface {0}.  Define a [ObjectHydrator].",

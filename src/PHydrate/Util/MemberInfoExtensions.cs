@@ -39,7 +39,7 @@ namespace PHydrate.Util
         [ SuppressMessage( "Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter" ) ]
         [ SuppressMessage( "Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj" ) ]
         public static int GetLookupHash< T >( this object obj,
-                                              params string[] primaryKeyMembers ) where T : class
+                                              params string[] primaryKeyMembers ) //where T : class
         {
             return typeof(T).GetObjectsHashCodeByFieldValues(
                 obj.GetType().GetMembersByName( primaryKeyMembers ).Select(
