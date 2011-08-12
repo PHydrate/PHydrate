@@ -28,12 +28,12 @@ namespace PHydrate.Specs.Core.FluentConfiguration
     [ Subject( typeof(PHydrate.Core.FluentConfiguration) ) ]
     public sealed class When_setting_database : FluentConfigurationSpecificationBase
     {
-        private static IDatabaseService _databaseService;
+        private static IDatabaseServiceProvider _databaseServiceProvider;
 
         private Establish Context =
-            () => _databaseService = MockRepository.GenerateStub< IDatabaseService >();
+            () => _databaseServiceProvider = MockRepository.GenerateStub< IDatabaseServiceProvider >();
 
-        private Because Of = () => ReturnedObject = FluentConfiguration.Database( _databaseService );
+        private Because Of = () => ReturnedObject = FluentConfiguration.DatabaseProvider( _databaseServiceProvider );
 
         private Behaves_like< AFluentInterface > a_fluent_interface;
     }

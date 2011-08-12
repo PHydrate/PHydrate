@@ -65,5 +65,10 @@ namespace PHydrate
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         T ExecuteStoredProcedureScalar< T >( string storedProcedureName,
                                              IEnumerable< KeyValuePair< string, object > > dataParameters );
+
+        /// <summary>
+        /// Begins a transaction.
+        /// </summary>
+        IDbTransaction BeginTransaction();
     }
 }

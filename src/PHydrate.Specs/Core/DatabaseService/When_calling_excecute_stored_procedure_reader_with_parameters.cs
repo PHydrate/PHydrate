@@ -26,7 +26,7 @@ using PHydrate.Core;
 
 namespace PHydrate.Specs.Core.DatabaseService
 {
-    [ Subject( typeof(DatabaseServiceBase) ) ]
+    [ Subject( typeof(PHydrate.Core.DatabaseService) ) ]
     public sealed class When_calling_excecute_stored_procedure_reader_with_parameters :
         DatabaseServiceSpecificationReaderBase
     {

@@ -1,0 +1,250 @@
+<Configuration>
+  <CodeStyleSettings>
+    <ExternalPath IsNull="False">
+    </ExternalPath>
+    <Sharing>SOLUTION</Sharing>
+    <CSS>
+      <FormatSettings />
+      <Naming2 />
+    </CSS>
+    <CSharp>
+      <FormatSettings>
+        <ANONYMOUS_METHOD_DECLARATION_BRACES>END_OF_LINE</ANONYMOUS_METHOD_DECLARATION_BRACES>
+        <BLANK_LINES_AROUND_SINGLE_LINE_INVOCABLE>1</BLANK_LINES_AROUND_SINGLE_LINE_INVOCABLE>
+        <CASE_BLOCK_BRACES>NEXT_LINE</CASE_BLOCK_BRACES>
+        <EMPTY_BLOCK_STYLE>TOGETHER_SAME_LINE</EMPTY_BLOCK_STYLE>
+        <FORCE_ATTRIBUTE_STYLE>SEPARATE</FORCE_ATTRIBUTE_STYLE>
+        <INITIALIZER_BRACES>END_OF_LINE</INITIALIZER_BRACES>
+        <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
+        <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
+        <MODIFIERS_ORDER IsNull="False">
+          <Item>public</Item>
+          <Item>protected</Item>
+          <Item>internal</Item>
+          <Item>private</Item>
+          <Item>new</Item>
+          <Item>abstract</Item>
+          <Item>virtual</Item>
+          <Item>override</Item>
+          <Item>sealed</Item>
+          <Item>static</Item>
+          <Item>readonly</Item>
+          <Item>extern</Item>
+          <Item>unsafe</Item>
+          <Item>volatile</Item>
+        </MODIFIERS_ORDER>
+        <PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>False</PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>
+        <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
+        <SIMPLE_EMBEDDED_STATEMENT_STYLE>LINE_BREAK</SIMPLE_EMBEDDED_STATEMENT_STYLE>
+        <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
+        <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
+        <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
+        <SPACE_BEFORE_TYPEOF_PARENTHESES>False</SPACE_BEFORE_TYPEOF_PARENTHESES>
+        <SPACE_WITHIN_ARRAY_ACCESS_BRACKETS>True</SPACE_WITHIN_ARRAY_ACCESS_BRACKETS>
+        <SPACE_WITHIN_ATTRIBUTE_BRACKETS>True</SPACE_WITHIN_ATTRIBUTE_BRACKETS>
+        <SPACE_WITHIN_CATCH_PARENTHESES>True</SPACE_WITHIN_CATCH_PARENTHESES>
+        <SPACE_WITHIN_FIXED_PARENTHESES>True</SPACE_WITHIN_FIXED_PARENTHESES>
+        <SPACE_WITHIN_FOR_PARENTHESES>True</SPACE_WITHIN_FOR_PARENTHESES>
+        <SPACE_WITHIN_FOREACH_PARENTHESES>True</SPACE_WITHIN_FOREACH_PARENTHESES>
+        <SPACE_WITHIN_IF_PARENTHESES>True</SPACE_WITHIN_IF_PARENTHESES>
+        <SPACE_WITHIN_LOCK_PARENTHESES>True</SPACE_WITHIN_LOCK_PARENTHESES>
+        <SPACE_WITHIN_METHOD_CALL_PARENTHESES>True</SPACE_WITHIN_METHOD_CALL_PARENTHESES>
+        <SPACE_WITHIN_METHOD_PARENTHESES>True</SPACE_WITHIN_METHOD_PARENTHESES>
+        <SPACE_WITHIN_PARENTHESES>True</SPACE_WITHIN_PARENTHESES>
+        <SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>True</SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES>
+        <SPACE_WITHIN_SWITCH_PARENTHESES>True</SPACE_WITHIN_SWITCH_PARENTHESES>
+        <SPACE_WITHIN_TYPE_ARGUMENT_ANGLES>True</SPACE_WITHIN_TYPE_ARGUMENT_ANGLES>
+        <SPACE_WITHIN_TYPE_PARAMETER_ANGLES>True</SPACE_WITHIN_TYPE_PARAMETER_ANGLES>
+        <SPACE_WITHIN_USING_PARENTHESES>True</SPACE_WITHIN_USING_PARENTHESES>
+        <SPACE_WITHIN_WHILE_PARENTHESES>True</SPACE_WITHIN_WHILE_PARENTHESES>
+        <STICK_COMMENT>False</STICK_COMMENT>
+      </FormatSettings>
+      <UsingsSettings />
+      <Naming2>
+        <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+        <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+        <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+        <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+        <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+        <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+      </Naming2>
+    </CSharp>
+    <HTML>
+      <FormatSettings />
+    </HTML>
+    <JavaScript>
+      <FormatSettings />
+      <Naming2 />
+    </JavaScript>
+    <VB>
+      <FormatSettings />
+      <ImportsSettings />
+      <Naming2>
+        <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+        <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+      </Naming2>
+    </VB>
+    <Web>
+      <Naming2>
+        <UserRule Name="ASP_TAG_NAME" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+        <UserRule Name="ASP_TAG_PREFIX" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+        <UserRule Name="ASP_FIELD" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+        <UserRule Name="ASP_HTML_CONTROL" Inspect="True" Prefix="" Suffix="" Style="AaBb" />
+      </Naming2>
+    </Web>
+    <XML>
+      <FormatSettings />
+    </XML>
+    <Xaml>
+      <Naming2 />
+    </Xaml>
+    <FileHeader Region="Copyright"><![CDATA[This file is part of PHydrate.
+
+PHydrate is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PHydrate is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
+
+Copyright 2010-2011, Stephen Michael Czetty]]></FileHeader>
+    <GenerateMemberBody />
+    <Naming2>
+      <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
+      <EventHandlerPatternShort>$event$Handler</EventHandlerPatternShort>
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="TypesAndNamespaces" />
+      <PredefinedRule Inspect="True" Prefix="I" Suffix="" Style="AaBb" ElementKind="Interfaces" />
+      <PredefinedRule Inspect="True" Prefix="T" Suffix="" Style="AaBb" ElementKind="TypeParameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="MethodPropertyEvent" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Locals" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="Parameters" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
+      <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateStaticReadonly" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
+      <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="Aa_bb" StaticnessKind="Static, Instance" AccessRight="Private, Public" Description="MSpec Contexts &amp; Specifications">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Context" />
+          <Kind Name="Machine.Specifications_Specification" />
+        </ElementKinds>
+      </UserRule>
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="aa_bb" StaticnessKind="Static, Instance" AccessRight="Private" Description="MSpec behaviors">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Behavior" />
+        </ElementKinds>
+      </UserRule>
+      <UserRule Inspect="True" Prefix="" Suffix="" Style="AaBb" StaticnessKind="Static, Instance" AccessRight="Private, Protected, ProtectedInternal, Internal, Public" Description="MSpec Supporting Fields">
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_SupportingField" />
+        </ElementKinds>
+      </UserRule>
+      <Abbreviation Text="SQ" />
+      <Abbreviation Text="DB" />
+    </Naming2>
+  </CodeStyleSettings>
+  <SharedSolutionTemplateManager>
+    <LiveTemplates>
+      <Template uid="3075e2fe-4991-4b03-baff-42f24d682df3" shortcut="po" description="" text="=()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="48476a4e-7329-4d23-ab38-35937c835b98" shortcut="sc" description="Specification Context" text="private Establish Context =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="04b79314-6f96-4ea4-bb51-777c5f1d192e" shortcut="sb" description="Specification Because" text="private Because Of =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables />
+        <CustomProperties />
+      </Template>
+      <Template uid="6164c5ca-7c47-47a7-bcea-eeffad47ae75" shortcut="st" description="Specification It" text="private It Should_$SPECNAME$&#xD;&#xA; =()=&gt; " reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="SPECNAME" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+    </LiveTemplates>
+    <FileTemplates>
+      <Template uid="f929b89c-a576-4414-8b96-5c36498b7f8b" shortcut="" description="Attribute Class" text="using System;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$ &#xD;&#xA;{&#xD;&#xA;    /// &lt;summary&gt;&#xD;&#xA;	/// $SUMMARY$&#xD;&#xA;	/// &lt;/summary&gt;&#xD;&#xA;	[AttributeUsage(AttributeTargets.$TARGET$, AllowMultiple = $MULTIPLE$, Inherited = $INHERITED$)]&#xD;&#xA;	public class $CLASS$ : Attribute&#xD;&#xA;    {&#xD;&#xA;        $END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
+          <Variable name="CLASS" expression="getFileNameWithoutExtension()" initialRange="-1" />
+          <Variable name="SUMMARY" expression="" initialRange="0" />
+          <Variable name="TARGET" expression="complete()" initialRange="0" />
+          <Variable name="MULTIPLE" expression="constant(&quot;false&quot;)" initialRange="0" />
+          <Variable name="INHERITED" expression="constant(&quot;false&quot;)" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Attribute" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="False" />
+        </CustomProperties>
+      </Template>
+      <Template uid="2b702d26-6885-4d82-8943-423be844eb35" shortcut="" description="Specification" text="using Machine.Specifications;&#xD;&#xA;&#xD;&#xA;namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;    [ Subject( typeof($CLASS$) ) ]&#xD;&#xA;    public class $SPECIFICATIONCONTEXT$&#xD;&#xA;    {&#xD;&#xA;		$END$&#xD;&#xA;    }&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Context>
+          <ProjectLanguageContext language="CSharp" />
+        </Context>
+        <Categories />
+        <Variables>
+          <Variable name="CLASS" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
+          <Variable name="SPECIFICATIONCONTEXT" expression="getFileNameWithoutExtension()" initialRange="0" />
+        </Variables>
+        <CustomProperties>
+          <Property key="FileName" value="Class" />
+          <Property key="Extension" value="cs" />
+          <Property key="ValidateFileName" value="False" />
+        </CustomProperties>
+      </Template>
+    </FileTemplates>
+  </SharedSolutionTemplateManager>
+  <CodeAnnotations>
+    <Namespace>JetBrains.Annotations</Namespace>
+    <Namespace>Machine.Specifications.Annotations</Namespace>
+    <Namespace>PHydrate.Attributes</Namespace>
+    <DefaultNamespace>PHydrate.Attributes</DefaultNamespace>
+  </CodeAnnotations>
+</Configuration>

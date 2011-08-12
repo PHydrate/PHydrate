@@ -73,63 +73,83 @@ namespace PHydrate.Core
                             _hydratedObjects
                             );
 
-                    if ( typeof(IEnumerable< >).MakeGenericType( typeToCastTo ).IsAssignableFrom( internalRecordset.Type ) )
+                    Type dictionaryKeyType;
+                    if ( InternalIsEnumerable( typeToCastTo, internalRecordset.Type ) )
                         // IEnumerable, IList
-                    {
-                        //var list = internalRecordset.GetEnumerableOrList( enumerable, typeToCastTo );
-
-                        foreach ( object obj in enumerable )
-                        {
-                            T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
-                            if ( found == null )
-                                continue;
-
-                            var list = internalRecordset.GetValue( found ) as IList;
-                            if ( list == null )
-                            {
-                                list = typeof(List< >).MakeGenericType( typeToCastTo ).
-                                    ConstructUsingDefaultConstructor< IList >();
-                                internalRecordset.SetValue( found,
-                                                            list );
-                            }
-                            list.Add( obj );
-                        }
-                    }
+                        HydrateInnerRecordsetEnumerable( internalRecordset, typeToCastTo, enumerable, aggregateRoot );
+                    else if ( InternalIsDictionary( typeToCastTo, internalRecordset.Type, out dictionaryKeyType ) )
+                        // Dictionary
+                        HydrateRecordsetDictionary( internalRecordset, typeToCastTo, enumerable, aggregateRoot,
+                                                    dictionaryKeyType );
+                    else if (InternalIsSimpleType( typeToCastTo, internalRecordset.Type ) ) // Simple type
+                        SetSimpleTypeInAggregateRoot( internalRecordset,
+                                                      enumerable.Cast< object >().FirstOrDefault(),
+                                                      aggregateRoot );
                     else
-                    {
-                        // Look up the primary keys for the internal type
-                        var primaryKeys = typeToCastTo.GetMembersWithAttribute< PrimaryKeyAttribute >().ToList();
-                        if ( primaryKeys.Count == 1 &&
-                             typeof(IDictionary< , >).MakeGenericType( primaryKeys[ 0 ].Type, typeToCastTo ).
-                                 IsAssignableFrom( internalRecordset.Type ) ) // Dictionary
-                        {
-                            foreach ( object obj in enumerable )
-                            {
-                                T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
-                                if ( found == null )
-                                    continue;
+                        throw new PHydrateException(
+                            "Unable to map internal recordset.  Check the types to make sure they match!" );
 
-                                var dictionary = internalRecordset.GetValue( found ) as IDictionary;
-                                if ( dictionary == null )
-                                {
-                                    dictionary =
-                                        typeof(Dictionary< , >).MakeGenericType( primaryKeys[ 0 ].Type, typeToCastTo ).
-                                            ConstructUsingDefaultConstructor< IDictionary >();
-                                    internalRecordset.SetValue( found, dictionary );
-                                }
-                                dictionary.Add( obj.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >().First(), obj );
-                            }
-                        }
-                        else if ( typeToCastTo.IsAssignableFrom( internalRecordset.Type ) ) // Simple type
-                            SetSimpleTypeInAggregateRoot( internalRecordset,
-                                                          enumerable.Cast< object >().FirstOrDefault(),
-                                                          aggregateRoot );
-                        else
-                            throw new PHydrateException(
-                                "Unable to map internal recordset.  Check the types to make sure they match!" );
-                    }
                 }
                 return aggregateRoot.Values;
+            }
+
+            private static bool InternalIsEnumerable(Type typeToCastTo, Type internalType)
+            {
+                return typeof(IEnumerable< >).MakeGenericType( typeToCastTo ).IsAssignableFrom( internalType );
+            }
+
+            private static bool InternalIsDictionary(Type typeToCastTo, Type internalType, out Type dictionaryKeyType)
+            {
+                var primaryKeys = typeToCastTo.GetMembersWithAttribute< PrimaryKeyAttribute >().ToList();
+                dictionaryKeyType = primaryKeys.Count == 1 ? primaryKeys[ 0 ].Type : null;
+                return dictionaryKeyType != null &&
+                       typeof(IDictionary< , >).MakeGenericType( dictionaryKeyType, typeToCastTo ).IsAssignableFrom(
+                           internalType );
+            }
+
+            private static bool InternalIsSimpleType(Type typeToCastTo, Type internalType)
+            {
+                return typeToCastTo.IsAssignableFrom( internalType );
+            }
+
+            private static void HydrateRecordsetDictionary( IMemberInfo internalRecordset, Type typeToCastTo, IEnumerable enumerable, IDictionary< int, T > aggregateRoot, Type primaryKeyType )
+            {
+                foreach ( object obj in enumerable )
+                {
+                    T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
+                    if ( found == null )
+                        continue;
+
+                    var dictionary = internalRecordset.GetValue( found ) as IDictionary;
+                    if ( dictionary == null )
+                    {
+                        dictionary =
+                            typeof(Dictionary< , >).MakeGenericType( primaryKeyType, typeToCastTo ).
+                                ConstructUsingDefaultConstructor< IDictionary >();
+                        internalRecordset.SetValue( found, dictionary );
+                    }
+                    dictionary.Add( obj.GetPropertyValuesWithAttribute< PrimaryKeyAttribute >().First(), obj );
+                }
+            }
+
+            private static void HydrateInnerRecordsetEnumerable( IMemberInfo internalRecordset, Type typeToCastTo, IEnumerable enumerable, IDictionary< int, T > aggregateRoot )
+            {
+                foreach ( object obj in enumerable )
+                {
+                    T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
+                    if ( found == null )
+                        continue;
+
+                    var list = internalRecordset.GetValue( found ) as IList;
+                    if ( list == null )
+                    {
+                        list = typeof(List< >).MakeGenericType( typeToCastTo ).
+                            ConstructUsingDefaultConstructor< IList >();
+                        internalRecordset.SetValue( found,
+                                                    list );
+                    }
+                    list.Add( obj );
+                }
             }
 
             private static Type GetTypeToCastTo( IMemberInfo internalRecordset )

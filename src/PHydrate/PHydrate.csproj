@@ -93,14 +93,16 @@
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\DataHydrator.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
-    <Compile Include="Core\SqlServerDatabaseService.cs" />
+    <Compile Include="Core\SessionTransaction.cs" />
+    <Compile Include="Core\SqlServerDatabaseServiceProvider.cs" />
     <Compile Include="Core\WeakReferenceObjectCache.cs" />
     <Compile Include="Fluently.cs" />
-    <Compile Include="Core\DatabaseServiceBase.cs" />
+    <Compile Include="Core\DatabaseService.cs" />
     <Compile Include="Core\DefaultObjectHydrator.cs" />
     <Compile Include="Core\Session.cs" />
     <Compile Include="Core\SessionFactory.cs" />
     <Compile Include="IDatabaseService.cs" />
+    <Compile Include="IDatabaseServiceProvider.cs" />
     <Compile Include="IDefaultObjectHydrator.cs" />
     <Compile Include="IObjectHydrator.cs" />
     <Compile Include="ISession.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapper.cs" />
     <Compile Include="Util\MemberInfoWrapper\MemberInfoWrapperFactory.cs" />
     <Compile Include="Util\MemberInfoWrapper\PropertyInfoWrapper.cs" />
+    <Compile Include="Util\StackExtensions.cs" />
     <Compile Include="Util\TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +156,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(SolutionDir)\packages\Afterthought.1.0.7\tools\Afterthought.Amender "$(TargetPath)"
+    <PostBuildEvent>"$(SolutionDir)\packages\Afterthought.1.0.7\tools\Afterthought.Amender" "$(TargetPath)"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

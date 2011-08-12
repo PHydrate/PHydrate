@@ -20,32 +20,34 @@
 #endregion
 
 using System;
+using System.Data;
+using System.Data.SqlClient;
 
-namespace PHydrate
+namespace PHydrate.Core
 {
     /// <summary>
-    ///   Represents a database transaction.
+    /// MS Sql Server implementation of IDatabaseServiceProvider
     /// </summary>
-    public interface ITransaction : IDisposable
+    public sealed class SqlServerDatabaseServiceProvider : IDatabaseServiceProvider
     {
-        /// <summary>
-        ///   Begins this transaction.
-        /// </summary>
-        void Begin();
+        private readonly string _connectionString;
 
         /// <summary>
-        ///   Commits this transaction.
+        /// Initializes a new instance of the <see cref="SqlServerDatabaseServiceProvider"/> class.
         /// </summary>
-        void Commit();
+        /// <param name="connectionString">The connection string.</param>
+        public SqlServerDatabaseServiceProvider( string connectionString )
+        {
+            _connectionString = connectionString;
+        }
 
         /// <summary>
-        /// Commits all outstanding transactions.
+        /// Get an instance of the database service.
         /// </summary>
-        void CommitAll();
-
-        /// <summary>
-        ///   Rolls back this transaction.
-        /// </summary>
-        void Rollback();
+        /// <returns></returns>
+        public IDatabaseService DatabaseService()
+        {
+            return new DatabaseService( new SqlConnection( _connectionString ) );
+        }
     }
 }
