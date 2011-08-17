@@ -26,6 +26,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using PHydrate.Attributes;
+using PHydrate.Util.MemberInfoWrapper;
 
 namespace PHydrate.Util
 {
@@ -77,6 +78,21 @@ namespace PHydrate.Util
                                              typeof(TAttributeType).Name, typeof(TInstance).Name );
 
             member.SetValue( obj, value );
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public static void SetPropertyValue<TInstance>(this object obj, string propertyName, object value)
+        {
+            MemberInfo member =
+                typeof(TInstance).GetMember( propertyName, MemberTypes.Property | MemberTypes.Field,
+                                             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic ).
+                    FirstOrDefault();
+
+            if (member == null)
+                throw new PHydrateException( "Member with name {0} not found in type {1}", propertyName,
+                                             typeof(TInstance).Name );
+
+            member.CreateWrapper().SetValue( obj, value );
         }
 
         /// <summary>

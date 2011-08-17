@@ -49,8 +49,8 @@ namespace PHydrate
         /// <returns>The found object, or null if not found.</returns>
         [ SuppressMessage( "Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures" ) ]
         [ SuppressMessage( "Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get" ) ]
-        IEnumerable< T > Get< T >( Expression< Func< T, bool > > query )
-            where T : class;
+        IEnumerable< T > Get< T >( Expression< Func< T, bool > > query );
+            //where T : class;
 
         /// <summary>
         /// Gets an object of type <typeparamref name="T"/> given the specification.

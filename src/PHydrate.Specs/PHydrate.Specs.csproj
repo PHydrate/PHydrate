@@ -154,6 +154,8 @@
     <Compile Include="Core\DefaultObjectHydrator\When_hydrating_an_object_without_a_parameterless_constructor.cs" />
     <Compile Include="Core\DefaultObjectHydrator\When_hydrating_an_object_without_a_parameterless_constructor_or_one_that_matches_the_arguments.cs" />
     <Compile Include="Core\Session\When_getting_an_object_with_simple_expression_with_rhs_containing_a_method_call.cs" />
+    <Compile Include="Core\Session\When_getting_a_simple_struct.cs" />
+    <Compile Include="Core\Session\When_getting_a_struct_with_a_constructor.cs" />
     <Compile Include="Core\Session\When_persisting_an_existing_object.cs" />
     <Compile Include="Core\Session\When_persisting_an_existing_object_where_the_update_fails.cs" />
     <Compile Include="Core\Session\When_persisting_an_existing_object_with_no_creation_method.cs" />

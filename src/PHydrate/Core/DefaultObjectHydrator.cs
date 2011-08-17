@@ -19,6 +19,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -48,11 +49,13 @@ namespace PHydrate.Core
             // Find a suitable constructor
             var objToHydrate = GetObject< T >( columnValues );
 
-            // Go through all the properties and get them from the dictionary argument
-            IEnumerable< IMemberInfo > propertySetters = typeof(T).GetSettableMembers();
-            PopulateObjectProperties( objToHydrate, columnValues, propertySetters );
-            PopulateInnerObjects( objToHydrate, columnValues, propertySetters );
-
+            if (typeof(T).IsClass)
+            {
+                // Go through all the properties and get them from the dictionary argument
+                IEnumerable< IMemberInfo > propertySetters = typeof(T).GetSettableMembers();
+                PopulateObjectProperties( objToHydrate, columnValues, propertySetters );
+                PopulateInnerObjects( objToHydrate, columnValues, propertySetters );
+            }
             return objToHydrate;
         }
 
@@ -97,7 +100,7 @@ namespace PHydrate.Core
         private static T GetObject< T >( IDictionary< string, object > columnValues )
         {
             // Try to get a default constructor
-            ConstructorInfo defaultConstructor = typeof(T).GetDefaultConstructor();
+            ConstructorInfo defaultConstructor = typeof(T).IsClass ? typeof(T).GetDefaultConstructor() : null;
 
             if ( defaultConstructor != null )
                 return (T)defaultConstructor.Invoke( new object[] { } );
@@ -112,8 +115,24 @@ namespace PHydrate.Core
                 if ( arguments.Count == parameters.Length )
                     return (T)ci.Invoke( arguments.ToArray() );
             }
+
+            if ( typeof(T).IsValueType )
+                return GetStruct< T >( columnValues );
             throw new PHydrateException( "Could not find constructor for hydration of object {0}",
                                          typeof(T).FullName );
+        }
+
+        private static T GetStruct< T >( IEnumerable< KeyValuePair< string, object > > columnValues )
+        {
+            if (!typeof(T).IsValueType)
+                throw new PHydrateInternalException( "Attempt to call GetStruct for non-value type." );
+
+            object newStruct = Activator.CreateInstance< T >();
+
+            foreach (KeyValuePair<string, object> columnValue in columnValues)
+                newStruct.SetPropertyValue<T>( columnValue.Key, columnValue.Value );
+
+            return (T)newStruct;
         }
     }
 }

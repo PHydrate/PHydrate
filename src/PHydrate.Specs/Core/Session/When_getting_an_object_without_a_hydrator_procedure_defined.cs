@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using Machine.Specifications;
 
 namespace PHydrate.Specs.Core.Session

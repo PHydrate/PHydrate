@@ -31,7 +31,7 @@ namespace PHydrate.Core
 {
     public partial class Session
     {
-        private class DataHydrator< T > where T : class
+        private class DataHydrator< T > //where T : class
         {
             private readonly IDefaultObjectHydrator _defaultObjectHydrator;
             private readonly WeakReferenceObjectCache _hydratedObjects;
@@ -45,7 +45,7 @@ namespace PHydrate.Core
             public IEnumerable< T > HydrateFromDataReader( IDataReader dataReader )
             {
                 IEnumerable< IMemberInfo > internalRecordsets =
-                    typeof(T).GetMembersWithAttribute< RecordsetAttribute >();
+                    typeof(T).GetMembersWithAttribute< RecordsetAttribute >().ToList();
                 return internalRecordsets.Any()
                            ? HydrateRecordsetWithInternals( dataReader, internalRecordsets )
                            : HydrateRecordset( dataReader );
@@ -172,7 +172,7 @@ namespace PHydrate.Core
 
                 int lookupHash = obj.GetLookupHash< T >( primaryKeyMembers );
 
-                return aggregateRoot.ContainsKey( lookupHash ) ? aggregateRoot[ lookupHash ] : null;
+                return aggregateRoot.ContainsKey( lookupHash ) ? aggregateRoot[ lookupHash ] : default(T);
             }
 
             private static void SetSimpleTypeInAggregateRoot( IMemberInfo internalRecordset, object obj,
@@ -216,8 +216,8 @@ namespace PHydrate.Core
             {
                 if ( _hydratedObjects.Contains( hydratedObject ) )
                     return
-                        ( _hydratedObjects[ hydratedObject ].Target ??
-                          ( _hydratedObjects[ hydratedObject ].Target = hydratedObject ) ) as T;
+                        (T)( _hydratedObjects[ hydratedObject ].Target ??
+                          ( _hydratedObjects[ hydratedObject ].Target = hydratedObject ) );
 
                 _hydratedObjects.Add( hydratedObject );
                 return hydratedObject;
