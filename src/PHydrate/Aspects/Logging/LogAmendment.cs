@@ -35,29 +35,20 @@ namespace PHydrate.Aspects.Logging
     public sealed class LogAmendment< T > : Amendment< T, T >
     {
         /// <summary>
-        /// Amends the specified method.
+        /// Initializes a new instance of the <see cref="LogAmendment&lt;T&gt;"/> class.
         /// </summary>
-        /// <param name="method">The method.</param>
-        public override void Amend( Method method )
+        public LogAmendment()
         {
-            if ( !ShouldApplyLogging( method.MethodInfo ) )
-                return;
+            Methods
+                .Where( x => ShouldApplyLogging( x.MethodInfo ) )
+                .Before( Logger< T >.BeginMethod )
+                .After( Logger< T >.EndMethod );
+                //.Catch<Exception>( (MethodEnumeration.CatchMethodAction< Exception >)Logger< T >.LogException ); // TODO: Afterthought chokes on this.
 
-            method.Before( Logger< T >.BeginMethod );
-            method.After( Logger< T >.EndMethod );
-        }
-
-        /// <summary>
-        /// Amends the specified constructor.
-        /// </summary>
-        /// <param name="constructor">The constructor.</param>
-        public override void Amend( Constructor constructor )
-        {
-            if ( !ShouldApplyLogging( constructor.ConstructorInfo ) )
-                return;
-
-            constructor.Before( Logger< T >.BeginMethod );
-            constructor.After( Logger< T >.EndMethod );
+            Constructors
+                .Where( x => ShouldApplyLogging( x.ConstructorInfo ) )
+                .Before( Logger< T >.BeginMethod )
+                .After( Logger< T >.EndMethod );
         }
 
         private static bool ShouldApplyLogging( ICustomAttributeProvider member )

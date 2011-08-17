@@ -122,5 +122,28 @@ namespace PHydrate.Aspects.Logging
             Unindent();
             DoLog( "Leaving method: " + methodName );
         }
+
+        /// <summary>
+        /// Logs an exception.
+        /// </summary>
+        /// <param name="instance">The instance of the class.</param>
+        /// <param name="methodName">Name of the method.</param>
+        /// <param name="exception">The exception thrown.</param>
+        /// <param name="parameters">Parameters passed to the method call.</param>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        public static void LogException( T instance, string methodName, Exception exception, object[] parameters )
+        {
+            DoLog( "Uncaught exception: " + exception.Message );
+            if (!String.IsNullOrEmpty(exception.StackTrace))
+                DoLog( "StackTrace: " + exception.StackTrace );
+            if (exception.InnerException != null)
+            {
+                Indent();
+                DoLog( "Inner Exception:" );
+                LogException( instance, methodName, exception.InnerException, parameters );
+                Unindent();
+            }
+            EndMethod( instance, methodName, parameters );
+        }
     }
 }

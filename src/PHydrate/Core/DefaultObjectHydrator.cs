@@ -52,7 +52,7 @@ namespace PHydrate.Core
             if (typeof(T).IsClass)
             {
                 // Go through all the properties and get them from the dictionary argument
-                IEnumerable< IMemberInfo > propertySetters = typeof(T).GetSettableMembers();
+                IEnumerable< IMemberInfo > propertySetters = typeof(T).GetSettableMembers().ToList();
                 PopulateObjectProperties( objToHydrate, columnValues, propertySetters );
                 PopulateInnerObjects( objToHydrate, columnValues, propertySetters );
             }
