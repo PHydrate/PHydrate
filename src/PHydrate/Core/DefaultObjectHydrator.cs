@@ -122,7 +122,7 @@ namespace PHydrate.Core
                                          typeof(T).FullName );
         }
 
-        private static T GetStruct< T >( IDictionary< string, object > columnValues )
+        private static T GetStruct< T >( IEnumerable< KeyValuePair< string, object > > columnValues )
         {
             if (!typeof(T).IsValueType)
                 throw new PHydrateInternalException( "Attempt to call GetStruct for non-value type." );
