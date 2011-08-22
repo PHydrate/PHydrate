@@ -69,6 +69,11 @@ namespace PHydrate.Core
             return this;
         }
 
+        /// <summary>
+        /// Sets the type of the identifier columns.  Default is int.
+        /// </summary>
+        /// <typeparam name="T">The type. (int, Guid, etc.)</typeparam>
+        /// <returns></returns>
         public FluentConfiguration WithIdentifierType<T>()
         {
             _identifierType = typeof(T);
@@ -97,10 +102,10 @@ namespace PHydrate.Core
 
             return
                 (ISessionFactory)
-                factoryConstructor.Invoke( new object[] {
-                                                            _databaseServiceProvider, _prefix, _defaultObjectHydrator,
-                                                            cacheConstructor.Invoke( new object[] { } )
-                                                        } );
+                factoryConstructor.Invoke( new[] {
+                                                     _databaseServiceProvider, _prefix, _defaultObjectHydrator,
+                                                     cacheConstructor.Invoke( new object[] { } )
+                                                 } );
         }
     }
 }

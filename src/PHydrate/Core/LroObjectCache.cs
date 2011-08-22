@@ -55,7 +55,7 @@ namespace PHydrate.Core
         /// </summary>
         /// <typeparam name="T">The type of the object</typeparam>
         /// <param name="identifier">The identifier.</param>
-        /// <returns></returns>
+        /// <returns>The object from the cache</returns>
         public T GetFromCache< T >( TIdentifierType identifier )
         {
             if ( _cache.ContainsKey( typeof(T) ) && _cache[ typeof(T) ].ContainsKey( identifier ) )
