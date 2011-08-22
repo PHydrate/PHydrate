@@ -23,7 +23,7 @@ using Machine.Specifications;
 
 namespace PHydrate.Specs.Core.SessionFactory
 {
-    [ Subject( typeof(PHydrate.Core.SessionFactory) ) ]
+    [ Subject( typeof(PHydrate.Core.SessionFactory<>) ) ]
     public sealed class When_getting_a_session_from_factory : SessionFactorySpecificationBase
     {
         private static ISession _session;

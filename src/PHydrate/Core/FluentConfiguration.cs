@@ -19,6 +19,9 @@
 
 #endregion
 
+using System;
+using System.Reflection;
+
 namespace PHydrate.Core
 {
     /// <summary>
@@ -29,6 +32,7 @@ namespace PHydrate.Core
         private IDatabaseServiceProvider _databaseServiceProvider;
         private string _prefix = "@";
         private IDefaultObjectHydrator _defaultObjectHydrator;
+        private Type _identifierType = typeof(int);
 
         internal FluentConfiguration() {}
 
@@ -65,13 +69,38 @@ namespace PHydrate.Core
             return this;
         }
 
+        public FluentConfiguration WithIdentifierType<T>()
+        {
+            _identifierType = typeof(T);
+            return this;
+        }
+
         /// <summary>
         /// Builds the session factory.
         /// </summary>
         /// <returns></returns>
         public ISessionFactory BuildSessionFactory()
         {
-            return new SessionFactory( _databaseServiceProvider, _prefix, _defaultObjectHydrator );
+            ConstructorInfo cacheConstructor =
+                typeof(LroObjectCache< >).MakeGenericType( _identifierType ).GetConstructor(
+                    BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null );
+
+
+            ConstructorInfo factoryConstructor =
+                typeof(SessionFactory< >).MakeGenericType( _identifierType ).GetConstructor(
+                    BindingFlags.NonPublic | BindingFlags.Instance, null,
+                    new[] {
+                              typeof(IDatabaseServiceProvider), typeof(string),
+                              typeof(IDefaultObjectHydrator),
+                              typeof(IObjectCache<>).MakeGenericType(_identifierType)
+                          }, null );
+
+            return
+                (ISessionFactory)
+                factoryConstructor.Invoke( new object[] {
+                                                            _databaseServiceProvider, _prefix, _defaultObjectHydrator,
+                                                            cacheConstructor.Invoke( new object[] { } )
+                                                        } );
         }
     }
 }

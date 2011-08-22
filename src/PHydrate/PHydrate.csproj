@@ -93,6 +93,8 @@
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\DataHydrator.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
+    <Compile Include="Core\IObjectCache.cs" />
+    <Compile Include="Core\LroObjectCache.cs" />
     <Compile Include="Core\SessionTransaction.cs" />
     <Compile Include="Core\SqlServerDatabaseServiceProvider.cs" />
     <Compile Include="Core\WeakReferenceObjectCache.cs" />
