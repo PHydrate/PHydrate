@@ -56,14 +56,14 @@ namespace PHydrate.Core
         /// <typeparam name="T">The type of the object</typeparam>
         /// <param name="identifier">The identifier.</param>
         /// <returns>The object from the cache</returns>
-        public T GetFromCache< T >( TIdentifierType identifier )
+        public T GetFromCache<T>(TIdentifierType identifier)
         {
-            if ( _cache.ContainsKey( typeof(T) ) && _cache[ typeof(T) ].ContainsKey( identifier ) )
+            if ( IsInCache< T >( identifier ) )
             {
                 _cache[ typeof(T) ][ identifier ].Touch();
-                return (T)_cache[typeof(T)][identifier].WrappedObject;
+                return (T)_cache[ typeof(T) ][ identifier ].WrappedObject;
             }
-                
+
             throw new PHydrateInternalException( "Could not find key in cache.  Code should call IsInCache() first." );
         }
 
@@ -75,10 +75,10 @@ namespace PHydrate.Core
         /// <param name="obj">The object to store.</param>
         public void AddToCache<T>(TIdentifierType identifier, T obj)
         {
-            if (!_cache.ContainsKey(typeof(T)  ))
+            if ( !_cache.ContainsKey( typeof(T) ) )
                 _cache[ typeof(T) ] = new ConcurrentDictionary< TIdentifierType, TimeStampedObjectWrapper >();
             _cache[ typeof(T) ].Add( identifier, new TimeStampedObjectWrapper( obj ) );
-            lock (_cacheLock)
+            lock ( _cacheLock )
                 _cacheSize++;
         }
 
@@ -88,10 +88,8 @@ namespace PHydrate.Core
         public void Cleanup()
         {
             var orderedList = _cache.SelectMany( x => x.Value ).OrderBy( x => x.Value.LastAccessed ).GetEnumerator();
-            while (_cacheSize > _maxCacheSize && orderedList.MoveNext())
-            {
+            while ( _cacheSize > _maxCacheSize && orderedList.MoveNext() )
                 RemoveItem( orderedList.Current );
-            }
         }
 
         /// <summary>
@@ -109,15 +107,15 @@ namespace PHydrate.Core
 
         private void RemoveItem( KeyValuePair< TIdentifierType, TimeStampedObjectWrapper > kvp )
         {
-            var item = new WeakReference( kvp.Value.WrappedObject );
+            //var item = new WeakReference( kvp.Value.WrappedObject );
             lock ( _cacheLock )
             {
                 _cache[ kvp.Value.WrappedObject.GetType() ].Remove( kvp.Key );
                 _cacheSize--;
             }
-            kvp = new KeyValuePair< TIdentifierType, TimeStampedObjectWrapper >();
-            if ( !item.IsAlive && item.Target is IDisposable )
-                ( (IDisposable)item.Target ).Dispose();
+            //kvp.Value.ReleaseWrappedObject();
+            //if ( !item.IsAlive && item.Target is IDisposable )
+            //    ( (IDisposable)item.Target ).Dispose();
 
         }
 
@@ -136,6 +134,11 @@ namespace PHydrate.Core
 
             public DateTime LastAccessed { get; private set; }
             public Object WrappedObject { get; private set; }
+
+            //public void ReleaseWrappedObject()
+            //{
+            //    WrappedObject = null;
+            //}
         }
     }
 }
