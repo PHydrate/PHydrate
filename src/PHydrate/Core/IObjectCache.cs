@@ -2,7 +2,11 @@ using System;
 
 namespace PHydrate.Core
 {
-    internal interface IObjectCache< in TIdentifierType > : IDisposable
+    /// <summary>
+    /// A cache of objects, used by SessionFactory
+    /// </summary>
+    /// <typeparam name="TIdentifierType">The type of the identifier type.</typeparam>
+    public interface IObjectCache< in TIdentifierType >
     {
         /// <summary>
         /// Determines whether the object exists in the cache

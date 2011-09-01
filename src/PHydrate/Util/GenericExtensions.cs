@@ -80,6 +80,13 @@ namespace PHydrate.Util
             member.SetValue( obj, value );
         }
 
+        /// <summary>
+        /// Sets the property value.
+        /// </summary>
+        /// <typeparam name="TInstance">The type of the instance.</typeparam>
+        /// <param name="obj">The obj.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="value">The value.</param>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         public static void SetPropertyValue<TInstance>(this object obj, string propertyName, object value)
         {

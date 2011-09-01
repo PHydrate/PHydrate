@@ -109,6 +109,15 @@
     <Compile Include="Core\FluentConfiguration\When_setting_database.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_default_hydrator.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_prefix.cs" />
+    <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationBase.cs" />
+    <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationGuidBase.cs" />
+    <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationIntBase.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_cache_is_cleaned_up.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_item_is_added_to_cache.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_item_is_not_in_cache.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_cache_is_cleaned_up.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_item_is_added_to_cache.cs" />
+    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_item_is_not_in_cache.cs" />
     <Compile Include="Core\SessionFactory\SessionFactorySpecificationBase.cs" />
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
     <Compile Include="Core\Session\ChainedDbSpecificationBase.cs" />

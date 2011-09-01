@@ -33,6 +33,7 @@ namespace PHydrate.Core
         private string _prefix = "@";
         private IDefaultObjectHydrator _defaultObjectHydrator;
         private Type _identifierType = typeof(int);
+        private int _cacheSize;
 
         internal FluentConfiguration() {}
 
@@ -81,6 +82,17 @@ namespace PHydrate.Core
         }
 
         /// <summary>
+        /// Sets the size of the cache.
+        /// </summary>
+        /// <param name="cacheSize">Size of the cache.</param>
+        /// <returns></returns>
+        public FluentConfiguration WithCacheSize(int cacheSize)
+        {
+            _cacheSize = cacheSize;
+            return this;
+        }
+
+        /// <summary>
         /// Builds the session factory.
         /// </summary>
         /// <returns></returns>
@@ -88,7 +100,7 @@ namespace PHydrate.Core
         {
             ConstructorInfo cacheConstructor =
                 typeof(LroObjectCache< >).MakeGenericType( _identifierType ).GetConstructor(
-                    BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null );
+                    BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(int) }, null );
 
 
             ConstructorInfo factoryConstructor =
@@ -104,7 +116,7 @@ namespace PHydrate.Core
                 (ISessionFactory)
                 factoryConstructor.Invoke( new[] {
                                                      _databaseServiceProvider, _prefix, _defaultObjectHydrator,
-                                                     cacheConstructor.Invoke( new object[] { } )
+                                                     cacheConstructor.Invoke( new object[] { _cacheSize } )
                                                  } );
         }
     }

@@ -21,7 +21,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using PHydrate.Attributes;
 
 namespace PHydrate.Core
 {
@@ -30,10 +29,12 @@ namespace PHydrate.Core
         private readonly IDictionary< Type, IDictionary< TIdentifierType, TimeStampedObjectWrapper > > _cache =
             new ConcurrentDictionary< Type, IDictionary< TIdentifierType, TimeStampedObjectWrapper > >();
 
-        [UsedImplicitly]
-        internal LroObjectCache() {}
+        internal LroObjectCache( int maxCacheSize )
+        {
+            _maxCacheSize = maxCacheSize;
+        }
 
-        private readonly int _maxCacheSize = 100;
+        private readonly int _maxCacheSize;
         private int _cacheSize;
         private readonly object _cacheLock = new object();
 
@@ -92,19 +93,6 @@ namespace PHydrate.Core
                 RemoveItem( orderedList.Current );
         }
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            foreach(var type in _cache)
-            {
-                foreach ( var kvp in type.Value )
-                    RemoveItem( kvp );
-                _cache.Remove( type.Key );
-            }
-        }
-
         private void RemoveItem( KeyValuePair< TIdentifierType, TimeStampedObjectWrapper > kvp )
         {
             //var item = new WeakReference( kvp.Value.WrappedObject );
@@ -124,7 +112,7 @@ namespace PHydrate.Core
             public TimeStampedObjectWrapper( object o )
             {
                 WrappedObject = o;
-                LastAccessed = DateTime.Now;
+                Touch();
             }
 
             public void Touch()
