@@ -70,8 +70,10 @@ namespace PHydrate.Core
         /// </returns>
         public ISession GetSession()
         {
-            return new Session( _databaseServiceProvider.DatabaseService(), _defaultObjectHydrator, _parameterPrefix );
+            return new Session( _databaseServiceProvider.DatabaseService(), _defaultObjectHydrator, _parameterPrefix, this );
         }
+
+        internal IObjectCache<TIdentifierType> Cache { get { return _cache; } } 
 
         #endregion
     }

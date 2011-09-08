@@ -27,6 +27,7 @@ namespace PHydrate.Attributes
     ///   Annotate a class with the stored procedure used to get an object
     /// </summary>
     [ MeansImplicitUse( ImplicitUseKindFlags.Instantiated, ImplicitUseTargetFlags.Itself ) ]
+    // TODO: AllowMultiple = true
     [ AttributeUsage( AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = false, Inherited = true ) ]
     public sealed class HydrateUsingAttribute : CrudAttributeBase
     {
@@ -35,6 +36,15 @@ namespace PHydrate.Attributes
         /// </summary>
         /// <param name = "procedureName">Name of the procedure.</param>
         public HydrateUsingAttribute( string procedureName )
-            : base( procedureName ) {}
+            : base( procedureName )
+        {
+            UsesPrimaryKey = true;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the procedure uses the primary key of the table.  This procedure is chosen for GetById().
+        /// Default is true.
+        /// </summary>
+        public bool UsesPrimaryKey { get; set; }
     }
 }

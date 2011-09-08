@@ -55,7 +55,7 @@ namespace PHydrate.Specs.Core.Session
                                         DatabaseService = MockRepository.GenerateStub< IDatabaseService >();
                                         SessionUnderTest = new PHydrate.Core.Session( DatabaseService,
                                                                                       new PHydrate.Core.
-                                                                                          DefaultObjectHydrator(), "@" );
+                                                                                          DefaultObjectHydrator(), "@", null );
                                     };
 
         protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue,

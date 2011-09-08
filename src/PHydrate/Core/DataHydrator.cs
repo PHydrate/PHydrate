@@ -35,11 +35,13 @@ namespace PHydrate.Core
         {
             private readonly IDefaultObjectHydrator _defaultObjectHydrator;
             private readonly WeakReferenceObjectCache _hydratedObjects;
+            private readonly SessionFactory< T > _sessionFactory;
 
-            public DataHydrator( IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects )
+            public DataHydrator( IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects, ISessionFactory sessionFactory )
             {
                 _defaultObjectHydrator = defaultObjectHydrator;
                 _hydratedObjects = hydratedObjects;
+                _sessionFactory = sessionFactory as SessionFactory< T >;
             }
 
             public IEnumerable< T > HydrateFromDataReader( IDataReader dataReader )

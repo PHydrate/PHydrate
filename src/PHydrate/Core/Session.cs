@@ -40,6 +40,7 @@ namespace PHydrate.Core
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
         private readonly WeakReferenceObjectCache _hydratedObjects = new WeakReferenceObjectCache();
         private readonly string _parameterPrefix;
+        private readonly ISessionFactory _sessionFactory;
         private ITransaction _transaction;
 
         /// <summary>
@@ -48,12 +49,13 @@ namespace PHydrate.Core
         /// <param name="databaseService">The database service.</param>
         /// <param name="defaultObjectHydrator">The object hydrator to use by default</param>
         /// <param name="parameterPrefix">The string to prepend to parameter names</param>
-        internal Session( IDatabaseService databaseService, IDefaultObjectHydrator defaultObjectHydrator,
-                          string parameterPrefix )
+        /// <param name="sessionFactory"></param>
+        internal Session( IDatabaseService databaseService, IDefaultObjectHydrator defaultObjectHydrator, string parameterPrefix, ISessionFactory sessionFactory )
         {
             _databaseService = databaseService;
             _defaultObjectHydrator = defaultObjectHydrator;
             _parameterPrefix = parameterPrefix;
+            _sessionFactory = sessionFactory;
         }
 
         #region Implementation of ISession
@@ -78,9 +80,21 @@ namespace PHydrate.Core
             //where T : class
         {
             // Get the name of the stored procedure that will hydrate this object
-            HydrateUsingAttribute hydrationAttribute = GetCrudAttributeFromType< T, HydrateUsingAttribute >();
+            HydrateUsingAttribute hydrationAttribute = SelectHydrationProcedure< T >( query );
 
             return HydrateFromStoredProcedure( hydrationAttribute, query );
+        }
+
+        // TODO
+        public T GetByPrimaryKey<T>(params object[] primaryKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        // TODO: Support for multiple HydrateUsing attributes
+        private HydrateUsingAttribute SelectHydrationProcedure<T>(Expression<Func<T, bool>> query)
+        {
+            return GetCrudAttributeFromType< T, HydrateUsingAttribute >();
         }
 
         /// <exception cref="PHydrateException">Unable to process object of type {0}.  Define a stored procedure with [{0}]</exception>
@@ -108,7 +122,7 @@ namespace PHydrate.Core
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
-            return new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects ).HydrateFromDataReader( dataReader );
+            return new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects, _sessionFactory ).HydrateFromDataReader( dataReader );
         }
 
         [CanBeNull]
