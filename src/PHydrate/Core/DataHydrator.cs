@@ -35,13 +35,13 @@ namespace PHydrate.Core
         {
             private readonly IDefaultObjectHydrator _defaultObjectHydrator;
             private readonly WeakReferenceObjectCache _hydratedObjects;
-            private readonly SessionFactory< T > _sessionFactory;
+            private readonly SessionFactory _sessionFactory;
 
-            public DataHydrator( IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects, ISessionFactory sessionFactory )
+            public DataHydrator( IDefaultObjectHydrator defaultObjectHydrator, WeakReferenceObjectCache hydratedObjects, SessionFactory sessionFactory )
             {
                 _defaultObjectHydrator = defaultObjectHydrator;
                 _hydratedObjects = hydratedObjects;
-                _sessionFactory = sessionFactory as SessionFactory< T >;
+                _sessionFactory = sessionFactory;
             }
 
             public IEnumerable< T > HydrateFromDataReader( IDataReader dataReader )
@@ -72,7 +72,8 @@ namespace PHydrate.Core
                         typeToCastTo.ExecuteGenericMethod< DataHydrator< T >, IEnumerable >(
                             x => x.HydrateFromDataReader( dataReader ),
                             _defaultObjectHydrator,
-                            _hydratedObjects
+                            _hydratedObjects,
+                            _sessionFactory
                             );
 
                     Type dictionaryKeyType;
@@ -119,8 +120,10 @@ namespace PHydrate.Core
                 foreach ( object obj in enumerable )
                 {
                     T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
-                    if ( found == null )
+// ReSharper disable CompareNonConstrainedGenericWithNull
+                    if ( typeof(T).IsClass && found == null )
                         continue;
+// ReSharper restore CompareNonConstrainedGenericWithNull
 
                     var dictionary = internalRecordset.GetValue( found ) as IDictionary;
                     if ( dictionary == null )
@@ -139,8 +142,10 @@ namespace PHydrate.Core
                 foreach ( object obj in enumerable )
                 {
                     T found = GetAggregateRootFromSecondaryObject( obj, aggregateRoot );
-                    if ( found == null )
+// ReSharper disable CompareNonConstrainedGenericWithNull
+                    if ( typeof(T).IsClass && found == null )
                         continue;
+// ReSharper restore CompareNonConstrainedGenericWithNull
 
                     var list = internalRecordset.GetValue( found ) as IList;
                     if ( list == null )

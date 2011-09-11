@@ -122,7 +122,9 @@ namespace PHydrate.Core
                                                                                     query.GetDataParameters(
                                                                                         _parameterPrefix ) );
 
-            return new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects, _sessionFactory ).HydrateFromDataReader( dataReader );
+            return
+                new DataHydrator< T >( _defaultObjectHydrator, _hydratedObjects, _sessionFactory as SessionFactory ).
+                    HydrateFromDataReader( dataReader );
         }
 
         [CanBeNull]

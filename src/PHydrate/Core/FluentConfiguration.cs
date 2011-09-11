@@ -19,28 +19,24 @@
 
 #endregion
 
-using System;
-using System.Reflection;
-
 namespace PHydrate.Core
 {
     /// <summary>
-    /// Configuration class for PHydrate
+    ///   Configuration class for PHydrate
     /// </summary>
     public class FluentConfiguration
     {
         private IDatabaseServiceProvider _databaseServiceProvider;
         private string _prefix = "@";
         private IDefaultObjectHydrator _defaultObjectHydrator;
-        private Type _identifierType = typeof(int);
         private int _cacheSize;
 
         internal FluentConfiguration() {}
 
         /// <summary>
-        /// Specifies the database service to use.
+        ///   Specifies the database service to use.
         /// </summary>
-        /// <param name="databaseService">The database service.</param>
+        /// <param name = "databaseService">The database service.</param>
         /// <returns></returns>
         public FluentConfiguration DatabaseProvider( IDatabaseServiceProvider databaseService )
         {
@@ -49,9 +45,9 @@ namespace PHydrate.Core
         }
 
         /// <summary>
-        /// Specifies a string to prepend to parameter names.  Defaults to "@".
+        ///   Specifies a string to prepend to parameter names.  Defaults to "@".
         /// </summary>
-        /// <param name="prefix">The prefix.</param>
+        /// <param name = "prefix">The prefix.</param>
         /// <returns></returns>
         public FluentConfiguration ParameterPrefix( string prefix )
         {
@@ -60,9 +56,9 @@ namespace PHydrate.Core
         }
 
         /// <summary>
-        /// Withes the default hydrator.  If not specified, the built-in hydrator is used.
+        ///   Withes the default hydrator.  If not specified, the built-in hydrator is used.
         /// </summary>
-        /// <param name="defaultObjectHydrator">The default object hydrator.</param>
+        /// <param name = "defaultObjectHydrator">The default object hydrator.</param>
         /// <returns></returns>
         public FluentConfiguration WithDefaultHydrator( IDefaultObjectHydrator defaultObjectHydrator )
         {
@@ -71,53 +67,24 @@ namespace PHydrate.Core
         }
 
         /// <summary>
-        /// Sets the type of the identifier columns.  Default is int.
+        ///   Sets the size of the cache.
         /// </summary>
-        /// <typeparam name="T">The type. (int, Guid, etc.)</typeparam>
+        /// <param name = "cacheSize">Size of the cache.</param>
         /// <returns></returns>
-        public FluentConfiguration WithIdentifierType<T>()
-        {
-            _identifierType = typeof(T);
-            return this;
-        }
-
-        /// <summary>
-        /// Sets the size of the cache.
-        /// </summary>
-        /// <param name="cacheSize">Size of the cache.</param>
-        /// <returns></returns>
-        public FluentConfiguration WithCacheSize(int cacheSize)
+        public FluentConfiguration WithCacheSize( int cacheSize )
         {
             _cacheSize = cacheSize;
             return this;
         }
 
         /// <summary>
-        /// Builds the session factory.
+        ///   Builds the session factory.
         /// </summary>
         /// <returns></returns>
         public ISessionFactory BuildSessionFactory()
         {
-            ConstructorInfo cacheConstructor =
-                typeof(LroObjectCache< >).MakeGenericType( _identifierType ).GetConstructor(
-                    BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(int) }, null );
-
-
-            ConstructorInfo factoryConstructor =
-                typeof(SessionFactory< >).MakeGenericType( _identifierType ).GetConstructor(
-                    BindingFlags.NonPublic | BindingFlags.Instance, null,
-                    new[] {
-                              typeof(IDatabaseServiceProvider), typeof(string),
-                              typeof(IDefaultObjectHydrator),
-                              typeof(IObjectCache<>).MakeGenericType(_identifierType)
-                          }, null );
-
-            return
-                (ISessionFactory)
-                factoryConstructor.Invoke( new[] {
-                                                     _databaseServiceProvider, _prefix, _defaultObjectHydrator,
-                                                     cacheConstructor.Invoke( new object[] { _cacheSize } )
-                                                 } );
+            return new SessionFactory( _databaseServiceProvider, _prefix, _defaultObjectHydrator,
+                                       new LroObjectCache( _cacheSize ) );
         }
     }
 }

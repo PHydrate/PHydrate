@@ -1,4 +1,5 @@
-﻿#region Copyright
+#region Copyright
+
 // This file is part of PHydrate.
 // 
 // PHydrate is free software: you can redistribute it and/or modify
@@ -15,30 +16,31 @@
 // along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 // 
 // Copyright 2010-2011, Stephen Michael Czetty
+
 #endregion
 
 using Machine.Specifications;
-using PHydrate.Attributes;
-using PHydrate.Core;
+using UMMO.TestingUtils;
 
 namespace PHydrate.Specs.Core.LroObjectCache
 {
-    public abstract class LroObjectCacheSpecificationBase<T>
+    [ Subject( typeof(PHydrate.Core.LroObjectCache) ) ]
+    public sealed class When_cache_is_cleaned_up : LroObjectCacheSpecificationIntBase
     {
-// ReSharper disable StaticFieldInGenericType
-        protected static IObjectCache CacheToTest;
-        protected static TestObjectToCache TestObject;
-        protected static T IdentifierValue;
-// ReSharper restore StaticFieldInGenericType
+        private Establish Context =
+            () => {
+                _newIdentifier = A.Random.Integer;
+                CacheToTest.AddToCache( _newIdentifier, new TestObjectToCache { Identifier = _newIdentifier } );
+            };
 
-        protected class TestObjectToCache
-        {
-            [PrimaryKey]
-            public T Identifier { get; set; }
-            public string StringValue { [UsedImplicitly]get; set; }
-        }
+        private Because Of = () => CacheToTest.Cleanup();
 
-        [ UsedImplicitly ]
-        private Establish Context = () => CacheToTest = new PHydrate.Core.LroObjectCache( 1 );
+        private It Should_remove_older_cached_object
+            = () => CacheToTest.IsInCache< TestObjectToCache >( IdentifierValue ).ShouldBeFalse();
+
+        private It Should_retain_newer_cached_object
+            = () => CacheToTest.IsInCache< TestObjectToCache >( _newIdentifier ).ShouldBeTrue();
+
+        private static int _newIdentifier;
     }
 }

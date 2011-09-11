@@ -157,6 +157,9 @@ namespace PHydrate.Util
             ConstructorInfo constructor =
                 constructors.Where( ci => ci.MatchesParameters( constructorParameters ) ).FirstOrDefault();
 
+            if (constructor == null)
+                throw new PHydrateException( "Could not find matching constructor" );
+
             return constructor.Invoke( constructorParameters );
         }
 

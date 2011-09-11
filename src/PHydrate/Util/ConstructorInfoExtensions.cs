@@ -41,6 +41,8 @@ namespace PHydrate.Util
             ParameterInfo[] parameterInfos = method.GetParameters();
             if ( parameterInfos.Length != constructorParameters.Count )
                 return false;
+
+            // BUG: Throws NullArgumentException when one of constructorParameters is null
             return
                 !constructorParameters.Where(
                     ( t, i ) => !parameterInfos[ i ].ParameterType.IsAssignableFrom( t.GetType() ) ).Any();

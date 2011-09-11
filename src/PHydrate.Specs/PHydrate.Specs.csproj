@@ -110,14 +110,10 @@
     <Compile Include="Core\FluentConfiguration\When_setting_default_hydrator.cs" />
     <Compile Include="Core\FluentConfiguration\When_setting_prefix.cs" />
     <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationBase.cs" />
-    <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationGuidBase.cs" />
     <Compile Include="Core\LroObjectCache\LroObjectCacheSpecificationIntBase.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_cache_is_cleaned_up.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_item_is_added_to_cache.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_guid_and_item_is_not_in_cache.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_cache_is_cleaned_up.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_item_is_added_to_cache.cs" />
-    <Compile Include="Core\LroObjectCache\When_identifier_type_is_integer_and_item_is_not_in_cache.cs" />
+    <Compile Include="Core\LroObjectCache\When_cache_is_cleaned_up.cs" />
+    <Compile Include="Core\LroObjectCache\When_item_is_added_to_cache.cs" />
+    <Compile Include="Core\LroObjectCache\When_item_is_not_in_cache.cs" />
     <Compile Include="Core\SessionFactory\SessionFactorySpecificationBase.cs" />
     <Compile Include="Core\SessionFactory\When_getting_a_session_from_factory.cs" />
     <Compile Include="Core\Session\ChainedDbSpecificationBase.cs" />
@@ -250,6 +246,9 @@
       <Project>{5427851E-6732-435D-A982-13DC7DA2489F}</Project>
       <Name>PHydrate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

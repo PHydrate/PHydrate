@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 
 // This file is part of PHydrate.
 // 
@@ -20,21 +20,20 @@
 #endregion
 
 using Machine.Specifications;
-using Machine.Specifications.Annotations;
-using Rhino.Mocks;
 
-namespace PHydrate.Specs.Core.SessionFactory
+namespace PHydrate.Specs.Core.LroObjectCache
 {
-    public abstract class SessionFactorySpecificationBase
+    [ Subject( typeof(PHydrate.Core.LroObjectCache) ) ]
+    public sealed class When_item_is_added_to_cache : LroObjectCacheSpecificationIntBase
     {
-        protected static ISessionFactory SessionFactoryUnderTest;
-        private static IDatabaseServiceProvider _databaseService;
+        private Because Of = () => _retrievedObject = CacheToTest.GetFromCache< TestObjectToCache >( IdentifierValue );
 
-        [ UsedImplicitly ]
-        private Establish Context = () => {
-                                        _databaseService = MockRepository.GenerateStub< IDatabaseServiceProvider >();
-                                        SessionFactoryUnderTest = new PHydrate.Core.SessionFactory( _databaseService,
-                                                                                                    "@", null, null );
-                                    };
+        private It Should_be_added_to_cache
+            = () => CacheToTest.IsInCache< TestObjectToCache >( IdentifierValue ).ShouldBeTrue();
+
+        private It Should_retrieve_item_from_cache
+            = () => _retrievedObject.ShouldBeTheSameAs( TestObject );
+
+        private static TestObjectToCache _retrievedObject;
     }
 }

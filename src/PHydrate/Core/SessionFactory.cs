@@ -27,22 +27,22 @@ namespace PHydrate.Core
     /// <summary>
     /// Default implementation of ISessionFactory
     /// </summary>
-    public sealed class SessionFactory<TIdentifierType> : ISessionFactory
+    public sealed class SessionFactory : ISessionFactory
     {
         private readonly IDatabaseServiceProvider _databaseServiceProvider;
         private readonly string _parameterPrefix;
         private readonly IDefaultObjectHydrator _defaultObjectHydrator;
-        private readonly IObjectCache< TIdentifierType > _cache;
+        private readonly IObjectCache _cache;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SessionFactory{TIdentifierType}"/> class.
+        /// Initializes a new instance of the <see cref="SessionFactory"/> class.
         /// </summary>
         /// <param name="databaseServiceProvider">The database service.</param>
         /// <param name="parameterPrefix">The prefix to place in front of parameter names.</param>
         /// <param name="defaultObjectHydrator">The default object hydrator to use, or null to use the built-in version</param>
         /// <param name="cache">The cache.</param>
         internal SessionFactory( IDatabaseServiceProvider databaseServiceProvider, string parameterPrefix,
-                                 IDefaultObjectHydrator defaultObjectHydrator, IObjectCache<TIdentifierType> cache  )
+                                 IDefaultObjectHydrator defaultObjectHydrator, IObjectCache cache  )
         {
             _databaseServiceProvider = databaseServiceProvider;
             _parameterPrefix = parameterPrefix;
@@ -73,7 +73,7 @@ namespace PHydrate.Core
             return new Session( _databaseServiceProvider.DatabaseService(), _defaultObjectHydrator, _parameterPrefix, this );
         }
 
-        internal IObjectCache<TIdentifierType> Cache { get { return _cache; } } 
+        internal IObjectCache Cache { get { return _cache; } } 
 
         #endregion
     }

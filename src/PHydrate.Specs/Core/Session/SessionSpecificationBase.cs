@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
 using PHydrate.Attributes;
+using PHydrate.Core;
 using Rhino.Mocks;
 using UMMO.TestingUtils;
 
@@ -53,10 +54,23 @@ namespace PHydrate.Specs.Core.Session
         private Establish Context = () => {
                                         DataReaderMock = A.DataReader as DataReaderMock;
                                         DatabaseService = MockRepository.GenerateStub< IDatabaseService >();
+                                        _databaseServiceProvider =
+                                            MockRepository.GenerateStub< IDatabaseServiceProvider >();
+                                        _defaultObjectHydrator = MockRepository.GenerateStub< IDefaultObjectHydrator >();
+                                        _objectCache = MockRepository.GenerateStub< IObjectCache >();
+                                        _sessionFactory = new PHydrate.Core.SessionFactory( _databaseServiceProvider, "",
+                                                                                            _defaultObjectHydrator,
+                                                                                            _objectCache );
                                         SessionUnderTest = new PHydrate.Core.Session( DatabaseService,
                                                                                       new PHydrate.Core.
-                                                                                          DefaultObjectHydrator(), "@", null );
+                                                                                          DefaultObjectHydrator(), "@",
+                                                                                      _sessionFactory );
                                     };
+
+        private static IDatabaseServiceProvider _databaseServiceProvider;
+        private static IDefaultObjectHydrator _defaultObjectHydrator;
+        private static IObjectCache _objectCache;
+        private static PHydrate.Core.SessionFactory _sessionFactory;
 
         protected static void AssertDatabaseServiceParameter( string parameterName, int parameterValue,
                                                               Action< IDatabaseService > action )

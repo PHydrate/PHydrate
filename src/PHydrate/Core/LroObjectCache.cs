@@ -24,10 +24,10 @@ using System.Linq;
 
 namespace PHydrate.Core
 {
-    internal sealed class LroObjectCache< TIdentifierType > : IObjectCache< TIdentifierType >
+    internal sealed class LroObjectCache : IObjectCache
     {
-        private readonly IDictionary< Type, IDictionary< TIdentifierType, TimeStampedObjectWrapper > > _cache =
-            new ConcurrentDictionary< Type, IDictionary< TIdentifierType, TimeStampedObjectWrapper > >();
+        private readonly IDictionary< Type, IDictionary< int, TimeStampedObjectWrapper > > _cache =
+            new ConcurrentDictionary< Type, IDictionary< int, TimeStampedObjectWrapper > >();
 
         internal LroObjectCache( int maxCacheSize )
         {
@@ -42,43 +42,43 @@ namespace PHydrate.Core
         /// Determines whether the object exists in the cache
         /// </summary>
         /// <typeparam name="T">The type of the object</typeparam>
-        /// <param name="identifier">The identifier.</param>
+        /// <param name="hashCode">The hash code.</param>
         /// <returns>
         ///   <c>true</c> the object exists; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsInCache< T >( TIdentifierType identifier )
+        public bool IsInCache< T >( int hashCode )
         {
-            return _cache.ContainsKey( typeof(T) ) && _cache[ typeof(T) ].ContainsKey( identifier );
+            return _cache.ContainsKey( typeof(T) ) && _cache[ typeof(T) ].ContainsKey( hashCode );
         }
 
         /// <summary>
         /// Gets from cache.
         /// </summary>
         /// <typeparam name="T">The type of the object</typeparam>
-        /// <param name="identifier">The identifier.</param>
+        /// <param name="hashCode">The hash code.</param>
         /// <returns>The object from the cache</returns>
-        public T GetFromCache<T>(TIdentifierType identifier)
+        public T GetFromCache<T>(int hashCode)
         {
-            if ( IsInCache< T >( identifier ) )
+            if ( IsInCache< T >( hashCode ) )
             {
-                _cache[ typeof(T) ][ identifier ].Touch();
-                return (T)_cache[ typeof(T) ][ identifier ].WrappedObject;
+                _cache[ typeof(T) ][ hashCode ].Touch();
+                return (T)_cache[ typeof(T) ][ hashCode ].WrappedObject;
             }
 
-            throw new PHydrateInternalException( "Could not find key in cache.  Code should call IsInCache() first." );
+            throw new PHydrateInternalException( "Could not find object in cache.  Code should call IsInCache() first." );
         }
 
         /// <summary>
         /// Adds to the cache.
         /// </summary>
         /// <typeparam name="T">The type of the object</typeparam>
-        /// <param name="identifier">The identifier.</param>
+        /// <param name="hashCode">The hash code.</param>
         /// <param name="obj">The object to store.</param>
-        public void AddToCache<T>(TIdentifierType identifier, T obj)
+        public void AddToCache<T>(int hashCode, T obj)
         {
             if ( !_cache.ContainsKey( typeof(T) ) )
-                _cache[ typeof(T) ] = new ConcurrentDictionary< TIdentifierType, TimeStampedObjectWrapper >();
-            _cache[ typeof(T) ].Add( identifier, new TimeStampedObjectWrapper( obj ) );
+                _cache[ typeof(T) ] = new ConcurrentDictionary< int, TimeStampedObjectWrapper >();
+            _cache[ typeof(T) ].Add( hashCode, new TimeStampedObjectWrapper( obj ) );
             lock ( _cacheLock )
                 _cacheSize++;
         }
@@ -93,7 +93,7 @@ namespace PHydrate.Core
                 RemoveItem( orderedList.Current );
         }
 
-        private void RemoveItem( KeyValuePair< TIdentifierType, TimeStampedObjectWrapper > kvp )
+        private void RemoveItem( KeyValuePair< int, TimeStampedObjectWrapper > kvp )
         {
             //var item = new WeakReference( kvp.Value.WrappedObject );
             lock ( _cacheLock )
