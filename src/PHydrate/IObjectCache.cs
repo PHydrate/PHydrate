@@ -1,4 +1,4 @@
-namespace PHydrate.Core
+namespace PHydrate
 {
     /// <summary>
     /// A cache of objects, used by SessionFactory

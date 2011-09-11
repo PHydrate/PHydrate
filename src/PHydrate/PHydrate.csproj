@@ -93,7 +93,6 @@
     <Compile Include="Attributes\UpdateUsingAttribute.cs" />
     <Compile Include="Core\DataHydrator.cs" />
     <Compile Include="Core\FluentConfiguration.cs" />
-    <Compile Include="Core\IObjectCache.cs" />
     <Compile Include="Core\LroObjectCache.cs" />
     <Compile Include="Core\SessionTransaction.cs" />
     <Compile Include="Core\SqlServerDatabaseServiceProvider.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="IDatabaseService.cs" />
     <Compile Include="IDatabaseServiceProvider.cs" />
     <Compile Include="IDefaultObjectHydrator.cs" />
+    <Compile Include="IObjectCache.cs" />
     <Compile Include="IObjectHydrator.cs" />
     <Compile Include="ISession.cs" />
     <Compile Include="ISessionFactory.cs" />
