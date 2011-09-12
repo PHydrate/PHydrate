@@ -166,7 +166,7 @@
     <Compile Include="Core\Session\When_persisting_an_existing_object_with_no_creation_method.cs" />
     <Compile Include="Core\Session\When_persisting_a_new_object.cs" />
     <Compile Include="Core\Session\When_persisting_a_new_object_with_no_creation_method.cs" />
-    <Compile Include="Core\Session\Wher_getting_an_interface_without_an_object_hydrator_defined.cs" />
+    <Compile Include="Core\Session\When_getting_an_interface_without_an_object_hydrator_defined.cs" />
     <Compile Include="Core\SqlServerDatabaseService\When_using_sql_server_database_service.cs" />
     <Compile Include="Core\WeakReferenceObjectCache\WeakReferenceObjectCacheSpecificationBase.cs" />
     <Compile Include="Core\WeakReferenceObjectCache\When_adding_an_item_to_the_cache.cs" />

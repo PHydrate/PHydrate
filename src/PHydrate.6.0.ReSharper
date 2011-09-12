@@ -125,7 +125,7 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with PHydrate.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2010-2011, Stephen Michael Czetty]]></FileHeader>
+Copyright 2010-$CURRENT_YEAR$, Stephen Michael Czetty]]></FileHeader>
     <GenerateMemberBody />
     <Naming2>
       <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
